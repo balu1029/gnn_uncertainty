@@ -1,9 +1,10 @@
 import numpy as np
 import torch
+import os
 
 
 class MDDataset(torch.utils.data.Dataset):
-    def __init__(self, filename):
+    def __init__(self, foldername):
         self.type_to_number = {"H" : 0,
                                "C" : 1,
                                "N" : 2,
@@ -18,8 +19,8 @@ class MDDataset(torch.utils.data.Dataset):
                          3: -75.0362229210}
         Eh_to_eV = 27.211399
         
-        self.atom_numbers, self.coordinates = self._read_coordinates(filename + ".xyz")
-        self.energies = self._read_energies(filename)
+        self.atom_numbers, self.coordinates = self._read_coordinates(foldername + "/xyz")
+        self.energies = self._read_energies(foldername + "/energy")
         self.total_self_energy = [sum(self_energies[atom] for atom in molecule) * Eh_to_eV for molecule in self.atom_numbers] 
         self.energies = self.energies - self.total_self_energy
 
@@ -49,48 +50,49 @@ class MDDataset(torch.utils.data.Dataset):
                 "charges": self.charges[idx]}
     
 
-    def _read_coordinates(self, filename):
+    def _read_coordinates(self, foldername):
+        all_atom_numbers = []
+        all_coordinates = []
+        for filename in os.listdir(foldername):
+            if filename.endswith(".xyz"):
+                with open(os.path.join(foldername, filename), 'r') as file:
+                    while True:
+                        line = file.readline()
+                        if line == "":
+                            break
+                        num_atoms = int(line.strip())
+                        
 
-        with open(filename, 'r') as file:
-            all_atom_numbers = []
-            all_coordinates = []
-            while True:
-                line = file.readline()
-                if line == "":
-                    break
-                num_atoms = int(line.strip())
-                
 
+                    # Skip the comment line
+                        file.readline()
 
-            # Skip the comment line
-                file.readline()
+                    # Initialize lists to store atom types and coordinates
+                        atom_numbers = []
 
-            # Initialize lists to store atom types and coordinates
-                atom_numbers = []
+                        coordinates = []
 
-                coordinates = []
+                        # Read atom types and coordinates for each atom
+                        for _ in range(num_atoms):
+                            line = file.readline().split()
+                            atom_type = line[0]
+                            x, y, z = map(float, line[1:4])
 
-                # Read atom types and coordinates for each atom
-                for _ in range(num_atoms):
-                    line = file.readline().split()
-                    atom_type = line[0]
-                    x, y, z = map(float, line[1:4])
-
-                    atom_numbers.append(int(self.type_to_number[atom_type]))
-                    coordinates.append([x, y, z]) 
-                all_coordinates.append(coordinates)
-                all_atom_numbers.append(atom_numbers)
+                            atom_numbers.append(int(self.type_to_number[atom_type]))
+                            coordinates.append([x, y, z]) 
+                        all_coordinates.append(coordinates)
+                        all_atom_numbers.append(atom_numbers)
         return np.array(all_atom_numbers), np.array(all_coordinates)
 
 
-    def _read_energies(self, filename):
-        with open(filename) as file:
-            energies = np.array([float(e) for e in file.readline()[1:-1].split(",")])
-        return energies
-
+    def _read_energies(self, foldername):
+        energies = []
+        for filename in os.listdir(foldername):
+            with open(os.path.join(foldername, filename)) as file:
+                energies.extend(np.array([float(e) for e in file.readline()[1:-1].split(",")]))
+        return np.array(energies)
 
 
 
 if __name__ == "__main__":
-    ds = md_dataset("datasets/files/alaninedipeptide")
-    print(ds.edge_mask)
+    ds = MDDataset("datasets/files/alaninedipeptide")

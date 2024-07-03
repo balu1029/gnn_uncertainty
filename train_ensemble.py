@@ -37,9 +37,9 @@ if __name__ == "__main__":
     batch_size = 16
     lr = 1e-4
     min_lr = 1e-7
-    log_interval = int(1000/batch_size)
+    log_interval = int(2000/batch_size)
 
-    num_ensembles = 20
+    num_ensembles = 5
     model = ModelEnsemble(EGNN, num_ensembles, in_node_nf=12, in_edge_nf=0, hidden_nf=32, n_layers=2)
 
     qm9 = QM9()
