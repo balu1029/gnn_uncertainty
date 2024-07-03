@@ -1,3 +1,4 @@
+from uncertainty.ensemble import ModelEnsemble
 from gnn.egnn import EGNN
 from datasets.qm9 import QM9
 from datasets.md_dataset import MDDataset
@@ -33,29 +34,35 @@ if __name__ == "__main__":
     dtype = torch.float32
 
     epochs = 2000
+    batch_size = 16
+    lr = 1e-4
+    min_lr = 1e-7
+    log_interval = int(1000/batch_size)
 
-
-    model = EGNN(12,0,128,n_layers=16)
+    num_ensembles = 20
+    model = ModelEnsemble(EGNN, num_ensembles, in_node_nf=12, in_edge_nf=0, hidden_nf=32, n_layers=2)
 
     qm9 = QM9()
     qm9.create(1,0)
     trainset = MDDataset("datasets/files/alaninedipeptide")
-    trainloader = torch.utils.data.DataLoader(trainset, batch_size=32, shuffle=True)
+    trainloader = torch.utils.data.DataLoader(trainset, batch_size=batch_size, shuffle=True)
     charge_scale = qm9.charge_scale
     charge_power = 2
 
     loss_fn = nn.L1Loss()
-    optimizer = torch.optim.Adam(model.parameters(),lr=1e-4,weight_decay=1e-16)
-    optimizer = torch.optim.SGD(model.parameters(),lr=1e-4)
-    scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=0.9, patience=100, verbose=True)
+    optimizer = torch.optim.Adam(model.parameters(),lr=lr,weight_decay=1e-16)
+    #optimizer = torch.optim.SGD(model.parameters(),lr=lr)
+    scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=0.1, patience=100, verbose=True)
 
     model.train()
     total_params = sum(p.numel() for p in model.parameters())
     #print(total_params)
-
+    lr_before = 0
+    lr_after = 0
     for epoch in range(epochs):
         losses = []
-        for data in trainloader:
+        uncertainties = []
+        for i,data in enumerate(trainloader):
             batch_size, n_nodes, _ = data['coordinates'].size()
             atom_positions = data['coordinates'].view(batch_size * n_nodes, -1).to(device, dtype)
             atom_mask = data['atom_mask'].view(batch_size * n_nodes, -1).to(device, dtype)
@@ -73,13 +80,33 @@ if __name__ == "__main__":
             edges = qm9_utils.get_adj_matrix(n_nodes, batch_size, device)
             label = (data["energies"]).to(device, dtype)
 
-            pred = model.forward(x=atom_positions, h0=nodes, edges=edges, edge_attr=None, node_mask=atom_mask, edge_mask=edge_mask, n_nodes=n_nodes)
-            loss = loss_fn(pred,label)
+            stacked_pred, pred, uncertainty = model.forward(x=atom_positions, h0=nodes, edges=edges, edge_attr=None, node_mask=atom_mask, edge_mask=edge_mask, n_nodes=n_nodes)
+            stacked_label = label.repeat(stacked_pred.size(0), 1)
+            loss = loss_fn(stacked_pred, stacked_label)
             loss.backward()
-            losses.append(loss.item())
+            mean_loss = loss_fn(pred, label)
+            losses.append(mean_loss.item())
+
+            uncertainty = torch.mean(uncertainty)
+            uncertainties.append(uncertainty.item())    
 
             optimizer.step()
-            scheduler.step(loss.item())        
+            lr_before = optimizer.param_groups[0]['lr']
+            scheduler.step(loss.item())   
+            lr_after = optimizer.param_groups[0]['lr']   
+            
             optimizer.zero_grad()
-        print(np.array(losses).mean())
+
+            if lr_before != lr_after:
+                print(f"Learning rate changed to: {lr_after}")
+
+            if lr_after < min_lr:
+                print(f"Learning rate is below minimum, stopping training")
+                break
+
+            if (i+1) % log_interval == 0:
+                print(f"Epoch {epoch}, Batch {i}, Loss: {loss.item()}, Uncertainty: {uncertainty.item()}")
+        if lr_after < min_lr:
+            break
+        print(f"Epoch {epoch}, Mean Loss: {np.array(losses).mean()}, Mean Uncertainty: {np.array(uncertainties).mean()}")
     
