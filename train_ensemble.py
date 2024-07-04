@@ -2,6 +2,7 @@ from uncertainty.ensemble import ModelEnsemble
 from gnn.egnn import EGNN
 from datasets.qm9 import QM9
 from datasets.md_dataset import MDDataset
+from datasets.md17_dataset import MD17Dataset
 import torch
 from torch import nn
 from datasets.helper import utils as qm9_utils
@@ -34,17 +35,18 @@ if __name__ == "__main__":
     dtype = torch.float32
 
     epochs = 2000
-    batch_size = 16
+    batch_size = 128
     lr = 1e-4
     min_lr = 1e-7
-    log_interval = int(2000/batch_size)
+    log_interval = 500#int(2000/batch_size)
 
-    num_ensembles = 5
+    num_ensembles = 2
     model = ModelEnsemble(EGNN, num_ensembles, in_node_nf=12, in_edge_nf=0, hidden_nf=32, n_layers=2)
 
     qm9 = QM9()
     qm9.create(1,0)
-    trainset = MDDataset("datasets/files/alaninedipeptide")
+    #trainset = MDDataset("datasets/files/alaninedipeptide")
+    trainset = MD17Dataset("datasets/files/md17_single")
     trainloader = torch.utils.data.DataLoader(trainset, batch_size=batch_size, shuffle=True)
     charge_scale = qm9.charge_scale
     charge_power = 2
@@ -52,7 +54,7 @@ if __name__ == "__main__":
     loss_fn = nn.L1Loss()
     optimizer = torch.optim.Adam(model.parameters(),lr=lr,weight_decay=1e-16)
     #optimizer = torch.optim.SGD(model.parameters(),lr=lr)
-    scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=0.1, patience=100, verbose=True)
+    #scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=0.1, patience=100, verbose=True)
 
     model.train()
     total_params = sum(p.numel() for p in model.parameters())
@@ -92,7 +94,7 @@ if __name__ == "__main__":
 
             optimizer.step()
             lr_before = optimizer.param_groups[0]['lr']
-            scheduler.step(loss.item())   
+            #scheduler.step(loss.item())   
             lr_after = optimizer.param_groups[0]['lr']   
             
             optimizer.zero_grad()
@@ -105,7 +107,7 @@ if __name__ == "__main__":
                 break
 
             if (i+1) % log_interval == 0:
-                print(f"Epoch {epoch}, Batch {i}, Loss: {loss.item()}, Uncertainty: {uncertainty.item()}")
+                print(f"Epoch {epoch}, Batch {i+1}/{len(trainloader)}, Loss: {loss.item()}, Uncertainty: {uncertainty.item()}")
         if lr_after < min_lr:
             break
         print(f"Epoch {epoch}, Mean Loss: {np.array(losses).mean()}, Mean Uncertainty: {np.array(uncertainties).mean()}")
