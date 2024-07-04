@@ -9,7 +9,7 @@ from datasets.helper import utils as qm9_utils
 import numpy as np
 
 from torchsummary import summary
-
+from sklearn.model_selection import train_test_split
 
 def make_global_adjacency_matrix(n_nodes):
     device = "cpu"
@@ -47,16 +47,21 @@ if __name__ == "__main__":
     qm9.create(1,0)
     #trainset = MDDataset("datasets/files/alaninedipeptide")
     trainset = MD17Dataset("datasets/files/md17_single")
+    # Split the dataset into train and validation sets
+    trainset, validset = train_test_split(trainset, test_size=0.2, random_state=42)
+
+    # Create data loaders for train and validation sets
     trainloader = torch.utils.data.DataLoader(trainset, batch_size=batch_size, shuffle=True)
+    validloader = torch.utils.data.DataLoader(validset, batch_size=batch_size, shuffle=False)
+
     charge_scale = qm9.charge_scale
     charge_power = 2
 
     loss_fn = nn.L1Loss()
     optimizer = torch.optim.Adam(model.parameters(),lr=lr,weight_decay=1e-16)
     #optimizer = torch.optim.SGD(model.parameters(),lr=lr)
-    #scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=0.1, patience=100, verbose=True)
+    scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=0.1, patience=10, verbose=True)
 
-    model.train()
     total_params = sum(p.numel() for p in model.parameters())
     #print(total_params)
     lr_before = 0
@@ -64,6 +69,7 @@ if __name__ == "__main__":
     for epoch in range(epochs):
         losses = []
         uncertainties = []
+        model.train()
         for i,data in enumerate(trainloader):
             batch_size, n_nodes, _ = data['coordinates'].size()
             atom_positions = data['coordinates'].view(batch_size * n_nodes, -1).to(device, dtype)
@@ -93,11 +99,45 @@ if __name__ == "__main__":
             uncertainties.append(uncertainty.item())    
 
             optimizer.step()
-            lr_before = optimizer.param_groups[0]['lr']
-            #scheduler.step(loss.item())   
-            lr_after = optimizer.param_groups[0]['lr']   
-            
+                        
             optimizer.zero_grad()
+
+            
+
+            if (i+1) % log_interval == 0:
+                print(f"Epoch {epoch}, Batch {i+1}/{len(trainloader)}, Loss: {loss.item()}, Uncertainty: {uncertainty.item()}")
+
+                
+        model.eval()
+        valid_losses = []
+        valid_uncertainties = []
+        with torch.no_grad():
+            for i, data in enumerate(validloader):
+                batch_size, n_nodes, _ = data['coordinates'].size()
+                atom_positions = data['coordinates'].view(batch_size * n_nodes, -1).to(device, dtype)
+                atom_mask = data['atom_mask'].view(batch_size * n_nodes, -1).to(device, dtype)
+                edge_mask = data['edge_mask'].view(batch_size * n_nodes * n_nodes, -1).to(device, dtype)
+                one_hot = data['one_hot'].to(device, dtype)
+                charges = data['charges'].to(device, dtype)
+                nodes = qm9_utils.preprocess_input(one_hot, charges, charge_power, charge_scale, device)
+                nodes = nodes.view(batch_size * n_nodes, -1)
+                edges = qm9_utils.get_adj_matrix(n_nodes, batch_size, device)
+                label = (data["energies"]).to(device, dtype)
+
+
+                stacked_pred, pred, uncertainty = model.forward(x=atom_positions, h0=nodes, edges=edges, edge_attr=None, node_mask=atom_mask, edge_mask=edge_mask, n_nodes=n_nodes)
+
+
+                stacked_label = label.repeat(stacked_pred.size(0), 1)
+                loss = loss_fn(stacked_pred, stacked_label)
+                mean_loss = loss_fn(pred, label)
+                valid_losses.append(mean_loss.item())
+                uncertainty = torch.mean(uncertainty)
+                valid_uncertainties.append(uncertainty.item())
+
+            lr_before = optimizer.param_groups[0]['lr']
+            scheduler.step(np.array(valid_losses).mean())
+            lr_after = optimizer.param_groups[0]['lr']
 
             if lr_before != lr_after:
                 print(f"Learning rate changed to: {lr_after}")
@@ -105,10 +145,10 @@ if __name__ == "__main__":
             if lr_after < min_lr:
                 print(f"Learning rate is below minimum, stopping training")
                 break
-
-            if (i+1) % log_interval == 0:
-                print(f"Epoch {epoch}, Batch {i+1}/{len(trainloader)}, Loss: {loss.item()}, Uncertainty: {uncertainty.item()}")
-        if lr_after < min_lr:
-            break
-        print(f"Epoch {epoch}, Mean Loss: {np.array(losses).mean()}, Mean Uncertainty: {np.array(uncertainties).mean()}")
+        
+        print("Training and Validation Results:")
+        print("================================")
+        print(f"Epoch {epoch}, Training Loss: {np.array(losses).mean()}, Training Uncertainty: {np.array(uncertainties).mean()}")
+        print(f"Epoch {epoch}, Validation Loss: {np.array(valid_losses).mean()}, Validation Uncertainty: {np.array(valid_uncertainties).mean()}")
+        print("")
     
