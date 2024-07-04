@@ -1,0 +1,10 @@
+name: egnn
+channels:
+  - defaults
+dependencies:
+  - pytorch::pytorch
+  - numpy
+  - matplotlib
+  - scikit-learn
+  - conda-forge::paramiko
+prefix: /Users/lukas/opt/miniconda3/envs/egnn
