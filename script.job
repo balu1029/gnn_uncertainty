@@ -1,0 +1,10 @@
+#! /bin/bash
+#SBATCH --job-name=egnn_ensemble
+#SBATCH --partition=gpu_4
+#SBATCH --ntasks=1
+#SBATCH --gres=gpu:1
+#SBATCH --time=20:00
+#SBATCH --mail-type=NONE
+#SBATCH --error=/home/kit/iti/fq0795/gnn_uncertainty/cluster_err
+#SBATCH --out=/home/kit/iti/fq0795/gnn_uncertainty/cluster_out2
+python3 train_ensemble.py

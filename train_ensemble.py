@@ -7,6 +7,7 @@ import torch
 from torch import nn
 from datasets.helper import utils as qm9_utils
 import numpy as np
+import time
 
 from torchsummary import summary
 from sklearn.model_selection import train_test_split
@@ -32,16 +33,18 @@ def make_global_adjacency_matrix(n_nodes):
 if __name__ == "__main__":
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    #device = torch.device("cpu")
+    print(device, flush=True)
     dtype = torch.float32
 
-    epochs = 2000
-    batch_size = 128
+    epochs = 10
+    batch_size = 512
     lr = 1e-4
     min_lr = 1e-7
-    log_interval = 500#int(2000/batch_size)
+    log_interval = 10000#int(2000/batch_size)
 
     num_ensembles = 2
-    model = ModelEnsemble(EGNN, num_ensembles, in_node_nf=12, in_edge_nf=0, hidden_nf=32, n_layers=2)
+    model = ModelEnsemble(EGNN, num_ensembles, in_node_nf=12, in_edge_nf=0, hidden_nf=128, n_layers=4).to(device)
 
     qm9 = QM9()
     qm9.create(1,0)
@@ -70,6 +73,7 @@ if __name__ == "__main__":
         losses = []
         uncertainties = []
         model.train()
+        start = time.time()
         for i,data in enumerate(trainloader):
             batch_size, n_nodes, _ = data['coordinates'].size()
             atom_positions = data['coordinates'].view(batch_size * n_nodes, -1).to(device, dtype)
@@ -105,12 +109,13 @@ if __name__ == "__main__":
             
 
             if (i+1) % log_interval == 0:
-                print(f"Epoch {epoch}, Batch {i+1}/{len(trainloader)}, Loss: {loss.item()}, Uncertainty: {uncertainty.item()}")
+                print(f"Epoch {epoch}, Batch {i+1}/{len(trainloader)}, Loss: {loss.item()}, Uncertainty: {uncertainty.item()}", flush=True)
 
-
+        train_time = time.time() - start
         model.eval()
         valid_losses = []
         valid_uncertainties = []
+        start = time.time()
         with torch.no_grad():
             for i, data in enumerate(validloader):
                 batch_size, n_nodes, _ = data['coordinates'].size()
@@ -140,15 +145,15 @@ if __name__ == "__main__":
             lr_after = optimizer.param_groups[0]['lr']
 
             if lr_before != lr_after:
-                print(f"Learning rate changed to: {lr_after}")
+                print(f"Learning rate changed to: {lr_after}", flush=True)
 
             if lr_after < min_lr:
                 print(f"Learning rate is below minimum, stopping training")
                 break
-        
-        print("Training and Validation Results:")
+        val_time = time.time() - start
+        print(f"Training and Validation Results of Epoch {epoch}:", flush=True)
         print("================================")
-        print(f"Epoch {epoch}, Training Loss: {np.array(losses).mean()}, Training Uncertainty: {np.array(uncertainties).mean()}")
-        print(f"Epoch {epoch}, Validation Loss: {np.array(valid_losses).mean()}, Validation Uncertainty: {np.array(valid_uncertainties).mean()}")
-        print("")
+        print(f"Training Loss: {np.array(losses).mean()}, Training Uncertainty: {np.array(uncertainties).mean()}, time: {train_time}", flush=True)
+        print(f"Validation Loss: {np.array(valid_losses).mean()}, Validation Uncertainty: {np.array(valid_uncertainties).mean()}, time: {val_time}", flush=True)
+        print("", flush=True)
     
