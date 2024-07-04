@@ -31,7 +31,7 @@ def make_global_adjacency_matrix(n_nodes):
 
 if __name__ == "__main__":
 
-    device = torch.device("cpu")
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     dtype = torch.float32
 
     epochs = 2000
@@ -107,7 +107,7 @@ if __name__ == "__main__":
             if (i+1) % log_interval == 0:
                 print(f"Epoch {epoch}, Batch {i+1}/{len(trainloader)}, Loss: {loss.item()}, Uncertainty: {uncertainty.item()}")
 
-                
+
         model.eval()
         valid_losses = []
         valid_uncertainties = []
