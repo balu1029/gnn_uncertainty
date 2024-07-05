@@ -12,23 +12,6 @@ import time
 from torchsummary import summary
 from sklearn.model_selection import train_test_split
 
-def make_global_adjacency_matrix(n_nodes):
-    device = "cpu"
-    row = (
-        torch.arange(0, n_nodes, dtype=torch.long)
-        .reshape(1, -1, 1)
-        .repeat(1, 1, n_nodes)
-        .to(device=device)
-    )
-    col = (
-        torch.arange(0, n_nodes, dtype=torch.long)
-        .reshape(1, 1, -1)
-        .repeat(1, n_nodes, 1)
-        .to(device=device)
-    )
-    full_adj = torch.concat([row, col], dim=0)
-    diag_bool = torch.eye(n_nodes, dtype=torch.bool).to(device=device)
-    return full_adj, diag_bool
 
 if __name__ == "__main__":
 
