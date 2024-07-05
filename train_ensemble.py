@@ -15,7 +15,7 @@ from sklearn.model_selection import train_test_split
 
 if __name__ == "__main__":
 
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    device = torch.device("cuda" if torch.cuda.is_available() else ("mps" if torch.backends.mps.is_available() else "cpu"))
     #device = torch.device("cpu")
     print(device, flush=True)
     dtype = torch.float32
