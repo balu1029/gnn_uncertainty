@@ -22,7 +22,16 @@ class MD17Dataset(torch.utils.data.Dataset):
         self.Eh_to_eV = 27.211399
         self.kcal_to_eV = 0.0433641
         
-        self.atom_numbers, self.coordinates, self.energies = self._read_coordinates_energies(foldername)
+        self.atom_numbers_raw, self.coordinates_raw, self.energies = self._read_coordinates_energies(foldername)
+        self.atom_numbers = self._pad_array(self.atom_numbers_raw, fill = [-1])
+        self.coordinates = self._pad_array(self.coordinates_raw, fill = [[0, 0, 0]])
+
+        self.atom_mask = torch.where(torch.tensor(self.atom_numbers) != -1, torch.tensor(1.0), torch.tensor(0.0))
+    
+        self.atom_numbers = np.array(self.atom_numbers)
+        self.coordinates = np.array(self.coordinates)
+        self.energies = np.array(self.energies)
+
         self.total_self_energy = [sum(self_energies[atom] for atom in molecule) * self.Eh_to_eV for molecule in self.atom_numbers] 
         self.energies = self.energies - self.total_self_energy
 
@@ -33,9 +42,12 @@ class MD17Dataset(torch.utils.data.Dataset):
         self.one_hot = torch.eye(self.num_types, dtype=torch.float)[torch.tensor(self.atom_numbers.flatten())].reshape(-1, self.num_atoms, self.num_types)
         self.charges = torch.tensor([self.ground_charges[atom] for atom in self.atom_numbers.flatten()]).reshape(-1, self.num_atoms)
 
-        self.atom_mask = torch.ones((self.num_atoms), dtype=torch.float).reshape(-1, 1)
-        self.edge_mask = torch.eye((self.num_atoms), dtype=torch.float).flatten().reshape(-1, 1)
+        #self.atom_mask = torch.ones((self.num_atoms), dtype=torch.float).reshape(-1, 1)
+        self.edge_mask = torch.eye(self.num_atoms, dtype=torch.float).unsqueeze(0).expand(self.num_snapshots, -1, -1)
         self.edge_mask = torch.where(self.edge_mask == 1, torch.tensor(0.0), torch.tensor(1.0))
+        self.edge_mask = self.edge_mask * self.atom_mask.unsqueeze(1) * self.atom_mask.unsqueeze(2)
+        self.edge_mask = self.edge_mask.view(self.num_snapshots, -1)
+
         self.energies = torch.tensor(self.energies)
         self.coordinates = torch.tensor(self.coordinates)
         
@@ -47,8 +59,8 @@ class MD17Dataset(torch.utils.data.Dataset):
         return {"one_hot" : self.one_hot[idx],
                 "coordinates" : self.coordinates[idx],
                 "energies" : self.energies[idx],
-                "atom_mask": self.atom_mask,
-                "edge_mask": self.edge_mask,
+                "atom_mask": self.atom_mask[idx],
+                "edge_mask": self.edge_mask[idx],
                 "charges": self.charges[idx]}
     
 
@@ -87,37 +99,23 @@ class MD17Dataset(torch.utils.data.Dataset):
                             coordinates.append([x, y, z]) 
                         all_coordinates.append(coordinates)
                         all_atom_numbers.append(atom_numbers)
-        # Find the length of the longest element in the sequence of coordinates
-        max_length_coords = max(len(coords) for coords in all_coordinates)
 
-        # Find the length of the longest element in the sequence of atom numbers
-        max_length_atom_numbers = max(len(nums) for nums in all_atom_numbers)
+        return all_atom_numbers, all_coordinates, energies
+    
 
-        # Pad all the coordinates to the same size
-        padded_coordinates = []
-        for coords in all_coordinates:
+    def _pad_array(self, arr, fill = [-1]):
+        max_length = max(len(nums) for nums in arr)
+        padded_arr = []
+        for nums in arr:
             # Calculate the number of padding elements needed
-            num_padding = max_length_coords - len(coords)
-            # Pad the coordinates with zeros
-            padded_coords = coords + [[0, 0, 0]] * num_padding
-            padded_coordinates.append(padded_coords)
+            num_padding = max_length - len(nums)
+            # Pad the atom numbers with the filling element
+            padded_nums = nums + fill * num_padding
+            padded_arr.append(padded_nums)
 
-        # Pad all the atom numbers to the same size
-        padded_atom_numbers = []
-        for nums in all_atom_numbers:
-            # Calculate the number of padding elements needed
-            num_padding = max_length_atom_numbers - len(nums)
-            # Pad the atom numbers with zeros
-            padded_nums = nums + [-1] * num_padding
-            padded_atom_numbers.append(padded_nums)
+    
+        return padded_arr
 
-        # Convert the padded coordinates and atom numbers back to numpy arrays
-        padded_coordinates = np.array(padded_coordinates)
-        padded_atom_numbers = np.array(padded_atom_numbers)
-
-        # Update the return statement
-        return padded_atom_numbers, padded_coordinates, np.array(energies)
-        #return np.array(all_atom_numbers), np.array(all_coordinates), np.array(energies)
 
 
 
@@ -125,5 +123,4 @@ class MD17Dataset(torch.utils.data.Dataset):
 
 if __name__ == "__main__":
     ds = MD17Dataset("datasets/files/md17_double")
-    print(ds.coordinates.shape)
-    print(ds.atom_numbers.shape)
+    
