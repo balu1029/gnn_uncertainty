@@ -38,13 +38,13 @@ if __name__ == "__main__":
     dtype = torch.float32
 
     epochs = 10
-    batch_size = 256
+    batch_size = 512
     lr = 1e-4
     min_lr = 1e-7
     log_interval = 20#int(2000/batch_size)
 
     num_ensembles = 2
-    model = ModelEnsemble(EGNN, num_ensembles, in_node_nf=12, in_edge_nf=0, hidden_nf=128, n_layers=4).to(device)
+    model = ModelEnsemble(EGNN, num_ensembles, in_node_nf=12, in_edge_nf=0, hidden_nf=16, n_layers=2).to(device)
 
     qm9 = QM9()
     qm9.create(1,0)
