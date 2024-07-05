@@ -38,10 +38,10 @@ if __name__ == "__main__":
     dtype = torch.float32
 
     epochs = 10
-    batch_size = 512
+    batch_size = 256
     lr = 1e-4
     min_lr = 1e-7
-    log_interval = 10000#int(2000/batch_size)
+    log_interval = 20#int(2000/batch_size)
 
     num_ensembles = 2
     model = ModelEnsemble(EGNN, num_ensembles, in_node_nf=12, in_edge_nf=0, hidden_nf=128, n_layers=4).to(device)
@@ -49,7 +49,7 @@ if __name__ == "__main__":
     qm9 = QM9()
     qm9.create(1,0)
     #trainset = MDDataset("datasets/files/alaninedipeptide")
-    trainset = MD17Dataset("datasets/files/md17_single")
+    trainset = MD17Dataset("datasets/files/md17_double")
     # Split the dataset into train and validation sets
     trainset, validset = train_test_split(trainset, test_size=0.2, random_state=42)
 
@@ -63,7 +63,7 @@ if __name__ == "__main__":
     loss_fn = nn.L1Loss()
     optimizer = torch.optim.Adam(model.parameters(),lr=lr,weight_decay=1e-16)
     #optimizer = torch.optim.SGD(model.parameters(),lr=lr)
-    scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=0.1, patience=10, verbose=True)
+    scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=0.1, patience=10)
 
     total_params = sum(p.numel() for p in model.parameters())
     #print(total_params)

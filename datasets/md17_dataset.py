@@ -9,11 +9,13 @@ class MD17Dataset(torch.utils.data.Dataset):
                                "C" : 1,
                                "N" : 2,
                                "O" : 3}
-        self.ground_charges  = {0: 1.0,
+        self.ground_charges  = {-1: 0.0,
+                                0: 1.0,
                                 1: 6.0,
                                 2: 7.0,
                                 3: 8.0}
-        self_energies = {0: -0.500607632585,
+        self_energies = {-1: 0.0,
+                         0: -0.500607632585,
                          1: -37.8302333826,
                          2: -54.5680045287,
                          3: -75.0362229210}
@@ -85,11 +87,43 @@ class MD17Dataset(torch.utils.data.Dataset):
                             coordinates.append([x, y, z]) 
                         all_coordinates.append(coordinates)
                         all_atom_numbers.append(atom_numbers)
-        return np.array(all_atom_numbers), np.array(all_coordinates), np.array(energies)
+        # Find the length of the longest element in the sequence of coordinates
+        max_length_coords = max(len(coords) for coords in all_coordinates)
+
+        # Find the length of the longest element in the sequence of atom numbers
+        max_length_atom_numbers = max(len(nums) for nums in all_atom_numbers)
+
+        # Pad all the coordinates to the same size
+        padded_coordinates = []
+        for coords in all_coordinates:
+            # Calculate the number of padding elements needed
+            num_padding = max_length_coords - len(coords)
+            # Pad the coordinates with zeros
+            padded_coords = coords + [[0, 0, 0]] * num_padding
+            padded_coordinates.append(padded_coords)
+
+        # Pad all the atom numbers to the same size
+        padded_atom_numbers = []
+        for nums in all_atom_numbers:
+            # Calculate the number of padding elements needed
+            num_padding = max_length_atom_numbers - len(nums)
+            # Pad the atom numbers with zeros
+            padded_nums = nums + [-1] * num_padding
+            padded_atom_numbers.append(padded_nums)
+
+        # Convert the padded coordinates and atom numbers back to numpy arrays
+        padded_coordinates = np.array(padded_coordinates)
+        padded_atom_numbers = np.array(padded_atom_numbers)
+
+        # Update the return statement
+        return padded_atom_numbers, padded_coordinates, np.array(energies)
+        #return np.array(all_atom_numbers), np.array(all_coordinates), np.array(energies)
 
 
 
 
 
 if __name__ == "__main__":
-    ds = MD17Dataset("datasets/files/md17_single")
+    ds = MD17Dataset("datasets/files/md17_double")
+    print(ds.coordinates.shape)
+    print(ds.atom_numbers.shape)
