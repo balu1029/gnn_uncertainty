@@ -26,7 +26,7 @@ if __name__ == "__main__":
     min_lr = 1e-7
     log_interval = 100#int(2000/batch_size)
 
-    num_ensembles = 2
+    num_ensembles = 10
     model = ModelEnsemble(EGNN, num_ensembles, in_node_nf=12, in_edge_nf=0, hidden_nf=64, n_layers=2).to(device)
 
     qm9 = QM9()
