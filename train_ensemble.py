@@ -12,36 +12,19 @@ import time
 from torchsummary import summary
 from sklearn.model_selection import train_test_split
 
-def make_global_adjacency_matrix(n_nodes):
-    device = "cpu"
-    row = (
-        torch.arange(0, n_nodes, dtype=torch.long)
-        .reshape(1, -1, 1)
-        .repeat(1, 1, n_nodes)
-        .to(device=device)
-    )
-    col = (
-        torch.arange(0, n_nodes, dtype=torch.long)
-        .reshape(1, 1, -1)
-        .repeat(1, n_nodes, 1)
-        .to(device=device)
-    )
-    full_adj = torch.concat([row, col], dim=0)
-    diag_bool = torch.eye(n_nodes, dtype=torch.bool).to(device=device)
-    return full_adj, diag_bool
 
 if __name__ == "__main__":
 
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    device = torch.device("cuda" if torch.cuda.is_available() else ("mps" if torch.backends.mps.is_available() else "cpu"))
     #device = torch.device("cpu")
-    print(device, flush=True)
+    print("Training on device: " + str(device), flush=True)
     dtype = torch.float32
 
     epochs = 100
     batch_size = 2048
     lr = 1e-3
     min_lr = 1e-7
-    log_interval = 20#int(2000/batch_size)
+    log_interval = 100#int(2000/batch_size)
 
     num_ensembles = 2
     model = ModelEnsemble(EGNN, num_ensembles, in_node_nf=12, in_edge_nf=0, hidden_nf=64, n_layers=2).to(device)
@@ -49,9 +32,11 @@ if __name__ == "__main__":
     qm9 = QM9()
     qm9.create(1,0)
     #trainset = MDDataset("datasets/files/alaninedipeptide")
-    trainset = MD17Dataset("datasets/files/md17")
+    start = time.time()
+    trainset = MD17Dataset("datasets/files/md17_single")
     # Split the dataset into train and validation sets
     trainset, validset = train_test_split(trainset, test_size=0.2, random_state=42)
+    print(f"Loaded dataset in: {time.time() - start} seconds", flush=True)
 
     # Create data loaders for train and validation sets
     trainloader = torch.utils.data.DataLoader(trainset, batch_size=batch_size, shuffle=True)
@@ -66,7 +51,7 @@ if __name__ == "__main__":
     scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=0.1, patience=5)
 
     total_params = sum(p.numel() for p in model.parameters())
-    #print(total_params)
+    print("Number of trainable parameters: " + str(total_params))
     lr_before = 0
     lr_after = 0
     for epoch in range(epochs):
@@ -115,6 +100,8 @@ if __name__ == "__main__":
         model.eval()
         valid_losses = []
         valid_uncertainties = []
+        num_in_interval = 0
+        total_preds = 0
         start = time.time()
         with torch.no_grad():
             for i, data in enumerate(validloader):
@@ -137,6 +124,8 @@ if __name__ == "__main__":
                 loss = loss_fn(stacked_pred, stacked_label)
                 mean_loss = loss_fn(pred, label)
                 valid_losses.append(mean_loss.item())
+                num_in_interval += torch.sum(torch.abs(pred - label) <= uncertainty/2)
+                total_preds += pred.size(0)
                 uncertainty = torch.mean(uncertainty)
                 valid_uncertainties.append(uncertainty.item())
 
@@ -151,9 +140,11 @@ if __name__ == "__main__":
                 print(f"Learning rate is below minimum, stopping training")
                 break
         val_time = time.time() - start
+        print("", flush=True)
         print(f"Training and Validation Results of Epoch {epoch}:", flush=True)
         print("================================")
         print(f"Training Loss: {np.array(losses).mean()}, Training Uncertainty: {np.array(uncertainties).mean()}, time: {train_time}", flush=True)
         print(f"Validation Loss: {np.array(valid_losses).mean()}, Validation Uncertainty: {np.array(valid_uncertainties).mean()}, time: {val_time}", flush=True)
+        print(f"Number of predictions within uncertainty interval: {num_in_interval}/{total_preds} ({num_in_interval/total_preds*100:.2f}%)", flush=True)
         print("", flush=True)
     
