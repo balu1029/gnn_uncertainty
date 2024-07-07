@@ -20,14 +20,16 @@ if __name__ == "__main__":
     print("Training on device: " + str(device), flush=True)
     dtype = torch.float32
 
-    epochs = 100
+    epochs = 60
     batch_size = 2048
-    lr = 1e-3
+    lr = 1e-4
     min_lr = 1e-7
     log_interval = 100#int(2000/batch_size)
 
     num_ensembles = 10
     model = ModelEnsemble(EGNN, num_ensembles, in_node_nf=12, in_edge_nf=0, hidden_nf=64, n_layers=2).to(device)
+
+    best_loss = np.inf
 
     qm9 = QM9()
     qm9.create(1,0)
@@ -139,6 +141,10 @@ if __name__ == "__main__":
             if lr_after < min_lr:
                 print(f"Learning rate is below minimum, stopping training")
                 break
+            if np.array(valid_losses).mean() < best_loss:
+                best_loss = np.array(valid_losses).mean()
+                torch.save(model.state_dict(), "best_model.pt")
+
         val_time = time.time() - start
         print("", flush=True)
         print(f"Training and Validation Results of Epoch {epoch}:", flush=True)
