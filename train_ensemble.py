@@ -35,7 +35,7 @@ if __name__ == "__main__":
     qm9.create(1,0)
     #trainset = MDDataset("datasets/files/alaninedipeptide")
     start = time.time()
-    trainset = MD17Dataset("datasets/files/md17_single")
+    trainset = MD17Dataset("datasets/files/md17")
     # Split the dataset into train and validation sets
     trainset, validset = train_test_split(trainset, test_size=0.2, random_state=42)
     print(f"Loaded dataset in: {time.time() - start} seconds", flush=True)
