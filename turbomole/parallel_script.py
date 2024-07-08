@@ -25,8 +25,8 @@ def AddStatementToControl(controlfilename, statement):
 
 def turbomole(xyz_path, output_dir='turbomole_calc', functional='b3-lyp', basis_set='def2-SVP'):
     # Read the atomic structure from the XYZ file
-    atoms = read(xyz_path)
-
+    atoms = read(xyz_path,index=':')
+    print(atoms,flush=True)
     # Create a directory for the calculation
     calc_dir = output_dir
     if not os.path.exists(calc_dir):
@@ -76,18 +76,23 @@ def turbomole(xyz_path, output_dir='turbomole_calc', functional='b3-lyp', basis_
     return homo, lumo
 
 def process_file(file, input_directory, node_directory):
-    product_code = file[:-4]
+    i = file.rfind('/')
+    j = file.rfind('.')
+    product_code = file[i+1:j]
     try:
-        homo, lumo = turbomole(input_directory + '/' + file, node_directory + '/Results/'+ product_code + '_results')
-
+        homo, lumo = turbomole(file, node_directory + '/Results/'+ product_code + '_results')
+        
     except Exception as e:
         print(f"Error processing {file}: {e}")
+        #print(os.listdir(node_directory + '/Results/'+ product_code + '_results'))
         homo, lumo = None, None
     return product_code, homo, lumo
 
 def process_directory(input_directory, node_directory):
     print(f"Processing directory: {input_directory}")
-    files = [file for file in os.listdir(input_directory) if file.endswith('.xyz')]
+    #files = [os.path.abspath(f'{input_directory}/{file}') for file in os.listdir(input_directory) if file.endswith('.xyz')]
+    #print(os.listdir(f'{node_directory}/coords/{input_directory}'))
+    files = [f'{node_directory}/coords/{input_directory}/{file}' for file in os.listdir(input_directory) if file.endswith('.xyz')]
     product_codes, homos, lumos = [], [], []
 
     with concurrent.futures.ProcessPoolExecutor() as executor:
@@ -101,19 +106,15 @@ def process_directory(input_directory, node_directory):
     return product_codes, homos, lumos
 
 if __name__ == "__main__":
-    """ parser = argparse.ArgumentParser(description="Process a directory.")
+    parser = argparse.ArgumentParser(description="Process a directory.")
     parser.add_argument("directory", type=str, help="The directory to process")
     parser.add_argument("temp_node_dir", type=str, help="The assigned node temporary directory path")
     args = parser.parse_args()
-    """
-    filepath = os.path.dirname(os.path.abspath(__file__))
-    in_dir = filepath + "/xyz_in/"
-    tmp_dir = filepath + "/tmp"
-    product_codes, homos, lumos = process_directory(in_dir, tmp_dir)
+
+    product_codes, homos, lumos = process_directory(args.directory, args.temp_node_dir)
 
     df = pd.DataFrame()
-    print(df.keys)
-    """  df['Product Code'] = product_codes
+    df['Product Code'] = product_codes
     df['HOMO(eV)'] = homos
     df['LUMO(eV)'] = lumos
-    df.to_csv(args.temp_node_dir + '/Results/DFT_results.csv') """
+    df.to_csv(args.temp_node_dir + '/Results/DFT_results.csv')
