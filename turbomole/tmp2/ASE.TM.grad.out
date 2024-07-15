@@ -1,0 +1,270 @@
+
+   OpenMP run-time library returned nthreads =  1
+
+ grad (uc2n357.localdomain) : TURBOMOLE rev. V7-7-1 compiled 3 Feb 2023 at 10:13:59
+ Copyright (C) 2023 TURBOMOLE GmbH, Karlsruhe
+
+
+    2024-07-09 23:36:00.690 
+
+
+
+                             g r a d - program
+
+                reinhart ahlrichs, hans horn & ansgar schaefer
+                 density functional version : oliver treutler
+
+
+                          quantum chemistry group
+                          universitaet  karlsruhe
+                                   germany
+
+
+
+
+                                                 
+                                 References:     
+                                                 
+          Density Functional:                              
+              O. Treutler and R. Ahlrichs                      
+              Efficient Molecular Numerical Integration Schemes
+              J. Chem. Phys. 102: 346 (1995)                   
+          Parallel Version:                                
+              Performance of parallel TURBOMOLE for Density    
+              Functional Calculations                          
+              M. v. Arnim and R. Ahlrichs                      
+              J. Comp. Chem. 19: 1746 (1998)                   
+                                         
+
+
+
+
+              +--------------------------------------------------+
+              | Atomic coordinate, charge and isotop information |
+              +--------------------------------------------------+
+
+                    atomic coordinates            atom    charge  isotop
+          4.00742927    2.08871966    2.35003862    h      1.000     0
+          3.72399055    3.42785687    0.81517053    c      6.000     0
+          2.08493991    4.60183737    1.30717214    h      1.000     0
+          3.31533470    2.30419789   -0.93047439    h      1.000     0
+          6.14343944    4.92964285    0.41545989    c      6.000     0
+          8.20610875    3.95008623    0.78345322    o      8.000     0
+          5.89829223    7.32155175   -0.56145780    n      7.000     0
+          4.18251796    8.27470717   -0.60703759    h      1.000     0
+          8.08280843    8.87826521   -1.21728575    c      6.000     0
+          9.68696073    7.79851246   -0.40096529    h      1.000     0
+          8.43896807    9.09587766   -4.08465509    c      6.000     0
+          6.75249012    9.96858854   -5.06360220    h      1.000     0
+         10.19514383   10.24958709   -4.52347099    h      1.000     0
+          8.86408753    7.18847188   -4.90117660    h      1.000     0
+          7.81728287   11.44530398   -0.00965728    c      6.000     0
+          5.70168050   12.29972417    0.53285602    o      8.000     0
+         10.02835791   12.71908791    0.34115658    n      7.000     0
+         11.71765853   11.76561924    0.16215081    h      1.000     0
+         10.03374605   15.23070804    1.26316072    c      6.000     0
+          8.04512816   15.91759201    1.36239173    h      1.000     0
+         10.94272682   15.40765337    3.17226030    h      1.000     0
+         11.15715969   16.53026976   -0.00495931    h      1.000     0
+ 
+       center of nuclear mass  :    7.41217677    8.94999009   -0.16655268
+       center of nuclear charge:    7.42489557    8.97980314   -0.20507884
+
+              +--------------------------------------------------+
+              |               basis set information              |
+              +--------------------------------------------------+
+
+              we will work with the 1s 3p 5d 7f 9g ... basis set
+              ...i.e. with spherical basis functions...
+
+   type   atoms  prim   cont   basis
+   ---------------------------------------------------------------------------
+    h       12      4      2   def-SV(P)   [2s|4s]
+    c        6     24     14   def-SV(P)   [3s2p1d|7s4p1d]
+    o        2     24     14   def-SV(P)   [3s2p1d|7s4p1d]
+    n        2     24     14   def-SV(P)   [3s2p1d|7s4p1d]
+   ---------------------------------------------------------------------------
+   total:   22    288    164
+   ---------------------------------------------------------------------------
+
+   total number of primitive shells          :   40
+   total number of contracted shells         :   84
+   total number of cartesian basis functions :  174
+   total number of SCF-basis functions       :  164
+
+
+ integral neglect threshold       :  0.19E-10
+ integral storage threshold THIZE :  0.10E-04
+ integral storage threshold THIME :         5
+
+
+ WARNING : cannot change filename for statistics 
+
+ symmetry group of the molecule :   c1 
+
+ the group has the following generators :
+   c1(z)
+
+    1 symmetry operations found
+
+ there are 1 real representations :   a   
+
+ maximum number of shells which are related by symmetry :  1
+
+
+    mo occupation :
+   irrep   mo's   occupied
+    a      164       39
+ 
+ number of basis functions   :   164
+ number of occupied orbitals :    39
+ 
+
+ number of off-diagonal lagrangians expected :  0
+  MOs are in ASCII format !
+
+
+ reading orbital data $scfmo  from file mos
+ orbital characterization : scfconv=7
+ time elapsed for calculating density matrices :   0.002 sec
+
+  grad preliminaries : cpu elapsed         0.037 s
+                       wall                0.073 s
+  
+           ------------------
+           density functional
+           ------------------
+ B-P86 functional
+ exchange:    LDA + Becke (B88)
+ correlation: LDA (VWN) + Perdew (P86)
+ iterations will be done with small grid
+  
+ spherical integration : Lebedev's spherical grid
+ spherical gridsize    :                     3
+    i.e. gridpoints    :                   302
+  maximum batchsize    :                   100
+ value for diffuse not defined
+ radial integration    : Chebyshev 2nd kind (scaling 3)
+ radial gridsize       :                     3
+ integration cells     :                    22
+ partition function    : becke
+ partition sharpness   :                     3
+  
+
+ <rpardf> : input of entry tasksize
+           from data group '$pardft' failed !
+
+               Default values taken
+
+ <rpardf> : input of entry memdiv
+           from data group '$pardft' failed !
+
+               Default values taken
+
+
+
+                    and now featuring
+                             the super-duper gradient    ..... wow .....
+
+
+ ------------------------------------------------------------------------------
+
+            SCF ENERGY GRADIENT with respect to NUCLEAR COORDINATES            
+
+ ------------------------------------------------------------------------------
+
+
+
+    ----------------------------------------
+     S+T+V CONTRIBUTIONS TO ENERGY GRADIENT 
+    ----------------------------------------
+
+ 1e-integral 1st. derivatives will be neglected if expon. factor < 0.100000E-10
+
+  cpu time for 1e-part of gradient :      0.10 sec
+
+
+    -----------------------------------------------
+     TWO ELECTRON CONTRIBUTIONS TO ENERGY GRADIENT 
+    -----------------------------------------------
+
+ biggest 1-particle AO density matrix element is expected to be    2.1368804250
+
+ setting up bound for integral derivative estimation
+
+ increment for numerical differentiation : 0.00050000
+
+ biggest AO integral is expected to be     4.776656448
+ biggest cartesian 1st derivative AO integral is expected to be     8.648821438
+
+ 2e-integral 1st. derivatives will be neglected if expon. factor < 0.100000E-06
+ outer boundary for 2e-integral derivative neglection is 0.364996E-08
+
+  cpu time for 2e-part of gradient :      0.08 min
+
+          Overall gridpoints after grid construction =        103568
+
+ Integrated ground state density     :   78.00001363410838    
+
+
+          ------------------------------------------------
+           cartesian gradient of the energy (hartree/bohr)
+          ------------------------------------------------
+
+  ATOM      1 h           2 c           3 h           4 h           5 c 
+dE/dx -0.4500522D-02  0.1125206D-02  0.8126968D-02  0.8862460D-03  0.5483525D-02
+dE/dy  0.9132950D-02 -0.4588760D-02 -0.5612025D-02 -0.3686149D-02  0.1295535D-02
+dE/dz -0.9534611D-02  0.9595328D-02  0.1999370D-02 -0.2947768D-02  0.3695826D-02
+
+  ATOM      6 o           7 n           8 h           9 c          10 h 
+dE/dx -0.1505843D-01  0.1184849D-01 -0.8019903D-02  0.4561191D-02 -0.4678534D-02
+dE/dy  0.4023736D-02 -0.1249396D-01  0.6994429D-02  0.2187551D-01 -0.1800534D-02
+dE/dz -0.1897761D-02  0.4785879D-02 -0.2238818D-02 -0.1087205D-02  0.2976543D-03
+
+  ATOM     11 c          12 h          13 h          14 h          15 c 
+dE/dx -0.1406395D-01 -0.9073418D-02  0.1279690D-01  0.6835106D-02  0.1627771D-01
+dE/dy -0.2535374D-02  0.4627823D-02  0.2323285D-02 -0.3636958D-02 -0.3372770D-02
+dE/dz  0.1396961D-01 -0.5781275D-02 -0.2101082D-02 -0.1391806D-02 -0.8268235D-02
+
+  ATOM     16 o          17 n          18 h          19 c          20 h 
+dE/dx -0.9094729D-02 -0.3906949D-02  0.6481680D-02 -0.1327026D-01 -0.3599141D-02
+dE/dy -0.1468119D-02  0.1442329D-01 -0.2729899D-02 -0.3167628D-01  0.2356234D-02
+dE/dz  0.4298530D-02  0.3560694D-02  0.1644168D-02 -0.6759847D-02 -0.7639000D-03
+
+  ATOM     21 h          22 h 
+dE/dx  0.4947286D-02  0.6034727D-02
+dE/dy  0.2017981D-02  0.4446239D-02
+dE/dz  0.1365787D-02 -0.2441692D-02
+ 
+ resulting FORCE  (fx,fy,fz) = (0.139D-03,-.838D-04,-.115D-05)
+ resulting MOMENT (mx,my,mz) = (-.291D-03,0.194D-03,-.182D-02)
+
+
+ exx =       0.026666 eyy =      -0.087060 ezz =      -0.022148
+ eyz =      -0.038232 exz =      -0.014220 exy =       0.004445
+
+
+ **********************************************************************
+  |maximum component of gradient| : 0.31676282E-01  (atom 19 c )       
+   gradient norm                  : 0.67334486E-01
+ **********************************************************************
+
+ <getgrd> : data group $grad  is missing 
+
+   ***  cartesian gradients written onto <gradient>  ***
+
+
+     --- calculation of the energy gradient finished ---
+
+
+
+    ------------------------------------------------------------------------
+         total  cpu-time :   5.83 seconds
+         total wall-time :   5.90 seconds
+    ------------------------------------------------------------------------
+
+   ****  grad : all done  ****
+
+
+    2024-07-09 23:36:06.569 
+

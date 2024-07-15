@@ -61,6 +61,12 @@ $rundimensions
    natoms=22
    nbf(CAO)=174
    nbf(AO)=164
-$actual step      dscf
-$restart  dscf  twoint
+$last step     grad
+$orbital_max_rnorm 0.36596888758316E-04
+$last SCF energy change = -495.48784
+$charge from dscf
+         -0.000 (not to be modified here)
+$dipole from dscf
+  x     0.44702020795262    y     0.76389267032232    z    -0.47010865066384    a.u.
+   | dipole | =    2.5473022516  debye
 $end

@@ -1,0 +1,2 @@
+model_name, architecture, dataset, n_layers, n_features, n_ensemble, optimizer, scheduler, start_lr, batch_size, best_loss
+md17.pt, egnn, md17, 2, 64, 10, adam, plateau, 1e-4, 2048, 0.15

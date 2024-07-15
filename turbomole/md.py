@@ -53,7 +53,7 @@ for step in range(3000):
     total_energy = atoms.get_potential_energy()
     molecules = [numbers_to_atoms[atom] for atom in atoms.get_atomic_numbers()]
 
-    write_xyz(positions, molecules, total_energy, f'../{xyz_path.split("/")[-1].split(".")[0]}_traj.xyz')
+    write_xyz(positions, molecules, total_energy, f'../{xyz_path.split("/")[-1].split(".")[0]}_traj2.xyz')
 
     dyn.run(1)
 

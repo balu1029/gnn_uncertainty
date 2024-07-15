@@ -811,3 +811,18 @@ Epoch 38, Batch 800/1492, Loss: 0.1590893268585205, Uncertainty: 0.0605779737234
 Epoch 38, Batch 900/1492, Loss: 0.14753128588199615, Uncertainty: 0.04955325648188591
 Epoch 38, Batch 1000/1492, Loss: 0.15908785164356232, Uncertainty: 0.05163171887397766
 Epoch 38, Batch 1100/1492, Loss: 0.15517893433570862, Uncertainty: 0.04924792796373367
+
+============================= JOB FEEDBACK =============================
+
+NodeName=uc2n510
+Job ID: 23841084
+Cluster: uc2
+User/Group: fq0795/iti
+State: COMPLETED (exit code 0)
+Nodes: 1
+Cores per node: 10
+CPU Utilized: 1-11:11:38
+CPU Efficiency: 9.93% of 14-18:19:30 core-walltime
+Job Wall-clock time: 1-11:25:57
+Memory Utilized: 37.51 GB
+Memory Efficiency: 40.86% of 91.80 GB

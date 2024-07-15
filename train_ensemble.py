@@ -9,6 +9,8 @@ from datasets.helper import utils as qm9_utils
 import numpy as np
 import time
 
+import wandb
+
 from torchsummary import summary
 from sklearn.model_selection import train_test_split
 
@@ -20,14 +22,26 @@ if __name__ == "__main__":
     print("Training on device: " + str(device), flush=True)
     dtype = torch.float32
 
-    epochs = 60
-    batch_size = 2048
+    epochs = 100
+    batch_size = 1028
     lr = 1e-4
     min_lr = 1e-7
     log_interval = 100#int(2000/batch_size)
 
     num_ensembles = 10
+
+    layers = 2
+    hidden_nf = 64
     model = ModelEnsemble(EGNN, num_ensembles, in_node_nf=12, in_edge_nf=0, hidden_nf=64, n_layers=2).to(device)
+
+
+    model_path = None #"./gnn/models/md17.pt"
+    data_path = "./datasets/files/md17/"
+    save_model = True
+    save_path = "gnn/models/md17_ensemble.pt"
+
+    if model_path is not None:
+        model.load_state_dict(torch.load(model_path))
 
     best_loss = np.inf
 
@@ -35,14 +49,17 @@ if __name__ == "__main__":
     qm9.create(1,0)
     #trainset = MDDataset("datasets/files/alaninedipeptide")
     start = time.time()
-    trainset = MD17Dataset("datasets/files/md17")
+    trainset = MD17Dataset(foldername=data_path, seed=42)
     # Split the dataset into train and validation sets
     trainset, validset = train_test_split(trainset, test_size=0.2, random_state=42)
     print(f"Loaded dataset in: {time.time() - start} seconds", flush=True)
+    
 
     # Create data loaders for train and validation sets
-    trainloader = torch.utils.data.DataLoader(trainset, batch_size=batch_size, shuffle=True)
+    start = time.time()
+    trainloader = torch.utils.data.DataLoader(trainset, batch_size=batch_size, shuffle=False)
     validloader = torch.utils.data.DataLoader(validset, batch_size=batch_size, shuffle=False)
+    print(f"Created data loaders in: {time.time() - start} seconds", flush=True)
 
     charge_scale = qm9.charge_scale
     charge_power = 2
@@ -50,7 +67,30 @@ if __name__ == "__main__":
     loss_fn = nn.L1Loss()
     optimizer = torch.optim.Adam(model.parameters(),lr=lr,weight_decay=1e-16)
     #optimizer = torch.optim.SGD(model.parameters(),lr=lr)
-    scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=0.1, patience=5)
+
+    factor = 0.1
+    patience = 5
+
+    scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=factor, patience=patience)
+
+
+    wandb.init(
+        # set the wandb project where this run will be logged
+        project="GNN-Uncertainty",
+
+        # track hyperparameters and run metadata
+        config={
+        "learning_rate_start": lr,
+        "layers": layers,
+        "hidden_nf": hidden_nf,
+        "scheduler": type(scheduler).__name__,
+        "optimizer": type(optimizer).__name__,
+        "patience": patience,
+        "factor": factor,
+        "dataset": data_path,
+        "epochs": epochs,
+        }
+    )
 
     total_params = sum(p.numel() for p in model.parameters())
     print("Number of trainable parameters: " + str(total_params))
@@ -79,7 +119,7 @@ if __name__ == "__main__":
             edges = qm9_utils.get_adj_matrix(n_nodes, batch_size, device)
             label = (data["energies"]).to(device, dtype)
 
-            stacked_pred, pred, uncertainty = model.forward(x=atom_positions, h0=nodes, edges=edges, edge_attr=None, node_mask=atom_mask, edge_mask=edge_mask, n_nodes=n_nodes)
+            stacked_pred, pred, uncertainty = model.forward(leave_out=(i%num_ensembles), x=atom_positions, h0=nodes, edges=edges, edge_attr=None, node_mask=atom_mask, edge_mask=edge_mask, n_nodes=n_nodes)
             stacked_label = label.repeat(stacked_pred.size(0), 1)
             loss = loss_fn(stacked_pred, stacked_label)
             loss.backward()
@@ -141,9 +181,9 @@ if __name__ == "__main__":
             if lr_after < min_lr:
                 print(f"Learning rate is below minimum, stopping training")
                 break
-            if np.array(valid_losses).mean() < best_loss:
+            if np.array(valid_losses).mean() < best_loss and save_model:
                 best_loss = np.array(valid_losses).mean()
-                torch.save(model.state_dict(), "best_model.pt")
+                torch.save(model.state_dict(), save_path)
 
         val_time = time.time() - start
         print("", flush=True)
@@ -153,4 +193,15 @@ if __name__ == "__main__":
         print(f"Validation Loss: {np.array(valid_losses).mean()}, Validation Uncertainty: {np.array(valid_uncertainties).mean()}, time: {val_time}", flush=True)
         print(f"Number of predictions within uncertainty interval: {num_in_interval}/{total_preds} ({num_in_interval/total_preds*100:.2f}%)", flush=True)
         print("", flush=True)
+
+
+        wandb.log({
+            "train_loss": np.array(losses).mean(),
+            "train_uncertainty": np.array(uncertainties).mean(),
+            "valid_loss": np.array(valid_losses).mean(),
+            "valid_uncertainty": np.array(valid_uncertainties).mean(),
+            "in_interval": num_in_interval/total_preds*100,
+        })
+
+    wandb.finish()
     

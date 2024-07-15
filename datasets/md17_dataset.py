@@ -4,7 +4,7 @@ import os
 
 
 class MD17Dataset(torch.utils.data.Dataset):
-    def __init__(self, foldername):
+    def __init__(self, foldername, seed=42):
         self.type_to_number = {"H" : 0,
                                "C" : 1,
                                "N" : 2,
@@ -50,6 +50,19 @@ class MD17Dataset(torch.utils.data.Dataset):
 
         self.energies = torch.tensor(self.energies)
         self.coordinates = torch.tensor(self.coordinates)
+
+        # Shuffle the data
+        np.random.seed(seed)
+        indices = np.arange(self.num_snapshots)
+        np.random.shuffle(indices)
+
+        self.atom_numbers = self.atom_numbers[indices]
+        self.coordinates = self.coordinates[indices]
+        self.energies = self.energies[indices]
+        self.one_hot = self.one_hot[indices]
+        self.charges = self.charges[indices]
+        self.atom_mask = self.atom_mask[indices]
+        self.edge_mask = self.edge_mask[indices]
         
 
     def __len__(self):
