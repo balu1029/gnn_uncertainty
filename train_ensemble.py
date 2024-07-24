@@ -32,7 +32,7 @@ if __name__ == "__main__":
 
     layers = 2
     hidden_nf = 64
-    model = ModelEnsemble(EGNN, num_ensembles, in_node_nf=12, in_edge_nf=0, hidden_nf=64, n_layers=2).to(device)
+    model = ModelEnsemble(EGNN, num_ensembles, in_node_nf=12, in_edge_nf=0, hidden_nf=hidden_nf, n_layers=layers).to(device)
 
 
     model_path = None #"./gnn/models/md17.pt"
@@ -89,6 +89,7 @@ if __name__ == "__main__":
         "factor": factor,
         "dataset": data_path,
         "epochs": epochs,
+        "batch-size": batch_size,
         }
     )
 
@@ -201,6 +202,7 @@ if __name__ == "__main__":
             "valid_loss": np.array(valid_losses).mean(),
             "valid_uncertainty": np.array(valid_uncertainties).mean(),
             "in_interval": num_in_interval/total_preds*100,
+            "learning_rate": lr_after,
         })
 
     wandb.finish()
