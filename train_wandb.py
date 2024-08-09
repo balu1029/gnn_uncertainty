@@ -25,7 +25,7 @@ if __name__ == "__main__":
     print("Training on device: " + str(device), flush=True)
     dtype = torch.float32
 
-    epochs = 10
+    epochs = 100
     batch_size = 256
     lr = 1e-4
     min_lr = 1e-7
@@ -40,7 +40,7 @@ if __name__ == "__main__":
     qm9.create(1,0)
     #trainset = MDDataset("datasets/files/alaninedipeptide")
     start = time.time()
-    dataset = "datasets/files/md17_single"
+    dataset = "datasets/files/ala_converged_1000000"
     trainset = MD17Dataset(dataset)
     # Split the dataset into train and validation sets
     trainset, validset = train_test_split(trainset, test_size=0.2, random_state=42)
@@ -72,6 +72,7 @@ if __name__ == "__main__":
 
         # track hyperparameters and run metadata
         config={
+        "name": "alaninedipeptide",
         "learning_rate_start": lr,
         "layers": 2,
         "hidden_nf": 16,

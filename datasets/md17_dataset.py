@@ -4,7 +4,7 @@ import os
 
 
 class MD17Dataset(torch.utils.data.Dataset):
-    def __init__(self, foldername, seed=42):
+    def __init__(self, foldername, seed=42, subtract_self_energies=True):
         self.type_to_number = {"H" : 0,
                                "C" : 1,
                                "N" : 2,
@@ -31,9 +31,10 @@ class MD17Dataset(torch.utils.data.Dataset):
         self.atom_numbers = np.array(self.atom_numbers)
         self.coordinates = np.array(self.coordinates)
         self.energies = np.array(self.energies)
-
-        self.total_self_energy = [sum(self_energies[atom] for atom in molecule) * self.Eh_to_eV for molecule in self.atom_numbers] 
-        self.energies = self.energies - self.total_self_energy
+        self.total_self_energy = 0
+        if subtract_self_energies:
+            self.total_self_energy = [sum(self_energies[atom] for atom in molecule) * self.Eh_to_eV for molecule in self.atom_numbers] 
+            self.energies = self.energies - self.total_self_energy
 
         self.num_atoms = self.atom_numbers.shape[1]
         self.num_snapshots = self.atom_numbers.shape[0]

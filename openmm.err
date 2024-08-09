@@ -1,0 +1,2 @@
+/var/spool/slurmd/job23943764/slurm_script: line 13: 168775 Killed                  python3 datasets/helper/energy_calculation.py
+slurmstepd: error: Detected 1 oom_kill event in StepId=23943764.batch. Some of the step tasks have been OOM Killed.

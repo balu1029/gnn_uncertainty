@@ -3,6 +3,7 @@ from openmm import *
 from openmm.unit import *
 from sys import stdout
 import numpy as np
+import multiprocessing
 
 kjpmol_to_kcalpmol = 0.239006
 
@@ -22,7 +23,21 @@ class OpenMMEnergyCalculation:
         self.simulation = Simulation(pdb.topology, system, integrator)
         self.simulation.context.setPositions(pdb.positions)
 
+        atoms = [atom.name for atom in pdb.topology.atoms()]
+        print(atoms)
+
         self.context = self.simulation.context
+
+    def add_ml_energy(self, model, model_path:str)->None:
+        """
+        Add a machine learning model to the energy calculation.
+
+        Args:
+            model: Machine learning model to use.
+            model_path (str): Path to the model.
+        """
+        self.simulation.context.setProperty('model', model)
+        self.simulation.context.setProperty('model_path', model_path)
 
     def set_positions(self, positions:np.array)->None:
         """
@@ -31,7 +46,7 @@ class OpenMMEnergyCalculation:
         Args:
             positions (np.array): Array of atom positions.
         """
-        positions =  positions * 0.1
+        positions =  positions * 10
         positions = [Vec3(position[0], position[1], position[2]) for position in positions]
         self.simulation.context.setPositions(positions)
 
@@ -103,10 +118,37 @@ class OpenMMEnergyCalculation:
             num_molecules (int): Number of molecules to calculate energy for. If 0 is provided, it iterates
         """
         molecules = np.load(in_file)
-        energies = []
-        atoms_ala = ['H', 'C', 'H', 'H', 'C', 'O', 'N', 'H', 'C', 'H', 'C', 'H', 'H', 'H', 'C', 'O', 'N', 'H', 'C', 'H', 'H', 'H']
+        
         if num_molecules is None:
             num_molecules = len(molecules)
+
+        self._generate_from_npy(molecules, out_file, num_molecules)
+    
+
+    def run_npy_file_parallel(self, in_file:str, out_file:str, num_molecules:int, num_threads:int):
+        """
+        Run energy calculations for molecules specified in a NPY file in parallel.
+
+        Args:
+            in_file (str): Path to the NPY file.
+            out_file (str): Path to the output file to store xyz and energies in.
+            num_molecules (int): Number of molecules to calculate energy for. If 0 is provided, it iterates
+            num_threads (int): Number of threads to use for parallel processing.
+        """
+        
+        molecules = np.load(in_file)
+        if num_molecules is None:
+            num_molecules = len(molecules)
+        else:
+            molecules = molecules[:num_molecules]
+        
+
+        self._generate_from_npy(molecules, out_file, num_molecules)
+        return NotImplementedError
+
+    def _generate_from_npy(self, molecules:np.array, out_file:str, num_molecules:int)->None:
+        energies = []
+        atoms_ala = ['H', 'C', 'H', 'H', 'C', 'O', 'N', 'H', 'C', 'H', 'C', 'H', 'H', 'H', 'C', 'O', 'N', 'H', 'C', 'H', 'H', 'H']
         with open(out_file, 'w') as file:
             for i in range(num_molecules):
                 self.set_positions(molecules[i])
@@ -123,17 +165,7 @@ if __name__ == "__main__":
     energy_calculation = OpenMMEnergyCalculation()
     xyz_path = "datasets/files/alaninedipeptide_traj/alaninedipeptide_traj.xyz"
     out_path = "datasets/files/alaninedipeptide_traj/alaninedipeptide_traj_energies.xyz"
-    '''with open(xyz_path, 'r') as file:
-        lines = file.readlines()
-        num_atoms = int(lines[0])
-        coordinates = []
-        for line in lines[2:num_atoms+2]:
-            atom, x, y, z = line.split()
-            coordinates.append([float(x), float(y), float(z)])
-    energy_calculation.set_positions(np.array(coordinates))
-    energy_calculation.step(1)
-    state = energy_calculation.context.getState(getEnergy=True)
-    print(state.getPotentialEnergy() * kjpmol_to_kcalpmol)'''
+   
     npy_in = "datasets/files/ala_converged/prod_positions_20-09-2023_13-10-19.npy"
-    xyz_out = "datasets/files/ala_converged/prod_positions_20-09-2023_13-10-19_energies_1,000,000.xyz"
-    energy_calculation.run_npy_file(npy_in, xyz_out, 1000000)
+    xyz_out = "datasets/files/ala_converged/prod_positions_20-09-2023_13-10-19_energies_10,000.xyz"
+    energy_calculation.run_npy_file(npy_in, xyz_out,10000)
