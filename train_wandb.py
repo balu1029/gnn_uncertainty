@@ -27,7 +27,11 @@ if __name__ == "__main__":
     print("Training on device: " + str(device), flush=True)
     dtype = torch.float32
 
+<<<<<<< Updated upstream
     epochs = 100
+=======
+    epochs = 50
+>>>>>>> Stashed changes
     batch_size = 128
     lr = 1e-3
     min_lr = 1e-7
@@ -42,8 +46,8 @@ if __name__ == "__main__":
     qm9.create(1,0)
     #trainset = MDDataset("datasets/files/alaninedipeptide")
     start = time.time()
-    dataset = "datasets/files/ala_converged_10000"
-    model_path = "./gnn/models/ala_converged_10000.pt"
+    dataset = "datasets/files/ala_converged_1000000"
+    model_path = "./gnn/models/ala_converged_1000000_test.pt"
     trainset = MD17Dataset(dataset,subtract_self_energies=False, in_unit="eV")
     # Split the dataset into train and validation sets
     trainset, validset = random_split(trainset, [int(0.8*len(trainset)), len(trainset) - int(0.8*len(trainset))])
@@ -191,6 +195,7 @@ if __name__ == "__main__":
         print(f"Validation Loss: {np.array(valid_losses).mean()}, Validation Uncertainty: {np.array(valid_uncertainties).mean()}, time: {val_time}", flush=True)
         print(f"Number of predictions within uncertainty interval: {num_in_interval}/{total_preds} ({num_in_interval/total_preds*100:.2f}%)", flush=True)
         print("", flush=True)
+<<<<<<< Updated upstream
         if use_wandb:
             wandb.log({
                 "train_loss": np.array(losses).mean(),
@@ -201,4 +206,17 @@ if __name__ == "__main__":
             })
     if use_wandb:
         wandb.finish()
+=======
+
+        wandb.log({
+            "train_loss": np.array(losses).mean(),
+            "train_uncertainty": np.array(uncertainties).mean(),
+            "valid_loss": np.array(valid_losses).mean(),
+            "valid_uncertainty": np.array(valid_uncertainties).mean(),
+            "in_interval": num_in_interval/total_preds*100,
+            "lr": lr_after,
+        })
+
+    wandb.finish()
+>>>>>>> Stashed changes
     
