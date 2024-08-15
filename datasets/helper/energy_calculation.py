@@ -1,11 +1,12 @@
 from openmm.app import *
 from openmm import *
-from openmm.unit import *
+from openmm.unit import picosecond, femtoseconds, kelvin , kilojoules_per_mole, nanometers
 from sys import stdout
 import numpy as np
 import multiprocessing
 
 kjpmol_to_kcalpmol = 0.239006
+ev_to_kjpmol = 96.485
 
 class OpenMMEnergyCalculation:
     """
@@ -44,10 +45,10 @@ class OpenMMEnergyCalculation:
         Set the positions of the atoms in the simulation.
 
         Args:
-            positions (np.array): Array of atom positions.
+            positions (np.array): Array of atom positions in nm.
         """
-        positions =  positions * 10
-        positions = [Vec3(position[0], position[1], position[2]) for position in positions]
+        positions =  positions 
+        positions = [Vec3(position[0], position[1], position[2]) * nanometers for position in positions]
         self.simulation.context.setPositions(positions)
 
     def step(self, steps:int)->None:
@@ -85,7 +86,7 @@ class OpenMMEnergyCalculation:
                 for line in lines[sum+2:sum+num_atoms+2]:
                     atom, x, y, z = line.split()
                     atoms.append(atom)
-                    coordinates.append([float(x), float(y), float(z)])
+                    coordinates.append([float(x), float(y), float(z)]) * 0.1  # convert to nm
                 sum += num_atoms + 2
                 molecules.append(coordinates)
         molecules = np.array(molecules)
@@ -145,13 +146,31 @@ class OpenMMEnergyCalculation:
 
         self._generate_from_npy(molecules, out_file, num_molecules)
         return NotImplementedError
+    
+    def calc_energy(self, positions:np.array)->np.array:
+        """
+        Calculate the energy of a molecule with the given positions.
+
+        Args:
+            positions (np.array): Array of atom positions in nm.
+
+        Returns:
+            float: Energy of the molecule in eV.
+        """
+        energies = []
+        for i in range(len(positions)):
+            self.set_positions(positions[i])
+            state = self.context.getState(getEnergy=True)
+            energy = state.getPotentialEnergy().value_in_unit(kilojoules_per_mole) / ev_to_kjpmol
+            energies.append(energy)
+        return np.array(energies)
 
     def _generate_from_npy(self, molecules:np.array, out_file:str, num_molecules:int)->None:
         energies = []
         atoms_ala = ['H', 'C', 'H', 'H', 'C', 'O', 'N', 'H', 'C', 'H', 'C', 'H', 'H', 'H', 'C', 'O', 'N', 'H', 'C', 'H', 'H', 'H']
         with open(out_file, 'w') as file:
             for i in range(num_molecules):
-                self.set_positions(molecules[i])
+                self.set_positions(molecules[i]*0.1)    # convert to nm
                 state = self.context.getState(getEnergy=True)
                 energy = state.getPotentialEnergy()
                 energies.append(energy)

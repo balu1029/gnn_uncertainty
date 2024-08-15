@@ -31,7 +31,9 @@ class MLCalculator(Calculator):
         super().calculate(atoms, properties, system_changes)
         
         # Get atomic positions as a numpy array
-        positions = atoms.get_positions()
+        positions = atoms.get_positions() * 0.1
+
+        
 
 
         atom_numbers = [self.atom_numbers]
@@ -68,7 +70,7 @@ class MLCalculator(Calculator):
         
         # Predict energy using the model
         stacked_pred, energy, uncertainty = self.model(x=atom_positions, h0=nodes, edges=edges, edge_attr=None, node_mask=atom_mask, edge_mask=edge_mask, n_nodes=n_nodes)
-        print("Energy: ", energy)
+        
 
         # Convert energy to the appropriate ASE units (eV)
         self.results['energy'] = energy.item() * eV
@@ -76,7 +78,9 @@ class MLCalculator(Calculator):
         # Compute forces by taking the gradient of energy w.r.t. positions
         energy.backward()
         forces = -atom_positions.grad.numpy()
-
+        print("Uncertainty: ", uncertainty.item())
+        print("Energy:      ", energy.item())
+        print()
         # Store the forces in the results dictionary
         self.results['forces'] = forces
 
@@ -87,6 +91,7 @@ if __name__ == "__main__":
     from ase.md.verlet import VelocityVerlet
     from ase.io.trajectory import Trajectory
     from ase.io import read
+    from ase.visualize import view
     
 
     # Define a simple atomic system
@@ -95,9 +100,9 @@ if __name__ == "__main__":
 
 
     # Instantiate the model
-    num_ensembles = 2
+    num_ensembles = 3
     model = ModelEnsemble(EGNN, num_ensembles, in_node_nf=12, in_edge_nf=0, hidden_nf=16, n_layers=2)
-    model.load_state_dict(torch.load("gnn/models/ala_converged_1000.pt", map_location=torch.device('cpu')))
+    model.load_state_dict(torch.load("gnn/models/ala_converged_10000.pt", map_location=torch.device('cpu')))
 
     # Create the custom calculator
     calc = MLCalculator(model=model)
@@ -111,11 +116,15 @@ if __name__ == "__main__":
     # Define MD integrator
     dyn = VelocityVerlet(atoms, timestep=1.0 * fs)
 
-    # Save the trajectory
+
 
     # Run the MD simulation
 
-    for i in range(10):
-        dyn.run(1)  # Run for 10 steps
-        print(f"Step {i + 1}: Energy = {atoms.get_potential_energy()}")
-
+    
+    with Trajectory('ala.traj', 'w', atoms) as traj:
+        for i in range(100):
+            dyn.run(1)  # Run for 1 step
+            traj.write(atoms)
+            #print(f"Step {i + 1}: Energy = {atoms.get_potential_energy()}")
+    traj = Trajectory('ala.traj')
+    #view(traj)

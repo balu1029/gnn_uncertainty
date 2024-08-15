@@ -9,6 +9,8 @@ from datasets.helper import utils as qm9_utils
 import numpy as np
 import time
 
+from torch.utils.data import random_split
+
 import wandb
 
 from torchsummary import summary
@@ -18,14 +20,14 @@ from sklearn.model_selection import train_test_split
 if __name__ == "__main__":
 
 
-    
+    use_wandb = False
 
     device = torch.device("cuda" if torch.cuda.is_available() else ("mps" if torch.backends.mps.is_available() else "cpu"))
     #device = torch.device("cpu")
     print("Training on device: " + str(device), flush=True)
     dtype = torch.float32
 
-    epochs = 150
+    epochs = 100
     batch_size = 128
     lr = 1e-3
     min_lr = 1e-7
@@ -44,7 +46,9 @@ if __name__ == "__main__":
     model_path = "./gnn/models/ala_converged_10000.pt"
     trainset = MD17Dataset(dataset,subtract_self_energies=False, in_unit="eV")
     # Split the dataset into train and validation sets
-    trainset, validset = train_test_split(trainset, test_size=0.2, random_state=42)
+    trainset, validset = random_split(trainset, [int(0.8*len(trainset)), len(trainset) - int(0.8*len(trainset))])
+    #trainset, validset = train_test_split(trainset, test_size=0.2, random_state=42)
+
     print(f"Loaded dataset in: {time.time() - start} seconds", flush=True)
 
     # Create data loaders for train and validation sets
@@ -67,26 +71,27 @@ if __name__ == "__main__":
     lr_after = 0
 
     # start a new wandb run to track this script
-    wandb.init(
-        # set the wandb project where this run will be logged
-        project="GNN-Uncertainty",
+    if use_wandb:
+        wandb.init(
+            # set the wandb project where this run will be logged
+            project="GNN-Uncertainty",
 
-        # track hyperparameters and run metadata
-        config={
-        "name": "alaninedipeptide",
-        "learning_rate_start": lr,
-        "layers": 2,
-        "hidden_nf": 16,
-        "scheduler": type(scheduler).__name__,
-        "optimizer": type(optimizer).__name__,
-        "patience": patience,
-        "factor": factor,
-        "dataset": dataset,
-        "epochs": epochs,
-        "num_ensembles": num_ensembles,
-        "batch_size": batch_size,
-        }
-    )
+            # track hyperparameters and run metadata
+            config={
+            "name": "alaninedipeptide",
+            "learning_rate_start": lr,
+            "layers": 2,
+            "hidden_nf": 16,
+            "scheduler": type(scheduler).__name__,
+            "optimizer": type(optimizer).__name__,
+            "patience": patience,
+            "factor": factor,
+            "dataset": dataset,
+            "epochs": epochs,
+            "num_ensembles": num_ensembles,
+            "batch_size": batch_size,
+            }
+        )
 
     for epoch in range(epochs):
         losses = []
@@ -186,14 +191,14 @@ if __name__ == "__main__":
         print(f"Validation Loss: {np.array(valid_losses).mean()}, Validation Uncertainty: {np.array(valid_uncertainties).mean()}, time: {val_time}", flush=True)
         print(f"Number of predictions within uncertainty interval: {num_in_interval}/{total_preds} ({num_in_interval/total_preds*100:.2f}%)", flush=True)
         print("", flush=True)
-
-        wandb.log({
-            "train_loss": np.array(losses).mean(),
-            "train_uncertainty": np.array(uncertainties).mean(),
-            "valid_loss": np.array(valid_losses).mean(),
-            "valid_uncertainty": np.array(valid_uncertainties).mean(),
-            "in_interval": num_in_interval/total_preds*100,
-        })
-
-    wandb.finish()
+        if use_wandb:
+            wandb.log({
+                "train_loss": np.array(losses).mean(),
+                "train_uncertainty": np.array(uncertainties).mean(),
+                "valid_loss": np.array(valid_losses).mean(),
+                "valid_uncertainty": np.array(valid_uncertainties).mean(),
+                "in_interval": num_in_interval/total_preds*100,
+            })
+    if use_wandb:
+        wandb.finish()
     
