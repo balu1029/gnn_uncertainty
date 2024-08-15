@@ -1,0 +1,49 @@
+{
+    "os": "macOS-14.5-arm64-arm-64bit",
+    "python": "3.12.2",
+    "heartbeatAt": "2024-08-14T13:28:17.358615",
+    "startedAt": "2024-08-14T13:28:16.394653",
+    "docker": null,
+    "cuda": null,
+    "args": [],
+    "state": "running",
+    "program": "/Users/lukas/Documents/KIT/Masterarbeit/git/gnn_uncertainty/train_ensemble.py",
+    "codePathLocal": "train_ensemble.py",
+    "codePath": "train_ensemble.py",
+    "git": {
+        "remote": "git@github.com:balu1029/gnn_uncertainty.git",
+        "commit": "25ebd6b032a30c0a868cb4af6208d67e48fe3bf8"
+    },
+    "email": "l.baer.99@web.de",
+    "root": "/Users/lukas/Documents/KIT/Masterarbeit/git/gnn_uncertainty",
+    "host": "iiyama4.aimat.iti.kit.edu",
+    "username": "lukas",
+    "executable": "/Users/lukas/opt/miniconda3/envs/egnn/bin/python",
+    "cpu_count": 8,
+    "cpu_count_logical": 8,
+    "cpu_freq": {
+        "current": 3228,
+        "min": 600,
+        "max": 3228
+    },
+    "cpu_freq_per_core": [
+        {
+            "current": 3228,
+            "min": 600,
+            "max": 3228
+        }
+    ],
+    "disk": {
+        "/": {
+            "total": 460.4317207336426,
+            "used": 418.2483558654785
+        }
+    },
+    "gpuapple": {
+        "type": "Apple M1 Pro",
+        "vendor": "sppci_vendor_Apple"
+    },
+    "memory": {
+        "total": 16.0
+    }
+}

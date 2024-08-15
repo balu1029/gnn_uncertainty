@@ -16,5 +16,5 @@ class ModelEnsemble(nn.Module):
         else:
             stacked_outputs = torch.stack([model(*args,**kwargs) for model in self.models])
         ensemble_output = torch.mean(stacked_outputs, dim=0)
-        ensemble_uncertainty = torch.std(stacked_outputs, dim=0) * 3
+        ensemble_uncertainty = (torch.max(stacked_outputs, dim=0).values - torch.min(stacked_outputs, dim=0).values) * 1
         return stacked_outputs, ensemble_output, ensemble_uncertainty

@@ -22,23 +22,23 @@ if __name__ == "__main__":
     print("Training on device: " + str(device), flush=True)
     dtype = torch.float32
 
-    epochs = 100
-    batch_size = 1028
+    epochs = 50
+    batch_size = 64
     lr = 1e-4
     min_lr = 1e-7
     log_interval = 100#int(2000/batch_size)
 
-    num_ensembles = 10
+    num_ensembles = 2
 
     layers = 2
-    hidden_nf = 64
+    hidden_nf = 16
     model = ModelEnsemble(EGNN, num_ensembles, in_node_nf=12, in_edge_nf=0, hidden_nf=hidden_nf, n_layers=layers).to(device)
 
 
     model_path = None #"./gnn/models/md17.pt"
-    data_path = "./datasets/files/md17/"
+    data_path = "datasets/files/ala_converged_1000"
     save_model = True
-    save_path = "gnn/models/md17_ensemble.pt"
+    save_path = "gnn/models/ala_converged_1000.pt"
 
     if model_path is not None:
         model.load_state_dict(torch.load(model_path))
@@ -49,7 +49,7 @@ if __name__ == "__main__":
     qm9.create(1,0)
     #trainset = MDDataset("datasets/files/alaninedipeptide")
     start = time.time()
-    trainset = MD17Dataset(foldername=data_path, seed=42)
+    trainset = MD17Dataset(foldername=data_path, seed=42, subtract_self_energies=False, in_unit="eV")
     # Split the dataset into train and validation sets
     trainset, validset = train_test_split(trainset, test_size=0.2, random_state=42)
     print(f"Loaded dataset in: {time.time() - start} seconds", flush=True)

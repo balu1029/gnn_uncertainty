@@ -4,7 +4,7 @@ import os
 
 
 class MD17Dataset(torch.utils.data.Dataset):
-    def __init__(self, foldername, seed=42, subtract_self_energies=True):
+    def __init__(self, foldername, seed=42, subtract_self_energies=True, in_unit="eV"):
         self.type_to_number = {"H" : 0,
                                "C" : 1,
                                "N" : 2,
@@ -14,6 +14,7 @@ class MD17Dataset(torch.utils.data.Dataset):
                                 1: 6.0,
                                 2: 7.0,
                                 3: 8.0}
+        # energies in hartree
         self_energies = {-1: 0.0,
                          0: -0.500607632585,
                          1: -37.8302333826,
@@ -22,7 +23,7 @@ class MD17Dataset(torch.utils.data.Dataset):
         self.Eh_to_eV = 27.211399
         self.kcal_to_eV = 0.0433641
         
-        self.atom_numbers_raw, self.coordinates_raw, self.energies = self._read_coordinates_energies(foldername)
+        self.atom_numbers_raw, self.coordinates_raw, self.energies = self._read_coordinates_energies(foldername, in_unit=in_unit)
         self.atom_numbers = self._pad_array(self.atom_numbers_raw, fill = [-1])
         self.coordinates = self._pad_array(self.coordinates_raw, fill = [[0, 0, 0]])
 
@@ -78,7 +79,7 @@ class MD17Dataset(torch.utils.data.Dataset):
                 "charges": self.charges[idx]}
     
 
-    def _read_coordinates_energies(self, foldername):
+    def _read_coordinates_energies(self, foldername, in_unit="kcal/mol"):
         all_atom_numbers = []
         all_coordinates = []
         energies = []
@@ -93,12 +94,14 @@ class MD17Dataset(torch.utils.data.Dataset):
                         
 
 
-                    # Skip the comment line
-                        energy = float(file.readline().strip()) * self.kcal_to_eV
-                        
+                        # Skip the comment line
+                        if in_unit == "kcal/mol":
+                            energy = float(file.readline().strip()) * self.kcal_to_eV
+                        elif in_unit == "eV":
+                            energy = float(file.readline().strip())
                         energies.append(energy)
 
-                    # Initialize lists to store atom types and coordinates
+                        # Initialize lists to store atom types and coordinates
                         atom_numbers = []
 
                         coordinates = []

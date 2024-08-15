@@ -25,13 +25,13 @@ if __name__ == "__main__":
     print("Training on device: " + str(device), flush=True)
     dtype = torch.float32
 
-    epochs = 100
-    batch_size = 256
-    lr = 1e-4
+    epochs = 150
+    batch_size = 128
+    lr = 1e-3
     min_lr = 1e-7
     log_interval = 100#int(2000/batch_size)
 
-    num_ensembles = 2
+    num_ensembles = 3
     model = ModelEnsemble(EGNN, num_ensembles, in_node_nf=12, in_edge_nf=0, hidden_nf=16, n_layers=2).to(device)
 
     best_loss = np.inf
@@ -40,14 +40,15 @@ if __name__ == "__main__":
     qm9.create(1,0)
     #trainset = MDDataset("datasets/files/alaninedipeptide")
     start = time.time()
-    dataset = "datasets/files/ala_converged_1000000"
-    trainset = MD17Dataset(dataset)
+    dataset = "datasets/files/ala_converged_10000"
+    model_path = "./gnn/models/ala_converged_10000.pt"
+    trainset = MD17Dataset(dataset,subtract_self_energies=False, in_unit="eV")
     # Split the dataset into train and validation sets
     trainset, validset = train_test_split(trainset, test_size=0.2, random_state=42)
     print(f"Loaded dataset in: {time.time() - start} seconds", flush=True)
 
     # Create data loaders for train and validation sets
-    trainloader = torch.utils.data.DataLoader(trainset, batch_size=batch_size, shuffle=True)
+    trainloader = torch.utils.data.DataLoader(trainset, batch_size=batch_size, shuffle=False)
     validloader = torch.utils.data.DataLoader(validset, batch_size=batch_size, shuffle=False)
 
     charge_scale = qm9.charge_scale
@@ -82,6 +83,8 @@ if __name__ == "__main__":
         "factor": factor,
         "dataset": dataset,
         "epochs": epochs,
+        "num_ensembles": num_ensembles,
+        "batch_size": batch_size,
         }
     )
 
@@ -108,7 +111,8 @@ if __name__ == "__main__":
             edges = qm9_utils.get_adj_matrix(n_nodes, batch_size, device)
             label = (data["energies"]).to(device, dtype)
 
-            stacked_pred, pred, uncertainty = model.forward(x=atom_positions, h0=nodes, edges=edges, edge_attr=None, node_mask=atom_mask, edge_mask=edge_mask, n_nodes=n_nodes)
+
+            stacked_pred, pred, uncertainty = model.forward(x=atom_positions, h0=nodes, edges=edges, edge_attr=None, node_mask=atom_mask, edge_mask=edge_mask, n_nodes=n_nodes, leave_out=(i%num_ensembles))
             stacked_label = label.repeat(stacked_pred.size(0), 1)
             loss = loss_fn(stacked_pred, stacked_label)
             loss.backward()
@@ -172,7 +176,7 @@ if __name__ == "__main__":
                 break
             if np.array(valid_losses).mean() < best_loss:
                 best_loss = np.array(valid_losses).mean()
-                torch.save(model.state_dict(), "best_model.pt")
+                torch.save(model.state_dict(), model_path)
 
         val_time = time.time() - start
         print("", flush=True)
