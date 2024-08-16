@@ -41,12 +41,13 @@ class ALCalculator(Calculator):
         self.uncertainty_samples = []
         self.energy_unit = eV
         self.force_unit = eV / nm
+        self.a_to_nm = 0.1
 
     def calculate(self, atoms=None, properties=['energy', 'forces'], system_changes=all_properties):
         super().calculate(atoms, properties, system_changes)
         
         # Get atomic positions as a numpy array
-        positions = atoms.get_positions() * 0.1
+        positions = atoms.get_positions()
 
 
         atom_numbers = [self.atom_numbers]
@@ -80,12 +81,11 @@ class ALCalculator(Calculator):
         nodes = nodes.view(batch_size * n_nodes, -1)
         edges = qm9_utils.get_adj_matrix(n_nodes, batch_size, self.device)
 
-        
         # Predict energy using the model
         stacked_pred, energy, uncertainty = self.model(x=atom_positions, h0=nodes, edges=edges, edge_attr=None, node_mask=atom_mask, edge_mask=edge_mask, n_nodes=n_nodes)
         
         if uncertainty.item() > self.max_uncertainty:
-            self.uncertainty_samples.append(positions)
+            self.uncertainty_samples.append(positions * self.a_to_nm)
 
         # Convert energy to the appropriate ASE units (eV)
         self.results['energy'] = energy.item() * self.energy_unit
@@ -108,7 +108,7 @@ class ALCalculator(Calculator):
 
 class ActiveLearning:
     
-    def __init__(self, model_path:str="gnn/models/ala_converged_10000.pt", num_ensembles:int=3, in_nf:int=12, hidden_nf:int=16, n_layers:int=2, molecule_path:str="datasets/files/alaninedipeptide/xyz/ala_single.xyz") -> None:
+    def __init__(self, model_path:str="gnn/models/ala_converged_10000.pt", num_ensembles:int=3, in_nf:int=12, hidden_nf:int=16, n_layers:int=2, molecule_path:str="datasets/files/ala_converged_1000000/start_pos.xyz") -> None:
         """
         Initializes an instance of the ActiveLearning class.
 
@@ -122,6 +122,7 @@ class ActiveLearning:
         """
         self.device = torch.device("cuda" if torch.cuda.is_available() else ("mps" if torch.backends.mps.is_available() else "cpu"))
         self.temperature = 300
+        self.timestep = 0.5 * fs
         # Instantiate the model
         model = ModelEnsemble(EGNN, num_ensembles, in_node_nf=12, in_edge_nf=0, hidden_nf=16, n_layers=2)
         model.load_state_dict(torch.load(model_path, self.device))
@@ -132,7 +133,7 @@ class ActiveLearning:
 
         MaxwellBoltzmannDistribution(self.atoms, temperature_K=self.temperature)
 
-        self.dyn = VelocityVerlet(self.atoms, timestep=1*fs)
+        self.dyn = VelocityVerlet(self.atoms, timestep=self.timestep)
         self.oracle = OpenMMEnergyCalculation()
 
     def run_simulation(self, steps:int, show_traj:bool=False)->np.array:
@@ -153,11 +154,11 @@ class ActiveLearning:
 
 
 if __name__ == "__main__":
-    model_path = "gnn/models/ala_converged_10000.pt"
+    model_path = "gnn/models/ala_converged_1000000.pt"
     num_ensembles = 3
     in_nf = 12
     hidden_nf = 16
     n_layers = 2
     al = ActiveLearning(num_ensembles=num_ensembles, in_nf=in_nf, hidden_nf=hidden_nf, n_layers=n_layers, model_path=model_path)
 
-    al.run_simulation(100,show_traj=True)
+    al.run_simulation(30,show_traj=True)
