@@ -20,25 +20,25 @@ from sklearn.model_selection import train_test_split
 if __name__ == "__main__":
 
 
-    use_wandb = False
+    use_wandb = True
 
     device = torch.device("cuda" if torch.cuda.is_available() else ("mps" if torch.backends.mps.is_available() else "cpu"))
     #device = torch.device("cpu")
     print("Training on device: " + str(device), flush=True)
     dtype = torch.float32
 
-<<<<<<< Updated upstream
-    epochs = 100
-=======
-    epochs = 50
->>>>>>> Stashed changes
-    batch_size = 128
+    epochs = 150
+    batch_size = 256
     lr = 1e-3
     min_lr = 1e-7
     log_interval = 100#int(2000/batch_size)
 
     num_ensembles = 3
-    model = ModelEnsemble(EGNN, num_ensembles, in_node_nf=12, in_edge_nf=0, hidden_nf=16, n_layers=2).to(device)
+    in_node_nf = 12
+    in_edge_nf = 0
+    hidden_nf = 32
+    n_layers = 3
+    model = ModelEnsemble(EGNN, num_ensembles, in_node_nf=in_node_nf, in_edge_nf=in_edge_nf, hidden_nf=hidden_nf, n_layers=n_layers).to(device)
 
     best_loss = np.inf
 
@@ -47,7 +47,7 @@ if __name__ == "__main__":
     #trainset = MDDataset("datasets/files/alaninedipeptide")
     start = time.time()
     dataset = "datasets/files/ala_converged_1000000"
-    model_path = "./gnn/models/ala_converged_1000000_test.pt"
+    model_path = "./gnn/models/ala_converged_1000000_large.pt"
     trainset = MD17Dataset(dataset,subtract_self_energies=False, in_unit="eV")
     # Split the dataset into train and validation sets
     trainset, validset = random_split(trainset, [int(0.8*len(trainset)), len(trainset) - int(0.8*len(trainset))])
@@ -66,7 +66,7 @@ if __name__ == "__main__":
     optimizer = torch.optim.Adam(model.parameters(),lr=lr,weight_decay=1e-16)
     #optimizer = torch.optim.SGD(model.parameters(),lr=lr)
     factor = 0.1
-    patience = 5
+    patience = 7
     scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=factor, patience=patience)
 
     total_params = sum(p.numel() for p in model.parameters())
@@ -84,8 +84,8 @@ if __name__ == "__main__":
             config={
             "name": "alaninedipeptide",
             "learning_rate_start": lr,
-            "layers": 2,
-            "hidden_nf": 16,
+            "layers": n_layers,
+            "hidden_nf": hidden_nf,
             "scheduler": type(scheduler).__name__,
             "optimizer": type(optimizer).__name__,
             "patience": patience,
@@ -94,6 +94,10 @@ if __name__ == "__main__":
             "epochs": epochs,
             "num_ensembles": num_ensembles,
             "batch_size": batch_size,
+            "in_node_nf" : in_node_nf,
+            "in_edge_nf" : in_edge_nf,
+            "loss_fn" : type(loss_fn).__name__,
+            "model_checkpoint": model_path,
             }
         )
 
@@ -195,7 +199,7 @@ if __name__ == "__main__":
         print(f"Validation Loss: {np.array(valid_losses).mean()}, Validation Uncertainty: {np.array(valid_uncertainties).mean()}, time: {val_time}", flush=True)
         print(f"Number of predictions within uncertainty interval: {num_in_interval}/{total_preds} ({num_in_interval/total_preds*100:.2f}%)", flush=True)
         print("", flush=True)
-<<<<<<< Updated upstream
+
         if use_wandb:
             wandb.log({
                 "train_loss": np.array(losses).mean(),
@@ -203,20 +207,8 @@ if __name__ == "__main__":
                 "valid_loss": np.array(valid_losses).mean(),
                 "valid_uncertainty": np.array(valid_uncertainties).mean(),
                 "in_interval": num_in_interval/total_preds*100,
+                "lr" : lr_after 
             })
     if use_wandb:
         wandb.finish()
-=======
-
-        wandb.log({
-            "train_loss": np.array(losses).mean(),
-            "train_uncertainty": np.array(uncertainties).mean(),
-            "valid_loss": np.array(valid_losses).mean(),
-            "valid_uncertainty": np.array(valid_uncertainties).mean(),
-            "in_interval": num_in_interval/total_preds*100,
-            "lr": lr_after,
-        })
-
-    wandb.finish()
->>>>>>> Stashed changes
     
