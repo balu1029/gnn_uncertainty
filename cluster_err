@@ -1,9 +1,76 @@
 wandb: Currently logged in as: l-baer-99 (l-baer-99-Karlsruhe Institute of Technology). Use `wandb login --relogin` to force relogin
-wandb: wandb version 0.17.6 is available!  To upgrade, please run:
+wandb: wandb version 0.17.7 is available!  To upgrade, please run:
 wandb:  $ pip install wandb --upgrade
 wandb: Tracking run with wandb version 0.17.4
-wandb: Run data is saved locally in /pfs/data5/home/kit/iti/fq0795/gnn_uncertainty/wandb/run-20240815_103336-z5g1bm3c
+wandb: Run data is saved locally in /pfs/data5/home/kit/iti/fq0795/gnn_uncertainty/wandb/run-20240816_172513-ev5ozatk
 wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run jumping-salad-26
+wandb: Syncing run ethereal-butterfly-32
 wandb: ⭐️ View project at https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty
-wandb: 🚀 View run at https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty/runs/z5g1bm3c
+wandb: 🚀 View run at https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty/runs/ev5ozatk
+wandb: - 0.009 MB of 0.009 MB uploadedwandb: \ 0.009 MB of 0.009 MB uploadedwandb: | 0.009 MB of 0.470 MB uploadedwandb: / 0.009 MB of 0.470 MB uploadedwandb: - 0.470 MB of 0.470 MB uploadedwandb:                                                                                
+wandb: 
+wandb: Run history:
+wandb:       in_interval ▁▁▃▂▄▂▂▃▃▄▅▅▅▆▅▄▅▇▆▆▆▆▇▇▇▇▇▇████████████
+wandb:                lr █████████████████████████▂▂▂▂▁▁▁▁▁▁▁▁▁▁▁
+wandb:        train_loss █▆▆▆▅▅▅▅▅▅▅▄▄▄▄▄▄▄▄▃▃▃▃▃▃▃▂▂▁▁▁▁▁▁▁▁▁▁▁▁
+wandb: train_uncertainty ▁▃▃▃▃▃▄▄▄▅▅▅▆▆▆▆▆▇▇▇▇▇▇▇██▇█████████████
+wandb:        valid_loss █▄▄▄▄▃▃▃▃▂▂▂▃▂▂▂▂▂▂▂▂▂▂▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb: valid_uncertainty ▁▁▃▂▄▂▂▄▃▄▄▅▅▆▅▅▅▇▇▆▆▆█▇▇▇▇▇████████████
+wandb: 
+wandb: Run summary:
+wandb:       in_interval 27.55
+wandb:                lr 0.0
+wandb:        train_loss 8.61838
+wandb: train_uncertainty 5.76965
+wandb:        valid_loss 10.2922
+wandb: valid_uncertainty 9.41898
+wandb: 
+wandb: 🚀 View run swept-star-30 at: https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty/runs/va61eva7
+wandb: ⭐️ View project at: https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20240816_163141-va61eva7/logs
+wandb: WARNING The new W&B backend becomes opt-out in version 0.18.0; try it out with `wandb.require("core")`! See https://wandb.me/wandb-core for more information.
+wandb: - 0.009 MB of 0.009 MB uploadedwandb: \ 0.009 MB of 0.009 MB uploadedwandb: | 0.009 MB of 0.009 MB uploadedwandb: / 0.009 MB of 0.009 MB uploadedwandb: - 0.009 MB of 0.009 MB uploadedwandb: \ 0.009 MB of 0.009 MB uploadedwandb: | 0.009 MB of 0.009 MB uploadedwandb: / 0.009 MB of 0.009 MB uploadedwandb: - 0.015 MB of 0.443 MB uploaded (0.003 MB deduped)wandb: \ 0.018 MB of 0.443 MB uploaded (0.003 MB deduped)wandb: | 0.018 MB of 0.443 MB uploaded (0.003 MB deduped)wandb: / 0.443 MB of 0.443 MB uploaded (0.003 MB deduped)wandb:                                                                                
+wandb: 
+wandb: Run history:
+wandb:       in_interval ▁▁▂▄▄▄▅▅▅▆▆▅▆▅▇▇▆▆▇█▆▇▆▆▇▇▆▇▇▇▇▇▇▇▇▇▇▇▇▇
+wandb:        train_loss ██▇▅▄▄▃▃▃▃▃▂▂▂▂▂▂▂▂▂▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb: train_uncertainty ▂▄▇██▇▇▇▆▆▆▅▅▅▅▄▄▄▄▄▄▄▄▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:        valid_loss ██▆▅▄▄▃▃▃▂▃▂▂▂▂▂▂▂▂▂▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb: valid_uncertainty ▃▄▆█▇▅▆▆▅▅▆▄▅▃▅▄▄▃▄▅▃▃▃▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb: 
+wandb: Run summary:
+wandb:       in_interval 65.71449
+wandb:        train_loss 0.84065
+wandb: train_uncertainty 1.32826
+wandb:        valid_loss 0.71766
+wandb: valid_uncertainty 1.90901
+wandb: 
+wandb: 🚀 View run spring-pine-28 at: https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty/runs/sn3o1yzv
+wandb: ⭐️ View project at: https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty
+wandb: Synced 5 W&B file(s), 0 media file(s), 2 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20240816_102135-sn3o1yzv/logs
+wandb: WARNING The new W&B backend becomes opt-out in version 0.18.0; try it out with `wandb.require("core")`! See https://wandb.me/wandb-core for more information.
+wandb: - 0.009 MB of 0.009 MB uploadedwandb: \ 0.009 MB of 0.009 MB uploadedwandb: | 0.009 MB of 0.443 MB uploadedwandb: / 0.009 MB of 0.443 MB uploadedwandb: - 0.009 MB of 0.443 MB uploadedwandb: \ 0.443 MB of 0.443 MB uploadedwandb:                                                                                
+wandb: 
+wandb: Run history:
+wandb:       in_interval ▁▂▂▃▃▃▄▅▆▄▆▇▅▆▆▆▆▆▆▇▆▇▆▇▆██▆▇▆▆▆▇▇▇▇█▆▆█
+wandb:                lr ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:        train_loss ██▆▅▄▄▃▃▂▂▂▂▂▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb: train_uncertainty ▂▄▇█▇▇▇▇▅▅▄▄▄▄▃▃▃▃▃▂▂▂▂▂▂▂▂▂▂▂▂▁▁▁▁▁▁▁▁▁
+wandb:        valid_loss █▇▆▅▄▄▃▂▂▂▂▂▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb: valid_uncertainty ▄▇▇█▆▆▆▅▆▅▆▇▃▄▄▃▃▃▃▃▂▃▂▂▃▃▄▁▂▁▂▁▃▂▁▂▂▁▁▃
+wandb: 
+wandb: Run summary:
+wandb:       in_interval 85.708
+wandb:                lr 0.001
+wandb:        train_loss 1.01883
+wandb: train_uncertainty 1.78283
+wandb:        valid_loss 0.80319
+wandb: valid_uncertainty 3.73175
+wandb: 
+wandb: 🚀 View run ethereal-butterfly-32 at: https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty/runs/ev5ozatk
+wandb: ⭐️ View project at: https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20240816_172513-ev5ozatk/logs
+wandb: WARNING The new W&B backend becomes opt-out in version 0.18.0; try it out with `wandb.require("core")`! See https://wandb.me/wandb-core for more information.

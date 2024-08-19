@@ -36,7 +36,11 @@ if __name__ == "__main__":
     num_ensembles = 3
     in_node_nf = 12
     in_edge_nf = 0
+<<<<<<< Updated upstream
     hidden_nf = 64
+=======
+    hidden_nf = 32
+>>>>>>> Stashed changes
     n_layers = 4
     model = ModelEnsemble(EGNN, num_ensembles, in_node_nf=in_node_nf, in_edge_nf=in_edge_nf, hidden_nf=hidden_nf, n_layers=n_layers).to(device)
 
@@ -45,8 +49,13 @@ if __name__ == "__main__":
     qm9 = QM9()
     qm9.create(1,0)
     start = time.time()
+<<<<<<< Updated upstream
     dataset = "datasets/files/ala_converged_10000"
     model_path = "./gnn/models/ala_converged_10000.pt"
+=======
+    dataset = "datasets/files/ala_converged_1000000"
+    model_path = "./gnn/models/ala_converged_1000000_even_larger.pt"
+>>>>>>> Stashed changes
     trainset = MD17Dataset(dataset,subtract_self_energies=False, in_unit="eV")
     # Split the dataset into train and validation sets
     trainset, validset = random_split(trainset, [int(0.8*len(trainset)), len(trainset) - int(0.8*len(trainset))])
@@ -67,7 +76,7 @@ if __name__ == "__main__":
     optimizer = torch.optim.SGD(model.parameters(),lr=lr)
     #optimizer = torch.optim.SGD(model.parameters(),lr=lr)
     factor = 0.1
-    patience = 7
+    patience = 40
     scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=factor, patience=patience)
 
     total_params = sum(p.numel() for p in model.parameters())
