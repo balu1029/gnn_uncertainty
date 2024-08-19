@@ -155,13 +155,13 @@ class OpenMMEnergyCalculation:
             positions (np.array): Array of atom positions in nm.
 
         Returns:
-            float: Energy of the molecule in eV.
+            float: Energy of the molecule in kJ/mole.
         """
         energies = []
         for i in range(len(positions)):
             self.set_positions(positions[i])
             state = self.context.getState(getEnergy=True)
-            energy = state.getPotentialEnergy().value_in_unit(kilojoules_per_mole) / ev_to_kjpmol
+            energy = state.getPotentialEnergy().value_in_unit(kilojoules_per_mole) #/ ev_to_kjpmol
             energies.append(energy)
         return np.array(energies)
 

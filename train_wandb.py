@@ -20,7 +20,7 @@ from sklearn.model_selection import train_test_split
 if __name__ == "__main__":
 
 
-    use_wandb = True
+    use_wandb = False
 
     device = torch.device("cuda" if torch.cuda.is_available() else ("mps" if torch.backends.mps.is_available() else "cpu"))
     #device = torch.device("cpu")
@@ -29,25 +29,24 @@ if __name__ == "__main__":
 
     epochs = 150
     batch_size = 256
-    lr = 1e-3
+    lr = 1e-2
     min_lr = 1e-7
     log_interval = 100#int(2000/batch_size)
 
     num_ensembles = 3
     in_node_nf = 12
     in_edge_nf = 0
-    hidden_nf = 32
-    n_layers = 3
+    hidden_nf = 64
+    n_layers = 4
     model = ModelEnsemble(EGNN, num_ensembles, in_node_nf=in_node_nf, in_edge_nf=in_edge_nf, hidden_nf=hidden_nf, n_layers=n_layers).to(device)
 
     best_loss = np.inf
 
     qm9 = QM9()
     qm9.create(1,0)
-    #trainset = MDDataset("datasets/files/alaninedipeptide")
     start = time.time()
-    dataset = "datasets/files/ala_converged_1000000"
-    model_path = "./gnn/models/ala_converged_1000000_large.pt"
+    dataset = "datasets/files/ala_converged_10000"
+    model_path = "./gnn/models/ala_converged_10000.pt"
     trainset = MD17Dataset(dataset,subtract_self_energies=False, in_unit="eV")
     # Split the dataset into train and validation sets
     trainset, validset = random_split(trainset, [int(0.8*len(trainset)), len(trainset) - int(0.8*len(trainset))])
@@ -62,8 +61,10 @@ if __name__ == "__main__":
     charge_scale = qm9.charge_scale
     charge_power = 2
 
+    print(charge_scale.item())
     loss_fn = nn.L1Loss()
     optimizer = torch.optim.Adam(model.parameters(),lr=lr,weight_decay=1e-16)
+    optimizer = torch.optim.SGD(model.parameters(),lr=lr)
     #optimizer = torch.optim.SGD(model.parameters(),lr=lr)
     factor = 0.1
     patience = 7

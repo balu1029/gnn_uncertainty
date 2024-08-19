@@ -13,9 +13,7 @@ from uncertainty.ensemble import ModelEnsemble
 from gnn.egnn import EGNN
 from datasets.helper import utils as qm9_utils
 from datasets.helper.energy_calculation import OpenMMEnergyCalculation
-
-
-
+from trainer import ModelTrainer
 
 
 class ALCalculator(Calculator):
@@ -35,9 +33,9 @@ class ALCalculator(Calculator):
         
         self.dtype = torch.float32
         self.charge_power = 2
-        self.charge_scale = max(self.ground_charges.values())
+        self.charge_scale = torch.tensor(max(self.ground_charges.values())+1)
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        self.max_uncertainty = 10
+        self.max_uncertainty = 5
         self.uncertainty_samples = []
         self.energy_unit = eV
         self.force_unit = eV / nm
@@ -71,7 +69,7 @@ class ALCalculator(Calculator):
         coordinates = coordinates.unsqueeze(0)
 
         batch_size, n_nodes, _ = coordinates.size()
-        atom_positions = torch.tensor(coordinates.view(batch_size * n_nodes, -1),requires_grad=True).to(self.device, self.dtype)
+        atom_positions = coordinates.view(batch_size * n_nodes, -1).requires_grad_(True).to(self.device, self.dtype)
         atom_positions.retain_grad()
         atom_mask = atom_mask.view(batch_size * n_nodes, -1).to(self.device, self.dtype)
         edge_mask = edge_mask.view(batch_size * n_nodes * n_nodes, -1).to(self.device, self.dtype)
@@ -93,9 +91,9 @@ class ALCalculator(Calculator):
         # Compute forces by taking the gradient of energy w.r.t. positions
         energy.backward()
         forces = -atom_positions.grad.numpy()
-        print("Uncertainty: ", uncertainty.item())
-        print("Energy:      ", energy.item())
-        print()
+        #print("Uncertainty: ", uncertainty.item())
+        #print("Energy:      ", energy.item())
+        #print()
         # Store the forces in the results dictionary
         self.results['forces'] = forces * self.force_unit
 
@@ -123,9 +121,12 @@ class ActiveLearning:
         self.device = torch.device("cuda" if torch.cuda.is_available() else ("mps" if torch.backends.mps.is_available() else "cpu"))
         self.temperature = 300
         self.timestep = 0.5 * fs
+
         # Instantiate the model
         model = ModelEnsemble(EGNN, num_ensembles, in_node_nf=12, in_edge_nf=0, hidden_nf=16, n_layers=2)
         model.load_state_dict(torch.load(model_path, self.device))
+
+        self.num_ensembles = num_ensembles
 
         self.calc = ALCalculator(model=model)
         self.atoms = read(molecule_path)
@@ -135,6 +136,7 @@ class ActiveLearning:
 
         self.dyn = VelocityVerlet(self.atoms, timestep=self.timestep)
         self.oracle = OpenMMEnergyCalculation()
+        self.trainer = ModelTrainer(self.calc.model, self.num_ensembles)
 
     def run_simulation(self, steps:int, show_traj:bool=False)->np.array:
 
@@ -142,23 +144,47 @@ class ActiveLearning:
             for i in range(steps):
                 self.dyn.run(1)
                 traj.write(self.atoms)
-        samples = self.calc.get_uncertainty_samples()
-        self.calc.reset_uncertainty_samples()
-
-        print(self.oracle.calc_energy(samples))
+       
         
         if show_traj:
             traj = Trajectory('ala.traj')
-            view(traj)
+            view(traj, block=True)
+
+
+    def improve_model(self, num_iter, steps_per_iter):
+        model_out_path = "al/run1/models/"
+        data_out_path = "al/run1/data/"
+        for i in range(num_iter):
+            self.run_simulation(steps_per_iter, show_traj=False)
+
+            samples = self.calc.get_uncertainty_samples()
+            self.calc.reset_uncertainty_samples()
+            energies = self.oracle.calc_energy(samples)
+            print(energies)
+            
+            
+            if len(samples) > 0:
+                print(f"Training model {i}. Added {len(samples)} samples to the dataset.")
+
+                self.trainer.add_data(samples, energies, f"{data_out_path}data_{i}.txt")
+
+                self.trainer.train(num_epochs=2, learning_rate=1e-5, folder=data_out_path)
+                
+                torch.save(self.trainer.model.state_dict(), f"{model_out_path}model_{i}.pt")
+                self.calc.model.load_state_dict(torch.load(f"{model_out_path}model_{i}.pt", self.device))
         
 
 
 if __name__ == "__main__":
-    model_path = "gnn/models/ala_converged_1000000.pt"
+    model_path = "gnn/models/ala_converged_1000.pt"
+    #model_path = "al/run1/models/model_4.pt"
+    
     num_ensembles = 3
     in_nf = 12
     hidden_nf = 16
     n_layers = 2
     al = ActiveLearning(num_ensembles=num_ensembles, in_nf=in_nf, hidden_nf=hidden_nf, n_layers=n_layers, model_path=model_path)
+    al.run_simulation(1000, show_traj=True)
+    print(len(al.calc.get_uncertainty_samples()))
 
-    al.run_simulation(30,show_traj=True)
+    #al.improve_model(5, 200)
