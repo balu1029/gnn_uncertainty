@@ -37,8 +37,8 @@ class ALCalculator(Calculator):
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.max_uncertainty = 5
         self.uncertainty_samples = []
-        self.energy_unit = eV
-        self.force_unit = eV / nm
+        self.energy_unit = kJ / mol
+        self.force_unit = self.energy_unit / Angstrom
         self.a_to_nm = 0.1
 
     def calculate(self, atoms=None, properties=['energy', 'forces'], system_changes=all_properties):
@@ -95,6 +95,7 @@ class ALCalculator(Calculator):
         #print("Energy:      ", energy.item())
         #print()
         # Store the forces in the results dictionary
+        print("forces",forces)
         self.results['forces'] = forces * self.force_unit
 
     def get_uncertainty_samples(self):
@@ -123,7 +124,7 @@ class ActiveLearning:
         self.timestep = 0.5 * fs
 
         # Instantiate the model
-        model = ModelEnsemble(EGNN, num_ensembles, in_node_nf=12, in_edge_nf=0, hidden_nf=16, n_layers=2)
+        model = ModelEnsemble(EGNN, num_ensembles, in_node_nf=in_nf, in_edge_nf=0, hidden_nf=hidden_nf, n_layers=n_layers)
         model.load_state_dict(torch.load(model_path, self.device))
 
         self.num_ensembles = num_ensembles
@@ -159,9 +160,7 @@ class ActiveLearning:
 
             samples = self.calc.get_uncertainty_samples()
             self.calc.reset_uncertainty_samples()
-            energies = self.oracle.calc_energy(samples)
-            print(energies)
-            
+            energies = self.oracle.calc_energy(samples)            
             
             if len(samples) > 0:
                 print(f"Training model {i}. Added {len(samples)} samples to the dataset.")
@@ -176,15 +175,15 @@ class ActiveLearning:
 
 
 if __name__ == "__main__":
-    model_path = "gnn/models/ala_converged_1000.pt"
+    model_path = "gnn/models/ala_converged_1000000_even_larger.pt"
     #model_path = "al/run1/models/model_4.pt"
     
     num_ensembles = 3
     in_nf = 12
-    hidden_nf = 16
-    n_layers = 2
+    hidden_nf = 32
+    n_layers = 4
     al = ActiveLearning(num_ensembles=num_ensembles, in_nf=in_nf, hidden_nf=hidden_nf, n_layers=n_layers, model_path=model_path)
-    al.run_simulation(1000, show_traj=True)
+    al.run_simulation(1, show_traj=False)
     print(len(al.calc.get_uncertainty_samples()))
 
     #al.improve_model(5, 200)

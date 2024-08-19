@@ -4,7 +4,7 @@ import os
 
 
 class MD17Dataset(torch.utils.data.Dataset):
-    def __init__(self, foldername, seed=42, subtract_self_energies=True, in_unit="eV"):
+    def __init__(self, foldername, seed=42, subtract_self_energies=True, in_unit="kj/mol", train=True, train_ratio=0.8):
         self.type_to_number = {"H" : 0,
                                "C" : 1,
                                "N" : 2,
@@ -23,7 +23,7 @@ class MD17Dataset(torch.utils.data.Dataset):
         self.Eh_to_eV = 27.211399
         self.kcal_to_eV = 0.0433641
         
-        self.atom_numbers_raw, self.coordinates_raw, self.energies = self._read_coordinates_energies(foldername, in_unit=in_unit)
+        self.atom_numbers_raw, self.coordinates_raw, self.energies, self.forces = self._read_coordinates_energies_forces(foldername, in_unit=in_unit)
         self.atom_numbers = self._pad_array(self.atom_numbers_raw, fill = [-1])
         self.coordinates = self._pad_array(self.coordinates_raw, fill = [[0, 0, 0]])
 
@@ -51,16 +51,26 @@ class MD17Dataset(torch.utils.data.Dataset):
         self.edge_mask = self.edge_mask.view(self.num_snapshots, -1)
 
         self.energies = torch.tensor(self.energies)
+        self.forces = torch.tensor(self.forces)
         self.coordinates = torch.tensor(self.coordinates)
 
         # Shuffle the data
         np.random.seed(seed)
         indices = np.arange(self.num_snapshots)
         np.random.shuffle(indices)
+        
+        num_train = int(train_ratio * self.num_snapshots)
+        if train:  
+            indices = indices[:num_train]
+        else:
+            indices = indices[num_train:]
+
+        self.len = len(indices)
 
         self.atom_numbers = self.atom_numbers[indices]
         self.coordinates = self.coordinates[indices]
         self.energies = self.energies[indices]
+        self.forces = self.forces[indices]
         self.one_hot = self.one_hot[indices]
         self.charges = self.charges[indices]
         self.atom_mask = self.atom_mask[indices]
@@ -68,7 +78,7 @@ class MD17Dataset(torch.utils.data.Dataset):
         
 
     def __len__(self):
-        return self.num_snapshots
+        return self.len
 
     def __getitem__(self, idx):
         return {"one_hot" : self.one_hot[idx],
@@ -76,12 +86,15 @@ class MD17Dataset(torch.utils.data.Dataset):
                 "energies" : self.energies[idx],
                 "atom_mask": self.atom_mask[idx],
                 "edge_mask": self.edge_mask[idx],
-                "charges": self.charges[idx]}
+                "charges": self.charges[idx],
+                "forces": self.forces[idx],
+                }
     
 
-    def _read_coordinates_energies(self, foldername, in_unit="kcal/mol"):
+    def _read_coordinates_energies_forces(self, foldername, in_unit="kcal/mol"):
         all_atom_numbers = []
         all_coordinates = []
+        all_forces = []
         energies = []
         for filename in os.listdir(foldername):
             if filename.endswith(".xyz"):
@@ -97,7 +110,7 @@ class MD17Dataset(torch.utils.data.Dataset):
                         # Skip the comment line
                         if in_unit == "kcal/mol":
                             energy = float(file.readline().strip()) * self.kcal_to_eV
-                        elif in_unit == "eV":
+                        elif in_unit == "kj/mol":
                             energy = float(file.readline().strip())
                         energies.append(energy)
 
@@ -105,19 +118,23 @@ class MD17Dataset(torch.utils.data.Dataset):
                         atom_numbers = []
 
                         coordinates = []
+                        forces = []
 
                         # Read atom types and coordinates for each atom
                         for _ in range(num_atoms):
                             line = file.readline().split()
                             atom_type = line[0]
                             x, y, z = map(float, line[1:4])
+                            fx, fy, fz = map(float, line[4:7])
 
                             atom_numbers.append(int(self.type_to_number[atom_type]))
                             coordinates.append([x, y, z]) 
+                            forces.append([fx, fy, fz])
                         all_coordinates.append(coordinates)
                         all_atom_numbers.append(atom_numbers)
+                        all_forces.append(forces)
 
-        return all_atom_numbers, all_coordinates, energies
+        return all_atom_numbers, all_coordinates, energies, all_forces
     
 
     def _pad_array(self, arr, fill = [-1]):

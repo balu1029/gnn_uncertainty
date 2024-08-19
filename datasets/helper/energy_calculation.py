@@ -1,6 +1,6 @@
 from openmm.app import *
 from openmm import *
-from openmm.unit import picosecond, femtoseconds, kelvin , kilojoules_per_mole, nanometers
+from openmm.unit import picosecond, femtoseconds, kelvin , kilojoules_per_mole, nanometers, angstrom
 from sys import stdout
 import numpy as np
 import multiprocessing
@@ -171,13 +171,14 @@ class OpenMMEnergyCalculation:
         with open(out_file, 'w') as file:
             for i in range(num_molecules):
                 self.set_positions(molecules[i]*0.1)    # convert to nm
-                state = self.context.getState(getEnergy=True)
+                state = self.context.getState(getEnergy=True, getForces=True)
                 energy = state.getPotentialEnergy()
+                forces = state.getForces()
                 energies.append(energy)
                 file.write(f"{len(molecules[i])}\n")
                 file.write(f"{energy.value_in_unit(kilojoules_per_mole)}\n")
                 for j in range(len(molecules[i])):
-                    file.write(f"{atoms_ala[j]} {molecules[i][j][0]} {molecules[i][j][1]} {molecules[i][j][2]}\n")
+                    file.write(f"{atoms_ala[j]} {molecules[i][j][0]} {molecules[i][j][1]} {molecules[i][j][2]} {forces[j][0].value_in_unit(kilojoules_per_mole/angstrom)} {forces[j][1].value_in_unit(kilojoules_per_mole/angstrom)} {forces[j][2].value_in_unit(kilojoules_per_mole/angstrom)}\n")
 
 
 if __name__ == "__main__":
@@ -186,5 +187,5 @@ if __name__ == "__main__":
     out_path = "datasets/files/alaninedipeptide_traj/alaninedipeptide_traj_energies.xyz"
    
     npy_in = "datasets/files/ala_converged/prod_positions_20-09-2023_13-10-19.npy"
-    xyz_out = "datasets/files/ala_converged/prod_positions_20-09-2023_13-10-19_energies_10,000.xyz"
-    energy_calculation.run_npy_file(npy_in, xyz_out,10000)
+    xyz_out = "datasets/files/ala_converged/prod_positions_20-09-2023_13-10-19_energies_forces_1000000.xyz"
+    energy_calculation.run_npy_file(npy_in, xyz_out,1000000)
