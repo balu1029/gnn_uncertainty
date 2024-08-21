@@ -20,16 +20,16 @@ from sklearn.model_selection import train_test_split
 if __name__ == "__main__":
 
 
-    use_wandb = False
+    use_wandb = True
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     #device = torch.device("cpu")
     print("Training on device: " + str(device), flush=True)
     dtype = torch.float32
 
-    epochs = 100
-    batch_size = 64
-    lr = 1e-2
+    epochs = 2000
+    batch_size = 256
+    lr = 1e-3
     min_lr = 1e-7
     log_interval = 100#int(2000/batch_size)
     
@@ -39,8 +39,8 @@ if __name__ == "__main__":
     num_ensembles = 3
     in_node_nf = 12
     in_edge_nf = 0
-    hidden_nf = 16
-    n_layers = 2
+    hidden_nf = 32
+    n_layers = 4
     model = ModelEnsemble(EGNN, num_ensembles, in_node_nf=in_node_nf, in_edge_nf=in_edge_nf, hidden_nf=hidden_nf, n_layers=n_layers).to(device)
 
 
@@ -49,8 +49,8 @@ if __name__ == "__main__":
     qm9 = QM9()
     qm9.create(1,0)
     start = time.time()
-    dataset = "datasets/files/ala_converged_forces_1000"
-    model_path = "./gnn/models/ala_converged_1000_forces_test.pt"
+    dataset = "datasets/files/ala_converged_10000_forces"
+    model_path = "./gnn/models/ala_converged_10000_forces_7_ensemble.pt"
     trainset = MD17Dataset(dataset,subtract_self_energies=False, in_unit="kj/mol",train=True, train_ratio=0.8)
     validset = MD17Dataset(dataset,subtract_self_energies=False, in_unit="kj/mol",train=False, train_ratio=0.8)
     # Split the dataset into train and validation sets
@@ -72,7 +72,7 @@ if __name__ == "__main__":
     
     #optimizer = torch.optim.SGD(model.parameters(),lr=lr)
     factor = 0.1
-    patience = 40
+    patience = 200
     scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=factor, patience=patience)
 
     total_params = sum(p.numel() for p in model.parameters())
@@ -138,13 +138,18 @@ if __name__ == "__main__":
             stacked_pred, pred, uncertainty = model.forward(x=atom_positions, h0=nodes, edges=edges, edge_attr=None, node_mask=atom_mask, edge_mask=edge_mask, n_nodes=n_nodes, leave_out=(i%num_ensembles))
             grad_outputs = torch.ones_like(pred)
             grad_atom_positions = -torch.autograd.grad(pred, atom_positions, grad_outputs=grad_outputs, create_graph=True)[0]
+            stacked_label_energy = label_energy.repeat(len(stacked_pred),1)
             
+            stacked_loss_energy = loss_fn(stacked_pred, stacked_label_energy)
             loss_energy = loss_fn(pred, label_energy)
             loss_force = loss_fn(grad_atom_positions, label_forces)
-            total_loss = force_weight*loss_force + energy_weight*loss_energy
+            total_loss = force_weight*loss_force + energy_weight*stacked_loss_energy
 
+            optimizer.zero_grad()
             total_loss.backward()
             #torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
+            optimizer.step()
+            
 
 
             losses_energy.append(loss_energy.item())
@@ -153,11 +158,7 @@ if __name__ == "__main__":
 
             uncertainty = torch.mean(uncertainty)
             uncertainties.append(uncertainty.item())    
-
-            optimizer.step()
-                        
-            optimizer.zero_grad()
-
+            
             
 
             if (i+1) % log_interval == 0:
@@ -205,7 +206,7 @@ if __name__ == "__main__":
             valid_uncertainties.append(uncertainty.item())
 
         lr_before = optimizer.param_groups[0]['lr']
-        scheduler.step(np.array(valid_losses_energy).mean())
+        scheduler.step(np.array(valid_losses_total).mean())
         lr_after = optimizer.param_groups[0]['lr']
 
         if lr_before != lr_after:

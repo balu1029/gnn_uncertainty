@@ -223,6 +223,5 @@ if __name__ == "__main__":
     out_path = "datasets/files/alaninedipeptide_traj/alaninedipeptide_traj_energies.xyz"
    
     npy_in = "datasets/files/ala_converged/prod_positions_20-09-2023_13-10-19.npy"
-    xyz_out = "datasets/files/ala_converged/validation.xyz"
-    #energy_calculation.run_npy_file(npy_in, xyz_out,1000000)
-    energy_calculation.generate_validation_from_numpy(npy_in, xyz_out, 10000)
+    xyz_out = "datasets/files/ala_converged/prod_positions_20-09-2023_13-10-19_energies_forces_10000.xyz"
+    energy_calculation.run_npy_file(npy_in, xyz_out,10000)
