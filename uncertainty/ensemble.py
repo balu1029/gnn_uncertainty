@@ -26,15 +26,15 @@ class ModelEnsemble(nn.Module):
 
             atom_positions, nodes, edges, atom_mask, edge_mask, label_energy, label_forces, n_nodes = self.prepare_data(data, device, dtype)    
 
-            stacked_pred, pred, uncertainty = self.forward(x=atom_positions, h0=nodes, edges=edges, edge_attr=None, node_mask=atom_mask, edge_mask=edge_mask, n_nodes=n_nodes, leave_out=(i%num_ensembles))
-            grad_outputs = torch.ones_like(pred)
-            grad_atom_positions = -torch.autograd.grad(pred, atom_positions, grad_outputs=grad_outputs, create_graph=True)[0]
-            stacked_label_energy = label_energy.repeat(len(stacked_pred),1)
+            energies, mean_energy, forces, mean_force, uncertainty = self.forward(x=atom_positions, h0=nodes, edges=edges, edge_attr=None, node_mask=atom_mask, edge_mask=edge_mask, n_nodes=n_nodes, leave_out=(i%num_ensembles))
+            stacked_label_energy = label_energy.repeat(len(energies),1)
+            stacked_label_force = label_forces.repeat(len(forces),1,1)
             
-            stacked_loss_energy = criterion(stacked_pred, stacked_label_energy)
-            loss_energy = criterion(pred, label_energy)
-            loss_force = criterion(grad_atom_positions, label_forces)
-            total_loss = force_weight*loss_force + energy_weight*stacked_loss_energy
+            stacked_loss_energy = criterion(energies, stacked_label_energy)
+            loss_energy = criterion(mean_energy, label_energy)
+            stacked_loss_force = criterion(forces, stacked_label_force)
+            loss_force = criterion(mean_force, label_forces)
+            total_loss = force_weight*stacked_loss_force + energy_weight*stacked_loss_energy
 
             optimizer.zero_grad()
             total_loss.backward()
@@ -57,15 +57,15 @@ class ModelEnsemble(nn.Module):
         for i,data in enumerate(valid_loader):
             atom_positions, nodes, edges, atom_mask, edge_mask, label_energy, label_forces, n_nodes = self.prepare_data(data, device, dtype)    
 
-            stacked_pred, pred, uncertainty = self.forward(x=atom_positions, h0=nodes, edges=edges, edge_attr=None, node_mask=atom_mask, edge_mask=edge_mask, n_nodes=n_nodes)
-            grad_outputs = torch.ones_like(pred)
-            grad_atom_positions = -torch.autograd.grad(pred, atom_positions, grad_outputs=grad_outputs, create_graph=True)[0]
-            stacked_label_energy = label_energy.repeat(len(stacked_pred),1)
-
-            stacked_loss_energy = criterion(stacked_pred, stacked_label_energy)
-            loss_energy = criterion(pred, label_energy)
-            loss_force = criterion(grad_atom_positions, label_forces)
-            total_loss = force_weight*loss_force + energy_weight*stacked_loss_energy
+            energies, mean_energy, forces, mean_force, uncertainty = self.forward(x=atom_positions, h0=nodes, edges=edges, edge_attr=None, node_mask=atom_mask, edge_mask=edge_mask, n_nodes=n_nodes)
+            stacked_label_energy = label_energy.repeat(len(energies),1)
+            stacked_label_force = label_forces.repeat(len(forces),1,1)
+            
+            stacked_loss_energy = criterion(energies, stacked_label_energy)
+            loss_energy = criterion(mean_energy, label_energy)
+            stacked_loss_force = criterion(forces, stacked_label_force)
+            loss_force = criterion(mean_force, label_forces)
+            total_loss = force_weight*stacked_loss_force + energy_weight*stacked_loss_energy
 
             self.valid_losses_energy.append(loss_energy.item())
             self.valid_losses_force.append(loss_force.item())
@@ -74,8 +74,8 @@ class ModelEnsemble(nn.Module):
             uncertainty = torch.mean(uncertainty)
             self.valid_uncertainties.append(uncertainty.item())
 
-            self.num_in_interval += torch.sum(torch.abs(pred - label_energy) <= uncertainty/2)
-            self.total_preds += pred.size(0)
+            self.num_in_interval += torch.sum(torch.abs(mean_energy - label_energy) <= uncertainty/2)
+            self.total_preds += mean_energy.size(0)
 
     def prepare_data(self, data, device, dtype):
         batch_size, n_nodes, _ = data['coordinates'].size()
@@ -99,15 +99,18 @@ class ModelEnsemble(nn.Module):
         return atom_positions, nodes, edges, atom_mask, edge_mask, label_energy, label_forces, n_nodes
 
         
-    def forward(self,leave_out=None, *args, **kwargs):
+    def forward(self, x, leave_out=None, *args, **kwargs):
         # Collect the outputs from all models
         if leave_out is not None:
-            stacked_outputs = torch.stack([model(*args,**kwargs) for i, model in enumerate(self.models) if i != leave_out])
+            energies = torch.stack([model(x=x, *args,**kwargs) for i, model in enumerate(self.models) if i != leave_out])
         else:
-            stacked_outputs = torch.stack([model(*args,**kwargs) for model in self.models])
-        ensemble_output = torch.mean(stacked_outputs, dim=0)
-        ensemble_uncertainty = (torch.max(stacked_outputs, dim=0).values - torch.min(stacked_outputs, dim=0).values) * 1
-        return stacked_outputs, ensemble_output, ensemble_uncertainty
+            energies = torch.stack([model(x=x,*args,**kwargs) for model in self.models])
+        mean_energy = torch.mean(energies, dim=0)
+        grad_outputs = torch.ones_like(mean_energy)
+        forces = torch.stack([-torch.autograd.grad(outputs=e, inputs=x, grad_outputs=grad_outputs, create_graph=True)[0] for e in energies])
+        mean_force = torch.mean(forces, dim=0) 
+        ensemble_uncertainty = (torch.max(energies, dim=0).values - torch.min(energies, dim=0).values) * 1
+        return energies, mean_energy, forces, mean_force, ensemble_uncertainty
     
     
 
