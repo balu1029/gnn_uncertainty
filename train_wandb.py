@@ -20,17 +20,17 @@ from sklearn.model_selection import train_test_split
 if __name__ == "__main__":
 
 
-    use_wandb = False
+    use_wandb = True
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print("Training on device: " + str(device), flush=True)
     dtype = torch.float32
 
-    epochs = 20
+    epochs = 2000
     batch_size = 256
     lr = 1e-3
     min_lr = 1e-7
-    log_interval = 100
+    log_interval = 1000
     
     force_weight = 1
     energy_weight = 1
@@ -38,8 +38,8 @@ if __name__ == "__main__":
     num_ensembles = 3
     in_node_nf = 12
     in_edge_nf = 0
-    hidden_nf = 16
-    n_layers = 3
+    hidden_nf = 32
+    n_layers = 4
 
 
     model = ModelEnsemble(EGNN, num_ensembles, in_node_nf=in_node_nf, in_edge_nf=in_edge_nf, hidden_nf=hidden_nf, n_layers=n_layers).to(device)
