@@ -22,6 +22,8 @@ class MD17Dataset(torch.utils.data.Dataset):
                          3: -75.0362229210}
         self.Eh_to_eV = 27.211399
         self.kcal_to_eV = 0.0433641
+        self.charge_scale = torch.tensor(max(self.ground_charges.values())+1)
+        self.charge_power = 2
         
         self.atom_numbers_raw, self.coordinates_raw, self.energies, self.forces = self._read_coordinates_energies_forces(foldername, in_unit=in_unit)
         self.atom_numbers = self._pad_array(self.atom_numbers_raw, fill = [-1])
@@ -68,6 +70,8 @@ class MD17Dataset(torch.utils.data.Dataset):
 
         self.len = len(indices)
 
+        
+
         self.atom_numbers = self.atom_numbers[indices]
         self.coordinates = self.coordinates[indices]
         self.energies = self.energies[indices]
@@ -89,6 +93,8 @@ class MD17Dataset(torch.utils.data.Dataset):
                 "edge_mask": self.edge_mask[idx],
                 "charges": self.charges[idx],
                 "forces": self.forces[idx],
+                "charge_scale": self.charge_scale,
+                "charge_power": self.charge_power,
                 }
     
 
