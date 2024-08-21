@@ -4,7 +4,7 @@ import os
 
 
 class MD17Dataset(torch.utils.data.Dataset):
-    def __init__(self, foldername, seed=42, subtract_self_energies=True, in_unit="kj/mol", train=True, train_ratio=0.8):
+    def __init__(self, foldername, seed=42, subtract_self_energies=True, in_unit="kj/mol", train=None, train_ratio=0.8):
         self.type_to_number = {"H" : 0,
                                "C" : 1,
                                "N" : 2,
@@ -59,11 +59,12 @@ class MD17Dataset(torch.utils.data.Dataset):
         indices = np.arange(self.num_snapshots)
         np.random.shuffle(indices)
         
-        num_train = int(train_ratio * self.num_snapshots)
-        if train:  
-            indices = indices[:num_train]
-        else:
-            indices = indices[num_train:]
+        if train is not None:   
+            num_train = int(train_ratio * self.num_snapshots)
+            if train:  
+                indices = indices[:num_train]
+            else:
+                indices = indices[num_train:]
 
         self.len = len(indices)
 

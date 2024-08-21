@@ -147,6 +147,24 @@ class OpenMMEnergyCalculation:
         self._generate_from_npy(molecules, out_file, num_molecules)
         return NotImplementedError
     
+    def generate_validation_from_numpy(self, in_file:str, out_file:str, num_molecules:int)->None:
+        """
+        Generate a validation set from a NPY file.
+
+        Args:
+            in_file (str): Path to the NPY file.
+            out_file (str): Path to the output file to store xyz and energies in.
+            num_molecules (int): Number of molecules to calculate energy for. If 0 is provided, it iterates
+        """
+        molecules = np.load(in_file)
+        
+        if num_molecules is None:
+            num_molecules = len(molecules)
+
+        molecules = molecules[-num_molecules:]
+
+        self._generate_from_npy(molecules, out_file, num_molecules)
+    
     def calc_energy(self, positions:np.array)->np.array:
         """
         Calculate the energy of a molecule with the given positions.
@@ -164,6 +182,24 @@ class OpenMMEnergyCalculation:
             energy = state.getPotentialEnergy().value_in_unit(kilojoules_per_mole) #/ ev_to_kjpmol
             energies.append(energy)
         return np.array(energies)
+
+    def calc_forces(self, positions:np.array)->np.array:
+        """
+        Calculate the forces of a molecule with the given positions.
+
+        Args:
+            positions (np.array): Array of atom positions in nm.
+
+        Returns:
+            np.array: Array of forces in kJ/(mol*angstrom).
+        """
+        forces = []
+        for i in range(len(positions)):
+            self.set_positions(positions[i])
+            state = self.context.getState(getForces=True)
+            force = state.getForces(asNumpy=True).value_in_unit(kilojoules_per_mole/angstrom)
+            forces.append(force)
+        return np.array(forces)
 
     def _generate_from_npy(self, molecules:np.array, out_file:str, num_molecules:int)->None:
         energies = []
@@ -187,5 +223,6 @@ if __name__ == "__main__":
     out_path = "datasets/files/alaninedipeptide_traj/alaninedipeptide_traj_energies.xyz"
    
     npy_in = "datasets/files/ala_converged/prod_positions_20-09-2023_13-10-19.npy"
-    xyz_out = "datasets/files/ala_converged/prod_positions_20-09-2023_13-10-19_energies_forces_1000000.xyz"
-    energy_calculation.run_npy_file(npy_in, xyz_out,1000000)
+    xyz_out = "datasets/files/ala_converged/validation.xyz"
+    #energy_calculation.run_npy_file(npy_in, xyz_out,1000000)
+    energy_calculation.generate_validation_from_numpy(npy_in, xyz_out, 10000)

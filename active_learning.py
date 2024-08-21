@@ -1,10 +1,13 @@
 import torch
 import numpy as np
+import os
+import shutil
 
 from ase.calculators.calculator import Calculator, all_properties
 from ase.units import eV, fs, Angstrom, nm, kJ, mol
 from ase.md.velocitydistribution import MaxwellBoltzmannDistribution
 from ase.md.verlet import VelocityVerlet
+from ase.md.langevin import Langevin
 from ase.io.trajectory import Trajectory
 from ase.io import read
 from ase.visualize import view
@@ -14,6 +17,7 @@ from gnn.egnn import EGNN
 from datasets.helper import utils as qm9_utils
 from datasets.helper.energy_calculation import OpenMMEnergyCalculation
 from trainer import ModelTrainer
+
 
 
 class ALCalculator(Calculator):
@@ -35,7 +39,7 @@ class ALCalculator(Calculator):
         self.charge_power = 2
         self.charge_scale = torch.tensor(max(self.ground_charges.values())+1)
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        self.max_uncertainty = 5
+        self.max_uncertainty = 10
         self.uncertainty_samples = []
         self.energy_unit = kJ / mol
         self.force_unit = self.energy_unit / Angstrom
@@ -95,7 +99,6 @@ class ALCalculator(Calculator):
         #print("Energy:      ", energy.item())
         #print()
         # Store the forces in the results dictionary
-        print("forces",forces)
         self.results['forces'] = forces * self.force_unit
 
     def get_uncertainty_samples(self):
@@ -135,7 +138,8 @@ class ActiveLearning:
 
         MaxwellBoltzmannDistribution(self.atoms, temperature_K=self.temperature)
 
-        self.dyn = VelocityVerlet(self.atoms, timestep=self.timestep)
+        friction_coefficient = 0.01  # Friction coefficient in 1/fs
+        self.dyn = Langevin(self.atoms, timestep=self.timestep, temperature_K=self.temperature, friction=friction_coefficient)
         self.oracle = OpenMMEnergyCalculation()
         self.trainer = ModelTrainer(self.calc.model, self.num_ensembles)
 
@@ -152,20 +156,28 @@ class ActiveLearning:
             view(traj, block=True)
 
 
-    def improve_model(self, num_iter, steps_per_iter):
-        model_out_path = "al/run1/models/"
-        data_out_path = "al/run1/data/"
+    def improve_model(self, num_iter, steps_per_iter, run_idx=1):
+        model_out_path = f"al/run{run_idx}/models/"
+        data_out_path = f"al/run{run_idx}/data/"
+        if not os.path.exists(f"al/run{run_idx}"):
+            os.makedirs(f"al/run{run_idx}")
+            os.makedirs(model_out_path)
+            os.makedirs(data_out_path)
+            # Copy the file to the directory
+            shutil.copy2("al/run1/data/base.xyz", data_out_path)
+
         for i in range(num_iter):
             self.run_simulation(steps_per_iter, show_traj=False)
 
             samples = self.calc.get_uncertainty_samples()
             self.calc.reset_uncertainty_samples()
-            energies = self.oracle.calc_energy(samples)            
+            energies = self.oracle.calc_energy(samples)   
+            forces = self.oracle.calc_forces(samples)         
             
             if len(samples) > 0:
                 print(f"Training model {i}. Added {len(samples)} samples to the dataset.")
 
-                self.trainer.add_data(samples, energies, f"{data_out_path}data_{i}.txt")
+                self.trainer.add_data(samples, energies, forces, f"{data_out_path}data_{i}.txt")
 
                 self.trainer.train(num_epochs=2, learning_rate=1e-5, folder=data_out_path)
                 
@@ -175,15 +187,16 @@ class ActiveLearning:
 
 
 if __name__ == "__main__":
-    model_path = "gnn/models/ala_converged_1000000_even_larger.pt"
-    #model_path = "al/run1/models/model_4.pt"
+    model_path = "gnn/models/ala_converged_10000_forces.pt"
+    #model_path = "al/run2/models/model_21.pt"
+    #model_path = "gnn/models/ala_converged_1000000_even_larger.pt"
     
     num_ensembles = 3
     in_nf = 12
     hidden_nf = 32
     n_layers = 4
     al = ActiveLearning(num_ensembles=num_ensembles, in_nf=in_nf, hidden_nf=hidden_nf, n_layers=n_layers, model_path=model_path)
-    al.run_simulation(1, show_traj=False)
-    print(len(al.calc.get_uncertainty_samples()))
+    #al.run_simulation(1000, show_traj=True)
+    #print(len(al.calc.get_uncertainty_samples()))
 
-    #al.improve_model(5, 200)
+    al.improve_model(50, 200,run_idx=5)
