@@ -1,4 +1,5 @@
 from uncertainty.ensemble import ModelEnsemble
+from uncertainty.mve import MVE
 from gnn.egnn import EGNN
 from datasets.qm9 import QM9
 from datasets.md_dataset import MDDataset
@@ -20,7 +21,7 @@ from sklearn.model_selection import train_test_split
 if __name__ == "__main__":
 
 
-    use_wandb = True
+    use_wandb = False
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print("Training on device: " + str(device), flush=True)
@@ -43,13 +44,14 @@ if __name__ == "__main__":
 
 
     model = ModelEnsemble(EGNN, num_ensembles, in_node_nf=in_node_nf, in_edge_nf=in_edge_nf, hidden_nf=hidden_nf, n_layers=n_layers).to(device)
+    model = MVE(EGNN, in_node_nf=in_node_nf, in_edge_nf=in_edge_nf, hidden_nf=hidden_nf, n_layers=n_layers).to(device)
 
 
     best_loss = np.inf
 
 
     start = time.time()
-    dataset = "datasets/files/ala_converged_forces_1000"
+    dataset = "datasets/files/ala_converged_forces_10000"
     model_path = None#"./gnn/models/ala_converged_10000_forces_7_ensemble.pt"
     trainset = MD17Dataset(dataset,subtract_self_energies=False, in_unit="kj/mol",train=True, train_ratio=0.8)
     validset = MD17Dataset(dataset,subtract_self_energies=False, in_unit="kj/mol",train=False, train_ratio=0.8)
@@ -99,6 +101,8 @@ if __name__ == "__main__":
             }
         )
 
+    model.warmup(trainloader, optimizer, loss_fn, device, dtype, epochs=150, force_weight=force_weight, energy_weight=energy_weight, log_interval=log_interval, num_ensembles=num_ensembles)
+
     for epoch in range(epochs):
 
         start = time.time()
@@ -128,28 +132,8 @@ if __name__ == "__main__":
                 best_loss = np.array(valid_losses_energy).mean()
                 torch.save(model.state_dict(), model_path)
 
+        model.epoch_summary(epoch, use_wandb)
         
-        print("", flush=True)
-        print(f"Training and Validation Results of Epoch {epoch}:", flush=True)
-        print("================================")
-        print(f"Training Loss Energy: {np.array(train_losses_energy).mean()}, Training Loss Force: {np.array(train_losses_force).mean()}, Training Uncertainty: {np.array(train_uncertainties).mean()}, time: {train_time}", flush=True)
-        print(f"Validation Loss Energy: {np.array(valid_losses_energy).mean()}, Validation Loss Force: {np.array(valid_losses_force).mean()},Validation Uncertainty: {np.array(valid_uncertainties).mean()}, time: {val_time}", flush=True)
-        print(f"Number of predictions within uncertainty interval: {num_in_interval}/{total_preds} ({num_in_interval/total_preds*100:.2f}%)", flush=True)
-        print("", flush=True)
-
-        if use_wandb:
-            wandb.log({
-                "train_loss_energy": np.array(train_losses_energy).mean(),
-                "train_uncertainty": np.array(train_uncertainties).mean(),
-                "train_loss_force": np.array(train_losses_force).mean(),
-                "train_loss_total": np.array(train_losses_total).mean(),
-                "valid_loss_energy": np.array(valid_losses_energy).mean(),
-                "valid_uncertainty": np.array(valid_uncertainties).mean(),
-                "valid_loss_force": np.array(valid_losses_force).mean(),
-                "valid_loss_total": np.array(valid_losses_total).mean(),
-                "in_interval": num_in_interval/total_preds*100,
-                "lr" : lr_before 
-            })
     if use_wandb:
         wandb.finish()
     
