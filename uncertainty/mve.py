@@ -16,13 +16,13 @@ class MVE(nn.Module):
 
         self.train_losses_energy = []
         self.train_losses_force = []
-        self.train_total_losses = []
+        self.train_losses_total = []
         self.train_uncertainties = []
         self.train_time = 0
 
         self.valid_losses_energy = []
         self.valid_losses_force = []
-        self.valid_total_losses = []
+        self.valid_losses_total = []
         self.valid_uncertainties = []
         self.num_in_interval = 0
         self.total_preds = 0
@@ -51,14 +51,15 @@ class MVE(nn.Module):
 
                 self.train_losses_energy.append(loss_energy.item())
                 self.train_losses_force.append(loss_force.item())
-                self.train_total_losses.append(total_loss.item())
+                self.train_losses_total.append(total_loss.item())
 
                 self.train_uncertainties.append(torch.mean(uncertainty).item())
                 
                 if (i+1) % log_interval == 0:
                     print(f"Batch {i+1}/{len(train_loader)}, Loss: {loss_energy.item()}, Uncertainty: {uncertainty.item()}", flush=True) 
             self.train_time = time.time() - start
-            self.epoch_summary(epoch, False)
+            lr = optimizer.param_groups[0]['lr']
+            self.epoch_summary(f"Warmup-{epoch}", False, lr)
         print("Warmup phase finished", flush=True)
 
     def train_epoch(self, train_loader, optimizer, criterion, epoch, device, dtype, force_weight=1.0, energy_weight=1.0, log_interval=100, num_ensembles=3):
@@ -76,13 +77,13 @@ class MVE(nn.Module):
 
             optimizer.zero_grad()
             total_loss.backward()
-            #torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
+            torch.nn.utils.clip_grad_norm_(self.parameters(), max_norm=100.0)
             optimizer.step()
             
 
             self.train_losses_energy.append(loss_energy.item())
             self.train_losses_force.append(loss_force.item())
-            self.train_total_losses.append(total_loss.item())
+            self.train_losses_total.append(total_loss.item())
 
             self.train_uncertainties.append(torch.mean(uncertainty).item())
             
@@ -107,7 +108,7 @@ class MVE(nn.Module):
 
             self.valid_losses_energy.append(loss_energy.item())
             self.valid_losses_force.append(loss_force.item())
-            self.valid_total_losses.append(total_loss.item())
+            self.valid_losses_total.append(total_loss.item())
 
             self.valid_uncertainties.append(torch.mean(uncertainty).item())
 
@@ -151,13 +152,13 @@ class MVE(nn.Module):
     def pop_metrics(self):
         train_losses_energy = self.train_losses_energy
         train_losses_force = self.train_losses_force
-        train_total_losses = self.train_total_losses
+        train_total_losses = self.train_losses_total
         train_uncertainties = self.train_uncertainties
         train_time = self.train_time
 
         valid_losses_energy = self.valid_losses_energy
         valid_losses_force = self.valid_losses_force
-        valid_total_losses = self.valid_total_losses
+        valid_total_losses = self.valid_losses_total
         num_in_interval = self.num_in_interval
         total_preds = self.total_preds
         valid_uncertainties = self.valid_uncertainties
@@ -165,13 +166,13 @@ class MVE(nn.Module):
 
         self.train_losses_energy = []
         self.train_losses_force = []
-        self.train_total_losses = []
+        self.train_losses_total = []
         self.train_uncertainties = []
         self.train_time = 0
 
         self.valid_losses_energy = []
         self.valid_losses_force = []
-        self.valid_total_losses = []
+        self.valid_losses_total = []
         self.valid_uncertainties = []
         self.num_in_interval = 0
         self.total_preds = 0
@@ -179,7 +180,7 @@ class MVE(nn.Module):
 
         return train_losses_energy, train_losses_force, train_total_losses, train_uncertainties, valid_losses_energy, valid_losses_force, valid_total_losses, valid_uncertainties, num_in_interval, total_preds, train_time, valid_time
     
-    def epoch_summary(self, epoch, use_wandb):
+    def epoch_summary(self, epoch, use_wandb, lr):
         print("", flush=True)
         print(f"Training and Validation Results of Epoch {epoch}:", flush=True)
         print("================================")
@@ -200,9 +201,8 @@ class MVE(nn.Module):
                 "valid_loss_force": np.array(self.valid_losses_force).mean(),
                 "valid_loss_total": np.array(self.valid_losses_total).mean(),
                 "in_interval": self.num_in_interval/self.total_preds*100,
-                "lr" : self.lr_before 
+                "lr" : lr 
             })
-        self.pop_metrics()
 
 
 if __name__ == "__main__":
