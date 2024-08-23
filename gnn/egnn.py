@@ -10,6 +10,7 @@ class EGNN(nn.Module, BaseGNN):
         self.hidden_nf = hidden_nf
         self.device = device
         self.n_layers = n_layers
+        self.multi_dec = multi_dec
 
         ### Encoder
         self.embedding = nn.Linear(in_node_nf, hidden_nf)
@@ -24,10 +25,19 @@ class EGNN(nn.Module, BaseGNN):
         self.node_dec = nn.Sequential(nn.Linear(self.hidden_nf, self.hidden_nf),
                                       act_fn,
                                       nn.Linear(self.hidden_nf, self.hidden_nf))
-
-        self.graph_dec = nn.Sequential(nn.Linear(self.hidden_nf, self.hidden_nf),
-                                       act_fn,
-                                       nn.Linear(self.hidden_nf, out_features))
+        if self.multi_dec:
+            graph_dec_energy = nn.Sequential(nn.Linear(self.hidden_nf, self.hidden_nf),
+                                        act_fn,
+                                        nn.Linear(self.hidden_nf, out_features))
+            graph_dec_variance = nn.Sequential(nn.Linear(self.hidden_nf, self.hidden_nf),
+                                        act_fn,
+                                        nn.Linear(self.hidden_nf, out_features))
+            self.graph_dec = [graph_dec_energy, graph_dec_variance]
+        else:
+            self.graph_dec = nn.Sequential(nn.Linear(self.hidden_nf, self.hidden_nf),
+                                        act_fn,
+                                        nn.Linear(self.hidden_nf, out_features))
+            
         self.to(self.device)
 
     def forward(self, h0, x, edges, edge_attr, node_mask, edge_mask, n_nodes):
@@ -43,7 +53,10 @@ class EGNN(nn.Module, BaseGNN):
         h = h * node_mask
         h = h.view(-1, n_nodes, self.hidden_nf)
         h = torch.sum(h, dim=1)
-        pred = self.graph_dec(h)
+        if self.multi_dec:
+            pred = torch.stack([self.graph_dec[0](h), self.graph_dec[1](h)], dim=1)
+        else:   
+            pred = self.graph_dec(h)
         return pred.squeeze(1)
 
 

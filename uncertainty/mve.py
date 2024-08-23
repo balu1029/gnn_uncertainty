@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 class MVE(nn.Module):
     def __init__(self, base_model_class, *args, **kwargs):
         super(MVE, self).__init__()
-        self.model = base_model_class(*args, **kwargs, out_features=2)
+        self.model = base_model_class(*args, **kwargs, multi_dec=True)
 
 
         self.train_losses_energy = []
@@ -142,8 +142,8 @@ class MVE(nn.Module):
         
     def forward(self, x, *args, **kwargs):
         output = self.model.forward(x=x, *args, **kwargs)
-        energy = output[:,0]
-        variance = output[:,1]
+        energy = output[:,0].squeeze()
+        variance = output[:,1].squeeze()
         grad_output = torch.ones_like(energy)
         force = -torch.autograd.grad(outputs=energy, inputs=x, grad_outputs=grad_output, create_graph=True)[0]
         return energy, force, variance

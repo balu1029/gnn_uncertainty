@@ -21,7 +21,7 @@ from sklearn.model_selection import train_test_split
 if __name__ == "__main__":
 
 
-    use_wandb = True
+    use_wandb = False
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print("Training on device: " + str(device), flush=True)
@@ -51,8 +51,8 @@ if __name__ == "__main__":
 
 
     start = time.time()
-    dataset = "datasets/files/ala_converged_1000000_forces"
-    model_path = "./gnn/models/ala_converged_1000000_forces_mve.pt"
+    dataset = "datasets/files/ala_converged_forces_1000"
+    model_path = None#"./gnn/models/ala_converged_1000000_forces_mve.pt"
     trainset = MD17Dataset(dataset,subtract_self_energies=False, in_unit="kj/mol",train=True, train_ratio=0.8)
     validset = MD17Dataset(dataset,subtract_self_energies=False, in_unit="kj/mol",train=False, train_ratio=0.8)
 
@@ -101,7 +101,7 @@ if __name__ == "__main__":
             }
         )
 
-    model.warmup(trainloader, optimizer, loss_fn, device, dtype, epochs=20, force_weight=force_weight, energy_weight=energy_weight, log_interval=log_interval, num_ensembles=num_ensembles)
+    #model.warmup(trainloader, optimizer, loss_fn, device, dtype, epochs=20, force_weight=force_weight, energy_weight=energy_weight, log_interval=log_interval, num_ensembles=num_ensembles)
 
     for epoch in range(epochs):
 
