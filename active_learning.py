@@ -13,6 +13,7 @@ from ase.io import read
 from ase.visualize import view
 
 from uncertainty.ensemble import ModelEnsemble
+from uncertainty.mve import MVE
 from gnn.egnn import EGNN
 from datasets.helper import utils as qm9_utils
 from datasets.helper.energy_calculation import OpenMMEnergyCalculation

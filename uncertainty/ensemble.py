@@ -3,6 +3,9 @@ import torch
 from torch import nn
 from datasets.helper import utils as qm9_utils
 
+import numpy as np
+import matplotlib.pyplot as plt
+
 
 class ModelEnsemble(nn.Module):
     def __init__(self, base_model_class, num_models, *args, **kwargs):
@@ -22,6 +25,7 @@ class ModelEnsemble(nn.Module):
         self.total_preds = 0
 
     def train_epoch(self, train_loader, optimizer, criterion, epoch, device, dtype, force_weight=1.0, energy_weight=1.0, log_interval=100, num_ensembles=3):
+         self.train()
          for i,data in enumerate(train_loader):
 
             atom_positions, nodes, edges, atom_mask, edge_mask, label_energy, label_forces, n_nodes = self.prepare_data(data, device, dtype)    
@@ -53,7 +57,7 @@ class ModelEnsemble(nn.Module):
                 print(f"Epoch {epoch}, Batch {i+1}/{len(train_loader)}, Loss: {loss_energy.item()}, Uncertainty: {uncertainty.item()}", flush=True)
 
     def valid_epoch(self, valid_loader, criterion, device, dtype, force_weight=1.0, energy_weight=1.0):
-        
+        self.eval()
         for i,data in enumerate(valid_loader):
             atom_positions, nodes, edges, atom_mask, edge_mask, label_energy, label_forces, n_nodes = self.prepare_data(data, device, dtype)    
 
@@ -109,7 +113,7 @@ class ModelEnsemble(nn.Module):
         grad_outputs = torch.ones_like(mean_energy)
         forces = torch.stack([-torch.autograd.grad(outputs=e, inputs=x, grad_outputs=grad_outputs, create_graph=True)[0] for e in energies])
         mean_force = torch.mean(forces, dim=0) 
-        ensemble_uncertainty = (torch.max(energies, dim=0).values - torch.min(energies, dim=0).values) * 1
+        ensemble_uncertainty = torch.std(energies,dim=0)*2#(torch.max(energies, dim=0).values - torch.min(energies, dim=0).values) * 1
         return energies, mean_energy, forces, mean_force, ensemble_uncertainty
     
     
@@ -140,3 +144,33 @@ class ModelEnsemble(nn.Module):
         self.total_preds = 0
 
         return train_losses_energy, train_losses_force, train_total_losses, train_uncertainties, valid_losses_energy, valid_losses_force, valid_total_losses, valid_uncertainties, num_in_interval, total_preds
+    
+
+    def evaluate_uncertainty(self, test_loader, device, dtype):
+        criterion = nn.L1Loss(reduction='none')
+        energy_losses = torch.Tensor()
+        force_losses = torch.Tensor()
+        uncertainties = torch.Tensor()
+        self.eval()
+        for i,data in enumerate(test_loader):
+            atom_positions, nodes, edges, atom_mask, edge_mask, label_energy, label_forces, n_nodes = self.prepare_data(data, device, dtype)    
+
+            energies, mean_energy, forces, mean_force, uncertainty = self.forward(x=atom_positions, h0=nodes, edges=edges, edge_attr=None, node_mask=atom_mask, edge_mask=edge_mask, n_nodes=n_nodes)
+            energy_losses = torch.cat((energy_losses, criterion(mean_energy.detach(), label_energy)), dim=0)
+            uncertainties = torch.cat((uncertainties, uncertainty.detach()), dim=0)
+
+            atom_positions.detach()
+
+        
+        energy_losses = energy_losses.cpu().detach().numpy()
+        uncertainties = uncertainties.cpu().detach().numpy()
+
+        plt.scatter(energy_losses, uncertainties)
+        plt.plot([0, max(energy_losses)], [0, max(energy_losses)], color='red', linestyle='--')
+        plt.xlabel('Energy Losses')
+        plt.ylabel('Uncertainties')
+        plt.title('Scatter Plot of Energy Losses vs Uncertainties')
+        plt.show()
+
+        correlation = np.corrcoef(energy_losses, uncertainties)[0, 1]
+        print(f"Correlation: {correlation}")

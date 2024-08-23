@@ -5,7 +5,7 @@ from gnn.base_gnn import BaseGNN
 
 
 class EGNN(nn.Module, BaseGNN):
-    def __init__(self, in_node_nf, in_edge_nf, hidden_nf, device='cpu', act_fn=nn.SiLU(), n_layers=4, coords_weight=1.0, attention=False, node_attr=1, out_features=1):
+    def __init__(self, in_node_nf, in_edge_nf, hidden_nf, device='cpu', act_fn=nn.SiLU(), n_layers=4, coords_weight=1.0, attention=False, node_attr=1, out_features=1, multi_dec=False):
         super(EGNN, self).__init__()
         self.hidden_nf = hidden_nf
         self.device = device

@@ -6,6 +6,7 @@ from datasets.helper import utils as qm9_utils
 import wandb
 import numpy as np  
 import time
+import matplotlib.pyplot as plt
 
 
 class MVE(nn.Module):
@@ -203,6 +204,37 @@ class MVE(nn.Module):
                 "in_interval": self.num_in_interval/self.total_preds*100,
                 "lr" : lr 
             })
+
+    def evaluate_uncertainty(self, test_loader, device, dtype):
+        criterion = nn.L1Loss(reduction='none')
+        energy_losses = torch.Tensor()
+        force_losses = torch.Tensor()
+        uncertainties = torch.Tensor()
+        self.eval()
+        for i,data in enumerate(test_loader):
+            atom_positions, nodes, edges, atom_mask, edge_mask, label_energy, label_forces, n_nodes = self.prepare_data(data, device, dtype)    
+
+            mean_energy, mean_force, uncertainty = self.forward(x=atom_positions, h0=nodes, edges=edges, edge_attr=None, node_mask=atom_mask, edge_mask=edge_mask, n_nodes=n_nodes)
+            
+            print(mean_energy.shape)
+            print(energy_losses.shape)
+            energy_losses = torch.cat((energy_losses, criterion(mean_energy.detach(), label_energy)), dim=0)
+            uncertainties = torch.cat((uncertainties.detach(), uncertainty), dim=0)
+            self.total_preds += mean_energy.size(0)
+            atom_positions.detach()
+        
+        energy_losses = energy_losses.cpu().detach().numpy()
+        uncertainties = uncertainties.cpu().detach().numpy()
+
+        plt.scatter(energy_losses, uncertainties)
+        plt.plot([0, max(energy_losses)], [0, max(energy_losses)], color='red', linestyle='--')
+        plt.xlabel('Energy Losses')
+        plt.ylabel('Uncertainties')
+        plt.title('Scatter Plot of Energy Losses vs Uncertainties')
+        plt.show()
+
+        correlation = np.corrcoef(energy_losses, uncertainties)[0, 1]
+        print(f"Correlation: {correlation}")
 
 
 if __name__ == "__main__":
