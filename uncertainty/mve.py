@@ -89,7 +89,7 @@ class MVE(nn.Module):
             self.train_uncertainties.append(torch.mean(uncertainty).item())
             
             if (i+1) % log_interval == 0:
-                print(f"Epoch {epoch}, Batch {i+1}/{len(train_loader)}, Loss: {loss_energy.item()}, Uncertainty: {uncertainty.item()}", flush=True)
+                print(f"Epoch {epoch}, Batch {i+1}/{len(train_loader)}, Loss: {loss_energy.item()}, Uncertainty: {torch.mean(uncertainty).item()}", flush=True)
         
         self.train_time = time.time() - start
 
