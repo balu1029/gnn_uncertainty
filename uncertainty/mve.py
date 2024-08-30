@@ -10,9 +10,9 @@ import matplotlib.pyplot as plt
 
 
 class MVE(nn.Module):
-    def __init__(self, base_model_class, *args, **kwargs):
+    def __init__(self, base_model_class, multi_dec = True, *args, **kwargs):
         super(MVE, self).__init__()
-        self.model = base_model_class(*args, **kwargs, multi_dec=True)
+        self.model = base_model_class(*args, **kwargs, multi_dec=multi_dec)
 
 
         self.train_losses_energy = []
@@ -32,6 +32,7 @@ class MVE(nn.Module):
     def warmup(self, train_loader, optimizer, criterion, device, dtype, epochs = 50, force_weight=1.0, energy_weight=1.0, log_interval=100, num_ensembles=3):
         print("",flush=True)
         print("Warmup phase started", flush=True)
+        self.train()
         for epoch in range(epochs):
             start = time.time()
             for i,data in enumerate(train_loader):
@@ -65,6 +66,7 @@ class MVE(nn.Module):
 
     def train_epoch(self, train_loader, optimizer, criterion, epoch, device, dtype, force_weight=1.0, energy_weight=1.0, log_interval=100, num_ensembles=3):
         start = time.time()
+        self.train()
         for i,data in enumerate(train_loader):
 
             atom_positions, nodes, edges, atom_mask, edge_mask, label_energy, label_forces, n_nodes = self.prepare_data(data, device, dtype)    
@@ -96,6 +98,7 @@ class MVE(nn.Module):
 
     def valid_epoch(self, valid_loader, criterion, device, dtype, force_weight=1.0, energy_weight=1.0):
         start = time.time()
+        self.eval()
         for i,data in enumerate(valid_loader):
             atom_positions, nodes, edges, atom_mask, edge_mask, label_energy, label_forces, n_nodes = self.prepare_data(data, device, dtype)    
 
@@ -181,7 +184,7 @@ class MVE(nn.Module):
 
         return train_losses_energy, train_losses_force, train_total_losses, train_uncertainties, valid_losses_energy, valid_losses_force, valid_total_losses, valid_uncertainties, num_in_interval, total_preds, train_time, valid_time
     
-    def epoch_summary(self, epoch, use_wandb, lr):
+    def epoch_summary(self, epoch, use_wandb=False, lr=None):
         print("", flush=True)
         print(f"Training and Validation Results of Epoch {epoch}:", flush=True)
         print("================================")
@@ -208,18 +211,15 @@ class MVE(nn.Module):
     def evaluate_uncertainty(self, test_loader, device, dtype):
         criterion = nn.L1Loss(reduction='none')
         energy_losses = torch.Tensor()
-        force_losses = torch.Tensor()
         uncertainties = torch.Tensor()
         self.eval()
         for i,data in enumerate(test_loader):
             atom_positions, nodes, edges, atom_mask, edge_mask, label_energy, label_forces, n_nodes = self.prepare_data(data, device, dtype)    
 
             mean_energy, mean_force, uncertainty = self.forward(x=atom_positions, h0=nodes, edges=edges, edge_attr=None, node_mask=atom_mask, edge_mask=edge_mask, n_nodes=n_nodes)
-            
-            print(mean_energy.shape)
-            print(energy_losses.shape)
             energy_losses = torch.cat((energy_losses, criterion(mean_energy.detach(), label_energy)), dim=0)
-            uncertainties = torch.cat((uncertainties.detach(), uncertainty), dim=0)
+            uncertainties = torch.cat((uncertainties, uncertainty.detach()), dim=0)
+
             self.total_preds += mean_energy.size(0)
             atom_positions.detach()
         

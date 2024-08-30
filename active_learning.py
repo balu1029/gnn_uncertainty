@@ -12,6 +12,7 @@ from ase.io.trajectory import Trajectory
 from ase.io import read
 from ase.visualize import view
 
+from datasets.md17_dataset import MD17Dataset
 from uncertainty.ensemble import ModelEnsemble
 from uncertainty.mve import MVE
 from gnn.egnn import EGNN
@@ -24,7 +25,7 @@ from trainer import ModelTrainer
 class ALCalculator(Calculator):
     implemented_properties = ['energy', 'forces']
 
-    def __init__(self, model, **kwargs):
+    def __init__(self, model, max_uncertainty=10, **kwargs):
         super().__init__(**kwargs)
         self.model = model
         self.model.eval()  # Set the model to evaluation mode
@@ -35,12 +36,17 @@ class ALCalculator(Calculator):
                                 1: 6.0,
                                 2: 7.0,
                                 3: 8.0}
+        self.number_to_type = {0: "H",
+                               1: "C",
+                               2: "N",
+                               3: "O"}
         
         self.dtype = torch.float32
         self.charge_power = 2
         self.charge_scale = torch.tensor(max(self.ground_charges.values())+1)
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.max_uncertainty = 10
+        self.max_force = 300
         self.uncertainty_samples = []
         self.energy_unit = kJ / mol
         self.force_unit = self.energy_unit / Angstrom
@@ -85,22 +91,19 @@ class ALCalculator(Calculator):
         edges = qm9_utils.get_adj_matrix(n_nodes, batch_size, self.device)
 
         # Predict energy using the model
-        stacked_pred, energy, uncertainty = self.model(x=atom_positions, h0=nodes, edges=edges, edge_attr=None, node_mask=atom_mask, edge_mask=edge_mask, n_nodes=n_nodes)
-        
+        energy, force, uncertainty = self.model(x=atom_positions, h0=nodes, edges=edges, edge_attr=None, node_mask=atom_mask, edge_mask=edge_mask, n_nodes=n_nodes)
         if uncertainty.item() > self.max_uncertainty:
             self.uncertainty_samples.append(positions * self.a_to_nm)
 
         # Convert energy to the appropriate ASE units (eV)
         self.results['energy'] = energy.item() * self.energy_unit
 
-        # Compute forces by taking the gradient of energy w.r.t. positions
-        energy.backward()
-        forces = -atom_positions.grad.numpy()
         #print("Uncertainty: ", uncertainty.item())
         #print("Energy:      ", energy.item())
         #print()
         # Store the forces in the results dictionary
-        self.results['forces'] = forces * self.force_unit
+        force = torch.clamp(force, -self.max_force, self.max_force)
+        self.results['forces'] = force.detach().numpy() * self.force_unit
 
     def get_uncertainty_samples(self):
         return np.array(self.uncertainty_samples)
@@ -111,7 +114,7 @@ class ALCalculator(Calculator):
 
 class ActiveLearning:
     
-    def __init__(self, model_path:str="gnn/models/ala_converged_10000.pt", num_ensembles:int=3, in_nf:int=12, hidden_nf:int=16, n_layers:int=2, molecule_path:str="datasets/files/ala_converged_1000000/start_pos.xyz") -> None:
+    def __init__(self, model, max_uncertainty=10, num_ensembles:int=3, in_nf:int=12, hidden_nf:int=16, n_layers:int=2, molecule_path:str="datasets/files/ala_converged_1000000/start_pos.xyz") -> None:
         """
         Initializes an instance of the ActiveLearning class.
 
@@ -123,17 +126,24 @@ class ActiveLearning:
         - n_layers (int): The number of layers in the model. Default is 2. HAS TO MATCH THE HYPERPARAMETERS OF THE MODEL IN MODEL_PATH.
         - molecule_path (str): The path to the molecule file. Default is "datasets/files/alaninedipeptide/xyz/ala_single.xyz".
         """
-        self.device = torch.device("cuda" if torch.cuda.is_available() else ("mps" if torch.backends.mps.is_available() else "cpu"))
+        self.atom_numbers  = [0, 1, 0, 0, 1, 3, 2, 0, 1, 0, 1, 0, 0, 0, 1, 3, 2, 0, 1, 0, 0, 0]
+        self.number_to_type = {0: "H",
+                               1: "C",
+                               2: "N",
+                               3: "O"}
+
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        self.dtype = torch.float32
         self.temperature = 300
         self.timestep = 0.5 * fs
 
         # Instantiate the model
-        model = ModelEnsemble(EGNN, num_ensembles, in_node_nf=in_nf, in_edge_nf=0, hidden_nf=hidden_nf, n_layers=n_layers)
-        model.load_state_dict(torch.load(model_path, self.device))
+        self.num_ensembles = num_ensembles
+        self.model = model.to(self.device)
 
         self.num_ensembles = num_ensembles
 
-        self.calc = ALCalculator(model=model)
+        self.calc = ALCalculator(model=model, max_uncertainty=max_uncertainty)
         self.atoms = read(molecule_path)
         self.atoms.set_calculator(self.calc)
 
@@ -178,26 +188,52 @@ class ActiveLearning:
             if len(samples) > 0:
                 print(f"Training model {i}. Added {len(samples)} samples to the dataset.")
 
-                self.trainer.add_data(samples, energies, forces, f"{data_out_path}data_{i}.txt")
+                self.add_data(samples, energies, forces, f"{data_out_path}data_{i}.txt")
 
-                self.trainer.train(num_epochs=2, learning_rate=1e-5, folder=data_out_path)
+                trainset = MD17Dataset(f"{data_out_path}", subtract_self_energies=False, in_unit="kj/mol", train=True, train_ratio=0.8)
+                validset = MD17Dataset(f"datasets/files/ala_converged_validation", subtract_self_energies=False, in_unit="kj/mol")
+                trainloader = torch.utils.data.DataLoader(trainset, batch_size=128, shuffle=True)
+                validloader = torch.utils.data.DataLoader(validset, batch_size=128, shuffle=True)
+                optimizer = torch.optim.AdamW(self.calc.model.parameters(), lr=1e-5)
+                loss_fn = torch.nn.L1Loss()
+                log_interval = 100
+                force_weight = 1
+                energy_weight = 1
+
+                for epoch in range(2):
+                    self.model.train_epoch(trainloader, optimizer, loss_fn, epoch, self.device, self.dtype, force_weight=force_weight, energy_weight=energy_weight, log_interval=log_interval, num_ensembles=self.num_ensembles)
+                #self.trainer.train(num_epochs=2, learning_rate=1e-5, folder=data_out_path)
+                self.model.valid_epoch(validloader, loss_fn, self.device, self.dtype, force_weight=force_weight, energy_weight=energy_weight)
+                self.model.epoch_summary(epoch=f"Validation {i}")
+                self.model.pop_metrics()
                 
                 torch.save(self.trainer.model.state_dict(), f"{model_out_path}model_{i}.pt")
-                self.calc.model.load_state_dict(torch.load(f"{model_out_path}model_{i}.pt", self.device))
+                
+    def add_data(self, samples, labels, forces, out_file):
+        num_molecules = len(samples)
+        samples = samples * 10
+        with open(out_file, 'w') as file:
+            for i in range(num_molecules):
+                file.write(f"{len(samples[i])}\n")
+                file.write(f"{labels[i]}\n")
+                for j in range(len(samples[i])):
+                    file.write(f"{self.number_to_type[self.atom_numbers[j]]} {samples[i][j][0]} {samples[i][j][1]} {samples[i][j][2]} {forces[i][j][0]} {forces[i][j][1]} {forces[i][j][2]}\n")
         
 
 
 if __name__ == "__main__":
-    model_path = "gnn/models/ala_converged_10000_forces.pt"
-    #model_path = "al/run2/models/model_21.pt"
+    model_path = "gnn/models/ala_converged_1000_forces_mve_no_warmup.pt"
+    #model_path = "al/run10/models/model_19.pt"
     #model_path = "gnn/models/ala_converged_1000000_even_larger.pt"
     
     num_ensembles = 3
     in_nf = 12
     hidden_nf = 32
     n_layers = 4
-    al = ActiveLearning(num_ensembles=num_ensembles, in_nf=in_nf, hidden_nf=hidden_nf, n_layers=n_layers, model_path=model_path)
-    #al.run_simulation(1000, show_traj=True)
+    model = MVE(EGNN, in_node_nf=in_nf, in_edge_nf=0, hidden_nf=hidden_nf, n_layers=n_layers, multi_dec=True)
+    model.load_state_dict(torch.load(model_path, map_location=torch.device("cuda" if torch.cuda.is_available() else "cpu")))
+    al = ActiveLearning(max_uncertainty=5 ,num_ensembles=num_ensembles, in_nf=in_nf, hidden_nf=hidden_nf, n_layers=n_layers, model=model)
+    al.run_simulation(5000, show_traj=True)
     #print(len(al.calc.get_uncertainty_samples()))
 
-    al.improve_model(50, 200,run_idx=5)
+    #al.improve_model(20, 200,run_idx=10)
