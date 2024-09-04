@@ -10,6 +10,8 @@ class EGNN(nn.Module, BaseGNN):
         self.hidden_nf = hidden_nf
         self.device = device
         self.n_layers = n_layers
+        self.in_node_nf = in_node_nf   
+        self.in_edge_nf = in_edge_nf
         self.multi_dec = multi_dec
 
         ### Encoder

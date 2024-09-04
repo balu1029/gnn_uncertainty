@@ -44,24 +44,47 @@ class SWAG(nn.Module):
         self.total_preds = 0
         self.valid_time = 0
     
-    def fit(self, epochs, swag_start_epoch, swag_freq, train_loader, valid_loader, device, dtype, model_path="gnn/models/swag.pt" , force_weight=1.0, energy_weight=1.0, log_interval=100):
+    def fit(self, epochs, swag_start_epoch, swag_freq, train_loader, valid_loader, device, dtype, model_path="gnn/models/swag.pt", use_wandb=False, force_weight=1.0, energy_weight=1.0, log_interval=100, patience=200, factor=0.1, lr=1e-3, min_lr=1e-6): 
 
         optimizer = torch.optim.AdamW(self.parameters(), lr=1e-3, weight_decay=1e-16)   
         criterion = nn.L1Loss()
-        scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=0.1, patience=200)
+        scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=factor, patience=patience)
+        if use_wandb:
+            wandb.init(
+                # set the wandb project where this run will be logged
+                project="GNN-Uncertainty-SWAG",
+
+                # track hyperparameters and run metadata
+                config={
+                "name": "alaninedipeptide",
+                "learning_rate_start": lr,
+                "layers": self.model.n_layers,
+                "hidden_nf": self.model.hidden_nf,
+                "scheduler": type(scheduler).__name__,
+                "optimizer": type(optimizer).__name__,
+                "patience": patience,
+                "factor": factor,
+                "dataset": len(train_loader.dataset)+len(valid_loader.dataset),
+                "epochs": epochs,
+                "batch_size": train_loader.batch_size,
+                "in_node_nf" : self.model.in_node_nf,
+                "in_edge_nf" : self.model.in_edge_nf,
+                "loss_fn" : type(criterion).__name__,
+                "model_checkpoint": model_path,
+                }
+            )
 
         best_valid_loss = np.inf
 
         for epoch in range(epochs):
             self.train_epoch(train_loader=train_loader, optimizer=optimizer, criterion=criterion, epoch=epoch, device=device, dtype=dtype, force_weight=force_weight, energy_weight=energy_weight, log_interval=log_interval)
             self.valid_epoch(valid_loader=valid_loader, criterion=criterion, device=device, dtype=dtype, force_weight=force_weight, energy_weight=energy_weight)
-            self.epoch_summary(epoch)
+            self.epoch_summary(epoch, use_wandb=use_wandb, lr=optimizer.param_groups[0]['lr'])
 
             if np.array(self.valid_losses_total).mean() < best_valid_loss:
                 best_valid_loss = np.array(self.valid_losses_total).mean()
                 torch.save(self.state_dict(), model_path)
 
-            self.pop_metrics()
             
 
             if epoch >= swag_start_epoch and (epoch-swag_start_epoch) % swag_freq == 0:
@@ -70,7 +93,10 @@ class SWAG(nn.Module):
                 self.lr_before = optimizer.param_groups[0]['lr']
                 scheduler.step(np.array(self.valid_losses_total).mean())
                 self.lr_after = optimizer.param_groups[0]['lr']
-                self.pop_metrics()
+            self.pop_metrics()
+
+        if use_wandb:
+            wandb.finish()
         
     def predict(self, x, *args, **kwargs):
         self.eval()
@@ -255,14 +281,11 @@ class SWAG(nn.Module):
         if use_wandb:
             wandb.log({
                 "train_loss_energy": np.array(self.train_losses_energy).mean(),
-                "train_uncertainty": np.array(self.train_uncertainties).mean(),
                 "train_loss_force": np.array(self.train_losses_force).mean(),
                 "train_loss_total": np.array(self.train_losses_total).mean(),
                 "valid_loss_energy": np.array(self.valid_losses_energy).mean(),
-                "valid_uncertainty": np.array(self.valid_uncertainties).mean(),
                 "valid_loss_force": np.array(self.valid_losses_force).mean(),
                 "valid_loss_total": np.array(self.valid_losses_total).mean(),
-                "in_interval": self.num_in_interval/self.total_preds*100,
                 "lr" : lr 
             })
 
