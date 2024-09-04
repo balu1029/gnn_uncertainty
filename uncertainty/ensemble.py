@@ -16,13 +16,13 @@ class ModelEnsemble(nn.Module):
         self.models = nn.ModuleList([base_model_class(*args, **kwargs) for _ in range(num_models)])
         self.train_losses_energy = []
         self.train_losses_force = []
-        self.train_total_losses = []
+        self.train_losses_total = []
         self.train_uncertainties = []
         self.train_time = 0
 
         self.valid_losses_energy = []
         self.valid_losses_force = []
-        self.valid_total_losses = []
+        self.valid_losses_total = []
         self.valid_uncertainties = []
         self.num_in_interval = 0
         self.total_preds = 0
@@ -53,7 +53,7 @@ class ModelEnsemble(nn.Module):
 
             self.train_losses_energy.append(loss_energy.item())
             self.train_losses_force.append(loss_force.item())
-            self.train_total_losses.append(total_loss.item())
+            self.train_losses_total.append(total_loss.item())
 
             uncertainty = torch.mean(uncertainty)
             self.train_uncertainties.append(uncertainty.item())    
@@ -80,7 +80,7 @@ class ModelEnsemble(nn.Module):
 
             self.valid_losses_energy.append(loss_energy.item())
             self.valid_losses_force.append(loss_force.item())
-            self.valid_total_losses.append(total_loss.item())
+            self.valid_losses_total.append(total_loss.item())
 
             uncertainty = torch.mean(uncertainty)
             self.valid_uncertainties.append(uncertainty.item())
@@ -129,24 +129,24 @@ class ModelEnsemble(nn.Module):
     def pop_metrics(self):
         train_losses_energy = self.train_losses_energy
         train_losses_force = self.train_losses_force
-        train_total_losses = self.train_total_losses
+        train_total_losses = self.train_losses_total
         train_uncertainties = self.train_uncertainties
 
         valid_losses_energy = self.valid_losses_energy
         valid_losses_force = self.valid_losses_force
-        valid_total_losses = self.valid_total_losses
+        valid_total_losses = self.valid_losses_total
         num_in_interval = self.num_in_interval
         total_preds = self.total_preds
         valid_uncertainties = self.valid_uncertainties
 
         self.train_losses_energy = []
         self.train_losses_force = []
-        self.train_total_losses = []
+        self.train_losses_total = []
         self.train_uncertainties = []
 
         self.valid_losses_energy = []
         self.valid_losses_force = []
-        self.valid_total_losses = []
+        self.valid_losses_total = []
         self.valid_uncertainties = []
         self.num_in_interval = 0
         self.total_preds = 0

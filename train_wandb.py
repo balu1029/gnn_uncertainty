@@ -51,7 +51,7 @@ if __name__ == "__main__":
 
 
     start = time.time()
-    dataset = "datasets/files/ala_converged_forces_1000"
+    dataset = "datasets/files/ala_converged_1000_forces"
     model_path = "./gnn/models/ensemble.pt"
     trainset = MD17Dataset(dataset,subtract_self_energies=False, in_unit="kj/mol",train=True, train_ratio=0.8)
     validset = MD17Dataset(dataset,subtract_self_energies=False, in_unit="kj/mol",train=False, train_ratio=0.8)
