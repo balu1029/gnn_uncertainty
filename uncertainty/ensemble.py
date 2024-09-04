@@ -8,6 +8,9 @@ import matplotlib.pyplot as plt
 import wandb
 import time
 
+from sklearn.metrics import r2_score
+
+
 
 class ModelEnsemble(nn.Module):
     def __init__(self, base_model_class, num_models, *args, **kwargs):
@@ -121,7 +124,7 @@ class ModelEnsemble(nn.Module):
         grad_outputs = torch.ones_like(mean_energy)
         forces = torch.stack([-torch.autograd.grad(outputs=e, inputs=x, grad_outputs=grad_outputs, create_graph=True)[0] for e in energies])
         mean_force = torch.mean(forces, dim=0) 
-        ensemble_uncertainty = torch.std(energies,dim=0)*2#(torch.max(energies, dim=0).values - torch.min(energies, dim=0).values) * 1
+        ensemble_uncertainty = torch.std(energies,dim=0)#(torch.max(energies, dim=0).values - torch.min(energies, dim=0).values) * 1
         return energies, mean_energy, forces, mean_force, ensemble_uncertainty
     
     
@@ -206,3 +209,59 @@ class ModelEnsemble(nn.Module):
 
         correlation = np.corrcoef(energy_losses, uncertainties)[0, 1]
         print(f"Correlation: {correlation}")
+
+
+    def evaluate_uncertainty(self, test_loader, device, dtype, save_path=None):
+        criterion = nn.L1Loss(reduction='none')
+        energy_losses = torch.Tensor()
+        uncertainties = torch.Tensor()
+        self.eval()
+        for i,data in enumerate(test_loader):
+            atom_positions, nodes, edges, atom_mask, edge_mask, label_energy, label_forces, n_nodes = self.prepare_data(data, device, dtype)    
+
+            energies, mean_energy, forces, mean_force, uncertainty = self.forward(x=atom_positions, h0=nodes, edges=edges, edge_attr=None, node_mask=atom_mask, edge_mask=edge_mask, n_nodes=n_nodes)
+            energy_losses = torch.cat((energy_losses, criterion(mean_energy.detach(), label_energy)), dim=0)
+            uncertainties = torch.cat((uncertainties, uncertainty.detach()), dim=0)
+
+            self.total_preds += mean_energy.size(0)
+            atom_positions.detach()
+        
+        energy_losses = energy_losses.cpu().detach().numpy()
+        uncertainties = uncertainties.cpu().detach().numpy()
+
+
+        correlation = np.corrcoef(energy_losses, uncertainties)[0, 1]
+        self._scatter_plot(energy_losses, uncertainties, 'MVE', 'Energy Losses', 'Uncertainties', text=f"Correlation: {correlation}", save_path=save_path)
+        print(f"Correlation: {correlation}")
+
+    def evaluate_model(self, test_loader, device, dtype, save_path=None):
+        criterion = nn.L1Loss(reduction='none')
+        predictions_energy = torch.Tensor()
+        ground_truths_energy = torch.Tensor()
+        self.eval()
+        for i,data in enumerate(test_loader):
+            atom_positions, nodes, edges, atom_mask, edge_mask, label_energy, label_forces, n_nodes = self.prepare_data(data, device, dtype)    
+
+            energies, mean_energy, forces, mean_force, uncertainty = self.forward(x=atom_positions, h0=nodes, edges=edges, edge_attr=None, node_mask=atom_mask, edge_mask=edge_mask, n_nodes=n_nodes)
+            predictions_energy = torch.cat((predictions_energy, mean_energy.detach()), dim=0)
+            ground_truths_energy = torch.cat((ground_truths_energy, label_energy.detach()), dim=0)
+
+            self.total_preds += mean_energy.size(0)
+            atom_positions.detach()
+        # Calculate R2 scores for energy and forces
+        energy_r2 = r2_score(ground_truths_energy.cpu().detach().numpy(), predictions_energy.cpu().detach().numpy())
+
+        self._scatter_plot(ground_truths_energy.cpu().detach().numpy(), predictions_energy.cpu().detach().numpy(), 'MVE', 'Ground Truth Energy', 'Predicted Energy', text=f"Energy R2 Score: {energy_r2}", save_path=save_path)
+
+
+    def _scatter_plot(self, x, y, title, xlabel, ylabel, text="", save_path=None):
+        plt.scatter(x, y)
+        plt.xlabel(xlabel)
+        plt.ylabel(ylabel)
+        plt.title(title)
+        plt.plot([min(x), max(x)], [min(x), max(x)], color='red', linestyle='--')
+        plt.text(0.1, 0.9, text, transform=plt.gca().transAxes)
+        if save_path is not None:
+            plt.savefig(save_path)
+        else:
+            plt.show()
