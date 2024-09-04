@@ -21,14 +21,14 @@ from sklearn.model_selection import train_test_split
 if __name__ == "__main__":
 
 
-    use_wandb = False
+    use_wandb = True
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print("Training on device: " + str(device), flush=True)
     dtype = torch.float32
 
-    epochs = 20
-    batch_size = 32
+    epochs = 10000
+    batch_size = 64
     lr = 1e-3
     min_lr = 1e-7
     log_interval = 1000
@@ -52,7 +52,7 @@ if __name__ == "__main__":
 
     start = time.time()
     dataset = "datasets/files/ala_converged_forces_1000"
-    model_path = None#"./gnn/models/ala_converged_1000000_forces_mve.pt"
+    model_path = "./gnn/models/ensemble.pt"
     trainset = MD17Dataset(dataset,subtract_self_energies=False, in_unit="kj/mol",train=True, train_ratio=0.8)
     validset = MD17Dataset(dataset,subtract_self_energies=False, in_unit="kj/mol",train=False, train_ratio=0.8)
 
@@ -66,7 +66,7 @@ if __name__ == "__main__":
     optimizer = torch.optim.AdamW(model.parameters(),lr=lr,weight_decay=1e-16)
     
     factor = 0.1
-    patience = 200
+    patience = 800
     scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=factor, patience=patience)
 
     total_params = sum(p.numel() for p in model.parameters())
@@ -78,7 +78,7 @@ if __name__ == "__main__":
     if use_wandb:
         wandb.init(
             # set the wandb project where this run will be logged
-            project="GNN-Uncertainty-MVE",
+            project="GNN-Uncertainty-Ensemble",
 
             # track hyperparameters and run metadata
             config={
