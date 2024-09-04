@@ -40,7 +40,7 @@ test_loader = torch.utils.data.DataLoader(test_dataset, batch_size=64, shuffle=F
 #swag.evaluate_uncertainty(test_loader, device=device, dtype=torch.float32)
 #swag.evaluate_model(test_loader, device=device, dtype=torch.float32, save_path="gnn/swag_eval.png")
 #mve.evaluate_model(test_loader, device=device, dtype=torch.float32, save_path="gnn/mve_eval.png")
-ens.evaluate_model(test_loader, device=device, dtype=torch.float32, save_path="gnn/ensemble_eval.png")
+#ens.evaluate_model(test_loader, device=device, dtype=torch.float32, save_path="gnn/ensemble_eval.png")
 
 #mve.evaluate_uncertainty(test_loader, device=device, dtype=torch.float32, save_path="gnn/mve_uncertainty.png")
 #swag.evaluate_uncertainty(test_loader, device=device, dtype=torch.float32, save_path="gnn/swag_uncertainty.png")

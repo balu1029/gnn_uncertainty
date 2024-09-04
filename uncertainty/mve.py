@@ -265,6 +265,7 @@ class MVE(nn.Module):
             plt.savefig(save_path)
         else:
             plt.show()
+        plt.close()
 
 
 if __name__ == "__main__":

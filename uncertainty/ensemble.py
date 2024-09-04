@@ -265,3 +265,4 @@ class ModelEnsemble(nn.Module):
             plt.savefig(save_path)
         else:
             plt.show()
+        plt.close()
