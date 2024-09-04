@@ -5,6 +5,8 @@ from datasets.helper import utils as qm9_utils
 
 import numpy as np
 import matplotlib.pyplot as plt
+import wandb
+import time
 
 
 class ModelEnsemble(nn.Module):
@@ -16,6 +18,7 @@ class ModelEnsemble(nn.Module):
         self.train_losses_force = []
         self.train_total_losses = []
         self.train_uncertainties = []
+        self.train_time = 0
 
         self.valid_losses_energy = []
         self.valid_losses_force = []
@@ -23,9 +26,11 @@ class ModelEnsemble(nn.Module):
         self.valid_uncertainties = []
         self.num_in_interval = 0
         self.total_preds = 0
+        self.valid_time = 0
 
     def train_epoch(self, train_loader, optimizer, criterion, epoch, device, dtype, force_weight=1.0, energy_weight=1.0, log_interval=100, num_ensembles=3):
          self.train()
+         start = time.time()
          for i,data in enumerate(train_loader):
 
             atom_positions, nodes, edges, atom_mask, edge_mask, label_energy, label_forces, n_nodes = self.prepare_data(data, device, dtype)    
@@ -55,9 +60,11 @@ class ModelEnsemble(nn.Module):
             
             if (i+1) % log_interval == 0:
                 print(f"Epoch {epoch}, Batch {i+1}/{len(train_loader)}, Loss: {loss_energy.item()}, Uncertainty: {uncertainty.item()}", flush=True)
+            self.train_time = time.time() - start
 
     def valid_epoch(self, valid_loader, criterion, device, dtype, force_weight=1.0, energy_weight=1.0):
         self.eval()
+        start = time.time()
         for i,data in enumerate(valid_loader):
             atom_positions, nodes, edges, atom_mask, edge_mask, label_energy, label_forces, n_nodes = self.prepare_data(data, device, dtype)    
 
@@ -80,6 +87,7 @@ class ModelEnsemble(nn.Module):
 
             self.num_in_interval += torch.sum(torch.abs(mean_energy - label_energy) <= uncertainty/2)
             self.total_preds += mean_energy.size(0)
+        self.valid_time = time.time() - start
 
     def prepare_data(self, data, device, dtype):
         batch_size, n_nodes, _ = data['coordinates'].size()
@@ -143,8 +151,32 @@ class ModelEnsemble(nn.Module):
         self.num_in_interval = 0
         self.total_preds = 0
 
-        return train_losses_energy, train_losses_force, train_total_losses, train_uncertainties, valid_losses_energy, valid_losses_force, valid_total_losses, valid_uncertainties, num_in_interval, total_preds
+        return train_losses_energy, train_losses_force, train_total_losses, train_uncertainties, valid_losses_energy, valid_losses_force, valid_total_losses, valid_uncertainties, num_in_interval, total_preds, self.train_time, self.valid_time
     
+
+    def epoch_summary(self, epoch, use_wandb=False, lr=None):
+        print("", flush=True)
+        print(f"Training and Validation Results of Epoch {epoch}:", flush=True)
+        print("================================")
+        print(f"Training Loss Energy: {np.array(self.train_losses_energy).mean()}, Training Loss Force: {np.array(self.train_losses_force).mean()}, Training Uncertainty: {np.array(self.train_uncertainties).mean()}, time: {self.train_time}", flush=True)
+        if len(self.valid_losses_energy) > 0:
+            print(f"Validation Loss Energy: {np.array(self.valid_losses_energy).mean()}, Validation Loss Force: {np.array(self.valid_losses_force).mean()},Validation Uncertainty: {np.array(self.valid_uncertainties).mean()}, time: {self.valid_time}", flush=True)
+            print(f"Number of predictions within uncertainty interval: {self.num_in_interval}/{self.total_preds} ({self.num_in_interval/self.total_preds*100:.2f}%)", flush=True)
+        print("", flush=True)
+
+        if use_wandb:
+            wandb.log({
+                "train_loss_energy": np.array(self.train_losses_energy).mean(),
+                "train_uncertainty": np.array(self.train_uncertainties).mean(),
+                "train_loss_force": np.array(self.train_losses_force).mean(),
+                "train_loss_total": np.array(self.train_losses_total).mean(),
+                "valid_loss_energy": np.array(self.valid_losses_energy).mean(),
+                "valid_uncertainty": np.array(self.valid_uncertainties).mean(),
+                "valid_loss_force": np.array(self.valid_losses_force).mean(),
+                "valid_loss_total": np.array(self.valid_losses_total).mean(),
+                "in_interval": self.num_in_interval/self.total_preds*100,
+                "lr" : lr 
+            })
 
     def evaluate_uncertainty(self, test_loader, device, dtype):
         criterion = nn.L1Loss(reduction='none')

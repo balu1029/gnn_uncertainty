@@ -27,8 +27,8 @@ if __name__ == "__main__":
     print("Training on device: " + str(device), flush=True)
     dtype = torch.float32
 
-    epochs = 200
-    batch_size = 256
+    epochs = 20
+    batch_size = 32
     lr = 1e-3
     min_lr = 1e-7
     log_interval = 1000
@@ -44,7 +44,7 @@ if __name__ == "__main__":
 
 
     model = ModelEnsemble(EGNN, num_ensembles, in_node_nf=in_node_nf, in_edge_nf=in_edge_nf, hidden_nf=hidden_nf, n_layers=n_layers).to(device)
-    model = MVE(EGNN, in_node_nf=in_node_nf, in_edge_nf=in_edge_nf, hidden_nf=hidden_nf, n_layers=n_layers).to(device)
+    #model = MVE(EGNN, in_node_nf=in_node_nf, in_edge_nf=in_edge_nf, hidden_nf=hidden_nf, n_layers=n_layers).to(device)
 
 
     best_loss = np.inf

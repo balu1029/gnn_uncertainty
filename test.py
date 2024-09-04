@@ -31,6 +31,6 @@ swag = SWAG(EGNN, in_node_nf=in_node_nf, in_edge_nf=in_edge_nf, hidden_nf=hidden
 
 swag.fit(epochs=10000, swag_start_epoch=7000, swag_freq=20,train_loader=trainloader, valid_loader=validloader, device=device, dtype=torch.float32, use_wandb=True, patience=800)
 
-#swag.load_state_dict(torch.load("swag.pt"))
-#swag.evaluate_uncertainty(validloader, device="cpu", dtype=torch.float32)
+swag.load_state_dict(torch.load("gnn/models/swag.pt", map_location=torch.device('cpu')))
+swag.evaluate_uncertainty(validloader, device="cpu", dtype=torch.float32)
 

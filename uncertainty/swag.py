@@ -112,8 +112,11 @@ class SWAG(nn.Module):
         energies = torch.cat(energies, dim=0)
         forces = torch.cat(forces, dim=0)
         uncertainty = torch.std(energies,dim=0)
-        energy = torch.mean(energies, dim=0)
-        force = torch.mean(forces, dim=0)
+        
+        self._load_mean_swag_weights()
+        energy, force = self.forward(x, *args, **kwargs)
+        #energy = torch.mean(energies, dim=0)
+        #force = torch.mean(forces, dim=0)
         
         return energy, force, uncertainty
             
@@ -225,6 +228,10 @@ class SWAG(nn.Module):
             z = torch.randn_like(self.first_moment)
             weights = self.first_moment + L @ z
         self.load_flattened_weights_into_model(weights)
+
+    def _load_mean_swag_weights(self):
+        mean_weights = self.first_moment
+        self.load_flattened_weights_into_model(mean_weights)
         
     def load_flattened_weights_into_model(self, weights):
         current_index = 0
