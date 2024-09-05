@@ -25,7 +25,7 @@ weights = torch.load(state_dict_path, map_location=device)
 swag.load_state_dict(torch.load(state_dict_path, map_location=device))
 state_dict_path = "gnn/models/ala_converged_1000_forces_mve_no_warmup.pt"
 mve.load_state_dict(torch.load(state_dict_path, map_location=device))
-state_dict_path = "gnn/models/ensemble.pt"
+state_dict_path = "gnn/models/ensemble3.pt"
 ens.load_state_dict(torch.load(state_dict_path, map_location=device))
 
 
