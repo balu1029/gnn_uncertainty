@@ -8,6 +8,8 @@ from sklearn.metrics import r2_score
 from matplotlib import pyplot as plt
 
 from datasets.helper import utils as qm9_utils
+import csv
+import os
 
 class BaseUncertainty(nn.Module):
 
@@ -16,7 +18,7 @@ class BaseUncertainty(nn.Module):
         pass
 
     @abstractmethod
-    def fit(self, epochs, swag_start_epoch, swag_freq, train_loader, valid_loader, device, dtype, model_path, use_wandb=False, force_weight=1.0, energy_weight=1.0, log_interval=100, patience=200, factor=0.1, lr=1e-3, min_lr=1e-6):
+    def fit(self, epochs, train_loader, valid_loader, device, dtype, model_path, use_wandb=False, force_weight=1.0, energy_weight=1.0, log_interval=100, patience=200, factor=0.1, lr=1e-3, min_lr=1e-6):
         pass
 
     def prepare_data(self, data, device, dtype):
@@ -40,7 +42,7 @@ class BaseUncertainty(nn.Module):
         return atom_positions, nodes, edges, atom_mask, edge_mask, label_energy, label_forces, n_nodes
     
     
-    def evaluate_uncertainty(self, test_loader, device, dtype, save_path=None):
+    def evaluate_uncertainty(self, test_loader, device, dtype, plot_path=None, csv_path=None, show_plot=False):
         criterion = nn.L1Loss(reduction='none')
         energy_losses = torch.Tensor()
         uncertainties = torch.Tensor()
@@ -59,10 +61,20 @@ class BaseUncertainty(nn.Module):
 
 
         correlation = np.corrcoef(energy_losses, uncertainties)[0, 1]
-        self._scatter_plot(energy_losses, uncertainties, 'Ensemble', 'Energy Losses', 'Uncertainties', text=f"Correlation: {correlation}", save_path=save_path)
+        self._scatter_plot(energy_losses, uncertainties, self.__class__.__name__, 'Energy Losses', 'Uncertainties', text=f"Correlation: {correlation}", save_path=plot_path, show_plot=show_plot)
         print(f"Correlation: {correlation}")
+        if csv_path:
+            if os.path.exists(csv_path):
+                with open(csv_path, 'a', newline='') as file:
+                    writer = csv.writer(file)
+                    writer.writerow([self.__class__.__name__, correlation])
+            else:
+                with open(csv_path, 'w', newline='') as file:
+                    writer = csv.writer(file)
+                    writer.writerow(['Method', 'Correlation Coefficient'])
+                    writer.writerow([self.__class__.__name__,  correlation])
 
-    def evaluate_model(self, test_loader, device, dtype, save_path=None):
+    def evaluate_model(self, test_loader, device, dtype, plot_path=None, csv_path=None, show_plot=False):
         criterion = nn.L1Loss(reduction='none')
         predictions_energy = torch.Tensor()
         ground_truths_energy = torch.Tensor()
@@ -81,10 +93,20 @@ class BaseUncertainty(nn.Module):
 
         energy_r2 = r2_score(ground_truths_energy, predictions_energy)
 
-        self._scatter_plot(ground_truths_energy, predictions_energy, 'Ensemble', 'Ground Truth Energy', 'Predicted Energy', text=f"Energy R2 Score: {energy_r2}", save_path=save_path)
+        self._scatter_plot(ground_truths_energy, predictions_energy, self.__class__.__name__, 'Ground Truth Energy', 'Predicted Energy', text=f"Energy R2 Score: {energy_r2}", save_path=plot_path, show_plot=show_plot)
+        if csv_path:
+            if os.path.exists(csv_path):
+                with open(csv_path, 'a', newline='') as file:
+                    writer = csv.writer(file)
+                    writer.writerow([self.__class__.__name__, energy_r2])
+            else:
+                with open(csv_path, 'w', newline='') as file:
+                    writer = csv.writer(file)
+                    writer.writerow(['Method', 'Energy R2 Score'])
+                    writer.writerow([self.__class__.__name__, energy_r2])
 
 
-    def _scatter_plot(self, x, y, title, xlabel, ylabel, text="", save_path=None):
+    def _scatter_plot(self, x, y, title, xlabel, ylabel, text="", save_path=None, show_plot=False):
         plt.scatter(x, y)
         plt.xlabel(xlabel)
         plt.ylabel(ylabel)
@@ -93,6 +115,6 @@ class BaseUncertainty(nn.Module):
         plt.text(0.1, 0.9, text, transform=plt.gca().transAxes)
         if save_path is not None:
             plt.savefig(save_path)
-        else:
+        if show_plot:
             plt.show()
         plt.close()
