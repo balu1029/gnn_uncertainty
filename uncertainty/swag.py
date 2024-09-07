@@ -236,7 +236,7 @@ class SWAG(BaseUncertainty):
     def init_wandb(self, scheduler, criterion, optimizer, model_path, train_loader, valid_loader, epochs, lr, patience, factor):
         wandb.init(
                 # set the wandb project where this run will be logged
-                project="GNN-Uncertainty-Ensemble",
+                project="GNN-Uncertainty-SWAG",
 
                 # track hyperparameters and run metadata
                 config={

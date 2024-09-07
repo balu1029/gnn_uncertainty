@@ -11,7 +11,7 @@ import argparse
 
 
 parser = argparse.ArgumentParser(description='Script to evaluate models')
-parser.add_argument('--uncertainty_method', type=str, default="ENS", help='MVE, ENS, SWAG')
+parser.add_argument('--uncertainty_method', type=str, default="ENS", help='MVE | ENS | SWAG')
 
 
 args = parser.parse_args()
@@ -21,7 +21,7 @@ in_node_nf = 12
 in_edge_nf = 0
 hidden_nf = 32
 n_layers = 4
-use_wandb = False
+use_wandb = True
 
 batch_size = 128
 lr = 1e-3
@@ -30,7 +30,7 @@ device = "cuda" if torch.cuda.is_available() else "cpu"
 
 num_samples = 5
 
-dataset = "datasets/files/ala_converged_forces_1000"
+dataset = "datasets/files/ala_converged_1000_forces"
 testset = "datsets/files/ala_converged_validation"
 model_path = None#"./gnn/models/ala_converged_1000000_forces_mve.pt"
 trainset = MD17Dataset(dataset,subtract_self_energies=False, in_unit="kj/mol",train=True, train_ratio=0.8)

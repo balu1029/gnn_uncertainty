@@ -51,8 +51,8 @@ class BaseUncertainty(nn.Module):
             atom_positions, nodes, edges, atom_mask, edge_mask, label_energy, label_forces, n_nodes = self.prepare_data(data, device, dtype)    
 
             energy, forces, uncertainty = self.predict(x=atom_positions, h0=nodes, edges=edges, edge_attr=None, node_mask=atom_mask, edge_mask=edge_mask, n_nodes=n_nodes)
-            energy_losses = torch.cat((energy_losses, criterion(energy.detach(), label_energy)), dim=0)
-            uncertainties = torch.cat((uncertainties, uncertainty.detach()), dim=0)
+            energy_losses = torch.cat((energy_losses, criterion(energy.cpu().detach(), label_energy.cpu())), dim=0)
+            uncertainties = torch.cat((uncertainties, uncertainty.cpu().detach()), dim=0)
 
             atom_positions.detach()
         
@@ -83,8 +83,8 @@ class BaseUncertainty(nn.Module):
             atom_positions, nodes, edges, atom_mask, edge_mask, label_energy, label_forces, n_nodes = self.prepare_data(data, device, dtype)    
 
             energy, forces, uncertainty = self.predict(x=atom_positions, h0=nodes, edges=edges, edge_attr=None, node_mask=atom_mask, edge_mask=edge_mask, n_nodes=n_nodes)
-            predictions_energy = torch.cat((predictions_energy, energy.detach()), dim=0)
-            ground_truths_energy = torch.cat((ground_truths_energy, label_energy.detach()), dim=0)
+            predictions_energy = torch.cat((predictions_energy, energy.cpu().detach()), dim=0)
+            ground_truths_energy = torch.cat((ground_truths_energy, label_energy.cpu().detach()), dim=0)
 
             atom_positions.detach()
         
