@@ -71,6 +71,7 @@ class ModelEnsemble(BaseUncertainty):
             stacked_loss_force = criterion(forces, stacked_label_force)
             loss_force = criterion(mean_force, label_forces)
             total_loss = force_weight*stacked_loss_force + energy_weight*stacked_loss_energy
+            total_loss /= force_weight + energy_weight
 
             optimizer.zero_grad()
             total_loss.backward()
@@ -101,6 +102,7 @@ class ModelEnsemble(BaseUncertainty):
             stacked_loss_force = criterion(forces, stacked_label_force)
             loss_force = criterion(mean_force, label_forces)
             total_loss = force_weight*stacked_loss_force + energy_weight*stacked_loss_energy
+            total_loss /= force_weight + energy_weight
 
             self.valid_losses_energy.append(loss_energy.item())
             self.valid_losses_force.append(loss_force.item())

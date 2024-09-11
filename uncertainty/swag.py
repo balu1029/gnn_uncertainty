@@ -89,6 +89,7 @@ class SWAG(BaseUncertainty):
             loss_energy = criterion(energy, label_energy)
             loss_force = criterion(force, label_forces)
             total_loss = force_weight*loss_force + energy_weight*loss_energy
+            total_loss /= force_weight + energy_weight
 
             optimizer.zero_grad()
             total_loss.backward()
@@ -119,6 +120,7 @@ class SWAG(BaseUncertainty):
             loss_energy = criterion(energy, label_energy)
             loss_force = criterion(force, label_forces)
             total_loss = force_weight*loss_force + energy_weight*loss_energy
+            total_loss /= force_weight + energy_weight
 
             self.valid_losses_energy.append(loss_energy.item())
             self.valid_losses_force.append(loss_force.item())

@@ -165,6 +165,33 @@ class OpenMMEnergyCalculation:
 
         self._generate_from_npy(molecules, out_file, num_molecules)
     
+    def generate_in_distribution_from_numpy(self, in_file:str, out_file:str, num_molecules:int, valid:bool)->None:
+        molecules = np.load(in_file)
+        indices1 = [4, 6, 8, 14]
+        indices2 = [6, 8, 14, 16]   
+
+        psi = self.calculate_dihedrals_batch(molecules, indices1)
+        phi = self.calculate_dihedrals_batch(molecules, indices2)
+
+        phi_indices = np.where(psi < -100)[0]
+        psi_indices = np.where((phi > 50) | (phi < -150))[0]
+        
+        overlapping_indices = np.intersect1d(phi_indices, psi_indices)
+
+        in_dist = molecules[overlapping_indices][-int(num_molecules/2):]
+        out_dist = molecules[np.delete(np.arange(len(molecules)), overlapping_indices)][-int(num_molecules/2):]
+        del(molecules)
+
+        out_file_name = out_file.split(".xyz")[0]
+        if not valid:
+            self._generate_from_npy(in_dist, out_file_name + "_in_dist.xyz", num_molecules)
+        else:
+            self._generate_from_npy(in_dist, out_file_name + "_validation_in_dist.xyz", int(num_molecules/2))
+            self._generate_from_npy(out_dist, out_file_name + "_validation_out_dist.xyz", int(num_molecules/2))
+
+
+
+    
     def calc_energy(self, positions:np.array)->np.array:
         """
         Calculate the energy of a molecule with the given positions.
@@ -216,6 +243,49 @@ class OpenMMEnergyCalculation:
                 for j in range(len(molecules[i])):
                     file.write(f"{atoms_ala[j]} {molecules[i][j][0]} {molecules[i][j][1]} {molecules[i][j][2]} {forces[j][0].value_in_unit(kilojoules_per_mole/angstrom)} {forces[j][1].value_in_unit(kilojoules_per_mole/angstrom)} {forces[j][2].value_in_unit(kilojoules_per_mole/angstrom)}\n")
 
+    def calculate_dihedrals_batch(self, molecules, indices) -> np.array:
+        """
+        Calculate dihedral angles for a batch of molecules in a vectorized manner.
+        
+        Parameters:
+        molecules (np.ndarray): Array of shape (n_molecules, n_atoms, 3) containing the coordinates of the atoms in each molecule.
+        indices (list): List of 4 indices that define the dihedral angle for all molecules.
+        
+        Returns:
+        np.ndarray: Array of dihedral angles for the batch of molecules.
+        """
+        n_molecules = molecules.shape[0]
+        
+        # Extract coordinates of the four atoms for all molecules
+        p0 = molecules[:, indices[0], :]
+        p1 = molecules[:, indices[1], :]
+        p2 = molecules[:, indices[2], :]
+        p3 = molecules[:, indices[3], :]
+        
+        # Compute the vectors between the points
+        b0 = p1 - p0
+        b1 = p2 - p1
+        b2 = p3 - p2
+        
+        # Normalize b1
+        b1 /= np.linalg.norm(b1, axis=1)[:, np.newaxis]
+        
+        # Compute normal vectors to the planes
+        n0 = np.cross(b0, b1)
+        n1 = np.cross(b1, b2)
+        
+        # Normalize the normal vectors
+        n0 /= np.linalg.norm(n0, axis=1)[:, np.newaxis]
+        n1 /= np.linalg.norm(n1, axis=1)[:, np.newaxis]
+        
+        # Compute the dihedral angles
+        m1 = np.cross(n0, b1)
+        x = np.einsum('ij,ij->i', n0, n1)
+        y = np.einsum('ij,ij->i', m1, n1)
+        angles = -np.degrees(np.arctan2(y, x))
+        
+        return angles
+
 
 if __name__ == "__main__":
     energy_calculation = OpenMMEnergyCalculation()
@@ -223,5 +293,6 @@ if __name__ == "__main__":
     out_path = "datasets/files/alaninedipeptide_traj/alaninedipeptide_traj_energies.xyz"
    
     npy_in = "datasets/files/ala_converged/prod_positions_20-09-2023_13-10-19.npy"
-    xyz_out = "datasets/files/ala_converged/prod_positions_20-09-2023_13-10-19_energies_forces_10000.xyz"
-    energy_calculation.run_npy_file(npy_in, xyz_out,10000)
+    xyz_out = "datasets/files/ala_converged/dataset_10000.xyz"
+    #energy_calculation.run_npy_file(npy_in, xyz_out,10000)
+    energy_calculation.generate_in_distribution_from_numpy(npy_in, xyz_out, 10000, valid=True)
