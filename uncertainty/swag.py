@@ -55,6 +55,8 @@ class SWAG(BaseUncertainty):
         best_valid_loss = np.inf
 
         for epoch in range(epochs):
+            if epoch > swag_start_epoch:
+                optimizer = torch.optim.SGD(self.parameters(), lr=lr)
             self.train_epoch(train_loader=train_loader, optimizer=optimizer, criterion=criterion, epoch=epoch, device=device, dtype=dtype, force_weight=force_weight, energy_weight=energy_weight, log_interval=log_interval)
             self.valid_epoch(valid_loader=valid_loader, criterion=criterion, device=device, dtype=dtype, force_weight=force_weight, energy_weight=energy_weight)
             self.epoch_summary(epoch, use_wandb=use_wandb, lr=optimizer.param_groups[0]['lr'])

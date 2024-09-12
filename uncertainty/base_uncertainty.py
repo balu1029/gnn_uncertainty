@@ -107,24 +107,24 @@ class BaseUncertainty(nn.Module):
 
     def evaluate_all(self, test_loader_in, device, dtype, test_loader_out=None, plot_name=None, csv_path=None, show_plot=None):
 
-        energy_r2_in, forces_r2_in, correlation_in, energy_losses_in, forces_losses_in = self._eval_all(test_loader_in, device, dtype, plot_path=f"{plot_name}_in.png", show_plot=show_plot, plot_title=self.__class__.__name__+'In Distribution')
+        energy_r2_in, forces_r2_in, correlation_in, energy_losses_in, forces_losses_in = self._eval_all(test_loader_in, device, dtype, plot_path=f"{plot_name}_in", plot_title=self.__class__.__name__+' In Distribution')
 
         if test_loader_out:
-            energy_r2_out, forces_r2_out, correlation_out, energy_losses_out, forces_losses_out = self._eval_all(test_loader_out, device, dtype, plot_path=f"{plot_name}_out.png", show_plot=show_plot, plot_title=self.__class__.__name__+'Out Distribution')
+            energy_r2_out, forces_r2_out, correlation_out, energy_losses_out, forces_losses_out = self._eval_all(test_loader_out, device, dtype, plot_path=f"{plot_name}_out", plot_title=self.__class__.__name__+' Out Distribution')
         
         else:
-            energy_r2_out, forces_r2_out, correlation_out, energy_losses_out, forces_losses_out = None, None, None, None, None
+            energy_r2_out, forces_r2_out, correlation_out, energy_losses_out, forces_losses_out = 0, 0, 0, np.array([0]), np.array([0])
 
         if csv_path:
             if os.path.exists(csv_path):
                 with open(csv_path, 'a', newline='') as file:
                     writer = csv.writer(file)
-                    writer.writerow([self.__class__.__name__, energy_r2_in, forces_r2_in, correlation_in, energy_losses_in, forces_losses_in, energy_r2_out, forces_r2_out, correlation_out, energy_losses_out, forces_losses_out])
+                    writer.writerow([self.__class__.__name__, energy_r2_in, forces_r2_in, correlation_in, np.mean(energy_losses_in), np.mean(forces_losses_in), energy_r2_out, forces_r2_out, correlation_out, np.mean(energy_losses_out), np.mean(forces_losses_out)])
             else:
                 with open(csv_path, 'w', newline='') as file:
                     writer = csv.writer(file)
                     writer.writerow(['Method', 'Energy R2 Score In Distribution', 'Forces R2 Score In Distribution', 'Correlation In Distribution', 'Energy Losses In Distribution', 'Forces Losses In Distribution', 'Energy R2 Score Out Distribution', 'Forces R2 Score Out Distribution', 'Correlation Out Distribution', 'Energy Losses Out Distribution', 'Forces Losses Out Distribution'])
-                    writer.writerow([self.__class__.__name__, energy_r2_in, forces_r2_in, correlation_in, energy_losses_in, forces_losses_in, energy_r2_out, forces_r2_out, correlation_out, energy_losses_out, forces_losses_out])
+                    writer.writerow([self.__class__.__name__, energy_r2_in, forces_r2_in, correlation_in, np.mean(energy_losses_in), np.mean(forces_losses_in), energy_r2_out, forces_r2_out, correlation_out, np.mean(energy_losses_out), np.mean(forces_losses_out)])
 
     def _eval_all(self, dataloader, device, dtype, plot_path=None, plot_title=None):
         criterion = nn.L1Loss(reduction='none')
@@ -161,8 +161,8 @@ class BaseUncertainty(nn.Module):
         correlation = np.corrcoef(energy_losses, uncertainties)[0, 1]
 
         if plot_path:
-            self._scatter_plot(ground_truths_energy, predictions_energy, plot_title, 'Ground Truth Energy', 'Predicted Energy', text=f"Energy R2 Score: {energy_r2}", save_path=plot_path, show_plot=False)
-            self._scatter_plot(energy_losses, uncertainties, plot_title, 'Energy Losses', 'Uncertainties', text=f"Correlation: {correlation}", save_path=plot_path, show_plot=False)
+            self._scatter_plot(ground_truths_energy, predictions_energy, plot_title, 'Ground Truth Energy', 'Predicted Energy', text=f"Energy R2 Score: {energy_r2}", save_path=plot_path + "_energy.png", show_plot=False)
+            self._scatter_plot(energy_losses, uncertainties, plot_title, 'Energy Losses', 'Uncertainties', text=f"Correlation: {correlation}", save_path=plot_path + "_uncertainty.png", show_plot=False)
 
         return energy_r2, forces_r2, correlation, energy_losses, forces_losses
 
