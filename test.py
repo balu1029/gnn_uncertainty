@@ -1,6 +1,7 @@
 from uncertainty.swag import SWAG
 from uncertainty.ensemble import ModelEnsemble
 from uncertainty.mve import MVE
+from uncertainty.evidential import EvidentialRegression
 from gnn.egnn import EGNN
 from datasets.md17_dataset import MD17Dataset
 
@@ -32,6 +33,7 @@ validloader = torch.utils.data.DataLoader(validset, batch_size=batch_size, shuff
 swag = SWAG(EGNN, in_node_nf=in_node_nf, in_edge_nf=in_edge_nf, hidden_nf=hidden_nf, n_layers=n_layers, device=device)
 ens = ModelEnsemble(EGNN, num_models=3, in_node_nf=in_node_nf, in_edge_nf=in_edge_nf, hidden_nf=hidden_nf, n_layers=n_layers, device=device)
 mve = MVE(EGNN, multi_dec=True, out_features=1, in_node_nf=in_node_nf, in_edge_nf=in_edge_nf, hidden_nf=hidden_nf, n_layers=n_layers, device=device)
+evi = EvidentialRegression(EGNN, in_node_nf=in_node_nf, in_edge_nf=in_edge_nf, hidden_nf=hidden_nf, n_layers=n_layers, device=device)
 
 #ens.fit(epochs=10000, train_loader=trainloader, valid_loader=validloader, device=device, dtype=torch.float32, use_wandb=False, patience=800, model_path=None)
 #ens.evaluate_model(validloader, device=device, dtype=torch.float32, save_path=None)
@@ -43,6 +45,10 @@ mve = MVE(EGNN, multi_dec=True, out_features=1, in_node_nf=in_node_nf, in_edge_n
 #swag.evaluate_model(validloader, device="cpu", dtype=torch.float32, save_path=None)
 
 #mve.fit(epochs=10000, warmup_steps=0, train_loader=trainloader, valid_loader=validloader, device=device, dtype=torch.float32, use_wandb=False, patience=800, model_path=None)
-mve.load_state_dict(torch.load("gnn/models/ala_converged_1000_forces_mve_no_warmup.pt", map_location=torch.device('cpu')))
-mve.evaluate_uncertainty(validloader, device="cpu", dtype=torch.float32, save_path=None)
-mve.evaluate_model(validloader, device="cpu", dtype=torch.float32, save_path=None)
+#mve.load_state_dict(torch.load("gnn/models/ala_converged_1000_forces_mve_no_warmup.pt", map_location=torch.device('cpu')))
+#mve.evaluate_uncertainty(validloader, device="cpu", dtype=torch.float32, save_path=None)
+#mve.evaluate_model(validloader, device="cpu", dtype=torch.float32, save_path=None)
+
+evi.fit(epochs=5, train_loader=trainloader, valid_loader=validloader, device=device, dtype=torch.float32, use_wandb=False, patience=800, log_interval=2, force_weight=0)
+#evi.load_state_dict(torch.load("gnn/models/evidential.pt", map_location=torch.device('cpu')))
+evi.evaluate_all(validloader, device=device, dtype=torch.float32, plot_name="logs/evi/plot", csv_path="logs/evi/evi_eval.csv", test_loader_out=None)

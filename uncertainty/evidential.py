@@ -64,11 +64,11 @@ class EvidentialRegressionLoss(nn.Module):
 
         return torch.mean(reg) if self.reduce else reg
 
-    def forward(self, y_true, evidential_output):
+    def forward(self, evidential_output, y_true):
         """
         Forward pass to compute the total loss which includes both NLL and regularization.
         """
-        gamma, v, alpha, beta = torch.split(evidential_output, 4, dim=-1)
+        gamma, v, alpha, beta = evidential_output
         loss_nll = self.NIG_NLL(y_true, gamma, v, alpha, beta)
         loss_reg = self.NIG_Reg(y_true, gamma, v, alpha, beta)
         return loss_nll + self.coeff * loss_reg
@@ -77,7 +77,7 @@ class EvidentialRegressionLoss(nn.Module):
 class EvidentialRegression(BaseUncertainty):
     def __init__(self, base_model_class, *args, **kwargs):
         super(EvidentialRegression, self).__init__()
-        self.model = base_model_class(*args, **kwargs, out_features=4)
+        self.model = base_model_class(*args, **kwargs, evidential=True)
 
 
         self.train_losses_energy = []
@@ -122,17 +122,17 @@ class EvidentialRegression(BaseUncertainty):
     def train_epoch(self, train_loader, optimizer, criterion, epoch, device, dtype, force_weight=1.0, energy_weight=1.0, log_interval=100):
         start = time.time()
         self.train()
+        force_criterion = nn.L1Loss()
         for i,data in enumerate(train_loader):
 
             atom_positions, nodes, edges, atom_mask, edge_mask, label_energy, label_forces, n_nodes = self.prepare_data(data, device, dtype)    
 
-            mean_energy, mean_force, uncertainty = self.forward(x=atom_positions, h0=nodes, edges=edges, edge_attr=None, node_mask=atom_mask, edge_mask=edge_mask, n_nodes=n_nodes)
+            energy, force, v, alpha, beta = self.forward(x=atom_positions, h0=nodes, edges=edges, edge_attr=None, node_mask=atom_mask, edge_mask=edge_mask, n_nodes=n_nodes)
             
-            loss_energy = criterion(mean_energy, label_energy)
-            loss_force = criterion(mean_force, label_forces)
+            loss_energy = criterion((energy, v, alpha, beta), label_energy)
+            loss_force = force_criterion(force, label_forces)
             total_loss = force_weight*loss_force + energy_weight*loss_energy
             total_loss /= force_weight + energy_weight
-            total_loss = 0.5 * torch.mean(torch.log(uncertainty) + total_loss/uncertainty)
 
             optimizer.zero_grad()
             total_loss.backward()
@@ -145,7 +145,7 @@ class EvidentialRegression(BaseUncertainty):
             self.train_losses_total.append(total_loss.item())
             
             if (i+1) % log_interval == 0:
-                print(f"Epoch {epoch}, Batch {i+1}/{len(train_loader)}, Loss: {loss_energy.item()}, Uncertainty: {torch.mean(uncertainty).item()}", flush=True)
+                print(f"Epoch {epoch}, Batch {i+1}/{len(train_loader)}, Loss: {total_loss.item()}", flush=True)
         
         self.train_time = time.time() - start
 
@@ -153,17 +153,17 @@ class EvidentialRegression(BaseUncertainty):
     def valid_epoch(self, valid_loader, criterion, device, dtype, force_weight=1.0, energy_weight=1.0):
         start = time.time()
         self.eval()
+        force_criterion = nn.L1Loss()
         for i,data in enumerate(valid_loader):
             atom_positions, nodes, edges, atom_mask, edge_mask, label_energy, label_forces, n_nodes = self.prepare_data(data, device, dtype)    
 
-            mean_energy, mean_force, uncertainty = self.forward(x=atom_positions, h0=nodes, edges=edges, edge_attr=None, node_mask=atom_mask, edge_mask=edge_mask, n_nodes=n_nodes)
+            energy, force, v, alpha, beta = self.forward(x=atom_positions, h0=nodes, edges=edges, edge_attr=None, node_mask=atom_mask, edge_mask=edge_mask, n_nodes=n_nodes)
 
  
-            loss_energy = criterion(mean_energy, label_energy)
-            loss_force = criterion(mean_force, label_forces)
+            loss_energy = criterion((energy, v, alpha, beta), label_energy)
+            loss_force = force_criterion(force, label_forces)
             total_loss = force_weight*loss_force + energy_weight*loss_energy
             total_loss /= force_weight + energy_weight
-            total_loss = 0.5 * torch.mean(torch.log(uncertainty) + total_loss/uncertainty)
 
             self.valid_losses_energy.append(loss_energy.item())
             self.valid_losses_force.append(loss_force.item())
@@ -174,17 +174,22 @@ class EvidentialRegression(BaseUncertainty):
 
     def predict(self, x, *args, **kwargs):
         self.eval()
-        return self.forward(x=x, *args, **kwargs)
+        energy, force, v, alpha, beta = self.forward(x=x, *args, **kwargs)
+        variance = torch.sqrt(beta / (v * (alpha - 1)))
+        return energy, force, variance
 
 
     def forward(self, x, *args, **kwargs):
         output = self.model.forward(x=x, *args, **kwargs)
         mu, v, alpha, beta = torch.split(output, 1, dim=-1)
-        energy = mu
-        variance = np.sqrt(beta / (v * (alpha - 1)))
+        energy = mu.squeeze(-1)
+        v = v.squeeze(-1)
+        alpha = alpha.squeeze(-1)
+        beta = beta.squeeze(-1)        
+        
         grad_output = torch.ones_like(energy)
         force = -torch.autograd.grad(outputs=energy, inputs=x, grad_outputs=grad_output, create_graph=True)[0]
-        return energy, force, variance
+        return energy, force, v, alpha, beta
     
 
     def drop_metrics(self):

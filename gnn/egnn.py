@@ -3,9 +3,34 @@ from torch import nn
 from gnn.architecture.egnn_architecture import *
 from gnn.base_gnn import BaseGNN
 
+import torch.nn.functional as F
+
+class DenseNormalGamma(nn.Module):
+    def __init__(self, in_features, out_features):
+        super(DenseNormalGamma, self).__init__()
+        self.units = int(out_features)
+        self.dense = nn.Linear(in_features=in_features, out_features=4 * self.units)
+
+    def evidence(self, x):
+        return F.softplus(x)
+
+    def forward(self, x):
+        output = self.dense(x)
+        mu, logv, logalpha, logbeta = torch.chunk(output, 4, dim=-1)
+        v = self.evidence(logv)
+        alpha = self.evidence(logalpha) + 1
+        beta = self.evidence(logbeta)
+        return torch.cat([mu, v, alpha, beta], dim=-1)
+
+    def compute_output_shape(self, input_shape):
+        return (input_shape[0], 4 * self.units)
+
+    def get_config(self):
+        return {'units': self.units}
+
 
 class EGNN(nn.Module, BaseGNN):
-    def __init__(self, in_node_nf, in_edge_nf, hidden_nf, device='cpu', act_fn=nn.SiLU(), n_layers=4, coords_weight=1.0, attention=False, node_attr=1, out_features=1, multi_dec=False):
+    def __init__(self, in_node_nf, in_edge_nf, hidden_nf, device='cpu', act_fn=nn.SiLU(), n_layers=4, coords_weight=1.0, attention=False, node_attr=1, out_features=1, multi_dec=False, evidential=False):
         super(EGNN, self).__init__()
         self.hidden_nf = hidden_nf
         self.device = device
@@ -35,6 +60,11 @@ class EGNN(nn.Module, BaseGNN):
                                         act_fn,
                                         nn.Linear(self.hidden_nf, out_features)).to(self.device)
             self.graph_dec = nn.ModuleList([graph_dec_energy, graph_dec_variance])
+
+        elif evidential:
+            self.graph_dec = nn.Sequential(nn.Linear(self.hidden_nf, self.hidden_nf),
+                                        act_fn,
+                                        DenseNormalGamma(in_features=self.hidden_nf, out_features=1))
         else:
             self.graph_dec = nn.Sequential(nn.Linear(self.hidden_nf, self.hidden_nf),
                                         act_fn,
