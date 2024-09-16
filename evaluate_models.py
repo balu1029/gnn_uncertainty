@@ -1,6 +1,7 @@
 from uncertainty.swag import SWAG
 from uncertainty.ensemble import ModelEnsemble
 from uncertainty.mve import MVE
+from uncertainty.evidential import EvidentialRegression
 from gnn.egnn import EGNN
 from datasets.md17_dataset import MD17Dataset
 
@@ -31,7 +32,7 @@ def setup_model_folder(name):
 
 
 parser = argparse.ArgumentParser(description='Script to evaluate models')
-parser.add_argument('--uncertainty_method', type=str, default="SWAG", help='MVE | ENS | SWAG')
+parser.add_argument('--uncertainty_method', type=str, default="SWAG", help='MVE | ENS | SWAG | EVI')
 parser.add_argument('--num_samples', type=int, default=5, help='Number of independent training runs')
 parser.add_argument('--swag_sample_size', type=int, default=5, help='Number of samples to evaluate SWAG')
 parser.add_argument('--ensemble_size', type=int, default=3, help='Number of models to evaluate ENS')
@@ -40,7 +41,7 @@ parser.add_argument('--save_model', type=bool, default=False, help='Save model')
 parser.add_argument('--epochs', type=int, default=10000, help='Number of epochs to train')
 parser.add_argument('--swag_start_epoch', type=int, default=7000, help='Epoch to start SWAG sampling')
 parser.add_argument('--force_weight', type=int, default=5, help='Factor to weight the force loss')
-parser.add_argument('energy_weight', type=int, default=1, help='Factor to weight the energy loss')
+parser.add_argument('--energy_weight', type=int, default=1, help='Factor to weight the energy loss')
 
 
 args = parser.parse_args()
@@ -63,7 +64,7 @@ use_wandb = True
 
 batch_size = 128
 lr = 1e-3
-patience = 1500
+patience = 5000
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
 
@@ -130,6 +131,19 @@ if uncertainty_method == "ENS":
         ens = ModelEnsemble(EGNN, num_models=ensemble_size, in_node_nf=in_node_nf, in_edge_nf=in_edge_nf, hidden_nf=hidden_nf, n_layers=n_layers, device=device)
         ens.fit(epochs=epochs, train_loader=trainloader, valid_loader=validloader, device=device, dtype=torch.float32, use_wandb=use_wandb, patience=patience, model_path=model_path, force_weight=force_weight, energy_weight=energy_weight)
         ens.evaluate_all(testloader_in, device=device, dtype=torch.float32, plot_name=f"{log_path}/plot_{i}", csv_path=f"{log_path}/eval.csv", test_loader_out=testloader_out)
+
+if uncertainty_method == "EVI":
+    name = "evi"
+    log_path = setup_log_folder(name)
+    if save_model:
+        base_model_path = setup_model_folder(name)
+    path = f"logs/{name}"
+    for i in range(num_samples):
+        if save_model:
+            model_path = f"{base_model_path}/model_{i}.pt"
+        evi = EvidentialRegression(EGNN, in_node_nf=in_node_nf, in_edge_nf=in_edge_nf, hidden_nf=hidden_nf, n_layers=n_layers, device=device)
+        evi.fit(epochs=epochs, train_loader=trainloader, valid_loader=validloader, device=device, dtype=torch.float32, use_wandb=use_wandb, patience=patience, model_path=model_path, force_weight=force_weight, energy_weight=energy_weight)
+        evi.evaluate_all(testloader_in, device=device, dtype=torch.float32, plot_name=f"{log_path}/plot_{i}", csv_path=f"{log_path}/eval.csv", test_loader_out=testloader_out)
 
 
 
