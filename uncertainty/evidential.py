@@ -174,7 +174,6 @@ class EvidentialRegression(BaseUncertainty):
             loss_energy = force_criterion(energy, label_energy)
             loss_force = force_criterion(force, label_forces)
             total_loss = force_weight*loss_force + energy_weight*evidential_loss_energy
-            total_loss /= force_weight + energy_weight
 
             self.valid_losses_energy.append(loss_energy.item())
             self.valid_losses_force.append(loss_force.item())

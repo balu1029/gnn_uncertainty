@@ -139,7 +139,6 @@ class MVE(BaseUncertainty):
             loss_energy = criterion(mean_energy, label_energy)
             loss_force = criterion(mean_force, label_forces)
             total_loss = force_weight*loss_force + energy_weight*loss_energy
-            total_loss /= force_weight + energy_weight
             total_loss = 0.5 * torch.mean(torch.log(uncertainty) + total_loss/uncertainty)
 
             self.valid_losses_energy.append(loss_energy.item())
