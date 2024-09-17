@@ -21,6 +21,10 @@ class BaseUncertainty(nn.Module):
     def fit(self, epochs, train_loader, valid_loader, device, dtype, model_path, use_wandb=False, force_weight=1.0, energy_weight=1.0, log_interval=100, patience=200, factor=0.1, lr=1e-3, min_lr=1e-6):
         pass
 
+    def __init__(self):
+        super(BaseUncertainty, self).__init__()
+        self.best_model = self.state_dict()
+
     def prepare_data(self, data, device, dtype):
         batch_size, n_nodes, _ = data['coordinates'].size()
         atom_positions = data['coordinates'].view(batch_size * n_nodes, -1).requires_grad_(True).to(device, dtype)
@@ -106,7 +110,7 @@ class BaseUncertainty(nn.Module):
                     writer.writerow([self.__class__.__name__, energy_r2])
 
     def evaluate_all(self, test_loader_in, device, dtype, test_loader_out=None, plot_name=None, csv_path=None, show_plot=None):
-
+        self.load_state_dict(self.best_model)
         energy_r2_in, forces_r2_in, correlation_in, energy_losses_in, forces_losses_in = self._eval_all(test_loader_in, device, dtype, plot_path=f"{plot_name}_in", plot_title=self.__class__.__name__+' In Distribution')
 
         if test_loader_out:
@@ -135,6 +139,9 @@ class BaseUncertainty(nn.Module):
         energy_losses = torch.Tensor()
         forces_losses = torch.Tensor()
         uncertainties = torch.Tensor()
+
+        
+
         self.eval()
         for i,data in enumerate(dataloader):
             atom_positions, nodes, edges, atom_mask, edge_mask, label_energy, label_forces, n_nodes = self.prepare_data(data, device, dtype)    

@@ -11,7 +11,7 @@ import torch.nn.functional as F
 import numpy as np
 
 class EvidentialRegressionLoss(nn.Module):
-    def __init__(self, coeff=1.0, omega=0.01, reduce=True, kl=False):
+    def __init__(self, coeff=2.0e-2, omega=0.01, reduce=True, kl=False):
         """
         Initialize the loss function with optional regularization coefficient (coeff),
         omega for controlling the regularization term, and other settings.
@@ -90,30 +90,39 @@ class EvidentialRegression(BaseUncertainty):
         self.valid_losses_total = []
         self.valid_time = 0
 
+
     def fit(self, epochs, train_loader, valid_loader, device, dtype, model_path="gnn/models/evidential.pt", use_wandb=False, warmup_steps=0, force_weight=1.0, energy_weight=1.0, log_interval=100, patience=200, factor=0.1, lr=1e-3, min_lr=1e-6): 
 
         optimizer = torch.optim.AdamW(self.parameters(), lr=1e-3, weight_decay=1e-16)   
-        criterion = EvidentialRegressionLoss()
+        criterion = EvidentialRegressionLoss(coeff=1e-3)
         scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=factor, patience=patience)
         
         if use_wandb:
-            self.init_wandb(scheduler,criterion,optimizer,model_path,train_loader,valid_loader,epochs,lr,patience,factor)
+            self.init_wandb(scheduler,criterion,optimizer,model_path,train_loader,valid_loader,epochs,lr,patience,factor, force_weight, energy_weight)
 
         best_valid_loss = np.inf
 
         for epoch in range(epochs):
             self.train_epoch(train_loader=train_loader, optimizer=optimizer, criterion=criterion, epoch=epoch, device=device, dtype=dtype, force_weight=force_weight, energy_weight=energy_weight, log_interval=log_interval)
             self.valid_epoch(valid_loader=valid_loader, criterion=criterion, device=device, dtype=dtype, force_weight=force_weight, energy_weight=energy_weight)
+            
+            if epoch % 50 == 0:
+                self.evaluate_uncertainty(valid_loader, device, dtype, show_plot=False)
+            
             self.epoch_summary(epoch, use_wandb=use_wandb, lr=optimizer.param_groups[0]['lr'])
 
-            if np.array(self.valid_losses_total).mean() < best_valid_loss and model_path is not None:
+            if np.array(self.valid_losses_total).mean() < best_valid_loss:
                 best_valid_loss = np.array(self.valid_losses_total).mean()
-                torch.save(self.state_dict(), model_path)
+                if model_path is not None:
+                    torch.save(self.state_dict(), model_path)
+                self.best_model = self.state_dict()
 
             self.lr_before = optimizer.param_groups[0]['lr']
             scheduler.step(np.array(self.valid_losses_total).mean())
             self.lr_after = optimizer.param_groups[0]['lr']
             self.drop_metrics()
+
+            
 
         if use_wandb:
             wandb.finish()
@@ -128,11 +137,12 @@ class EvidentialRegression(BaseUncertainty):
             atom_positions, nodes, edges, atom_mask, edge_mask, label_energy, label_forces, n_nodes = self.prepare_data(data, device, dtype)    
 
             energy, force, v, alpha, beta = self.forward(x=atom_positions, h0=nodes, edges=edges, edge_attr=None, node_mask=atom_mask, edge_mask=edge_mask, n_nodes=n_nodes)
+            variance = torch.sqrt(beta / (v * (alpha - 1)))
             
-            loss_energy = criterion((energy, v, alpha, beta), label_energy)
+            evidential_loss_energy = criterion((energy, v, alpha, beta), label_energy)
+            loss_energy = force_criterion(energy, label_energy)
             loss_force = force_criterion(force, label_forces)
-            total_loss = force_weight*loss_force + energy_weight*loss_energy
-            total_loss /= force_weight + energy_weight
+            total_loss = force_weight*loss_force + energy_weight*evidential_loss_energy
 
             optimizer.zero_grad()
             total_loss.backward()
@@ -145,7 +155,7 @@ class EvidentialRegression(BaseUncertainty):
             self.train_losses_total.append(total_loss.item())
             
             if (i+1) % log_interval == 0:
-                print(f"Epoch {epoch}, Batch {i+1}/{len(train_loader)}, Loss: {total_loss.item()}", flush=True)
+                print(f"Epoch {epoch}, Batch {i+1}/{len(train_loader)}, Loss: {total_loss.item()}, Variance: {torch.mean(variance)}", flush=True)
         
         self.train_time = time.time() - start
 
@@ -160,9 +170,10 @@ class EvidentialRegression(BaseUncertainty):
             energy, force, v, alpha, beta = self.forward(x=atom_positions, h0=nodes, edges=edges, edge_attr=None, node_mask=atom_mask, edge_mask=edge_mask, n_nodes=n_nodes)
 
  
-            loss_energy = criterion((energy, v, alpha, beta), label_energy)
+            evidential_loss_energy = criterion((energy, v, alpha, beta), label_energy)
+            loss_energy = force_criterion(energy, label_energy)
             loss_force = force_criterion(force, label_forces)
-            total_loss = force_weight*loss_force + energy_weight*loss_energy
+            total_loss = force_weight*loss_force + energy_weight*evidential_loss_energy
             total_loss /= force_weight + energy_weight
 
             self.valid_losses_energy.append(loss_energy.item())
@@ -224,7 +235,7 @@ class EvidentialRegression(BaseUncertainty):
                 "lr" : lr 
             })
 
-    def init_wandb(self, scheduler, criterion, optimizer, model_path, train_loader, valid_loader, epochs, lr, patience, factor):
+    def init_wandb(self, scheduler, criterion, optimizer, model_path, train_loader, valid_loader, epochs, lr, patience, factor, force_weight, energy_weight):
         wandb.init(
                 # set the wandb project where this run will be logged
                 project="GNN-Uncertainty-Evidential",
@@ -246,4 +257,6 @@ class EvidentialRegression(BaseUncertainty):
                 "in_edge_nf" : self.model.in_edge_nf,
                 "loss_fn" : type(criterion).__name__,
                 "model_checkpoint": model_path,
+                "force_weight": force_weight,
+                "energy_weight": energy_weight
                 })

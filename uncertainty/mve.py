@@ -29,6 +29,7 @@ class MVE(BaseUncertainty):
         self.valid_losses_total = []
         self.valid_time = 0
 
+
     def fit(self, epochs, train_loader, valid_loader, device, dtype, model_path="gnn/models/mve.pt", use_wandb=False, warmup_steps=0, force_weight=1.0, energy_weight=1.0, log_interval=100, patience=200, factor=0.1, lr=1e-3, min_lr=1e-6): 
 
         optimizer = torch.optim.AdamW(self.parameters(), lr=1e-3, weight_decay=1e-16)   
@@ -39,7 +40,7 @@ class MVE(BaseUncertainty):
             self.warmup(train_loader, optimizer, criterion, device, dtype, epochs=warmup_steps, force_weight=force_weight, energy_weight=energy_weight, log_interval=log_interval)
         
         if use_wandb:
-            self.init_wandb(scheduler,criterion,optimizer,model_path,train_loader,valid_loader,epochs,lr,patience,factor)
+            self.init_wandb(scheduler,criterion,optimizer,model_path,train_loader,valid_loader,epochs,lr,patience,factor,force_weight,energy_weight)
 
         best_valid_loss = np.inf
 
@@ -48,9 +49,11 @@ class MVE(BaseUncertainty):
             self.valid_epoch(valid_loader=valid_loader, criterion=criterion, device=device, dtype=dtype, force_weight=force_weight, energy_weight=energy_weight)
             self.epoch_summary(epoch, use_wandb=use_wandb, lr=optimizer.param_groups[0]['lr'])
 
-            if np.array(self.valid_losses_total).mean() < best_valid_loss and model_path is not None:
+            if np.array(self.valid_losses_total).mean() < best_valid_loss:
                 best_valid_loss = np.array(self.valid_losses_total).mean()
-                torch.save(self.state_dict(), model_path)
+                if model_path is not None:
+                    torch.save(self.state_dict(), model_path)
+                self.best_model = self.state_dict()
 
             self.lr_before = optimizer.param_groups[0]['lr']
             scheduler.step(np.array(self.valid_losses_total).mean())
@@ -106,7 +109,6 @@ class MVE(BaseUncertainty):
             loss_energy = criterion(mean_energy, label_energy)
             loss_force = criterion(mean_force, label_forces)
             total_loss = force_weight*loss_force + energy_weight*loss_energy
-            total_loss /= force_weight + energy_weight
             total_loss = 0.5 * torch.mean(torch.log(uncertainty) + total_loss/uncertainty)
 
             optimizer.zero_grad()
@@ -193,10 +195,10 @@ class MVE(BaseUncertainty):
                 "lr" : lr 
             })
 
-    def init_wandb(self, scheduler, criterion, optimizer, model_path, train_loader, valid_loader, epochs, lr, patience, factor):
+    def init_wandb(self, scheduler, criterion, optimizer, model_path, train_loader, valid_loader, epochs, lr, patience, factor, force_weight, energy_weight):
         wandb.init(
                 # set the wandb project where this run will be logged
-                project="GNN-Uncertainty-MVE",
+                project="GNN-Uncertainty-Evidential",
 
                 # track hyperparameters and run metadata
                 config={
@@ -215,6 +217,8 @@ class MVE(BaseUncertainty):
                 "in_edge_nf" : self.model.in_edge_nf,
                 "loss_fn" : type(criterion).__name__,
                 "model_checkpoint": model_path,
+                "force_weight": force_weight,
+                "energy_weight": energy_weight
                 })
 
 

@@ -34,7 +34,7 @@ class ModelEnsemble(BaseUncertainty):
         criterion = nn.L1Loss()
         scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=factor, patience=patience)
         if use_wandb:
-            self.init_wandb(scheduler,criterion,optimizer,model_path,train_loader,valid_loader,epochs,lr,patience,factor)
+            self.init_wandb(scheduler,criterion,optimizer,model_path,train_loader,valid_loader,epochs,lr,patience,factor,force_weight,energy_weight)
 
         best_valid_loss = np.inf
 
@@ -43,9 +43,11 @@ class ModelEnsemble(BaseUncertainty):
             self.valid_epoch(valid_loader=valid_loader, criterion=criterion, device=device, dtype=dtype, force_weight=force_weight, energy_weight=energy_weight)
             self.epoch_summary(epoch, use_wandb=use_wandb, lr=optimizer.param_groups[0]['lr'])
 
-            if np.array(self.valid_losses_total).mean() < best_valid_loss and model_path is not None:
+            if np.array(self.valid_losses_total).mean() < best_valid_loss:
                 best_valid_loss = np.array(self.valid_losses_total).mean()
-                torch.save(self.state_dict(), model_path)
+                if model_path is not None:
+                    torch.save(self.state_dict(), model_path)
+                self.best_model = self.state_dict()
 
             self.lr_before = optimizer.param_groups[0]['lr']
             scheduler.step(np.array(self.valid_losses_total).mean())
@@ -71,7 +73,6 @@ class ModelEnsemble(BaseUncertainty):
             stacked_loss_force = criterion(forces, stacked_label_force)
             loss_force = criterion(mean_force, label_forces)
             total_loss = force_weight*stacked_loss_force + energy_weight*stacked_loss_energy
-            total_loss /= force_weight + energy_weight
 
             optimizer.zero_grad()
             total_loss.backward()
@@ -161,17 +162,17 @@ class ModelEnsemble(BaseUncertainty):
                 "lr" : lr 
             })
 
-    def init_wandb(self, scheduler, criterion, optimizer, model_path, train_loader, valid_loader, epochs, lr, patience, factor):
+    def init_wandb(self, scheduler, criterion, optimizer, model_path, train_loader, valid_loader, epochs, lr, patience, factor, force_weight, energy_weight):
         wandb.init(
                 # set the wandb project where this run will be logged
-                project="GNN-Uncertainty-Ensemble",
+                project="GNN-Uncertainty-Evidential",
 
                 # track hyperparameters and run metadata
                 config={
                 "name": "alaninedipeptide",
                 "learning_rate_start": lr,
-                "layers": self.models[0].n_layers,
-                "hidden_nf": self.models[0].hidden_nf,
+                "layers": self.model.n_layers,
+                "hidden_nf": self.model.hidden_nf,
                 "scheduler": type(scheduler).__name__,
                 "optimizer": type(optimizer).__name__,
                 "patience": patience,
@@ -179,10 +180,12 @@ class ModelEnsemble(BaseUncertainty):
                 "dataset": len(train_loader.dataset)+len(valid_loader.dataset),
                 "epochs": epochs,
                 "batch_size": train_loader.batch_size,
-                "in_node_nf" : self.models[0].in_node_nf,
-                "in_edge_nf" : self.models[0].in_edge_nf,
+                "in_node_nf" : self.model.in_node_nf,
+                "in_edge_nf" : self.model.in_edge_nf,
                 "loss_fn" : type(criterion).__name__,
                 "model_checkpoint": model_path,
+                "force_weight": force_weight,
+                "energy_weight": energy_weight
                 })
                 
 

@@ -6,7 +6,6 @@ from torch import nn
 from datasets.helper import utils as qm9_utils
 import numpy as np
 
-from torchsummary import summary
 
 
 def make_global_adjacency_matrix(n_nodes):

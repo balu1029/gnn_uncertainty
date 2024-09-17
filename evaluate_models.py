@@ -40,8 +40,9 @@ parser.add_argument('--mve_warmup', type=int, default=0, help='Number of warmup 
 parser.add_argument('--save_model', type=bool, default=False, help='Save model')
 parser.add_argument('--epochs', type=int, default=10000, help='Number of epochs to train')
 parser.add_argument('--swag_start_epoch', type=int, default=7000, help='Epoch to start SWAG sampling')
-parser.add_argument('--force_weight', type=int, default=5, help='Factor to weight the force loss')
-parser.add_argument('--energy_weight', type=int, default=1, help='Factor to weight the energy loss')
+parser.add_argument('--force_weight', type=float, default=5, help='Factor to weight the force loss')
+parser.add_argument('--energy_weight', type=float, default=1, help='Factor to weight the energy loss')
+parser.add_argument('--use_wandb', type=bool, default=True, help="set to True to log information about training to wandb")
 
 
 args = parser.parse_args()
@@ -55,12 +56,13 @@ epochs = args.epochs
 swag_start_epoch = args.swag_start_epoch
 force_weight = args.force_weight
 energy_weight = args.energy_weight
+use_wandb = args.use_wandb
 
 in_node_nf = 12
 in_edge_nf = 0
 hidden_nf = 32
 n_layers = 4
-use_wandb = True
+
 
 batch_size = 128
 lr = 1e-3

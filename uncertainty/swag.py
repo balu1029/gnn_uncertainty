@@ -50,20 +50,22 @@ class SWAG(BaseUncertainty):
         criterion = nn.L1Loss()
         scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=factor, patience=patience)
         if use_wandb:
-            self.init_wandb(scheduler,criterion,optimizer,model_path,train_loader,valid_loader,epochs,lr,patience,factor)
+            self.init_wandb(scheduler,criterion,optimizer,model_path,train_loader,valid_loader,epochs,lr,patience,factor, force_weight, energy_weight)
 
         best_valid_loss = np.inf
 
         for epoch in range(epochs):
-            if epoch > swag_start_epoch:
-                optimizer = torch.optim.SGD(self.parameters(), lr=lr)
+            #if epoch > swag_start_epoch:
+            #    optimizer = torch.optim.SGD(self.parameters(), lr=lr)
             self.train_epoch(train_loader=train_loader, optimizer=optimizer, criterion=criterion, epoch=epoch, device=device, dtype=dtype, force_weight=force_weight, energy_weight=energy_weight, log_interval=log_interval)
             self.valid_epoch(valid_loader=valid_loader, criterion=criterion, device=device, dtype=dtype, force_weight=force_weight, energy_weight=energy_weight)
             self.epoch_summary(epoch, use_wandb=use_wandb, lr=optimizer.param_groups[0]['lr'])
 
-            if np.array(self.valid_losses_total).mean() < best_valid_loss and model_path is not None:
+            if np.array(self.valid_losses_total).mean() < best_valid_loss:
                 best_valid_loss = np.array(self.valid_losses_total).mean()
-                torch.save(self.state_dict(), model_path)
+                if model_path is not None:
+                    torch.save(self.state_dict(), model_path)
+                self.best_model = self.state_dict()
 
             
 
@@ -91,7 +93,6 @@ class SWAG(BaseUncertainty):
             loss_energy = criterion(energy, label_energy)
             loss_force = criterion(force, label_forces)
             total_loss = force_weight*loss_force + energy_weight*loss_energy
-            total_loss /= force_weight + energy_weight
 
             optimizer.zero_grad()
             total_loss.backward()
@@ -144,7 +145,10 @@ class SWAG(BaseUncertainty):
             forces.append(force.detach().unsqueeze(0))
         energies = torch.cat(energies, dim=0)
         forces = torch.cat(forces, dim=0)
-        uncertainty = torch.std(energies,dim=0)
+        batch_size = energies.shape[1]
+        uncertainty_forces = forces.view(self.sample_size, batch_size, -1, 3)
+        uncertainty = torch.std(uncertainty_forces,dim=0)
+        uncertainty = torch.mean(uncertainty, dim=(1,2))
         
         self._load_mean_swag_weights()
         energy, force = self.forward(x, *args, **kwargs)
@@ -237,7 +241,7 @@ class SWAG(BaseUncertainty):
                 "lr" : lr 
             })
 
-    def init_wandb(self, scheduler, criterion, optimizer, model_path, train_loader, valid_loader, epochs, lr, patience, factor):
+    def init_wandb(self, scheduler, criterion, optimizer, model_path, train_loader, valid_loader, epochs, lr, patience, factor, force_weight, energy_weight):
         wandb.init(
                 # set the wandb project where this run will be logged
                 project="GNN-Uncertainty-SWAG",
@@ -259,6 +263,8 @@ class SWAG(BaseUncertainty):
                 "in_edge_nf" : self.model.in_edge_nf,
                 "loss_fn" : type(criterion).__name__,
                 "model_checkpoint": model_path,
+                "force_weight": force_weight,
+                "energy_weight": energy_weight
                 })
                 
 
