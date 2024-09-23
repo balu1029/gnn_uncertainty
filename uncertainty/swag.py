@@ -65,7 +65,8 @@ class SWAG(BaseUncertainty):
                 best_valid_loss = np.array(self.valid_losses_total).mean()
                 if model_path is not None:
                     torch.save(self.state_dict(), model_path)
-                self.best_model = self.state_dict()
+            
+            self.best_model = self.state_dict() # For SWAG it does not make sense to take an intermediate model as "best" one because we sample the weights
 
             
 
@@ -263,7 +264,8 @@ class SWAG(BaseUncertainty):
                 "loss_fn" : type(criterion).__name__,
                 "model_checkpoint": model_path,
                 "force_weight": force_weight,
-                "energy_weight": energy_weight
+                "energy_weight": energy_weight,
+                "swag_sample_size": self.sample_size,
                 })
                 
 

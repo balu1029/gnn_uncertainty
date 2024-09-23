@@ -114,7 +114,11 @@ class ModelEnsemble(BaseUncertainty):
     def predict(self, x ,leave_out=None, *args, **kwargs):
         self.eval()
         energies, energy, forces, force = self.forward(x=x, leave_out=leave_out, *args, **kwargs)
-        uncertainty = torch.std(energies,dim=0)
+        batch_size = energies.shape[1]
+        uncertainty_forces = forces.view(self.num_models, batch_size, -1, 3)
+        uncertainty = torch.std(uncertainty_forces,dim=0)
+        uncertainty = torch.mean(uncertainty, dim=(1,2))
+        #uncertainty = torch.std(energies, dim=0)
         return energy, force, uncertainty
     
         
@@ -164,14 +168,14 @@ class ModelEnsemble(BaseUncertainty):
     def init_wandb(self, scheduler, criterion, optimizer, model_path, train_loader, valid_loader, epochs, lr, patience, factor, force_weight, energy_weight):
         wandb.init(
                 # set the wandb project where this run will be logged
-                project="GNN-Uncertainty-Evidential",
+                project="GNN-Uncertainty-Ensemble",
 
                 # track hyperparameters and run metadata
                 config={
                 "name": "alaninedipeptide",
                 "learning_rate_start": lr,
-                "layers": self.model.n_layers,
-                "hidden_nf": self.model.hidden_nf,
+                "layers": self.models[0].n_layers,
+                "hidden_nf": self.models[0].hidden_nf,
                 "scheduler": type(scheduler).__name__,
                 "optimizer": type(optimizer).__name__,
                 "patience": patience,
@@ -179,8 +183,8 @@ class ModelEnsemble(BaseUncertainty):
                 "dataset": len(train_loader.dataset)+len(valid_loader.dataset),
                 "epochs": epochs,
                 "batch_size": train_loader.batch_size,
-                "in_node_nf" : self.model.in_node_nf,
-                "in_edge_nf" : self.model.in_edge_nf,
+                "in_node_nf" : self.models[0].in_node_nf,
+                "in_edge_nf" : self.models[0].in_edge_nf,
                 "loss_fn" : type(criterion).__name__,
                 "model_checkpoint": model_path,
                 "force_weight": force_weight,

@@ -37,7 +37,7 @@ parser.add_argument('--num_samples', type=int, default=5, help='Number of indepe
 parser.add_argument('--swag_sample_size', type=int, default=5, help='Number of samples to evaluate SWAG')
 parser.add_argument('--ensemble_size', type=int, default=3, help='Number of models to evaluate ENS')
 parser.add_argument('--mve_warmup', type=int, default=0, help='Number of warmup steps for MVE')
-parser.add_argument('--save_model', type=bool, default=False, help='Save model')
+parser.add_argument('--save_model', type=bool, default=True, help='Save model')
 parser.add_argument('--epochs', type=int, default=10000, help='Number of epochs to train')
 parser.add_argument('--swag_start_epoch', type=int, default=7000, help='Epoch to start SWAG sampling')
 parser.add_argument('--force_weight', type=float, default=5, help='Factor to weight the force loss')
