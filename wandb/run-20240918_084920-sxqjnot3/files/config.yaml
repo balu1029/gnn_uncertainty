@@ -1,0 +1,63 @@
+_wandb:
+    value:
+        cli_version: 0.18.0
+        m: []
+        python_version: 3.12.2
+        t:
+            "1":
+                - 1
+                - 5
+                - 51
+                - 53
+                - 55
+            "2":
+                - 1
+                - 5
+                - 51
+                - 53
+                - 55
+            "3":
+                - 2
+                - 16
+                - 23
+                - 55
+            "4": 3.12.2
+            "5": 0.18.0
+            "8":
+                - 5
+            "12": 0.18.0
+            "13": linux-x86_64
+batch_size:
+    value: 128
+dataset:
+    value: 1000
+energy_weight:
+    value: 1
+epochs:
+    value: 10000
+factor:
+    value: 0.1
+force_weight:
+    value: 1
+hidden_nf:
+    value: 32
+in_edge_nf:
+    value: 0
+in_node_nf:
+    value: 12
+layers:
+    value: 4
+learning_rate_start:
+    value: 0.001
+loss_fn:
+    value: L1Loss
+model_checkpoint:
+    value: gnn/models/ensemble3_4/model_0.pt
+name:
+    value: alaninedipeptide
+optimizer:
+    value: AdamW
+patience:
+    value: 5000
+scheduler:
+    value: ReduceLROnPlateau
