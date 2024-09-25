@@ -11,22 +11,15 @@ import time
 import argparse
 import os
 
-def setup_log_folder(name):
-    i = 0
-    path = f"logs/{name}_{i}"
-    while os.path.exists(path):
-        i += 1
-        path = f"logs/{name}_{i}"
-    
+def setup_log_folder(name, timestamp):
+
+    path = f"logs/{name}_{timestamp}"
     os.makedirs(path)
     return path
 
-def setup_model_folder(name):
-    i = 0
-    path = f"gnn/models/{name}_{i}"
-    while os.path.exists(path):
-        i += 1
-        path = f"gnn/models/{name}_{i}"
+def setup_model_folder(name, timestamp):
+
+    path = f"gnn/models/{name}_{timestamp}"
     os.makedirs(path)
     return path
 
@@ -94,12 +87,13 @@ mve = MVE(EGNN, multi_dec=True, out_features=1, in_node_nf=in_node_nf, in_edge_n
 
 model_path = None
 
+timestamp = time.strftime("%Y%m%d_%H%M%S")
 
 if uncertainty_method == "MVE":
     name = "mve"
-    log_path = setup_log_folder(name)
+    log_path = setup_log_folder(name, timestamp)
     if save_model:
-        base_model_path = setup_model_folder(name)
+        base_model_path = setup_model_folder(name, timestamp)
     path = f"logs/{name}"
     for i in range(num_samples):
         if save_model:
@@ -110,9 +104,9 @@ if uncertainty_method == "MVE":
 
 if uncertainty_method == "SWAG":
     name = f"swag{swag_sample_size}"
-    log_path = setup_log_folder(name)
+    log_path = setup_log_folder(name, timestamp)
     if save_model:
-        base_model_path = setup_model_folder(name)
+        base_model_path = setup_model_folder(name, timestamp)
     path = f"logs/{name}"
     for i in range(num_samples):
         if save_model:
@@ -123,9 +117,9 @@ if uncertainty_method == "SWAG":
 
 if uncertainty_method == "ENS":
     name = f"ensemble{ensemble_size}"
-    log_path = setup_log_folder(name)
+    log_path = setup_log_folder(name, timestamp)
     if save_model:
-        base_model_path = setup_model_folder(name)
+        base_model_path = setup_model_folder(name, timestamp)
     path = f"logs/{name}"
     for i in range(num_samples):
         if save_model:
@@ -136,9 +130,9 @@ if uncertainty_method == "ENS":
 
 if uncertainty_method == "EVI":
     name = "evi"
-    log_path = setup_log_folder(name)
+    log_path = setup_log_folder(name, timestamp)
     if save_model:
-        base_model_path = setup_model_folder(name)
+        base_model_path = setup_model_folder(name, timestamp)
     path = f"logs/{name}"
     for i in range(num_samples):
         if save_model:
