@@ -2,75 +2,167 @@ wandb: Currently logged in as: l-baer-99 (l-baer-99-Karlsruhe Institute of Techn
 wandb: wandb version 0.18.1 is available!  To upgrade, please run:
 wandb:  $ pip install wandb --upgrade
 wandb: Tracking run with wandb version 0.17.4
-wandb: Run data is saved locally in /pfs/data5/home/kit/iti/fq0795/gnn_uncertainty/wandb/run-20240922_160629-8i5onr93
+wandb: Run data is saved locally in /pfs/data5/home/kit/iti/fq0795/gnn_uncertainty/wandb/run-20240923_150825-jf11x20l
 wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run breezy-pyramid-56
+wandb: Syncing run colorful-hill-59
 wandb: ⭐️ View project at https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-Ensemble
-wandb: 🚀 View run at https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-Ensemble/runs/8i5onr93
-wandb: ERROR Error while calling W&B API: context deadline exceeded (<Response [500]>)
-wandb: - 0.014 MB of 0.014 MB uploadedwandb: \ 0.014 MB of 4.274 MB uploadedwandb: | 0.690 MB of 4.275 MB uploadedwandb: / 0.690 MB of 4.275 MB uploadedwandb: - 4.275 MB of 4.275 MB uploadedwandb:                                                                                
+wandb: 🚀 View run at https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-Ensemble/runs/jf11x20l
+wandb: - 0.014 MB of 0.014 MB uploadedwandb: \ 0.014 MB of 0.014 MB uploadedwandb: | 0.014 MB of 0.014 MB uploadedwandb: / 0.020 MB of 4.301 MB uploaded (0.003 MB deduped)wandb: - 1.374 MB of 4.301 MB uploaded (0.003 MB deduped)wandb: \ 1.374 MB of 4.301 MB uploaded (0.003 MB deduped)wandb: | 4.301 MB of 4.301 MB uploaded (0.003 MB deduped)wandb:                                                                                
 wandb: 
 wandb: Run history:
 wandb:                lr ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
-wandb: train_loss_energy █▆▅▄▃▃▃▂▃▄▂▃▂▂▃▂▃▂▂▂▂▂▂▂▂▁▂▂▂▂▂▂▁▂▁▁▂▁▂▁
-wandb:  train_loss_force █▇▅▃▃▃▂▂▂▂▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
-wandb:  train_loss_total █▇▆▄▃▃▃▃▂▂▂▂▂▂▂▂▂▂▁▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
-wandb: valid_loss_energy █▇▅▄▄▃▃▅▃▆▃▃▃▂▂▃▂▃▃▂▁▁▂▂▁▁▂▂▂▂▁▃▁▁▁▁▃▂▁▁
-wandb:  valid_loss_force █▇▅▃▃▃▂▂▂▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
-wandb:  valid_loss_total █▇▆▄▃▃▃▃▂▂▂▂▂▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb: train_loss_energy █▇▅▄▃▄▄▂▄▃▂▃▂▂▃▃▅▂▃▂▄▃▃▂▂▃▃▂▂▃▃▂▂▂▃▄▂▂▁▂
+wandb:  train_loss_force ██▆▆▅▄▃▃▃▂▂▂▂▂▂▂▂▂▂▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:  train_loss_total ██▇▆▅▄▃▃▃▃▂▂▂▂▂▂▂▂▂▁▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb: valid_loss_energy ██▆▆▅▅▅▄▄▄▅▃▃▄▃▂▃▂▂▃▂▂▂▂▂▁▁▃▂▃▃▁▁▁▁▄▁▃▁▁
+wandb:  valid_loss_force ██▆▆▅▄▃▃▃▃▂▂▂▂▂▂▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:  valid_loss_total ██▇▆▆▄▄▃▃▃▃▃▂▂▂▂▂▂▂▂▂▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 wandb: 
 wandb: Run summary:
 wandb:                lr 0.001
-wandb: train_loss_energy 2.00696
-wandb:  train_loss_force 3.00652
-wandb:  train_loss_total 14.43597
-wandb: valid_loss_energy 2.02085
-wandb:  valid_loss_force 3.73076
-wandb:  valid_loss_total 17.18636
+wandb: train_loss_energy 3.93914
+wandb:  train_loss_force 4.00603
+wandb:  train_loss_total 15.56588
+wandb: valid_loss_energy 2.51295
+wandb:  valid_loss_force 6.12012
+wandb:  valid_loss_total 23.6908
 wandb: 
-wandb: 🚀 View run breezy-pyramid-56 at: https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-Ensemble/runs/8i5onr93
+wandb: 🚀 View run colorful-hill-59 at: https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-Ensemble/runs/jf11x20l
 wandb: ⭐️ View project at: https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-Ensemble
-wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
-wandb: Find logs at: ./wandb/run-20240922_160629-8i5onr93/logs
+wandb: Synced 6 W&B file(s), 0 media file(s), 2 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20240923_150825-jf11x20l/logs
 wandb: WARNING The new W&B backend becomes opt-out in version 0.18.0; try it out with `wandb.require("core")`! See https://wandb.me/wandb-core for more information.
 wandb: wandb version 0.18.1 is available!  To upgrade, please run:
 wandb:  $ pip install wandb --upgrade
 wandb: Tracking run with wandb version 0.17.4
-wandb: Run data is saved locally in /pfs/data5/home/kit/iti/fq0795/gnn_uncertainty/wandb/run-20240923_002727-sz82r9io
+wandb: Run data is saved locally in /pfs/data5/home/kit/iti/fq0795/gnn_uncertainty/wandb/run-20240923_171226-k5tsdlc5
 wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run unique-firefly-57
+wandb: Syncing run azure-snowflake-61
 wandb: ⭐️ View project at https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-Ensemble
-wandb: 🚀 View run at https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-Ensemble/runs/sz82r9io
-wandb: - 0.014 MB of 0.014 MB uploadedwandb: \ 0.014 MB of 4.282 MB uploadedwandb: | 4.282 MB of 4.282 MB uploadedwandb: / 4.282 MB of 4.282 MB uploadedwandb: - 4.282 MB of 4.282 MB uploadedwandb:                                                                                
+wandb: 🚀 View run at https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-Ensemble/runs/k5tsdlc5
+wandb: ERROR Error while calling W&B API: context deadline exceeded (<Response [500]>)
+wandb: ERROR Error while calling W&B API: context deadline exceeded (<Response [500]>)
+wandb: - 0.014 MB of 4.294 MB uploadedwandb: \ 0.759 MB of 4.294 MB uploadedwandb: | 0.759 MB of 4.294 MB uploadedwandb: / 4.294 MB of 4.294 MB uploadedwandb:                                                                                
 wandb: 
 wandb: Run history:
 wandb:                lr ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
-wandb: train_loss_energy █▆▄▄▃▃▂▄▃▂▃▂▂▂▂▂▃▂▂▂▂▁▂▂▂▁▂▁▁▁▁▂▁▂▂▁▁▂▂▁
-wandb:  train_loss_force ██▅▄▃▃▂▂▂▂▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
-wandb:  train_loss_total ██▆▄▃▃▃▃▂▂▂▂▂▂▁▂▂▁▁▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
-wandb: valid_loss_energy █▇▅▅▄▅▃▃▂▂▂▂▂▅▂▂▂▁▁▃▁▂▁▃▃▂▃▂▁▁▁▁▁▁▁▁▃▁▂▁
-wandb:  valid_loss_force ██▅▄▃▃▂▂▂▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
-wandb:  valid_loss_total ██▆▄▄▃▃▃▃▂▂▂▂▂▁▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb: train_loss_energy █▇▆▄▄▃▃▃▃▃▃▃▄▂▂▄▄▂▅▃▄▄▂▂▂▂▂▃▄▂▂▂▁▂▃▃▂▁▁▁
+wandb:  train_loss_force ██▇▅▄▄▃▃▃▃▃▂▂▂▂▂▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:  train_loss_total ██▇▆▅▄▃▃▃▃▃▃▂▂▂▂▂▂▂▂▂▂▁▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb: valid_loss_energy █▇▆▅▅▅▄▄▄▄▄▃▅▃▂▂▃▂▄▃▃▅▂▂▃▁▂▂▂▂▁▂▂▁▂▁▁▃▁▁
+wandb:  valid_loss_force ██▇▅▄▄▃▃▃▃▃▂▂▂▂▂▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:  valid_loss_total ██▇▆▅▄▄▃▃▄▃▃▃▂▂▂▂▂▂▂▂▂▁▂▁▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁
 wandb: 
 wandb: Run summary:
 wandb:                lr 0.001
-wandb: train_loss_energy 1.77023
-wandb:  train_loss_force 3.10539
-wandb:  train_loss_total 14.61363
-wandb: valid_loss_energy 1.80164
-wandb:  valid_loss_force 3.92271
-wandb:  valid_loss_total 18.84985
+wandb: train_loss_energy 2.91078
+wandb:  train_loss_force 5.10713
+wandb:  train_loss_total 16.5807
+wandb: valid_loss_energy 3.10712
+wandb:  valid_loss_force 7.52537
+wandb:  valid_loss_total 23.9078
 wandb: 
-wandb: 🚀 View run unique-firefly-57 at: https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-Ensemble/runs/sz82r9io
+wandb: 🚀 View run azure-snowflake-61 at: https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-Ensemble/runs/k5tsdlc5
 wandb: ⭐️ View project at: https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-Ensemble
 wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
-wandb: Find logs at: ./wandb/run-20240923_002727-sz82r9io/logs
+wandb: Find logs at: ./wandb/run-20240923_171226-k5tsdlc5/logs
 wandb: WARNING The new W&B backend becomes opt-out in version 0.18.0; try it out with `wandb.require("core")`! See https://wandb.me/wandb-core for more information.
 wandb: wandb version 0.18.1 is available!  To upgrade, please run:
 wandb:  $ pip install wandb --upgrade
 wandb: Tracking run with wandb version 0.17.4
-wandb: Run data is saved locally in /pfs/data5/home/kit/iti/fq0795/gnn_uncertainty/wandb/run-20240923_083745-mx84heee
+wandb: Run data is saved locally in /pfs/data5/home/kit/iti/fq0795/gnn_uncertainty/wandb/run-20240923_191556-6jie0g5y
 wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run lucky-wood-58
+wandb: Syncing run gallant-sky-62
 wandb: ⭐️ View project at https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-Ensemble
-wandb: 🚀 View run at https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-Ensemble/runs/mx84heee
+wandb: 🚀 View run at https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-Ensemble/runs/6jie0g5y
+wandb: - 0.014 MB of 0.014 MB uploadedwandb: \ 0.014 MB of 4.299 MB uploadedwandb: | 1.572 MB of 4.299 MB uploadedwandb: / 1.572 MB of 4.299 MB uploadedwandb: - 4.299 MB of 4.299 MB uploadedwandb:                                                                                
+wandb: 
+wandb: Run history:
+wandb:                lr ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb: train_loss_energy █▇▄▃▃▂▂▂▂▁▂▁▂▂▂▂▂▂▁▁▁▁▃▃▂▁▃▁▃▁▂▄▂▂▁▃▁▂▁▁
+wandb:  train_loss_force ██▇▅▄▄▃▃▃▃▃▂▂▂▂▂▂▂▂▂▂▂▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:  train_loss_total ██▇▆▄▄▃▃▃▃▃▂▃▂▂▂▂▂▂▂▂▂▂▂▂▁▁▂▁▁▁▁▁▁▁▁▁▁▁▁
+wandb: valid_loss_energy █▇▇▆▅▄▅▄▄▄▄▄▃▄▃▃▃▃▄▃▃▂▂▂▃▂▂▁▁▂▁▂▁▂▁▄▁▁▁▁
+wandb:  valid_loss_force ██▇▆▄▄▃▃▃▃▃▃▃▂▂▂▂▂▂▂▂▂▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:  valid_loss_total ███▆▅▄▄▃▃▃▃▃▃▃▃▃▂▂▂▂▂▂▂▂▂▁▁▂▁▁▁▁▁▁▁▁▁▁▁▁
+wandb: 
+wandb: Run summary:
+wandb:                lr 0.001
+wandb: train_loss_energy 2.69136
+wandb:  train_loss_force 5.86026
+wandb:  train_loss_total 17.58283
+wandb: valid_loss_energy 2.71682
+wandb:  valid_loss_force 8.72613
+wandb:  valid_loss_total 28.16829
+wandb: 
+wandb: 🚀 View run gallant-sky-62 at: https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-Ensemble/runs/6jie0g5y
+wandb: ⭐️ View project at: https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-Ensemble
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20240923_191556-6jie0g5y/logs
+wandb: WARNING The new W&B backend becomes opt-out in version 0.18.0; try it out with `wandb.require("core")`! See https://wandb.me/wandb-core for more information.
+wandb: wandb version 0.18.1 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.17.4
+wandb: Run data is saved locally in /pfs/data5/home/kit/iti/fq0795/gnn_uncertainty/wandb/run-20240923_212004-w75c7bos
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run revived-jazz-63
+wandb: ⭐️ View project at https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-Ensemble
+wandb: 🚀 View run at https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-Ensemble/runs/w75c7bos
+wandb: - 0.014 MB of 0.014 MB uploadedwandb: \ 0.014 MB of 0.014 MB uploadedwandb: | 0.014 MB of 4.293 MB uploadedwandb: / 1.118 MB of 4.293 MB uploadedwandb: - 1.118 MB of 4.293 MB uploadedwandb: \ 4.293 MB of 4.293 MB uploadedwandb:                                                                                
+wandb: 
+wandb: Run history:
+wandb:                lr ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb: train_loss_energy █▇▅▄▃▄▃▄▃▃▃▄▃▄▂▂▃▂▂▂▄▁▃▃▂▁▂▁▁▂▁▁▂▄▁▃▁▁▂▁
+wandb:  train_loss_force ██▆▄▄▃▃▃▂▂▂▂▂▂▂▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:  train_loss_total ██▇▅▄▃▃▃▂▃▂▂▂▂▂▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb: valid_loss_energy █▇▆▅▆▄▄▃▃▆▃▄▄▂▂▂▅▃▁▁▃▂▂▂▃▂▂▂▁▂▁▁▁▁▁▁▁▁▁▂
+wandb:  valid_loss_force ██▆▅▃▃▃▃▂▂▂▂▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:  valid_loss_total ██▇▅▄▄▃▃▃▃▃▂▂▂▂▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb: 
+wandb: Run summary:
+wandb:                lr 0.001
+wandb: train_loss_energy 3.3067
+wandb:  train_loss_force 4.75589
+wandb:  train_loss_total 17.30476
+wandb: valid_loss_energy 2.19565
+wandb:  valid_loss_force 6.76058
+wandb:  valid_loss_total 25.00844
+wandb: 
+wandb: 🚀 View run revived-jazz-63 at: https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-Ensemble/runs/w75c7bos
+wandb: ⭐️ View project at: https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-Ensemble
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20240923_212004-w75c7bos/logs
+wandb: WARNING The new W&B backend becomes opt-out in version 0.18.0; try it out with `wandb.require("core")`! See https://wandb.me/wandb-core for more information.
+wandb: wandb version 0.18.1 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.17.4
+wandb: Run data is saved locally in /pfs/data5/home/kit/iti/fq0795/gnn_uncertainty/wandb/run-20240923_232348-c4r1f4ti
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run lyric-tree-64
+wandb: ⭐️ View project at https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-Ensemble
+wandb: 🚀 View run at https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-Ensemble/runs/c4r1f4ti
+wandb: - 0.014 MB of 0.014 MB uploadedwandb: \ 0.014 MB of 4.287 MB uploadedwandb: | 0.799 MB of 4.287 MB uploadedwandb: / 0.799 MB of 4.287 MB uploadedwandb: - 4.287 MB of 4.287 MB uploadedwandb:                                                                                
+wandb: 
+wandb: Run history:
+wandb:                lr ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb: train_loss_energy █▇▆▃▃▃▄▃▃▅▂▂▃▄▂▅▃▃▃▂▂▄▂▃▃▂▂▃▃▂▂▂▁▂▂▂▂▂▁▁
+wandb:  train_loss_force ██▇▆▄▄▃▃▃▃▃▂▂▂▂▂▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:  train_loss_total ██▇▆▅▄▄▃▃▃▃▃▃▃▂▂▂▂▂▂▂▂▁▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb: valid_loss_energy ██▇▆▅▅▅▄▄▅▄▄▃▃▃▄▅▂▃▄▄█▂▂▂▂▄▃▁▃▃▃▂▁▂▂▁▁▅▁
+wandb:  valid_loss_force ███▆▄▄▃▃▃▃▃▂▂▂▂▂▂▂▂▁▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:  valid_loss_total ███▆▅▄▄▃▄▃▃▃▃▃▂▂▂▂▂▂▂▂▁▂▁▁▁▁▁▂▁▁▁▁▁▁▁▁▁▁
+wandb: 
+wandb: Run summary:
+wandb:                lr 0.001
+wandb: train_loss_energy 2.3634
+wandb:  train_loss_force 4.6845
+wandb:  train_loss_total 16.97104
+wandb: valid_loss_energy 2.55069
+wandb:  valid_loss_force 6.62398
+wandb:  valid_loss_total 23.73456
+wandb: 
+wandb: 🚀 View run lyric-tree-64 at: https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-Ensemble/runs/c4r1f4ti
+wandb: ⭐️ View project at: https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-Ensemble
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20240923_232348-c4r1f4ti/logs
+wandb: WARNING The new W&B backend becomes opt-out in version 0.18.0; try it out with `wandb.require("core")`! See https://wandb.me/wandb-core for more information.
