@@ -6,6 +6,7 @@ from abc import abstractmethod
 import numpy as np
 from sklearn.metrics import r2_score
 from matplotlib import pyplot as plt
+import seaborn as sns
 
 from datasets.helper import utils as qm9_utils
 import csv
@@ -109,28 +110,46 @@ class BaseUncertainty(nn.Module):
                     writer.writerow(['Method', 'Energy R2 Score'])
                     writer.writerow([self.__class__.__name__, energy_r2])
 
-    def evaluate_all(self, test_loader_in, device, dtype, test_loader_out=None, plot_name=None, csv_path=None, show_plot=None):
-        self.load_state_dict(self.best_model)
-        energy_r2_in, forces_r2_in, correlation_in, energy_losses_in, forces_losses_in = self._eval_all(test_loader_in, device, dtype, plot_path=f"{plot_name}_in", plot_title=self.__class__.__name__+' In Distribution')
+    def evaluate_all(self, test_loader_in, device, dtype, test_loader_out=None, plot_name=None, csv_path=None, show_plot=None, best_model_available=True, use_energy_uncertainty=False, use_force_uncertainty=True):
+        if best_model_available:
+            self.load_state_dict(self.best_model)
+        if use_energy_uncertainty:
+            energy_r2_in, forces_r2_in, energy_correlation_in_energy, energy_correlation_in_forces, energy_losses_in, forces_losses_in = self._eval_all(test_loader_in, device, dtype, plot_path=f"{plot_name}_in", plot_title=self.__class__.__name__+' In Distribution', use_force_uncertainty=False, plot_loss=True)
+        if use_force_uncertainty:
+            energy_r2_in, forces_r2_in, force_correlation_in_energy, force_correlation_in_forces, energy_losses_in, forces_losses_in = self._eval_all(test_loader_in, device, dtype, plot_path=f"{plot_name}_in", plot_title=self.__class__.__name__+' In Distribution', use_force_uncertainty=True)
+
 
         if test_loader_out:
-            energy_r2_out, forces_r2_out, correlation_out, energy_losses_out, forces_losses_out = self._eval_all(test_loader_out, device, dtype, plot_path=f"{plot_name}_out", plot_title=self.__class__.__name__+' Out Distribution')
+            if use_energy_uncertainty:
+                energy_r2_out, forces_r2_out, energy_correlation_out_energy, energy_correlation_out_forces, energy_losses_out, forces_losses_out = self._eval_all(test_loader_out, device, dtype, plot_path=f"{plot_name}_out", plot_title=self.__class__.__name__+' Out Distribution', use_force_uncertainty=False, plot_loss=True)
+            if use_force_uncertainty:
+                energy_r2_out, forces_r2_out, force_correlation_out_energy, force_correlation_out_forces, energy_losses_out, forces_losses_out = self._eval_all(test_loader_out, device, dtype, plot_path=f"{plot_name}_out", plot_title=self.__class__.__name__+' Out Distribution', use_force_uncertainty=True)
         
         else:
-            energy_r2_out, forces_r2_out, correlation_out, energy_losses_out, forces_losses_out = 0, 0, 0, np.array([0]), np.array([0])
+            energy_r2_out, forces_r2_out, energy_correlation_out_energy, energy_correlation_out_forces, force_correlation_out_energy, force_correlation_out_forces, energy_losses_out, forces_losses_out  = 0, 0, 0, 0, 0, np.array([0]), np.array([[[0]]])
 
         if csv_path:
+            row = [self.__class__.__name__, energy_r2_in, forces_r2_in, np.mean(energy_losses_in), np.mean(forces_losses_in), energy_r2_out, forces_r2_out, np.mean(energy_losses_out), np.mean(forces_losses_out)]
+            if use_energy_uncertainty:
+                row.extend([energy_correlation_in_energy, energy_correlation_in_forces, energy_correlation_out_energy, energy_correlation_out_forces])
+            if use_force_uncertainty:
+                row.extend([force_correlation_in_energy, force_correlation_in_forces, force_correlation_out_energy, force_correlation_out_forces])
             if os.path.exists(csv_path):
                 with open(csv_path, 'a', newline='') as file:
                     writer = csv.writer(file)
-                    writer.writerow([self.__class__.__name__, energy_r2_in, forces_r2_in, correlation_in, np.mean(energy_losses_in), np.mean(forces_losses_in), energy_r2_out, forces_r2_out, correlation_out, np.mean(energy_losses_out), np.mean(forces_losses_out)])
+                    writer.writerow(row)
             else:
                 with open(csv_path, 'w', newline='') as file:
                     writer = csv.writer(file)
-                    writer.writerow(['Method', 'Energy R2 Score In Distribution', 'Forces R2 Score In Distribution', 'Correlation In Distribution', 'Energy Losses In Distribution', 'Forces Losses In Distribution', 'Energy R2 Score Out Distribution', 'Forces R2 Score Out Distribution', 'Correlation Out Distribution', 'Energy Losses Out Distribution', 'Forces Losses Out Distribution'])
-                    writer.writerow([self.__class__.__name__, energy_r2_in, forces_r2_in, correlation_in, np.mean(energy_losses_in), np.mean(forces_losses_in), energy_r2_out, forces_r2_out, correlation_out, np.mean(energy_losses_out), np.mean(forces_losses_out)])
+                    titles = ['Method', 'Energy R2 Score In Distribution', 'Forces R2 Score In Distribution', 'Energy Losses In Distribution', 'Forces Losses In Distribution', 'Energy R2 Score Out Distribution', 'Forces R2 Score Out Distribution', 'Energy Losses Out Distribution', 'Forces Losses Out Distribution']
+                    if use_energy_uncertainty:
+                        titles.extend(['Energy Correlation In Distribution Energies', 'Energy Correlation In Distribution Forces', 'Energy Correlation Out Distribution Energy', 'Energy Correlation In Distribution Forces'])
+                    if use_force_uncertainty:
+                        titles.extend(['Force Correlation In Distribution Energy', 'Force Correlation In Distribution Forces', 'Force Correlation Out Distribution Energy', 'Force Correlation Out Distribution Forces'])
+                    writer.writerow(titles)
+                    writer.writerow(row)
 
-    def _eval_all(self, dataloader, device, dtype, plot_path=None, plot_title=None):
+    def _eval_all(self, dataloader, device, dtype, plot_path=None, plot_title=None, use_force_uncertainty=False, plot_loss=False):
         criterion = nn.L1Loss(reduction='none')
         predictions_energy = torch.Tensor()
         ground_truths_energy = torch.Tensor()
@@ -140,13 +159,13 @@ class BaseUncertainty(nn.Module):
         forces_losses = torch.Tensor()
         uncertainties = torch.Tensor()
 
-        
-
         self.eval()
         for i,data in enumerate(dataloader):
             atom_positions, nodes, edges, atom_mask, edge_mask, label_energy, label_forces, n_nodes = self.prepare_data(data, device, dtype)    
-
-            energy, forces, uncertainty = self.predict(x=atom_positions, h0=nodes, edges=edges, edge_attr=None, node_mask=atom_mask, edge_mask=edge_mask, n_nodes=n_nodes)
+            if use_force_uncertainty:
+                energy, forces, uncertainty = self.predict(x=atom_positions, h0=nodes, edges=edges, edge_attr=None, node_mask=atom_mask, edge_mask=edge_mask, n_nodes=n_nodes, use_force_uncertainty=True)
+            else:
+                energy, forces, uncertainty = self.predict(x=atom_positions, h0=nodes, edges=edges, edge_attr=None, node_mask=atom_mask, edge_mask=edge_mask, n_nodes=n_nodes, use_force_uncertainty=False)
             predictions_energy = torch.cat((predictions_energy, energy.cpu().detach()), dim=0)
             ground_truths_energy = torch.cat((ground_truths_energy, label_energy.cpu().detach()), dim=0)
             predictions_forces = torch.cat((predictions_forces, forces.cpu().detach()), dim=0)
@@ -165,17 +184,22 @@ class BaseUncertainty(nn.Module):
         uncertainties = uncertainties.cpu().detach().numpy()
         energy_r2 = r2_score(ground_truths_energy, predictions_energy)
         forces_r2 = r2_score(ground_truths_forces, predictions_forces)
-        correlation = np.corrcoef(energy_losses, uncertainties)[0, 1]
+        correlation_energy = np.corrcoef(energy_losses, uncertainties)[0, 1]
+        correlation_forces = np.corrcoef(np.mean(forces_losses.reshape(energy_losses.shape[0],-1,3),axis=(1,2)), uncertainties)[0, 1]
 
         if plot_path:
-            self._scatter_plot(ground_truths_energy, predictions_energy, plot_title, 'Ground Truth Energy', 'Predicted Energy', text=f"Energy R2 Score: {energy_r2}", save_path=plot_path + "_energy.png", show_plot=False)
-            self._scatter_plot(energy_losses, uncertainties, plot_title, 'Energy Losses', 'Uncertainties', text=f"Correlation: {correlation}", save_path=plot_path + "_uncertainty.png", show_plot=False)
+            if plot_loss:
+                self._scatter_plot(ground_truths_energy, predictions_energy, plot_title, 'Ground Truth Energy', 'Predicted Energy', text=f"Energy R2 Score: {energy_r2}", save_path=plot_path + "_energy.png", show_plot=False)
+            uncertainty_type = '_force' if use_force_uncertainty else '_energy'
+            self._scatter_plot(energy_losses, uncertainties, plot_title, 'Energy Losses', 'Uncertainties', text=f"Correlation: {correlation_energy}", save_path=plot_path + uncertainty_type + "_uncertainty_energy_loss.png", show_plot=False)
+            self._scatter_plot(np.mean(forces_losses.reshape(energy_losses.shape[0],-1,3),axis=(1,2)), uncertainties, plot_title, 'Force Losses', 'Uncertainties', text=f"Correlation: {correlation_forces}", save_path=plot_path + uncertainty_type + "_uncertainty_force_loss.png", show_plot=False)
 
-        return energy_r2, forces_r2, correlation, energy_losses, forces_losses
+        return energy_r2, forces_r2, correlation_energy, correlation_forces, energy_losses, forces_losses
 
 
     def _scatter_plot(self, x, y, title, xlabel, ylabel, text="", save_path=None, show_plot=False):
-        plt.scatter(x, y)
+        #plt.scatter(x, y)
+        sns.kdeplot(x=x, y=y, cmap="Blues", fill=True)  # Density plot
         plt.xlabel(xlabel)
         plt.ylabel(ylabel)
         plt.title(title)

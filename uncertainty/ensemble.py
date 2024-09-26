@@ -111,14 +111,16 @@ class ModelEnsemble(BaseUncertainty):
         self.valid_time = time.time() - start
 
 
-    def predict(self, x ,leave_out=None, *args, **kwargs):
+    def predict(self, x, leave_out=None, use_force_uncertainty=True, *args, **kwargs):
         self.eval()
         energies, energy, forces, force = self.forward(x=x, leave_out=leave_out, *args, **kwargs)
         batch_size = energies.shape[1]
-        uncertainty_forces = forces.view(self.num_models, batch_size, -1, 3)
-        uncertainty = torch.std(uncertainty_forces,dim=0)
-        uncertainty = torch.mean(uncertainty, dim=(1,2))
-        #uncertainty = torch.std(energies, dim=0)
+        if use_force_uncertainty:
+            uncertainty_forces = forces.view(self.num_models, batch_size, -1, 3)
+            uncertainty = torch.std(uncertainty_forces,dim=0)
+            uncertainty = torch.mean(uncertainty, dim=(1,2))
+        else:
+            uncertainty = torch.std(energies, dim=0)
         return energy, force, uncertainty
     
         

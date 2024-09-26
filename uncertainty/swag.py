@@ -132,7 +132,7 @@ class SWAG(BaseUncertainty):
         self.valid_time = time.time() - start
 
 
-    def predict(self, x, *args, **kwargs):
+    def predict(self, x, use_force_uncertainty=True, *args, **kwargs):
         self.eval()
         coord_shape = x.shape
         forces = []
@@ -146,9 +146,12 @@ class SWAG(BaseUncertainty):
         energies = torch.cat(energies, dim=0)
         forces = torch.cat(forces, dim=0)
         batch_size = energies.shape[1]
-        uncertainty_forces = forces.view(self.sample_size, batch_size, -1, 3)
-        uncertainty = torch.std(uncertainty_forces,dim=0)
-        uncertainty = torch.mean(uncertainty, dim=(1,2))
+        if use_force_uncertainty:
+            uncertainty_forces = forces.view(self.sample_size, batch_size, -1, 3)
+            uncertainty = torch.std(uncertainty_forces,dim=0)
+            uncertainty = torch.mean(uncertainty, dim=(1,2))
+        else:
+            uncertainty = torch.mean(energies, dim=0)
         
         self._load_mean_swag_weights()
         energy, force = self.forward(x, *args, **kwargs)
