@@ -5,12 +5,14 @@ from abc import abstractmethod
 
 import numpy as np
 from sklearn.metrics import r2_score
+from sklearn.linear_model import LinearRegression
 from matplotlib import pyplot as plt
 import seaborn as sns
 
 from datasets.helper import utils as qm9_utils
 import csv
 import os
+
 
 class BaseUncertainty(nn.Module):
 
@@ -25,6 +27,8 @@ class BaseUncertainty(nn.Module):
     def __init__(self):
         super(BaseUncertainty, self).__init__()
         self.best_model = self.state_dict()
+        self.uncertainty_slope = 1.0
+        self.uncertainty_bias = 0.0
 
     def prepare_data(self, data, device, dtype):
         batch_size, n_nodes, _ = data['coordinates'].size()
@@ -119,14 +123,14 @@ class BaseUncertainty(nn.Module):
             energy_r2_in, forces_r2_in, force_correlation_in_energy, force_correlation_in_forces, energy_losses_in, forces_losses_in = self._eval_all(test_loader_in, device, dtype, plot_path=f"{plot_name}_in", plot_title=self.__class__.__name__+' In Distribution', use_force_uncertainty=True)
 
 
-        if test_loader_out:
+        if test_loader_out is not None:
             if use_energy_uncertainty:
                 energy_r2_out, forces_r2_out, energy_correlation_out_energy, energy_correlation_out_forces, energy_losses_out, forces_losses_out = self._eval_all(test_loader_out, device, dtype, plot_path=f"{plot_name}_out", plot_title=self.__class__.__name__+' Out Distribution', use_force_uncertainty=False, plot_loss=True)
             if use_force_uncertainty:
                 energy_r2_out, forces_r2_out, force_correlation_out_energy, force_correlation_out_forces, energy_losses_out, forces_losses_out = self._eval_all(test_loader_out, device, dtype, plot_path=f"{plot_name}_out", plot_title=self.__class__.__name__+' Out Distribution', use_force_uncertainty=True)
         
         else:
-            energy_r2_out, forces_r2_out, energy_correlation_out_energy, energy_correlation_out_forces, force_correlation_out_energy, force_correlation_out_forces, energy_losses_out, forces_losses_out  = 0, 0, 0, 0, 0, np.array([0]), np.array([[[0]]])
+            energy_r2_out, forces_r2_out, energy_correlation_out_energy, energy_correlation_out_forces, force_correlation_out_energy, force_correlation_out_forces, energy_losses_out, forces_losses_out  = 0, 0, 0, 0, 0, 0, np.array([0]), np.array([[[0]]])
 
         if csv_path:
             row = [self.__class__.__name__, energy_r2_in, forces_r2_in, np.mean(energy_losses_in), np.mean(forces_losses_in), energy_r2_out, forces_r2_out, np.mean(energy_losses_out), np.mean(forces_losses_out)]
@@ -143,7 +147,7 @@ class BaseUncertainty(nn.Module):
                     writer = csv.writer(file)
                     titles = ['Method', 'Energy R2 Score In Distribution', 'Forces R2 Score In Distribution', 'Energy Losses In Distribution', 'Forces Losses In Distribution', 'Energy R2 Score Out Distribution', 'Forces R2 Score Out Distribution', 'Energy Losses Out Distribution', 'Forces Losses Out Distribution']
                     if use_energy_uncertainty:
-                        titles.extend(['Energy Correlation In Distribution Energies', 'Energy Correlation In Distribution Forces', 'Energy Correlation Out Distribution Energy', 'Energy Correlation In Distribution Forces'])
+                        titles.extend(['Energy Correlation In Distribution Energies', 'Energy Correlation In Distribution Forces', 'Energy Correlation Out Distribution Energy', 'Energy Correlation Out Distribution Forces'])
                     if use_force_uncertainty:
                         titles.extend(['Force Correlation In Distribution Energy', 'Force Correlation In Distribution Forces', 'Force Correlation Out Distribution Energy', 'Force Correlation Out Distribution Forces'])
                     writer.writerow(titles)
@@ -165,7 +169,7 @@ class BaseUncertainty(nn.Module):
             if use_force_uncertainty:
                 energy, forces, uncertainty = self.predict(x=atom_positions, h0=nodes, edges=edges, edge_attr=None, node_mask=atom_mask, edge_mask=edge_mask, n_nodes=n_nodes, use_force_uncertainty=True)
             else:
-                energy, forces, uncertainty = self.predict(x=atom_positions, h0=nodes, edges=edges, edge_attr=None, node_mask=atom_mask, edge_mask=edge_mask, n_nodes=n_nodes, use_force_uncertainty=False)
+                energy, forces, uncertainty = self.predict(x=atom_positions, h0=nodes, edges=edges, edge_attr=None, node_mask=atom_mask, edge_mask=edge_mask, n_nodes=n_nodes)
             predictions_energy = torch.cat((predictions_energy, energy.cpu().detach()), dim=0)
             ground_truths_energy = torch.cat((ground_truths_energy, label_energy.cpu().detach()), dim=0)
             predictions_forces = torch.cat((predictions_forces, forces.cpu().detach()), dim=0)
@@ -210,3 +214,40 @@ class BaseUncertainty(nn.Module):
         if show_plot:
             plt.show()
         plt.close()
+
+    def calibrate_uncertainty(self, validation_loader, device, dtype):
+        criterion = nn.L1Loss(reduction='none')
+        force_losses = torch.Tensor()
+        uncertainties = torch.Tensor()
+        self.eval()
+        for i,data in enumerate(validation_loader):
+            atom_positions, nodes, edges, atom_mask, edge_mask, label_energy, label_forces, n_nodes = self.prepare_data(data, device, dtype)    
+
+            energy, forces, uncertainty = self.predict(x=atom_positions, h0=nodes, edges=edges, edge_attr=None, node_mask=atom_mask, edge_mask=edge_mask, n_nodes=n_nodes)
+            force_losses = torch.cat((force_losses, criterion(forces.cpu().detach(), label_forces.cpu())), dim=0)
+            uncertainties = torch.cat((uncertainties, uncertainty.cpu().detach()), dim=0)
+
+            atom_positions.detach()
+
+        
+        force_losses = force_losses.cpu().detach().numpy()
+        force_losses = np.mean(force_losses.reshape(uncertainties.shape[0],-1,3),axis=(1,2))
+        uncertainties = uncertainties.cpu().detach().numpy()
+        print(uncertainties.shape)
+        print(force_losses.shape)   
+
+        # Perform linear regression of uncertainties to force_losses
+
+        # Reshape the data for linear regression
+        uncertainties = uncertainties.reshape(-1, 1)
+        force_losses = force_losses.reshape(-1, 1)
+
+        # Create and fit the model
+        linear = LinearRegression()
+        linear.fit(uncertainties, force_losses)
+
+        # Get the slope and intercept
+        self.uncertainty_slope = linear.coef_[0][0]
+        self.uncertainty_bias = linear.intercept_[0]
+        print(f"Uncertainty Slope: {self.uncertainty_slope}, Uncertainty Bias: {self.uncertainty_bias}", flush=True)
+

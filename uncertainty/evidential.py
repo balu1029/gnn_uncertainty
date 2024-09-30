@@ -188,7 +188,8 @@ class EvidentialRegression(BaseUncertainty):
         self.eval()
         energy, force, v, alpha, beta = self.forward(x=x, *args, **kwargs)
         variance = torch.sqrt(beta / (v * (alpha - 1)))
-        return energy, force, variance
+        print(self.uncertainty_bias, self.uncertainty_slope, flush=True)
+        return energy, force, (variance - self.uncertainty_bias)/self.uncertainty_slope
 
 
     def forward(self, x, *args, **kwargs):

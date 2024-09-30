@@ -156,7 +156,7 @@ class SWAG(BaseUncertainty):
         self._load_mean_swag_weights()
         energy, force = self.forward(x, *args, **kwargs)
         
-        return energy, force, uncertainty
+        return energy, force, uncertainty/self.uncertainty_slope - self.uncertainty_bias
             
         
     def forward(self, x, *args, **kwargs):

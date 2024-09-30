@@ -121,7 +121,7 @@ class ModelEnsemble(BaseUncertainty):
             uncertainty = torch.mean(uncertainty, dim=(1,2))
         else:
             uncertainty = torch.std(energies, dim=0)
-        return energy, force, uncertainty
+        return energy, force, uncertainty/self.uncertainty_slope - self.uncertainty_bias
     
         
     def forward(self, x, leave_out=None, *args, **kwargs):
