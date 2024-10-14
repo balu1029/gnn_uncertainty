@@ -27,7 +27,7 @@ if __name__ == "__main__":
     print("Training on device: " + str(device), flush=True)
     dtype = torch.float32
 
-    epochs = 10000
+    epochs = 100
     batch_size = 64
     lr = 1e-3
     min_lr = 1e-7
@@ -43,15 +43,15 @@ if __name__ == "__main__":
     n_layers = 4
 
 
-    model = ModelEnsemble(EGNN, num_ensembles, in_node_nf=in_node_nf, in_edge_nf=in_edge_nf, hidden_nf=hidden_nf, n_layers=n_layers).to(device)
-    #model = MVE(EGNN, in_node_nf=in_node_nf, in_edge_nf=in_edge_nf, hidden_nf=hidden_nf, n_layers=n_layers).to(device)
+    #model = ModelEnsemble(EGNN, num_ensembles, in_node_nf=in_node_nf, in_edge_nf=in_edge_nf, hidden_nf=hidden_nf, n_layers=n_layers).to(device)
+    model = MVE(EGNN, in_node_nf=in_node_nf, in_edge_nf=in_edge_nf, hidden_nf=hidden_nf, n_layers=n_layers).to(device)
 
 
     best_loss = np.inf
 
 
     start = time.time()
-    dataset = "datasets/files/ala_converged_1000_forces"
+    dataset = "datasets/files/ala_converged_forces_1000"
     model_path = "./gnn/models/ensemble.pt"
     trainset = MD17Dataset(dataset,subtract_self_energies=False, in_unit="kj/mol",train=True, train_ratio=0.8)
     validset = MD17Dataset(dataset,subtract_self_energies=False, in_unit="kj/mol",train=False, train_ratio=0.8)

@@ -14,6 +14,8 @@ in_node_nf = 12
 in_edge_nf = 0
 hidden_nf = 32
 n_layers = 4
+force_weight = 10
+energy_weight = 1
 
 batch_size = 32
 lr = 1e-3
@@ -50,13 +52,13 @@ evi = EvidentialRegression(EGNN, in_node_nf=in_node_nf, in_edge_nf=in_edge_nf, h
 #ens.fit(epochs=10000, train_loader=trainloader, valid_loader=validloader, device=device, dtype=torch.float32, use_wandb=False, patience=800, model_path=None)
 #ens.evaluate_model(validloader, device=device, dtype=torch.float32, save_path=None)
 
-#swag.fit(epochs=10000, swag_start_epoch=7000, swag_freq=20,train_loader=trainloader, valid_loader=validloader, device=device, dtype=torch.float32, use_wandb=False, patience=800, model_path=None)
+swag.fit(epochs=100, swag_start_epoch=70, swag_freq=1,train_loader=trainloader, valid_loader=validloader, device=device, dtype=torch.float32, use_wandb=True, patience=800, model_path=None, force_weight=force_weight, energy_weight=energy_weight)
 
-swag.load_state_dict(torch.load("gnn/models/swag.pt", map_location=torch.device(device)))
-swag.evaluate_uncertainty(validloader, device=device, dtype=torch.float32)
+#swag.load_state_dict(torch.load("gnn/models/swag.pt", map_location=torch.device(device)))
+#swag.evaluate_uncertainty(validloader, device=device, dtype=torch.float32)
 #swag.evaluate_model(validloader, device="cpu", dtype=torch.float32, save_path=None)
 
-#mve.fit(epochs=10000, warmup_steps=0, train_loader=trainloader, valid_loader=validloader, device=device, dtype=torch.float32, use_wandb=False, patience=800, model_path=None)
+#mve.fit(epochs=100, warmup_steps=0, train_loader=trainloader, valid_loader=validloader, device=device, dtype=torch.float32, use_wandb=True, patience=800, model_path=None)
 #mve.load_state_dict(torch.load("gnn/models/ala_converged_1000_forces_mve_no_warmup.pt", map_location=torch.device('cpu')))
 #mve.evaluate_uncertainty(validloader, device="cpu", dtype=torch.float32, save_path=None)
 #mve.evaluate_model(validloader, device="cpu", dtype=torch.float32, save_path=None)

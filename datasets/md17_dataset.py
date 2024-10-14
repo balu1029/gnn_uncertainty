@@ -24,6 +24,11 @@ class MD17Dataset(torch.utils.data.Dataset):
         self.kcal_to_eV = 0.0433641
         self.charge_scale = torch.tensor(max(self.ground_charges.values())+1)
         self.charge_power = 2
+
+        self.mean_energy = -2.664          # mean energy obtained from the training dataset (ala_converged_forces_1000)
+        self.std_energy = 15.6522          # std energy obtained from the training dataset (ala_converged_forces_1000)
+        self.mean_forces = 0
+        self.std_forces = 87.2151
         
         self.atom_numbers_raw, self.coordinates_raw, self.energies, self.forces = self._read_coordinates_energies_forces(foldername, in_unit=in_unit)
         self.atom_numbers = self._pad_array(self.atom_numbers_raw, fill = [-1])
@@ -80,6 +85,9 @@ class MD17Dataset(torch.utils.data.Dataset):
         self.charges = self.charges[indices]
         self.atom_mask = self.atom_mask[indices]
         self.edge_mask = self.edge_mask[indices]
+
+        self.energies = (self.energies - self.mean_energy) / self.std_energy
+        self.forces = (self.forces - self.mean_forces) / self.std_forces
         
 
     def __len__(self):
@@ -163,5 +171,5 @@ class MD17Dataset(torch.utils.data.Dataset):
 
 
 if __name__ == "__main__":
-    ds = MD17Dataset("datasets/files/md17_double")
+    ds = MD17Dataset("datasets/files/ala_converged_forces_1000", subtract_self_energies=False, train=True)
     
