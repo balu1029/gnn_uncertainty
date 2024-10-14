@@ -91,7 +91,7 @@ class ALCalculator(Calculator):
         edges = qm9_utils.get_adj_matrix(n_nodes, batch_size, self.device)
 
         # Predict energy using the model
-        energy, force, uncertainty = self.model(x=atom_positions, h0=nodes, edges=edges, edge_attr=None, node_mask=atom_mask, edge_mask=edge_mask, n_nodes=n_nodes)
+        energy, force, uncertainty = self.model.predict(x=atom_positions, h0=nodes, edges=edges, edge_attr=None, node_mask=atom_mask, edge_mask=edge_mask, n_nodes=n_nodes)
         if uncertainty.item() > self.max_uncertainty:
             self.uncertainty_samples.append(positions * self.a_to_nm)
 
@@ -159,6 +159,7 @@ class ActiveLearning:
         with Trajectory('ala.traj', 'w', self.atoms) as traj:
             for i in range(steps):
                 self.dyn.run(1)
+                print(self.atoms)
                 traj.write(self.atoms)
        
         
@@ -222,7 +223,7 @@ class ActiveLearning:
 
 
 if __name__ == "__main__":
-    model_path = "gnn/models/ala_converged_1000_forces_mve_no_warmup.pt"
+    model_path = "gnn/models/mve_2/model_0.pt"
     #model_path = "al/run10/models/model_19.pt"
     #model_path = "gnn/models/ala_converged_1000000_even_larger.pt"
     
@@ -232,8 +233,8 @@ if __name__ == "__main__":
     n_layers = 4
     model = MVE(EGNN, in_node_nf=in_nf, in_edge_nf=0, hidden_nf=hidden_nf, n_layers=n_layers, multi_dec=True)
     model.load_state_dict(torch.load(model_path, map_location=torch.device("cuda" if torch.cuda.is_available() else "cpu")))
-    al = ActiveLearning(max_uncertainty=5 ,num_ensembles=num_ensembles, in_nf=in_nf, hidden_nf=hidden_nf, n_layers=n_layers, model=model)
-    al.run_simulation(5000, show_traj=True)
+    al = ActiveLearning(max_uncertainty=30 ,num_ensembles=num_ensembles, in_nf=in_nf, hidden_nf=hidden_nf, n_layers=n_layers, model=model)
+    al.run_simulation(1000, show_traj=True)
     #print(len(al.calc.get_uncertainty_samples()))
 
     #al.improve_model(20, 200,run_idx=10)

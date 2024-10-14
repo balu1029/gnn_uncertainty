@@ -246,8 +246,33 @@ class BaseUncertainty(nn.Module):
         linear = LinearRegression()
         linear.fit(uncertainties, force_losses)
 
+        
+
         # Get the slope and intercept
         self.uncertainty_slope = linear.coef_[0][0]
         self.uncertainty_bias = linear.intercept_[0]
+        # Calculate the angle of the regression line
+        angle = np.arctan(self.uncertainty_slope)
+        print(f"Angle of the regression line: {angle} degrees", flush=True)
+        # Rotate the uncertainties from the calculated angle to 45 degrees
+        rotation_angle = np.pi / 4 - angle
+        rotation_matrix = np.array([[np.cos(rotation_angle), -np.sin(rotation_angle)], 
+                                    [np.sin(rotation_angle), np.cos(rotation_angle)]])
+        rotated_uncertainties = rotation_matrix @ np.hstack((uncertainties - self.uncertainty_bias, np.zeros_like(uncertainties))).T
+        
+       
+
+        # Plot the rotated uncertainties
+        plt.scatter(rotated_uncertainties[0, :], force_losses, color='purple', label='Rotated Uncertainties')
+        # Plot the data points and the regression line
+        plt.scatter(uncertainties, force_losses, color='blue', label='Data points')
+        
+        plt.plot(uncertainties, linear.predict(uncertainties), color='red', label='Regression line')
+        plt.xlabel('Uncertainties')
+        plt.ylabel('Force Losses')
+        plt.plot([0, max(uncertainties[0])], [0, max(uncertainties[0])], color='black', linestyle='--', label='y=x')
+        plt.title('Uncertainty Calibration')
+        plt.legend()
+        plt.show()
         print(f"Uncertainty Slope: {self.uncertainty_slope}, Uncertainty Bias: {self.uncertainty_bias}", flush=True)
 
