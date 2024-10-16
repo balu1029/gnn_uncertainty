@@ -57,9 +57,9 @@ hidden_nf = 32
 n_layers = 4
 
 
-batch_size = 128
+batch_size = 32
 lr = 1e-3
-patience = 5000
+patience = 800
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
 

@@ -52,7 +52,7 @@ evi = EvidentialRegression(EGNN, in_node_nf=in_node_nf, in_edge_nf=in_edge_nf, h
 #ens.fit(epochs=10000, train_loader=trainloader, valid_loader=validloader, device=device, dtype=torch.float32, use_wandb=False, patience=800, model_path=None)
 #ens.evaluate_model(validloader, device=device, dtype=torch.float32, save_path=None)
 
-swag.fit(epochs=100, swag_start_epoch=70, swag_freq=1,train_loader=trainloader, valid_loader=validloader, device=device, dtype=torch.float32, use_wandb=True, patience=800, model_path=None, force_weight=force_weight, energy_weight=energy_weight)
+swag.fit(epochs=10000, swag_start_epoch=7000, swag_freq=1,train_loader=trainloader, valid_loader=validloader, device=device, dtype=torch.float32, use_wandb=True, patience=800, force_weight=force_weight, energy_weight=energy_weight)
 
 #swag.load_state_dict(torch.load("gnn/models/swag.pt", map_location=torch.device(device)))
 #swag.evaluate_uncertainty(validloader, device=device, dtype=torch.float32)

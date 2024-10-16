@@ -1,16 +1,9 @@
-Traceback (most recent call last):
-  File "/pfs/data5/home/kit/iti/fq0795/gnn_uncertainty/reevaluate_experiments.py", line 59, in <module>
-    mve.evaluate_all(testloader_in, device=device, dtype=torch.float32, plot_name=f"{out_path}/plot_{i}", csv_path=f"{out_path}/eval.csv", test_loader_out=testloader_out, best_model_available=False, use_energy_uncertainty=True, use_force_uncertainty=False)
-  File "/pfs/data5/home/kit/iti/fq0795/gnn_uncertainty/uncertainty/base_uncertainty.py", line 121, in evaluate_all
-    energy_r2_in, forces_r2_in, energy_correlation_in_energy, energy_correlation_in_forces, energy_losses_in, forces_losses_in = self._eval_all(test_loader_in, device, dtype, plot_path=f"{plot_name}_in", plot_title=self.__class__.__name__+' In Distribution', use_force_uncertainty=False, plot_loss=True)
-                                                                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/pfs/data5/home/kit/iti/fq0795/gnn_uncertainty/uncertainty/base_uncertainty.py", line 172, in _eval_all
-    energy, forces, uncertainty = self.predict(x=atom_positions, h0=nodes, edges=edges, edge_attr=None, node_mask=atom_mask, edge_mask=edge_mask, n_nodes=n_nodes)
-                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/pfs/data5/home/kit/iti/fq0795/gnn_uncertainty/uncertainty/mve.py", line 155, in predict
-    return energy, forces, (uncertainty - self.uncertainty_bias)/self.uncertainty_slope
-                            ~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~
-  File "/home/kit/iti/fq0795/.conda/envs/torch/lib/python3.12/site-packages/torch/_tensor.py", line 1087, in __array__
-    return self.numpy()
-           ^^^^^^^^^^^^
-TypeError: can't convert cuda:0 device type tensor to numpy. Use Tensor.cpu() to copy the tensor to host memory first.
+wandb: Currently logged in as: l-baer-99 (l-baer-99-Karlsruhe Institute of Technology). Use `wandb login --relogin` to force relogin
+wandb: wandb version 0.18.3 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.17.4
+wandb: Run data is saved locally in /pfs/data5/home/kit/iti/fq0795/gnn_uncertainty/wandb/run-20241016_092855-zkyjr8q4
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run toasty-lion-57
+wandb: ⭐️ View project at https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-MVE
+wandb: 🚀 View run at https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-MVE/runs/zkyjr8q4
