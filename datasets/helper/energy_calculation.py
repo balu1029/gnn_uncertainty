@@ -189,6 +189,31 @@ class OpenMMEnergyCalculation:
             self._generate_from_npy(in_dist, out_file_name + "_validation_in_dist.xyz", int(num_molecules/2))
             self._generate_from_npy(out_dist, out_file_name + "_validation_out_dist.xyz", int(num_molecules/2))
 
+    def generate_validation_uniform(self, in_file:str, out_file:str, grid_size:int, samples_per_grid:int)->None:
+        molecules = np.load(in_file)
+
+        indices1 = [4, 6, 8, 14]
+        indices2 = [6, 8, 14, 16]   
+
+        samples = None
+
+        psi = self.calculate_dihedrals_batch(molecules, indices1)
+        phi = self.calculate_dihedrals_batch(molecules, indices2)
+
+        for ps in range(-180,180,grid_size):
+            for ph in range(-180,180,grid_size):
+                phi_indices = np.where((psi > ps) & (psi < ps + grid_size))[0]
+                psi_indices = np.where((phi > ph) & (phi < ph + grid_size))[0]
+                overlapping_indices = np.intersect1d(phi_indices, psi_indices)
+                num_samples = max(len(overlapping_indices), samples_per_grid)
+                if num_samples > 0:
+                    sampled_indices = np.random.choice(overlapping_indices, size=min(num_samples, len(overlapping_indices)), replace=False)
+                    if samples is None:
+                        samples = molecules[sampled_indices]
+                    else:
+                        samples = np.concatenate((samples, molecules[sampled_indices]), axis=0)
+        self._generate_from_npy(samples, out_file, len(samples))
+
 
 
     
@@ -292,7 +317,12 @@ if __name__ == "__main__":
     xyz_path = "datasets/files/alaninedipeptide_traj/alaninedipeptide_traj.xyz"
     out_path = "datasets/files/alaninedipeptide_traj/alaninedipeptide_traj_energies.xyz"
    
-    npy_in = "datasets/files/ala_converged/prod_positions_20-09-2023_13-10-19.npy"
-    xyz_out = "datasets/files/ala_converged/dataset_10000.xyz"
+    #npy_in = "datasets/files/ala_converged/prod_positions_20-09-2023_13-10-19.npy"
+    #xyz_out = "datasets/files/ala_converged/dataset_10000.xyz"
     #energy_calculation.run_npy_file(npy_in, xyz_out,10000)
-    energy_calculation.generate_in_distribution_from_numpy(npy_in, xyz_out, 10000, valid=True)
+    #energy_calculation.generate_in_distribution_from_numpy(npy_in, xyz_out, 10000, valid=True)
+
+    npy_in = "datasets/files/ala_converged/prod_positions_20-09-2023_13-10-19.npy"
+    xyz_out = "datasets/files/active_learning_validation/dataset.xyz"
+
+    energy_calculation.generate_validation_uniform(npy_in, xyz_out, 100, 10)
