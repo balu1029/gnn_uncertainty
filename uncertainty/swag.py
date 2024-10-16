@@ -248,6 +248,7 @@ class SWAG(BaseUncertainty):
         wandb.init(
                 # set the wandb project where this run will be logged
                 project="GNN-Uncertainty-SWAG",
+                name=self.wandb_name,
 
                 # track hyperparameters and run metadata
                 config={

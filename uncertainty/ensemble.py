@@ -171,6 +171,7 @@ class ModelEnsemble(BaseUncertainty):
         wandb.init(
                 # set the wandb project where this run will be logged
                 project="GNN-Uncertainty-Ensemble",
+                name=self.wandb_name,
 
                 # track hyperparameters and run metadata
                 config={

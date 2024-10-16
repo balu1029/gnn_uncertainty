@@ -29,6 +29,7 @@ class BaseUncertainty(nn.Module):
         self.best_model = self.state_dict()
         self.uncertainty_slope = 1.0
         self.uncertainty_bias = 0.0
+        self.wandb_name = None
 
     def prepare_data(self, data, device, dtype):
         batch_size, n_nodes, _ = data['coordinates'].size()
@@ -275,4 +276,8 @@ class BaseUncertainty(nn.Module):
         plt.legend()
         plt.show()
         print(f"Uncertainty Slope: {self.uncertainty_slope}, Uncertainty Bias: {self.uncertainty_bias}", flush=True)
+
+    
+    def set_wandb_name(self, name):
+        self.wandb_name = name
 

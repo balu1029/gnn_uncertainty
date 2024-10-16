@@ -199,6 +199,7 @@ class MVE(BaseUncertainty):
         wandb.init(
                 # set the wandb project where this run will be logged
                 project="GNN-Uncertainty-MVE",
+                name=self.wandb_name,
 
                 # track hyperparameters and run metadata
                 config={
