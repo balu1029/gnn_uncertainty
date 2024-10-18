@@ -96,10 +96,10 @@ if uncertainty_method == "MVE":
         base_model_path = setup_model_folder(name, timestamp)
     path = f"logs/{name}"
     for i in range(num_samples):
-        mve.set_wandb_name(f"{timestamp}_{i}")
         if save_model:
             model_path = f"{base_model_path}/model_{i}.pt"
         mve = MVE(EGNN, multi_dec=True, out_features=1, in_node_nf=in_node_nf, in_edge_nf=in_edge_nf, hidden_nf=hidden_nf, n_layers=n_layers, device=device)
+        mve.set_wandb_name(f"{timestamp}_{i}")
         mve.fit(epochs=epochs, warmup_steps=warmup_steps, train_loader=trainloader, valid_loader=validloader, device=device, dtype=torch.float32, use_wandb=use_wandb, patience=patience, model_path=model_path, force_weight=force_weight, energy_weight=energy_weight)
         mve.evaluate_all(testloader_in, device=device, dtype=torch.float32, plot_name=f"{log_path}/plot_{i}", csv_path=f"{log_path}/eval.csv", test_loader_out=testloader_out, use_energy_uncertainty=True, use_force_uncertainty=False)
 
@@ -110,10 +110,11 @@ if uncertainty_method == "SWAG":
         base_model_path = setup_model_folder(name, timestamp)
     path = f"logs/{name}"
     for i in range(num_samples):
-        mve.set_wandb_name(f"{timestamp}_{i}")
+        
         if save_model:
             model_path = f"{base_model_path}/model_{i}.pt"
         swag = SWAG(EGNN, in_node_nf=in_node_nf, in_edge_nf=in_edge_nf, hidden_nf=hidden_nf, n_layers=n_layers, device=device, sample_size = swag_sample_size)
+        swag.set_wandb_name(f"{timestamp}_{i}")
         swag.fit(epochs=epochs, swag_start_epoch=swag_start_epoch, swag_freq=1, train_loader=trainloader, valid_loader=validloader, device=device, dtype=torch.float32, use_wandb=use_wandb, patience=patience, model_path=model_path, force_weight=force_weight, energy_weight=energy_weight)
         swag.evaluate_all(testloader_in, device=device, dtype=torch.float32, plot_name=f"{log_path}/plot_{i}", csv_path=f"{log_path}/eval.csv", test_loader_out=testloader_out, use_energy_uncertainty=True, use_force_uncertainty=True)
 
@@ -124,10 +125,11 @@ if uncertainty_method == "ENS":
         base_model_path = setup_model_folder(name, timestamp)
     path = f"logs/{name}"
     for i in range(num_samples):
-        mve.set_wandb_name(f"{timestamp}_{i}")
+        
         if save_model:
             model_path = f"{base_model_path}/model_{i}.pt"
         ens = ModelEnsemble(EGNN, num_models=ensemble_size, in_node_nf=in_node_nf, in_edge_nf=in_edge_nf, hidden_nf=hidden_nf, n_layers=n_layers, device=device)
+        ens.set_wandb_name(f"{timestamp}_{i}")
         ens.fit(epochs=epochs, train_loader=trainloader, valid_loader=validloader, device=device, dtype=torch.float32, use_wandb=use_wandb, patience=patience, model_path=model_path, force_weight=force_weight, energy_weight=energy_weight)
         ens.evaluate_all(testloader_in, device=device, dtype=torch.float32, plot_name=f"{log_path}/plot_{i}", csv_path=f"{log_path}/eval.csv", test_loader_out=testloader_out, use_energy_uncertainty=True, use_force_uncertainty=True)
 
@@ -138,10 +140,11 @@ if uncertainty_method == "EVI":
         base_model_path = setup_model_folder(name, timestamp)
     path = f"logs/{name}"
     for i in range(num_samples):
-        mve.set_wandb_name(f"{timestamp}_{i}")
+        
         if save_model:
             model_path = f"{base_model_path}/model_{i}.pt"
         evi = EvidentialRegression(EGNN, in_node_nf=in_node_nf, in_edge_nf=in_edge_nf, hidden_nf=hidden_nf, n_layers=n_layers, device=device)
+        evi.set_wandb_name(f"{timestamp}_{i}")
         evi.fit(epochs=epochs, train_loader=trainloader, valid_loader=validloader, device=device, dtype=torch.float32, use_wandb=use_wandb, patience=patience, model_path=model_path, force_weight=force_weight, energy_weight=energy_weight)
         evi.evaluate_all(testloader_in, device=device, dtype=torch.float32, plot_name=f"{log_path}/plot_{i}", csv_path=f"{log_path}/eval.csv", test_loader_out=testloader_out, use_energy_uncertainty=True, use_force_uncertainty=False)
 
