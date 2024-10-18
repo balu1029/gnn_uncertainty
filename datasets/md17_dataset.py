@@ -27,8 +27,8 @@ class MD17Dataset(torch.utils.data.Dataset):
 
         self.mean_energy = -2.664          # mean energy obtained from the training dataset (ala_converged_forces_1000)
         self.std_energy = 15.6522          # std energy obtained from the training dataset (ala_converged_forces_1000)
-        self.mean_forces = 0
-        self.std_forces = 87.2151
+        self.mean_forces = self.mean_energy
+        self.std_forces = self.std_energy
         
         self.atom_numbers_raw, self.coordinates_raw, self.energies, self.forces = self._read_coordinates_energies_forces(foldername, in_unit=in_unit)
         self.atom_numbers = self._pad_array(self.atom_numbers_raw, fill = [-1])
