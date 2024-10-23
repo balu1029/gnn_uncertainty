@@ -2,6 +2,7 @@ import torch
 import numpy as np
 import os
 import shutil
+import wandb
 
 from ase.calculators.calculator import Calculator, all_properties
 from ase.units import eV, fs, Angstrom, nm, kJ, mol
@@ -159,7 +160,6 @@ class ActiveLearning:
         with Trajectory('ala.traj', 'w', self.atoms) as traj:
             for i in range(steps):
                 self.dyn.run(1)
-                print(self.atoms)
                 traj.write(self.atoms)
        
         
@@ -168,7 +168,7 @@ class ActiveLearning:
             view(traj, block=True)
 
 
-    def improve_model(self, num_iter, steps_per_iter, run_idx=1):
+    def improve_model(self, num_iter, steps_per_iter, use_wandb=False, run_idx=1, model_path="gnn/models/ala_converged_1000000.pt"):
         model_out_path = f"al/run{run_idx}/models/"
         data_out_path = f"al/run{run_idx}/data/"
         if not os.path.exists(f"al/run{run_idx}"):
@@ -178,13 +178,22 @@ class ActiveLearning:
             # Copy the file to the directory
             shutil.copy2("al/run1/data/base.xyz", data_out_path)
 
+        batch_size = 32
+        lr=1e-3
+        epochs_per_iter = 10
+        optimizer = torch.optim.AdamW(self.calc.model.parameters(), lr=1e-3)
+        criterion = torch.nn.L1Loss()
+        if use_wandb:
+            self.init_wandb(model=self.model, criterion=criterion, optimizer=optimizer, model_path=model_path, lr=lr, batch_size=batch_size, epochs_per_iter=epochs_per_iter)
+
         for i in range(num_iter):
             self.run_simulation(steps_per_iter, show_traj=False)
 
             samples = self.calc.get_uncertainty_samples()
             self.calc.reset_uncertainty_samples()
             energies = self.oracle.calc_energy(samples)   
-            forces = self.oracle.calc_forces(samples)         
+            forces = self.oracle.calc_forces(samples)   
+            print(len(samples))      
             
             if len(samples) > 0:
                 print(f"Training model {i}. Added {len(samples)} samples to the dataset.")
@@ -192,23 +201,28 @@ class ActiveLearning:
                 self.add_data(samples, energies, forces, f"{data_out_path}data_{i}.txt")
 
                 trainset = MD17Dataset(f"{data_out_path}", subtract_self_energies=False, in_unit="kj/mol", train=True, train_ratio=0.8)
-                validset = MD17Dataset(f"datasets/files/ala_converged_validation", subtract_self_energies=False, in_unit="kj/mol")
-                trainloader = torch.utils.data.DataLoader(trainset, batch_size=128, shuffle=True)
-                validloader = torch.utils.data.DataLoader(validset, batch_size=128, shuffle=True)
-                optimizer = torch.optim.AdamW(self.calc.model.parameters(), lr=1e-5)
-                loss_fn = torch.nn.L1Loss()
+                validset = MD17Dataset(f"datasets/files/active_learning_validation", subtract_self_energies=False, in_unit="kj/mol")
+                trainloader = torch.utils.data.DataLoader(trainset, batch_size=32, shuffle=True)
+                validloader = torch.utils.data.DataLoader(validset, batch_size=32, shuffle=True)
+                wandb.log({
+                    "dataset_size": len(trainloader.dataset)
+                })
+
                 log_interval = 100
                 force_weight = 1
                 energy_weight = 1
 
-                for epoch in range(2):
-                    self.model.train_epoch(trainloader, optimizer, loss_fn, epoch, self.device, self.dtype, force_weight=force_weight, energy_weight=energy_weight, log_interval=log_interval, num_ensembles=self.num_ensembles)
-                #self.trainer.train(num_epochs=2, learning_rate=1e-5, folder=data_out_path)
-                self.model.valid_epoch(validloader, loss_fn, self.device, self.dtype, force_weight=force_weight, energy_weight=energy_weight)
-                self.model.epoch_summary(epoch=f"Validation {i}")
-                self.model.pop_metrics()
+                for epoch in range(epochs_per_iter):
+                    self.model.train_epoch(trainloader, optimizer, criterion, epoch, self.device, self.dtype, force_weight=force_weight, energy_weight=energy_weight, log_interval=log_interval)
+                    #self.trainer.train(num_epochs=2, learning_rate=1e-5, folder=data_out_path)
+                    self.model.valid_epoch(validloader, criterion, self.device, self.dtype, force_weight=force_weight, energy_weight=energy_weight)
+                    self.model.epoch_summary(epoch=f"Validation {i}", use_wandb=use_wandb)
+                    self.model.drop_metrics()
                 
                 torch.save(self.trainer.model.state_dict(), f"{model_out_path}model_{i}.pt")
+                
+        if use_wandb:
+            wandb.finish()
                 
     def add_data(self, samples, labels, forces, out_file):
         num_molecules = len(samples)
@@ -219,6 +233,23 @@ class ActiveLearning:
                 file.write(f"{labels[i]}\n")
                 for j in range(len(samples[i])):
                     file.write(f"{self.number_to_type[self.atom_numbers[j]]} {samples[i][j][0]} {samples[i][j][1]} {samples[i][j][2]} {forces[i][j][0]} {forces[i][j][1]} {forces[i][j][2]}\n")
+
+    def init_wandb(self, model, criterion, optimizer, model_path, lr, batch_size, epochs_per_iter):
+        wandb.init(
+                # set the wandb project where this run will be logged
+                project="ActiveLearning",
+
+                # track hyperparameters and run metadata
+                config={
+                "name": "alaninedipeptide",
+                "learning_rate_start": lr,
+                "optimizer": type(optimizer).__name__,
+                "batch_size": batch_size,
+                "loss_fn" : type(criterion).__name__,
+                "model_checkpoint": model_path,
+                "model" : type(model).__name__,
+                "epochs_per_iter": epochs_per_iter,
+                })
         
 
 
@@ -226,15 +257,17 @@ if __name__ == "__main__":
     model_path = "gnn/models/mve_2/model_0.pt"
     #model_path = "al/run10/models/model_19.pt"
     #model_path = "gnn/models/ala_converged_1000000_even_larger.pt"
+    model_path = "gnn/models/ensemble3_6/model_0.pt"
     
     num_ensembles = 3
     in_nf = 12
     hidden_nf = 32
     n_layers = 4
     model = MVE(EGNN, in_node_nf=in_nf, in_edge_nf=0, hidden_nf=hidden_nf, n_layers=n_layers, multi_dec=True)
+    model = ModelEnsemble(EGNN, num_models=num_ensembles, in_node_nf=in_nf, in_edge_nf=0, hidden_nf=hidden_nf, n_layers=n_layers)
     model.load_state_dict(torch.load(model_path, map_location=torch.device("cuda" if torch.cuda.is_available() else "cpu")))
-    al = ActiveLearning(max_uncertainty=30 ,num_ensembles=num_ensembles, in_nf=in_nf, hidden_nf=hidden_nf, n_layers=n_layers, model=model)
-    al.run_simulation(1000, show_traj=True)
+    al = ActiveLearning(max_uncertainty=25 ,num_ensembles=num_ensembles, in_nf=in_nf, hidden_nf=hidden_nf, n_layers=n_layers, model=model)
+    #al.run_simulation(1000, show_traj=True)
     #print(len(al.calc.get_uncertainty_samples()))
 
-    #al.improve_model(20, 200,run_idx=10)
+    al.improve_model(20, 100,run_idx=13, use_wandb=True, model_path=model_path)
