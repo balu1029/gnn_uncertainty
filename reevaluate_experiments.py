@@ -18,12 +18,12 @@ in_edge_nf = 0
 hidden_nf = 32
 n_layers = 4
 
-ensemble_size = 6
-uncertainty_method = "MVE"
+ensemble_size = 3
+uncertainty_method = "ENS"
 swag_sample_size = 20
 
-model_dir = "gnn/models/mve_2"
-out_path = "logs/test_calibrated"
+model_dir = "gnn/models/ensemble3_20241016_100027"
+out_path = "logs/ensemble3_20241016_100027_reevaluate"
 
 if not os.path.exists(out_path):
     os.makedirs(out_path)
@@ -55,27 +55,27 @@ for i, model_name in enumerate(os.listdir(model_dir)):
     if uncertainty_method == "MVE":
         mve = MVE(EGNN, multi_dec=True, out_features=1, in_node_nf=in_node_nf, in_edge_nf=in_edge_nf, hidden_nf=hidden_nf, n_layers=n_layers, device=device)
         mve.load_state_dict(torch.load(model_path, map_location=torch.device(device)))
-        mve.calibrate_uncertainty(testloader_in, device=device, dtype=torch.float32)
+        #mve.calibrate_uncertainty(testloader_in, device=device, dtype=torch.float32)
         mve.evaluate_all(testloader_in, device=device, dtype=torch.float32, plot_name=f"{out_path}/plot_{i}", csv_path=f"{out_path}/eval.csv", test_loader_out=testloader_out, best_model_available=False, use_energy_uncertainty=True, use_force_uncertainty=False)
 
     if uncertainty_method == "SWAG":
     
         swag = SWAG(EGNN, in_node_nf=in_node_nf, in_edge_nf=in_edge_nf, hidden_nf=hidden_nf, n_layers=n_layers, device=device, sample_size = swag_sample_size)
         swag.load_state_dict(torch.load(model_path, map_location=torch.device(device)))
-        swag.calibrate_uncertainty(validationloader, device=device, dtype=torch.float32)
+        #swag.calibrate_uncertainty(validationloader, device=device, dtype=torch.float32)
         swag.evaluate_all(testloader_in, device=device, dtype=torch.float32, plot_name=f"{out_path}/plot_{i}", csv_path=f"{out_path}/eval.csv", test_loader_out=testloader_out, best_model_available=False, use_energy_uncertainty=True, use_force_uncertainty=True)
 
     if uncertainty_method == "ENS":
         ens = ModelEnsemble(EGNN, num_models=ensemble_size, in_node_nf=in_node_nf, in_edge_nf=in_edge_nf, hidden_nf=hidden_nf, n_layers=n_layers, device=device)
         ens.load_state_dict(torch.load(model_path, map_location=torch.device(device)))
-        ens.calibrate_uncertainty(validationloader, device=device, dtype=torch.float32)
+        #ens.calibrate_uncertainty(validationloader, device=device, dtype=torch.float32)
         ens.evaluate_all(testloader_in, device=device, dtype=torch.float32, plot_name=f"{out_path}/plot_{i}", csv_path=f"{out_path}/eval.csv", test_loader_out=testloader_out, best_model_available=False, use_energy_uncertainty=True, use_force_uncertainty=True)
 
     if uncertainty_method == "EVI":
         
         evi = EvidentialRegression(EGNN, in_node_nf=in_node_nf, in_edge_nf=in_edge_nf, hidden_nf=hidden_nf, n_layers=n_layers, device=device)
         evi.load_state_dict(torch.load(model_path, map_location=torch.device(device)))
-        evi.calibrate_uncertainty(validationloader, device=device, dtype=torch.float32)
+        #evi.calibrate_uncertainty(validationloader, device=device, dtype=torch.float32)
         evi.evaluate_all(testloader_in, device=device, dtype=torch.float32, plot_name=f"{out_path}/plot_{i}", csv_path=f"{out_path}/eval.csv", test_loader_out=testloader_out, best_model_available=False, use_energy_uncertainty=True, use_force_uncertainty=False)
 
 
