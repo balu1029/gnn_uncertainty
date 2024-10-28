@@ -8,6 +8,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import wandb
 import time
+import copy
 
 from sklearn.metrics import r2_score
 
@@ -47,7 +48,7 @@ class ModelEnsemble(BaseUncertainty):
                 best_valid_loss = np.array(self.valid_losses_total).mean()
                 if model_path is not None:
                     torch.save(self.state_dict(), model_path)
-                self.best_model = self.state_dict()
+                self.best_model = copy.deepcopy(self.state_dict())
 
             self.lr_before = optimizer.param_groups[0]['lr']
             scheduler.step(np.array(self.valid_losses_total).mean())
