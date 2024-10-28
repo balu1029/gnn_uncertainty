@@ -4,7 +4,7 @@ import os
 
 
 class MD17Dataset(torch.utils.data.Dataset):
-    def __init__(self, foldername, seed=42, subtract_self_energies=True, in_unit="kj/mol", train=None, train_ratio=0.8):
+    def __init__(self, foldername, seed=42, subtract_self_energies=True, in_unit="kj/mol", train=None, train_ratio=0.8, scale=True):
         self.type_to_number = {"H" : 0,
                                "C" : 1,
                                "N" : 2,
@@ -85,10 +85,10 @@ class MD17Dataset(torch.utils.data.Dataset):
         self.charges = self.charges[indices]
         self.atom_mask = self.atom_mask[indices]
         self.edge_mask = self.edge_mask[indices]
-
-        self.energies = (self.energies - self.mean_energy) / self.std_energy
-        self.forces = (self.forces - self.mean_forces) / self.std_forces
-        
+        if scale:
+            self.energies = (self.energies - self.mean_energy) / self.std_energy
+            self.forces = (self.forces - self.mean_forces) / self.std_forces
+            
 
     def __len__(self):
         return self.len

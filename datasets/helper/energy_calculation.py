@@ -2,8 +2,13 @@ from openmm.app import *
 from openmm import *
 from openmm.unit import picosecond, femtoseconds, kelvin , kilojoules_per_mole, nanometers, angstrom
 from sys import stdout
+import os
 import numpy as np
 import multiprocessing
+import torch
+
+sys.path.append(os.path.abspath('/home/kit/iti/fq0795/gnn_uncertainty/'))
+from datasets.md17_dataset import MD17Dataset
 
 kjpmol_to_kcalpmol = 0.239006
 ev_to_kjpmol = 96.485
@@ -220,6 +225,11 @@ class OpenMMEnergyCalculation:
                         samples = np.concatenate((samples, molecules[sampled_indices]), axis=0)
         self._generate_from_npy(samples, out_file, len(samples))
 
+    def generate_from_dataset(self, dataset, out_file:str)->None:
+        molecules = dataset.coordinates
+        print(len(molecules))
+        print(out_file)
+        self._generate_from_npy(molecules, out_file, len(molecules))
 
 
     
@@ -331,4 +341,9 @@ if __name__ == "__main__":
     npy_in = "datasets/files/ala_converged/prod_positions_20-09-2023_13-10-19.npy"
     xyz_out = "datasets/files/active_learning_validation/dataset2.xyz"
 
-    energy_calculation.generate_validation_uniform(npy_in, xyz_out, 300, 1)
+    dataset = "datasets/files/train_in"
+    out_path = "datasets/files/train_in2/dataset.xyz"
+    trainset = MD17Dataset(dataset,subtract_self_energies=False, in_unit="kj/mol",train=True, train_ratio=0.8)
+    
+    energy_calculation.generate_from_dataset(trainset, out_path)
+    #energy_calculation.generate_validation_uniform(npy_in, xyz_out, 300, 1)

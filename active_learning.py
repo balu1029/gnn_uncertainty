@@ -104,7 +104,7 @@ class ALCalculator(Calculator):
         #print()
         # Store the forces in the results dictionary
         force = torch.clamp(force, -self.max_force, self.max_force)
-        self.results['forces'] = force.detach().numpy() * self.force_unit
+        self.results['forces'] = force.cpu().detach().numpy() * self.force_unit
 
     def get_uncertainty_samples(self):
         return np.array(self.uncertainty_samples)
@@ -176,7 +176,7 @@ class ActiveLearning:
             os.makedirs(model_out_path)
             os.makedirs(data_out_path)
             # Copy the file to the directory
-            shutil.copy2("al/run1/data/base.xyz", data_out_path)
+            shutil.copy2("datasets/files/train_in2/dataset.xyz", data_out_path)
 
         batch_size = 32
         lr=1e-3
@@ -198,18 +198,18 @@ class ActiveLearning:
             if len(samples) > 0:
                 print(f"Training model {i}. Added {len(samples)} samples to the dataset.")
 
-                self.add_data(samples, energies, forces, f"{data_out_path}data_{i}.txt")
+                self.add_data(samples, energies, forces, f"{data_out_path}data_{i}.xyz")
 
-                trainset = MD17Dataset(f"{data_out_path}", subtract_self_energies=False, in_unit="kj/mol", train=True, train_ratio=0.8)
-                validset = MD17Dataset(f"datasets/files/active_learning_validation", subtract_self_energies=False, in_unit="kj/mol")
+                trainset = MD17Dataset(f"{data_out_path}", subtract_self_energies=False, in_unit="kj/mol", scale=False)
+                validset = MD17Dataset(f"datasets/files/active_learning_validation2", subtract_self_energies=False, in_unit="kj/mol", scale=False)
                 trainloader = torch.utils.data.DataLoader(trainset, batch_size=32, shuffle=True)
                 validloader = torch.utils.data.DataLoader(validset, batch_size=32, shuffle=True)
                 wandb.log({
-                    "dataset_size": len(trainloader.dataset)
-                })
+                        "dataset_size": len(trainset.coordinates)
+                    })
 
                 log_interval = 100
-                force_weight = 1
+                force_weight = 5
                 energy_weight = 1
 
                 for epoch in range(epochs_per_iter):
@@ -217,6 +217,7 @@ class ActiveLearning:
                     #self.trainer.train(num_epochs=2, learning_rate=1e-5, folder=data_out_path)
                     self.model.valid_epoch(validloader, criterion, self.device, self.dtype, force_weight=force_weight, energy_weight=energy_weight)
                     self.model.epoch_summary(epoch=f"Validation {i}", use_wandb=use_wandb)
+                    
                     self.model.drop_metrics()
                 
                 torch.save(self.trainer.model.state_dict(), f"{model_out_path}model_{i}.pt")
@@ -258,16 +259,17 @@ if __name__ == "__main__":
     #model_path = "al/run10/models/model_19.pt"
     #model_path = "gnn/models/ala_converged_1000000_even_larger.pt"
     model_path = "gnn/models/ensemble3_6/model_0.pt"
+    #model_path = "gnn/models/mve_20241018_100051/model_0.pt"
     
     num_ensembles = 3
     in_nf = 12
     hidden_nf = 32
     n_layers = 4
-    model = MVE(EGNN, in_node_nf=in_nf, in_edge_nf=0, hidden_nf=hidden_nf, n_layers=n_layers, multi_dec=True)
+    #model = MVE(EGNN, in_node_nf=in_nf, in_edge_nf=0, hidden_nf=hidden_nf, n_layers=n_layers, multi_dec=True)
     model = ModelEnsemble(EGNN, num_models=num_ensembles, in_node_nf=in_nf, in_edge_nf=0, hidden_nf=hidden_nf, n_layers=n_layers)
     model.load_state_dict(torch.load(model_path, map_location=torch.device("cuda" if torch.cuda.is_available() else "cpu")))
     al = ActiveLearning(max_uncertainty=25 ,num_ensembles=num_ensembles, in_nf=in_nf, hidden_nf=hidden_nf, n_layers=n_layers, model=model)
     #al.run_simulation(1000, show_traj=True)
     #print(len(al.calc.get_uncertainty_samples()))
 
-    al.improve_model(20, 100,run_idx=13, use_wandb=True, model_path=model_path)
+    al.improve_model(100, 500,run_idx=16, use_wandb=True, model_path=model_path)
