@@ -121,7 +121,7 @@ class BaseUncertainty(nn.Module):
         if use_energy_uncertainty:
             energy_r2_in, forces_r2_in, energy_correlation_in_energy, energy_correlation_in_forces, energy_losses_in, forces_losses_in = self._eval_all(test_loader_in, device, dtype, plot_path=f"{plot_name}_in", plot_title=self.__class__.__name__+' In Distribution', use_force_uncertainty=False, plot_loss=True)
         if use_force_uncertainty:
-            energy_r2_in, forces_r2_in, force_correlation_in_energy, force_correlation_in_forces, energy_losses_in, forces_losses_in = self._eval_all(test_loader_in, device, dtype, plot_path=f"{plot_name}_in", plot_title=self.__class__.__name__+' In Distribution', use_force_uncertainty=True)
+            energy_r2_in, forces_r2_in, force_correlation_in_energy, force_correlation_in_forces, energy_losses_in, forces_losses_in = self._eval_all(test_loader_in, device, dtype, plot_path=f"{plot_name}_in", plot_title=self.__class__.__name__+' In Distribution', use_force_uncertainty=True, plot_loss= not use_energy_uncertainty)
 
 
         if test_loader_out is not None:
@@ -170,7 +170,7 @@ class BaseUncertainty(nn.Module):
             if use_force_uncertainty:
                 energy, forces, uncertainty = self.predict(x=atom_positions, h0=nodes, edges=edges, edge_attr=None, node_mask=atom_mask, edge_mask=edge_mask, n_nodes=n_nodes, use_force_uncertainty=True)
             else:
-                energy, forces, uncertainty = self.predict(x=atom_positions, h0=nodes, edges=edges, edge_attr=None, node_mask=atom_mask, edge_mask=edge_mask, n_nodes=n_nodes)
+                energy, forces, uncertainty = self.predict(x=atom_positions, h0=nodes, edges=edges, edge_attr=None, node_mask=atom_mask, edge_mask=edge_mask, n_nodes=n_nodes, use_force_uncertainty=False)
             predictions_energy = torch.cat((predictions_energy, energy.cpu().detach()), dim=0)
             ground_truths_energy = torch.cat((ground_truths_energy, label_energy.cpu().detach()), dim=0)
             predictions_forces = torch.cat((predictions_forces, forces.cpu().detach()), dim=0)

@@ -21,9 +21,8 @@ n_layers = 4
 ensemble_size = 3
 uncertainty_method = "ENS"
 swag_sample_size = 20
-
-model_dir = "gnn/models/ensemble3_20241016_100027"
-out_path = "logs/ensemble3_20241016_100027_reevaluate"
+model_dir = "gnn/models/ensemble3_20241018_101159"
+out_path = "logs/ensemble3_20241018_101159_reevaluate2"
 
 if not os.path.exists(out_path):
     os.makedirs(out_path)
