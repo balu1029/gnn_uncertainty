@@ -1,15 +1,16 @@
+['H1', 'CH3', 'H2', 'H3', 'C', 'O', 'N', 'H', 'CA', 'HA', 'CB', 'HB1', 'HB2', 'HB3', 'C', 'O', 'N', 'H', 'C', 'H1', 'H2', 'H3']
 
 ============================= JOB FEEDBACK =============================
 
 NodeName=uc2n520
-Job ID: 24529057
+Job ID: 24552337
 Cluster: uc2
 User/Group: fq0795/iti
-State: COMPLETED (exit code 0)
+State: FAILED (exit code 1)
 Nodes: 1
 Cores per node: 10
-CPU Utilized: 00:05:17
-CPU Efficiency: 9.08% of 00:58:10 core-walltime
-Job Wall-clock time: 00:05:49
-Memory Utilized: 1.22 GB
-Memory Efficiency: 1.33% of 91.80 GB
+CPU Utilized: 00:00:13
+CPU Efficiency: 2.00% of 00:10:50 core-walltime
+Job Wall-clock time: 00:01:05
+Memory Utilized: 880.81 MB
+Memory Efficiency: 0.94% of 91.80 GB

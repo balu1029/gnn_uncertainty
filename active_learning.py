@@ -155,6 +155,17 @@ class ActiveLearning:
         self.oracle = OpenMMEnergyCalculation()
         self.trainer = ModelTrainer(self.calc.model, self.num_ensembles)
 
+    def sample_rand_pos(self, data_path)->None:
+        """
+        Samples a random position from the dataset and sets the atoms object to this position.
+
+        Parameters:
+        - data_path (str): The path to the dataset file.
+        """
+        dataset = MD17Dataset(data_path, subtract_self_energies=False, in_unit="kj/mol", scale=False)
+        idx = np.random.randint(0, len(dataset))
+        self.atoms.positions = np.array(dataset[idx])
+
     def run_simulation(self, steps:int, show_traj:bool=False)->np.array:
 
         with Trajectory('ala.traj', 'w', self.atoms) as traj:
@@ -168,7 +179,7 @@ class ActiveLearning:
             view(traj, block=True)
 
 
-    def improve_model(self, num_iter, steps_per_iter, use_wandb=False, run_idx=1, model_path="gnn/models/ala_converged_1000000.pt"):
+    def improve_model(self, num_iter, steps_per_iter, use_wandb=False, run_idx=1, model_path="gnn/models/ala_converged_1000000.pt", max_iterations=3000):
         model_out_path = f"al/run{run_idx}/models/"
         data_out_path = f"al/run{run_idx}/data/"
         if not os.path.exists(f"al/run{run_idx}"):
@@ -187,7 +198,18 @@ class ActiveLearning:
             self.init_wandb(model=self.model, criterion=criterion, optimizer=optimizer, model_path=model_path, lr=lr, batch_size=batch_size, epochs_per_iter=epochs_per_iter)
 
         for i in range(num_iter):
-            self.run_simulation(steps_per_iter, show_traj=False)
+            #self.run_simulation(steps_per_iter, show_traj=False)
+            
+            for i in range(steps_per_iter):
+                self.sample_rand_pos(data_out_path)
+                j = 0
+                while len(self.calc.get_uncertainty_samples()) == 0:
+                    self.dyn.run(1)
+                    j += 1
+                    if j > max_iterations:
+                        print("No more uncertainty samples found.")
+                        break
+                print(f"Found uncertainty sample after {j} steps.")
 
             samples = self.calc.get_uncertainty_samples()
             self.calc.reset_uncertainty_samples()
@@ -272,4 +294,4 @@ if __name__ == "__main__":
     #al.run_simulation(1000, show_traj=True)
     #print(len(al.calc.get_uncertainty_samples()))
 
-    al.improve_model(100, 500,run_idx=16, use_wandb=True, model_path=model_path)
+    al.improve_model(100, 500,run_idx=17, use_wandb=True, model_path=model_path)
