@@ -163,8 +163,9 @@ class ActiveLearning:
         - data_path (str): The path to the dataset file.
         """
         dataset = MD17Dataset(data_path, subtract_self_energies=False, in_unit="kj/mol", scale=False)
+        np.random.seed(None)
         idx = np.random.randint(0, len(dataset))
-        self.atoms.positions = np.array(dataset[idx])
+        self.atoms.positions = np.array(dataset.coordinates[idx])
 
     def run_simulation(self, steps:int, show_traj:bool=False)->np.array:
 
@@ -200,10 +201,10 @@ class ActiveLearning:
         for i in range(num_iter):
             #self.run_simulation(steps_per_iter, show_traj=False)
             
-            for i in range(steps_per_iter):
+            for k in range(steps_per_iter):
                 self.sample_rand_pos(data_out_path)
                 j = 0
-                while len(self.calc.get_uncertainty_samples()) == 0:
+                while len(self.calc.get_uncertainty_samples()) == k:
                     self.dyn.run(1)
                     j += 1
                     if j > max_iterations:
@@ -226,9 +227,10 @@ class ActiveLearning:
                 validset = MD17Dataset(f"datasets/files/active_learning_validation2", subtract_self_energies=False, in_unit="kj/mol", scale=False)
                 trainloader = torch.utils.data.DataLoader(trainset, batch_size=32, shuffle=True)
                 validloader = torch.utils.data.DataLoader(validset, batch_size=32, shuffle=True)
-                wandb.log({
-                        "dataset_size": len(trainset.coordinates)
-                    })
+                if use_wandb:
+                    wandb.log({
+                            "dataset_size": len(trainset.coordinates)
+                        })
 
                 log_interval = 100
                 force_weight = 5
@@ -294,4 +296,4 @@ if __name__ == "__main__":
     #al.run_simulation(1000, show_traj=True)
     #print(len(al.calc.get_uncertainty_samples()))
 
-    al.improve_model(100, 500,run_idx=17, use_wandb=True, model_path=model_path)
+    al.improve_model(100, 50,run_idx=18, use_wandb=False, model_path=model_path)
