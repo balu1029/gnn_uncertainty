@@ -20,6 +20,7 @@ from gnn.egnn import EGNN
 from datasets.helper import utils as qm9_utils
 from datasets.helper.energy_calculation import OpenMMEnergyCalculation
 from trainer import ModelTrainer
+import csv
 
 
 
@@ -52,6 +53,8 @@ class ALCalculator(Calculator):
         self.energy_unit = kJ / mol
         self.force_unit = self.energy_unit / Angstrom
         self.a_to_nm = 0.1
+        self.energy_mean = self.force_mean = 0
+        self.energy_std = self.force_std = 1
 
     def calculate(self, atoms=None, properties=['energy', 'forces'], system_changes=all_properties):
         super().calculate(atoms, properties, system_changes)
@@ -93,6 +96,9 @@ class ALCalculator(Calculator):
 
         # Predict energy using the model
         energy, force, uncertainty = self.model.predict(x=atom_positions, h0=nodes, edges=edges, edge_attr=None, node_mask=atom_mask, edge_mask=edge_mask, n_nodes=n_nodes)
+        energy = energy * self.energy_std + self.energy_mean
+        force = force * self.force_std + self.force_mean
+
         if uncertainty.item() > self.max_uncertainty:
             self.uncertainty_samples.append(positions * self.a_to_nm)
 
@@ -111,11 +117,21 @@ class ALCalculator(Calculator):
     
     def reset_uncertainty_samples(self):
         self.uncertainty_samples = []   
+    
+    def change_norm(self, norm_file):
+        with open(norm_file, 'r') as csvfile:
+            reader = csv.reader(csvfile)
+            data = {rows[0]: float(rows[1]) for rows in reader}
+
+        self.mean_energy = data["mean_energy"]
+        self.std_energy = data["std_energy"]
+        self.mean_forces = data["mean_forces"]
+        self.std_forces = data["std_forces"]
 
 
 class ActiveLearning:
     
-    def __init__(self, model, max_uncertainty=10, num_ensembles:int=3, in_nf:int=12, hidden_nf:int=16, n_layers:int=2, molecule_path:str="datasets/files/ala_converged_1000000/start_pos.xyz") -> None:
+    def __init__(self, model, max_uncertainty=10, num_ensembles:int=3, in_nf:int=12, hidden_nf:int=16, n_layers:int=2, molecule_path:str="datasets/files/ala_converged_1000000/start_pos.xyz", norm_file="datasets/files/norm_values.csv") -> None:
         """
         Initializes an instance of the ActiveLearning class.
 
@@ -145,6 +161,8 @@ class ActiveLearning:
         self.num_ensembles = num_ensembles
 
         self.calc = ALCalculator(model=model, max_uncertainty=max_uncertainty)
+        if norm_file is not None:
+            self.calc.change_norm(norm_file)
         self.atoms = read(molecule_path)
         self.atoms.set_calculator(self.calc)
 
@@ -162,7 +180,7 @@ class ActiveLearning:
         Parameters:
         - data_path (str): The path to the dataset file.
         """
-        dataset = MD17Dataset(data_path, subtract_self_energies=False, in_unit="kj/mol", scale=False)
+        dataset = MD17Dataset(data_path, subtract_self_energies=False, in_unit="kj/mol", scale=False, determine_norm=True)
         np.random.seed(None)
         idx = np.random.randint(0, len(dataset))
         self.atoms.positions = np.array(dataset.coordinates[idx])
@@ -223,8 +241,9 @@ class ActiveLearning:
 
                 self.add_data(samples, energies, forces, f"{data_out_path}data_{i}.xyz")
 
-                trainset = MD17Dataset(f"{data_out_path}", subtract_self_energies=False, in_unit="kj/mol", scale=False)
-                validset = MD17Dataset(f"datasets/files/active_learning_validation2", subtract_self_energies=False, in_unit="kj/mol", scale=False)
+                trainset = MD17Dataset(f"{data_out_path}", subtract_self_energies=False, in_unit="kj/mol", scale=True, determine_norm=True, store_norm_path=f"{data_out_path}norms{i}.csv")
+                validset = MD17Dataset(f"datasets/files/active_learning_validation2", subtract_self_energies=False, in_unit="kj/mol", scale=True, load_norm_path=f"{data_out_path}norms{i}.csv")
+                self.calc.change_norm(f"{data_out_path}norms{i}.csv")
                 trainloader = torch.utils.data.DataLoader(trainset, batch_size=32, shuffle=True)
                 validloader = torch.utils.data.DataLoader(validset, batch_size=32, shuffle=True)
                 if use_wandb:
@@ -296,4 +315,4 @@ if __name__ == "__main__":
     #al.run_simulation(1000, show_traj=True)
     #print(len(al.calc.get_uncertainty_samples()))
 
-    al.improve_model(100, 50,run_idx=18, use_wandb=False, model_path=model_path)
+    al.improve_model(100, 10,run_idx=19, use_wandb=False, model_path=model_path)

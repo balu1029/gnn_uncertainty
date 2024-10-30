@@ -1,10 +1,11 @@
 import numpy as np
 import torch
 import os
+import csv
 
 
 class MD17Dataset(torch.utils.data.Dataset):
-    def __init__(self, foldername, seed=42, subtract_self_energies=True, in_unit="kj/mol", train=None, train_ratio=0.8, scale=True):
+    def __init__(self, foldername, seed=42, subtract_self_energies=True, in_unit="kj/mol", train=None, train_ratio=0.8, scale=True, determine_norm=False, store_norm_path=None, load_norm_path=None):
         self.type_to_number = {"H" : 0,
                                "C" : 1,
                                "N" : 2,
@@ -24,11 +25,23 @@ class MD17Dataset(torch.utils.data.Dataset):
         self.kcal_to_eV = 0.0433641
         self.charge_scale = torch.tensor(max(self.ground_charges.values())+1)
         self.charge_power = 2
-
-        self.mean_energy = -2.664          # mean energy obtained from the training dataset (ala_converged_forces_1000)
-        self.std_energy = 15.6522          # std energy obtained from the training dataset (ala_converged_forces_1000)
-        self.mean_forces = self.mean_energy
-        self.std_forces = self.std_energy
+        if load_norm_path is not None:
+            with open(load_norm_path, 'r', newline='') as csvfile:
+                reader = csv.reader(csvfile)
+                for row in reader:
+                    if row[0] == "mean_energy":
+                        self.mean_energy = float(row[1])
+                    elif row[0] == "std_energy":
+                        self.std_energy = float(row[1])
+                    elif row[0] == "mean_forces":
+                        self.mean_forces = float(row[1])
+                    elif row[0] == "std_forces":
+                        self.std_forces = float(row[1])
+        else:
+            self.mean_energy = -5.0381         # mean energy obtained from the training dataset (train_in2)
+            self.std_energy = 14.9411          # std energy obtained from the training dataset (train_in2)
+            self.mean_forces = self.mean_energy
+            self.std_forces = self.std_energy
         
         self.atom_numbers_raw, self.coordinates_raw, self.energies, self.forces = self._read_coordinates_energies_forces(foldername, in_unit=in_unit)
         self.atom_numbers = self._pad_array(self.atom_numbers_raw, fill = [-1])
@@ -85,6 +98,21 @@ class MD17Dataset(torch.utils.data.Dataset):
         self.charges = self.charges[indices]
         self.atom_mask = self.atom_mask[indices]
         self.edge_mask = self.edge_mask[indices]
+
+        if determine_norm:
+            if load_norm_path is not None:
+                print("WARNING: load_norm_path is not None, so the normalization parameters are not determined from dataset.")
+            else:
+                self.mean_energy = self.mean_forces = self.energies.mean()
+                self.std_energy = self.std_forces = self.energies.std()
+        if store_norm_path is not None:
+            with open(store_norm_path, 'w', newline='') as csvfile:
+                writer = csv.writer(csvfile)
+                writer.writerow(["mean_energy", self.mean_energy.item()])
+                writer.writerow(["std_energy", self.std_energy.item()])
+                writer.writerow(["mean_forces", self.mean_forces.item()])
+                writer.writerow(["std_forces", self.std_forces.item()])
+
         if scale:
             self.energies = (self.energies - self.mean_energy) / self.std_energy
             self.forces = (self.forces - self.mean_forces) / self.std_forces
