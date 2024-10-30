@@ -19,10 +19,10 @@ hidden_nf = 32
 n_layers = 4
 
 ensemble_size = 3
-uncertainty_method = "ENS"
-swag_sample_size = 20
-model_dir = "gnn/models/ensemble3_20241028_134915"
-out_path = "logs/ensemble3_20241028_134915_reevaluate"
+uncertainty_method = "SWAG"
+swag_sample_size = 5
+model_dir = "gnn/models/swag5_20241028_150629"
+out_path = "logs/swag5_20241028_150629_reevaluate"
 
 if not os.path.exists(out_path):
     os.makedirs(out_path)

@@ -8,6 +8,7 @@ import wandb
 import numpy as np  
 import time
 import matplotlib.pyplot as plt
+import copy
 
 from sklearn.metrics import r2_score
 
@@ -53,7 +54,7 @@ class MVE(BaseUncertainty):
                 best_valid_loss = np.array(self.valid_losses_total).mean()
                 if model_path is not None:
                     torch.save(self.state_dict(), model_path)
-                self.best_model = self.state_dict()
+                self.best_model = copy.deepcopy(self.state_dict())
 
             self.lr_before = optimizer.param_groups[0]['lr']
             scheduler.step(np.array(self.valid_losses_total).mean())
@@ -148,7 +149,7 @@ class MVE(BaseUncertainty):
         self.valid_time = time.time() - start
 
 
-    def predict(self, x, *args, **kwargs):
+    def predict(self, x, use_force_uncertainty=False, *args, **kwargs):
         self.eval()
         energy, forces, uncertainty = self.forward(x=x, *args, **kwargs)
         return energy, forces, (uncertainty - self.uncertainty_bias)/self.uncertainty_slope

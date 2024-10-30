@@ -47,6 +47,7 @@ class SWAG(BaseUncertainty):
     def fit(self, epochs, swag_start_epoch, swag_freq, train_loader, valid_loader, device, dtype, model_path="gnn/models/swag.pt", use_wandb=False, force_weight=1.0, energy_weight=1.0, log_interval=100, patience=200, factor=0.1, lr=1e-3, min_lr=1e-6): 
 
         optimizer = torch.optim.AdamW(self.parameters(), lr=1e-3, weight_decay=1e-16)   
+        optimizer = torch.optim.SGD(self.parameters(), lr=1e-2)
         criterion = nn.L1Loss()
         scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=factor, patience=patience)
         if use_wandb:
@@ -61,12 +62,6 @@ class SWAG(BaseUncertainty):
             self.valid_epoch(valid_loader=valid_loader, criterion=criterion, device=device, dtype=dtype, force_weight=force_weight, energy_weight=energy_weight)
             self.epoch_summary(epoch, use_wandb=use_wandb, lr=optimizer.param_groups[0]['lr'])
 
-            if np.array(self.valid_losses_total).mean() < best_valid_loss:
-                best_valid_loss = np.array(self.valid_losses_total).mean()
-                if model_path is not None:
-                    torch.save(self.state_dict(), model_path)
-            
-            self.best_model = self.state_dict() # For SWAG it does not make sense to take an intermediate model as "best" one because we sample the weights
 
             
 
@@ -77,6 +72,10 @@ class SWAG(BaseUncertainty):
                 scheduler.step(np.array(self.valid_losses_total).mean())
                 self.lr_after = optimizer.param_groups[0]['lr']
             self.drop_metrics()
+
+        if model_path is not None:
+            torch.save(self.state_dict(), model_path)
+        self.best_model = self.state_dict() # For SWAG it does not make sense to take an intermediate model as "best" one because we sample the weights
 
         if use_wandb:
             wandb.finish()

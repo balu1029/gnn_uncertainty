@@ -17,7 +17,7 @@ import os
 class BaseUncertainty(nn.Module):
 
     @abstractmethod
-    def predict(self, x, *args, **kwargs):
+    def predict(self, x, use_force_uncertainty=False, *args, **kwargs):
         pass
 
     @abstractmethod

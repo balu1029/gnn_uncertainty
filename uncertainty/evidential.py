@@ -9,6 +9,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import numpy as np
+import copy
 
 class EvidentialRegressionLoss(nn.Module):
     def __init__(self, coeff=2.0e-2, omega=0.01, reduce=True, kl=False):
@@ -117,7 +118,7 @@ class EvidentialRegression(BaseUncertainty):
                 best_valid_loss = np.array(self.valid_losses_total).mean()
                 if model_path is not None:
                     torch.save(self.state_dict(), model_path)
-                self.best_model = self.state_dict()
+                self.best_model = copy.deepcopy(self.state_dict())
 
             self.lr_before = optimizer.param_groups[0]['lr']
             scheduler.step(np.array(self.valid_losses_total).mean())
@@ -184,7 +185,7 @@ class EvidentialRegression(BaseUncertainty):
         self.valid_time = time.time() - start
 
 
-    def predict(self, x, *args, **kwargs):
+    def predict(self, x, use_force_uncertainty=False, *args, **kwargs):
         self.eval()
         energy, force, v, alpha, beta = self.forward(x=x, *args, **kwargs)
         variance = torch.sqrt(beta / (v * (alpha - 1)))
