@@ -218,17 +218,19 @@ class ActiveLearning:
 
         for i in range(num_iter):
             #self.run_simulation(steps_per_iter, show_traj=False)
-            
+            number_not_found = 0
             for k in range(steps_per_iter):
                 self.sample_rand_pos(data_out_path)
                 j = 0
-                while len(self.calc.get_uncertainty_samples()) == k:
+                while len(self.calc.get_uncertainty_samples()) == k - number_not_found:
                     self.dyn.run(1)
                     j += 1
                     if j > max_iterations:
                         print("No more uncertainty samples found.")
+                        number_not_found += 1
                         break
-                print(f"Found uncertainty sample after {j} steps.")
+                if not j > max_iterations:
+                    print(f"Found uncertainty sample after {j} steps.", flush=True)
 
             samples = self.calc.get_uncertainty_samples()
             self.calc.reset_uncertainty_samples()
@@ -246,10 +248,6 @@ class ActiveLearning:
                 self.calc.change_norm(f"{data_out_path}norms{i}.csv")
                 trainloader = torch.utils.data.DataLoader(trainset, batch_size=32, shuffle=True)
                 validloader = torch.utils.data.DataLoader(validset, batch_size=32, shuffle=True)
-                if use_wandb:
-                    wandb.log({
-                            "dataset_size": len(trainset.coordinates)
-                        })
 
                 log_interval = 100
                 force_weight = 5
@@ -259,7 +257,11 @@ class ActiveLearning:
                     self.model.train_epoch(trainloader, optimizer, criterion, epoch, self.device, self.dtype, force_weight=force_weight, energy_weight=energy_weight, log_interval=log_interval)
                     #self.trainer.train(num_epochs=2, learning_rate=1e-5, folder=data_out_path)
                     self.model.valid_epoch(validloader, criterion, self.device, self.dtype, force_weight=force_weight, energy_weight=energy_weight)
-                    self.model.epoch_summary(epoch=f"Validation {i}", use_wandb=use_wandb)
+                    self.model.epoch_summary(epoch=f"Validation {i}_{epoch}", use_wandb=use_wandb)
+                    if use_wandb:
+                        wandb.log({
+                                "dataset_size": len(trainset.coordinates)
+                            })
                     
                     self.model.drop_metrics()
                 
@@ -311,8 +313,8 @@ if __name__ == "__main__":
     #model = MVE(EGNN, in_node_nf=in_nf, in_edge_nf=0, hidden_nf=hidden_nf, n_layers=n_layers, multi_dec=True)
     model = ModelEnsemble(EGNN, num_models=num_ensembles, in_node_nf=in_nf, in_edge_nf=0, hidden_nf=hidden_nf, n_layers=n_layers)
     model.load_state_dict(torch.load(model_path, map_location=torch.device("cuda" if torch.cuda.is_available() else "cpu")))
-    al = ActiveLearning(max_uncertainty=25 ,num_ensembles=num_ensembles, in_nf=in_nf, hidden_nf=hidden_nf, n_layers=n_layers, model=model)
+    al = ActiveLearning(max_uncertainty=15 ,num_ensembles=num_ensembles, in_nf=in_nf, hidden_nf=hidden_nf, n_layers=n_layers, model=model)
     #al.run_simulation(1000, show_traj=True)
     #print(len(al.calc.get_uncertainty_samples()))
 
-    al.improve_model(100, 10,run_idx=19, use_wandb=False, model_path=model_path)
+    al.improve_model(100, 100,run_idx=21, use_wandb=True, model_path=model_path)
