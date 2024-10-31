@@ -25,7 +25,8 @@ class OpenMMEnergyCalculation:
         pdb = PDBFile('datasets/files/alaninedipeptide/pdb/alaninedipeptide.pdb')
         forcefield = ForceField('amber14-all.xml')
         system = forcefield.createSystem(pdb.topology)
-        integrator = LangevinIntegrator(300*kelvin, 1/picosecond, 1*femtoseconds)
+        self.temperature = 300
+        integrator = LangevinIntegrator(self.temperature*kelvin, 1/picosecond, 1*femtoseconds)
         self.simulation = Simulation(pdb.topology, system, integrator)
         self.simulation.context.setPositions(pdb.positions)
 
@@ -55,6 +56,7 @@ class OpenMMEnergyCalculation:
         positions =  positions 
         positions = [Vec3(position[0], position[1], position[2]) * nanometers for position in positions]
         self.simulation.context.setPositions(positions)
+        self.simulation.context.setVelocitiesToTemperature(self.temperature)
 
     def step(self, steps:int)->None:
         """

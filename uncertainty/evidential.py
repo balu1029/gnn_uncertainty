@@ -217,7 +217,7 @@ class EvidentialRegression(BaseUncertainty):
         self.valid_time = 0
 
     
-    def epoch_summary(self, epoch, use_wandb=False, lr=None):
+    def epoch_summary(self, epoch, additional_logs=None, use_wandb=False, lr=None):
         print("", flush=True)
         print(f"Training and Validation Results of Epoch {epoch}:", flush=True)
         print("================================")
@@ -226,16 +226,18 @@ class EvidentialRegression(BaseUncertainty):
             print(f"Validation Loss Energy: {np.array(self.valid_losses_energy).mean()}, Validation Loss Force: {np.array(self.valid_losses_force).mean()}, time: {self.valid_time}", flush=True)
         print("", flush=True)
 
-        if use_wandb:
-            wandb.log({
-                "train_loss_energy": np.array(self.train_losses_energy).mean(),
+        logs = {"train_loss_energy": np.array(self.train_losses_energy).mean(),
                 "train_loss_force": np.array(self.train_losses_force).mean(),
                 "train_loss_total": np.array(self.train_losses_total).mean(),
                 "valid_loss_energy": np.array(self.valid_losses_energy).mean(),
                 "valid_loss_force": np.array(self.valid_losses_force).mean(),
                 "valid_loss_total": np.array(self.valid_losses_total).mean(),
-                "lr" : lr 
-            })
+                "lr" : lr}
+        if additional_logs is not None:
+            logs.update(additional_logs)
+        
+        if use_wandb:
+            wandb.log(logs)
 
     def init_wandb(self, scheduler, criterion, optimizer, model_path, train_loader, valid_loader, epochs, lr, patience, factor, force_weight, energy_weight):
         wandb.init(
