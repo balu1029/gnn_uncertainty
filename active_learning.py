@@ -216,6 +216,14 @@ class ActiveLearning:
         if use_wandb:
             self.init_wandb(model=self.model, criterion=criterion, optimizer=optimizer, model_path=model_path, lr=lr, batch_size=batch_size, epochs_per_iter=epochs_per_iter)
 
+
+        trainset = MD17Dataset(f"{data_out_path}", subtract_self_energies=False, in_unit="kj/mol", scale=True, determine_norm=True, store_norm_path=f"{data_out_path}norms_dataset.csv")
+        validset = MD17Dataset(f"datasets/files/active_learning_validation2", subtract_self_energies=False, in_unit="kj/mol", scale=True, load_norm_path=f"{data_out_path}norms_dataset.csv")
+        self.calc.change_norm(f"{data_out_path}norms_dataset.csv")
+        self.model.valid_epoch(validloader, criterion, self.device, self.dtype, force_weight=force_weight, energy_weight=energy_weight)
+        self.model.epoch_summary(epoch=f"Initital validation", use_wandb=use_wandb, additional_info={"dataset_size": len(trainset.coordinates)})                    
+        self.model.drop_metrics()
+
         for i in range(num_iter):
             #self.run_simulation(steps_per_iter, show_traj=False)
             number_not_found = 0
@@ -257,12 +265,7 @@ class ActiveLearning:
                     self.model.train_epoch(trainloader, optimizer, criterion, epoch, self.device, self.dtype, force_weight=force_weight, energy_weight=energy_weight, log_interval=log_interval)
                     #self.trainer.train(num_epochs=2, learning_rate=1e-5, folder=data_out_path)
                     self.model.valid_epoch(validloader, criterion, self.device, self.dtype, force_weight=force_weight, energy_weight=energy_weight)
-                    self.model.epoch_summary(epoch=f"Validation {i}_{epoch}", use_wandb=use_wandb)
-                    if use_wandb:
-                        wandb.log({
-                                "dataset_size": len(trainset.coordinates)
-                            })
-                    
+                    self.model.epoch_summary(epoch=f"Validation {i}_{epoch}", use_wandb=use_wandb, additional_info={"dataset_size": len(trainset.coordinates)})                    
                     self.model.drop_metrics()
                 
                 torch.save(self.trainer.model.state_dict(), f"{model_out_path}model_{i}.pt")
