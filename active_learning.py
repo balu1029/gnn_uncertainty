@@ -226,9 +226,9 @@ class ActiveLearning:
         validset = MD17Dataset(f"datasets/files/active_learning_validation2", subtract_self_energies=False, in_unit="kj/mol", scale=True, load_norm_path=f"{data_out_path}norms_dataset.csv")
         self.calc.change_norm(f"{data_out_path}norms_dataset.csv")
         validloader = torch.utils.data.DataLoader(validset, batch_size=512, shuffle=True)
-        self.model.valid_epoch(validloader, criterion, self.device, self.dtype, force_weight=force_weight, energy_weight=energy_weight)
-        self.model.epoch_summary(epoch=f"Initital validation", use_wandb=use_wandb, additional_logs={"dataset_size": len(trainset.coordinates)})                    
-        self.model.drop_metrics()
+        #self.model.valid_epoch(validloader, criterion, self.device, self.dtype, force_weight=force_weight, energy_weight=energy_weight)
+        #self.model.epoch_summary(epoch=f"Initital validation", use_wandb=use_wandb, additional_logs={"dataset_size": len(trainset.coordinates)})                    
+        #self.model.drop_metrics()
 
         for i in range(num_iter):
             #self.run_simulation(steps_per_iter, show_traj=False)
@@ -238,11 +238,13 @@ class ActiveLearning:
                 j = 0
                 while len(self.calc.get_uncertainty_samples()) == k - number_not_found:
                     self.dyn.run(1)
+                    print(self.oracle.calc_energy([self.dyn.atoms.get_positions()*0.1]))
                     j += 1
                     if j > max_iterations:
                         print("No more uncertainty samples found.")
                         number_not_found += 1
                         break
+                
                 if not j > max_iterations:
                     print(f"Found uncertainty sample after {j} steps.", flush=True)
 
@@ -250,7 +252,6 @@ class ActiveLearning:
             self.calc.reset_uncertainty_samples()
             energies = self.oracle.calc_energy(samples)   
             forces = self.oracle.calc_forces(samples)   
-            print(len(samples))      
             
             if len(samples) > 0:
                 print(f"Training model {i}. Added {len(samples)} samples to the dataset.")
@@ -318,8 +319,8 @@ if __name__ == "__main__":
     #model = MVE(EGNN, in_node_nf=in_nf, in_edge_nf=0, hidden_nf=hidden_nf, n_layers=n_layers, multi_dec=True)
     model = ModelEnsemble(EGNN, num_models=num_ensembles, in_node_nf=in_nf, in_edge_nf=0, hidden_nf=hidden_nf, n_layers=n_layers)
     model.load_state_dict(torch.load(model_path, map_location=torch.device("cuda" if torch.cuda.is_available() else "cpu")))
-    al = ActiveLearning(max_uncertainty=5 ,num_ensembles=num_ensembles, in_nf=in_nf, hidden_nf=hidden_nf, n_layers=n_layers, model=model)
+    al = ActiveLearning(max_uncertainty=1 ,num_ensembles=num_ensembles, in_nf=in_nf, hidden_nf=hidden_nf, n_layers=n_layers, model=model)
     #al.run_simulation(1000, show_traj=True)
     #print(len(al.calc.get_uncertainty_samples()))
 
-    al.improve_model(100, 100,run_idx=24, use_wandb=True, model_path=model_path)
+    al.improve_model(100, 10,run_idx=25, use_wandb=False, model_path=model_path)
