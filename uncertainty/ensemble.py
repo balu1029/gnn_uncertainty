@@ -22,10 +22,12 @@ class ModelEnsemble(BaseUncertainty):
         self.train_losses_energy = []
         self.train_losses_force = []
         self.train_losses_total = []
+        self.train_time = 0
 
         self.valid_losses_energy = []
         self.valid_losses_force = []
         self.valid_losses_total = []
+        
         self.valid_time = 0
 
     def fit(self, epochs, train_loader, valid_loader, device, dtype, model_path="gnn/models/ensemble.pt", use_wandb=False, force_weight=1.0, energy_weight=1.0, log_interval=100, patience=200, factor=0.1, lr=1e-3, min_lr=1e-6): 
@@ -148,6 +150,19 @@ class ModelEnsemble(BaseUncertainty):
     
 
     def epoch_summary(self, epoch, additional_logs=None, use_wandb=False, lr=None):
+        attributes = [
+            'train_losses_energy',
+            'train_losses_force',
+            'train_losses_total',
+            'valid_losses_energy',
+            'valid_losses_force',
+            'valid_losses_total'
+        ]
+
+        for attr in attributes:
+            if getattr(self, attr) == []:
+                setattr(self, attr, [0])
+
         print("", flush=True)
         print(f"Training and Validation Results of Epoch {epoch}:", flush=True)
         print("================================")

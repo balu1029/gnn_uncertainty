@@ -176,6 +176,19 @@ class MVE(BaseUncertainty):
 
     
     def epoch_summary(self, epoch, additional_logs=None, use_wandb=False, lr=None):
+        attributes = [
+            'train_losses_energy',
+            'train_losses_force',
+            'train_losses_total',
+            'valid_losses_energy',
+            'valid_losses_force',
+            'valid_losses_total'
+        ]
+
+        for attr in attributes:
+            if getattr(self, attr) == []:
+                setattr(self, attr, [0])
+                
         print("", flush=True)
         print(f"Training and Validation Results of Epoch {epoch}:", flush=True)
         print("================================")

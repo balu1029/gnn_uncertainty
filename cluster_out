@@ -1,352 +1,185 @@
 ['H1', 'CH3', 'H2', 'H3', 'C', 'O', 'N', 'H', 'CA', 'HA', 'CB', 'HB1', 'HB2', 'HB3', 'C', 'O', 'N', 'H', 'C', 'H1', 'H2', 'H3']
-Found uncertainty sample after 29 steps.
-Found uncertainty sample after 45 steps.
-Found uncertainty sample after 114 steps.
-Found uncertainty sample after 98 steps.
-Found uncertainty sample after 287 steps.
-Found uncertainty sample after 164 steps.
-Found uncertainty sample after 146 steps.
-Found uncertainty sample after 163 steps.
-Found uncertainty sample after 207 steps.
-Found uncertainty sample after 171 steps.
-Found uncertainty sample after 324 steps.
-Found uncertainty sample after 284 steps.
-Found uncertainty sample after 122 steps.
-Found uncertainty sample after 143 steps.
-Found uncertainty sample after 185 steps.
-Found uncertainty sample after 167 steps.
-Found uncertainty sample after 223 steps.
-Found uncertainty sample after 141 steps.
-Found uncertainty sample after 170 steps.
-Found uncertainty sample after 196 steps.
+
+Training and Validation Results of Epoch Initital validation:
+================================
+Training Loss Energy: 0.0, Training Loss Force: 0.0, time: 0
+Validation Loss Energy: 0.7968690904478232, Validation Loss Force: 0.8886931681384643, time: 14.479298830032349
+
+Found uncertainty sample after 22 steps.
+Found uncertainty sample after 31 steps.
+Found uncertainty sample after 84 steps.
+Found uncertainty sample after 85 steps.
+Found uncertainty sample after 132 steps.
+Found uncertainty sample after 93 steps.
+Found uncertainty sample after 82 steps.
+Found uncertainty sample after 191 steps.
 Found uncertainty sample after 198 steps.
-Found uncertainty sample after 163 steps.
-Found uncertainty sample after 183 steps.
-Found uncertainty sample after 142 steps.
-Found uncertainty sample after 241 steps.
-Found uncertainty sample after 150 steps.
-Found uncertainty sample after 230 steps.
-Found uncertainty sample after 137 steps.
-Found uncertainty sample after 150 steps.
-Found uncertainty sample after 335 steps.
-Found uncertainty sample after 87 steps.
-Found uncertainty sample after 325 steps.
-Found uncertainty sample after 112 steps.
-Found uncertainty sample after 144 steps.
-Found uncertainty sample after 154 steps.
-Found uncertainty sample after 151 steps.
-Found uncertainty sample after 254 steps.
-Found uncertainty sample after 145 steps.
-Found uncertainty sample after 154 steps.
-Found uncertainty sample after 184 steps.
-Found uncertainty sample after 53 steps.
+Found uncertainty sample after 127 steps.
 Found uncertainty sample after 149 steps.
-Found uncertainty sample after 97 steps.
-Found uncertainty sample after 250 steps.
-Found uncertainty sample after 112 steps.
-Found uncertainty sample after 331 steps.
-Found uncertainty sample after 76 steps.
-Found uncertainty sample after 231 steps.
-Found uncertainty sample after 243 steps.
-Found uncertainty sample after 160 steps.
-Found uncertainty sample after 118 steps.
-Found uncertainty sample after 213 steps.
+Found uncertainty sample after 198 steps.
+Found uncertainty sample after 202 steps.
 Found uncertainty sample after 140 steps.
-Found uncertainty sample after 190 steps.
-Found uncertainty sample after 138 steps.
-Found uncertainty sample after 172 steps.
-Found uncertainty sample after 58 steps.
-Found uncertainty sample after 36 steps.
-Found uncertainty sample after 180 steps.
-Found uncertainty sample after 168 steps.
-Found uncertainty sample after 264 steps.
-Found uncertainty sample after 180 steps.
-Found uncertainty sample after 100 steps.
-Found uncertainty sample after 196 steps.
-Found uncertainty sample after 171 steps.
-Found uncertainty sample after 294 steps.
-Found uncertainty sample after 90 steps.
-Found uncertainty sample after 105 steps.
-Found uncertainty sample after 179 steps.
-Found uncertainty sample after 195 steps.
-Found uncertainty sample after 120 steps.
-Found uncertainty sample after 154 steps.
-Found uncertainty sample after 205 steps.
-Found uncertainty sample after 95 steps.
-Found uncertainty sample after 240 steps.
-Found uncertainty sample after 134 steps.
-Found uncertainty sample after 175 steps.
-Found uncertainty sample after 131 steps.
-Found uncertainty sample after 80 steps.
-Found uncertainty sample after 237 steps.
-Found uncertainty sample after 66 steps.
-Found uncertainty sample after 306 steps.
+Found uncertainty sample after 307 steps.
 Found uncertainty sample after 114 steps.
-Found uncertainty sample after 143 steps.
-Found uncertainty sample after 110 steps.
-Found uncertainty sample after 81 steps.
-Found uncertainty sample after 371 steps.
-Found uncertainty sample after 73 steps.
-Found uncertainty sample after 168 steps.
+Found uncertainty sample after 139 steps.
+Found uncertainty sample after 174 steps.
+Found uncertainty sample after 85 steps.
+Found uncertainty sample after 97 steps.
+Found uncertainty sample after 104 steps.
+Found uncertainty sample after 234 steps.
+Found uncertainty sample after 119 steps.
+Found uncertainty sample after 134 steps.
+Found uncertainty sample after 181 steps.
+Found uncertainty sample after 229 steps.
+Found uncertainty sample after 138 steps.
+Found uncertainty sample after 238 steps.
+Found uncertainty sample after 169 steps.
+Found uncertainty sample after 82 steps.
+Found uncertainty sample after 210 steps.
 Found uncertainty sample after 230 steps.
-Found uncertainty sample after 162 steps.
-Found uncertainty sample after 113 steps.
-Found uncertainty sample after 236 steps.
-Found uncertainty sample after 345 steps.
+Found uncertainty sample after 262 steps.
+Found uncertainty sample after 111 steps.
+Found uncertainty sample after 265 steps.
+Found uncertainty sample after 123 steps.
+Found uncertainty sample after 83 steps.
+Found uncertainty sample after 122 steps.
+Found uncertainty sample after 243 steps.
+Found uncertainty sample after 177 steps.
+Found uncertainty sample after 178 steps.
+Found uncertainty sample after 186 steps.
+Found uncertainty sample after 160 steps.
+Found uncertainty sample after 360 steps.
+Found uncertainty sample after 83 steps.
+Found uncertainty sample after 276 steps.
+Found uncertainty sample after 147 steps.
+Found uncertainty sample after 126 steps.
+Found uncertainty sample after 104 steps.
+Found uncertainty sample after 152 steps.
 Found uncertainty sample after 159 steps.
-Found uncertainty sample after 296 steps.
-Found uncertainty sample after 163 steps.
-Found uncertainty sample after 269 steps.
+Found uncertainty sample after 148 steps.
+Found uncertainty sample after 292 steps.
 Found uncertainty sample after 151 steps.
+Found uncertainty sample after 312 steps.
+Found uncertainty sample after 286 steps.
+Found uncertainty sample after 149 steps.
+Found uncertainty sample after 194 steps.
+Found uncertainty sample after 232 steps.
+Found uncertainty sample after 104 steps.
+Found uncertainty sample after 222 steps.
+Found uncertainty sample after 100 steps.
+Found uncertainty sample after 193 steps.
+Found uncertainty sample after 122 steps.
+Found uncertainty sample after 241 steps.
+Found uncertainty sample after 79 steps.
+Found uncertainty sample after 165 steps.
+Found uncertainty sample after 131 steps.
+Found uncertainty sample after 125 steps.
+Found uncertainty sample after 149 steps.
+Found uncertainty sample after 197 steps.
 Found uncertainty sample after 137 steps.
+Found uncertainty sample after 182 steps.
+Found uncertainty sample after 107 steps.
+Found uncertainty sample after 190 steps.
+Found uncertainty sample after 119 steps.
+Found uncertainty sample after 246 steps.
+Found uncertainty sample after 143 steps.
+Found uncertainty sample after 156 steps.
+Found uncertainty sample after 201 steps.
+Found uncertainty sample after 144 steps.
+Found uncertainty sample after 223 steps.
+Found uncertainty sample after 245 steps.
+Found uncertainty sample after 126 steps.
+Found uncertainty sample after 195 steps.
+Found uncertainty sample after 186 steps.
+Found uncertainty sample after 211 steps.
+Found uncertainty sample after 79 steps.
+Found uncertainty sample after 230 steps.
+Found uncertainty sample after 179 steps.
+Found uncertainty sample after 83 steps.
+Found uncertainty sample after 229 steps.
+Found uncertainty sample after 156 steps.
+Found uncertainty sample after 220 steps.
+Found uncertainty sample after 203 steps.
+Found uncertainty sample after 231 steps.
+Found uncertainty sample after 175 steps.
+Found uncertainty sample after 81 steps.
+Found uncertainty sample after 143 steps.
+Found uncertainty sample after 195 steps.
 100
 Training model 0. Added 100 samples to the dataset.
 
 Training and Validation Results of Epoch Validation 0_0:
 ================================
-Training Loss Energy: 1.4500942564216153, Training Loss Force: 1.2067775130271912, time: 4.127357721328735
-Validation Loss Energy: 0.25497423007771414, Validation Loss Force: 0.35088182273968627, time: 60.74618124961853
+Training Loss Energy: 1.147900824916774, Training Loss Force: 1.3684138306255997, time: 3.4695587158203125
+Validation Loss Energy: 0.2780907582491636, Validation Loss Force: 0.5215682033449411, time: 14.068166971206665
 
 
 Training and Validation Results of Epoch Validation 0_1:
 ================================
-Training Loss Energy: 0.3121375649653632, Training Loss Force: 0.28941359139721967, time: 1.2616121768951416
-Validation Loss Energy: 0.1648061594527381, Validation Loss Force: 0.23621179823448338, time: 60.90076684951782
+Training Loss Energy: 0.2347624833727705, Training Loss Force: 0.4110748428722908, time: 1.1851086616516113
+Validation Loss Energy: 0.1099418184409539, Validation Loss Force: 0.33641821922113496, time: 14.11745023727417
 
 
 Training and Validation Results of Epoch Validation 0_2:
 ================================
-Training Loss Energy: 0.18317081342483388, Training Loss Force: 0.23478564876934577, time: 1.2597661018371582
-Validation Loss Energy: 0.11630910108222814, Validation Loss Force: 0.21505841571749665, time: 61.25104308128357
+Training Loss Energy: 0.11289645102003525, Training Loss Force: 0.33418468976842947, time: 1.1851212978363037
+Validation Loss Energy: 0.10298206633888185, Validation Loss Force: 0.31842869985848665, time: 14.13005518913269
 
 
 Training and Validation Results of Epoch Validation 0_3:
 ================================
-Training Loss Energy: 0.14125773451965432, Training Loss Force: 0.22669139915499195, time: 1.272632122039795
-Validation Loss Energy: 0.08084776311174152, Validation Loss Force: 0.21087539785607592, time: 61.822927474975586
+Training Loss Energy: 0.08541869333591955, Training Loss Force: 0.3251832250891061, time: 1.1863415241241455
+Validation Loss Energy: 0.08672737415569524, Validation Loss Force: 0.31309125758707523, time: 14.181484460830688
 
 
 Training and Validation Results of Epoch Validation 0_4:
 ================================
-Training Loss Energy: 0.12674688849726629, Training Loss Force: 0.22173881273845147, time: 1.2638988494873047
-Validation Loss Energy: 0.07678053669846589, Validation Loss Force: 0.2083668320041316, time: 61.049474000930786
+Training Loss Energy: 0.07090423082740142, Training Loss Force: 0.32199557690784847, time: 1.1854560375213623
+Validation Loss Energy: 0.08826922159641981, Validation Loss Force: 0.3125346169496576, time: 14.157334327697754
 
 
 Training and Validation Results of Epoch Validation 0_5:
 ================================
-Training Loss Energy: 0.10756874540499572, Training Loss Force: 0.2197050349465732, time: 1.260437250137329
-Validation Loss Energy: 0.07235946239087135, Validation Loss Force: 0.20657197006652986, time: 61.66447639465332
+Training Loss Energy: 0.08099191944146979, Training Loss Force: 0.3189170124201939, time: 1.1837594509124756
+Validation Loss Energy: 0.11042906297370791, Validation Loss Force: 0.31024842026333016, time: 14.148851871490479
 
 
 Training and Validation Results of Epoch Validation 0_6:
 ================================
-Training Loss Energy: 0.11141930359961658, Training Loss Force: 0.21857675704462776, time: 1.2740442752838135
-Validation Loss Energy: 0.05485324416642036, Validation Loss Force: 0.20496393672711266, time: 61.969096183776855
+Training Loss Energy: 0.06271339541879194, Training Loss Force: 0.3164614038220767, time: 1.182525396347046
+Validation Loss Energy: 0.13103579729795456, Validation Loss Force: 0.30892179782191914, time: 14.14641523361206
 
 
 Training and Validation Results of Epoch Validation 0_7:
 ================================
-Training Loss Energy: 0.1405526133061483, Training Loss Force: 0.21688308335583786, time: 1.2788047790527344
-Validation Loss Energy: 0.07189547156626627, Validation Loss Force: 0.20203957088741417, time: 61.36875104904175
+Training Loss Energy: 0.0748706092608386, Training Loss Force: 0.3157706486767736, time: 1.1805145740509033
+Validation Loss Energy: 0.08769966980131964, Validation Loss Force: 0.3080002876619498, time: 14.131534337997437
 
 
 Training and Validation Results of Epoch Validation 0_8:
 ================================
-Training Loss Energy: 0.11722095824521163, Training Loss Force: 0.21571289773645072, time: 1.262204885482788
-Validation Loss Energy: 0.05001992062027529, Validation Loss Force: 0.20160773131517287, time: 60.83857798576355
+Training Loss Energy: 0.10462291834169421, Training Loss Force: 0.3143800938951558, time: 1.179675579071045
+Validation Loss Energy: 0.12305920516761641, Validation Loss Force: 0.3059446597471833, time: 14.131643772125244
 
 
 Training and Validation Results of Epoch Validation 0_9:
 ================================
-Training Loss Energy: 0.1374630855460619, Training Loss Force: 0.21611001470993305, time: 1.2636468410491943
-Validation Loss Energy: 0.13725031291933978, Validation Loss Force: 0.20160663770291748, time: 61.35520887374878
+Training Loss Energy: 0.126567754894495, Training Loss Force: 0.31403019715999736, time: 1.181239366531372
+Validation Loss Energy: 0.11204628328171869, Validation Loss Force: 0.3056718871618311, time: 14.642395973205566
 
-No more uncertainty samples found.
-Found uncertainty sample after 39 steps.
-No more uncertainty samples found.
-Found uncertainty sample after 102 steps.
-No more uncertainty samples found.
-Found uncertainty sample after 198 steps.
-Found uncertainty sample after 145 steps.
-Found uncertainty sample after 2610 steps.
-Found uncertainty sample after 185 steps.
-Found uncertainty sample after 223 steps.
-Found uncertainty sample after 2361 steps.
-Found uncertainty sample after 79 steps.
-Found uncertainty sample after 136 steps.
-No more uncertainty samples found.
-Found uncertainty sample after 39 steps.
-Found uncertainty sample after 2676 steps.
-No more uncertainty samples found.
-Found uncertainty sample after 173 steps.
-Found uncertainty sample after 200 steps.
-Found uncertainty sample after 207 steps.
-Found uncertainty sample after 196 steps.
-Found uncertainty sample after 1412 steps.
-Found uncertainty sample after 152 steps.
-Found uncertainty sample after 60 steps.
-Found uncertainty sample after 158 steps.
-Found uncertainty sample after 185 steps.
-Found uncertainty sample after 277 steps.
-No more uncertainty samples found.
-No more uncertainty samples found.
-No more uncertainty samples found.
-Found uncertainty sample after 49 steps.
-Found uncertainty sample after 159 steps.
-No more uncertainty samples found.
-Found uncertainty sample after 87 steps.
-Found uncertainty sample after 134 steps.
-Found uncertainty sample after 85 steps.
-Found uncertainty sample after 2931 steps.
-Found uncertainty sample after 86 steps.
-Found uncertainty sample after 34 steps.
-No more uncertainty samples found.
-Found uncertainty sample after 78 steps.
-Found uncertainty sample after 81 steps.
-Found uncertainty sample after 95 steps.
-Found uncertainty sample after 58 steps.
-Found uncertainty sample after 2430 steps.
-Found uncertainty sample after 45 steps.
-No more uncertainty samples found.
-Found uncertainty sample after 1244 steps.
-Found uncertainty sample after 2328 steps.
-Found uncertainty sample after 48 steps.
-Found uncertainty sample after 168 steps.
-Found uncertainty sample after 1537 steps.
-Found uncertainty sample after 159 steps.
-Found uncertainty sample after 237 steps.
-Found uncertainty sample after 119 steps.
-Found uncertainty sample after 234 steps.
-Found uncertainty sample after 118 steps.
-No more uncertainty samples found.
-Found uncertainty sample after 231 steps.
-Found uncertainty sample after 65 steps.
-Found uncertainty sample after 208 steps.
-No more uncertainty samples found.
-No more uncertainty samples found.
-Found uncertainty sample after 137 steps.
-No more uncertainty samples found.
-Found uncertainty sample after 1906 steps.
-Found uncertainty sample after 50 steps.
-No more uncertainty samples found.
-Found uncertainty sample after 144 steps.
-Found uncertainty sample after 34 steps.
-Found uncertainty sample after 74 steps.
-Found uncertainty sample after 188 steps.
-Found uncertainty sample after 54 steps.
-Found uncertainty sample after 132 steps.
-No more uncertainty samples found.
-Found uncertainty sample after 70 steps.
-Found uncertainty sample after 334 steps.
-Found uncertainty sample after 1104 steps.
-Found uncertainty sample after 145 steps.
-Found uncertainty sample after 47 steps.
-Found uncertainty sample after 1417 steps.
-No more uncertainty samples found.
-No more uncertainty samples found.
-Found uncertainty sample after 122 steps.
-Found uncertainty sample after 58 steps.
-Found uncertainty sample after 235 steps.
-No more uncertainty samples found.
-Found uncertainty sample after 695 steps.
-Found uncertainty sample after 125 steps.
-No more uncertainty samples found.
-Found uncertainty sample after 2425 steps.
-Found uncertainty sample after 263 steps.
-Found uncertainty sample after 44 steps.
-Found uncertainty sample after 92 steps.
-Found uncertainty sample after 69 steps.
-Found uncertainty sample after 312 steps.
-Found uncertainty sample after 152 steps.
-Found uncertainty sample after 52 steps.
-Found uncertainty sample after 189 steps.
-Found uncertainty sample after 75 steps.
-79
-Training model 1. Added 79 samples to the dataset.
-
-Training and Validation Results of Epoch Validation 1_0:
-================================
-Training Loss Energy: 2.0999187519473415, Training Loss Force: 0.22708283533011714, time: 4.405974864959717
-Validation Loss Energy: 0.028683712723080724, Validation Loss Force: 0.06799212935089752, time: 63.167855739593506
-
-
-Training and Validation Results of Epoch Validation 1_1:
-================================
-Training Loss Energy: 0.398252226171955, Training Loss Force: 0.07201260953180251, time: 1.3836076259613037
-Validation Loss Energy: 0.019345983609879814, Validation Loss Force: 0.04076574707350002, time: 63.816508293151855
-
-
-Training and Validation Results of Epoch Validation 1_2:
-================================
-Training Loss Energy: 0.15269842209114182, Training Loss Force: 0.05055102201238755, time: 1.3905737400054932
-Validation Loss Energy: 0.13429079146131756, Validation Loss Force: 0.0369504800413459, time: 62.86381196975708
-
-
-Training and Validation Results of Epoch Validation 1_3:
-================================
-Training Loss Energy: 0.18198689073324203, Training Loss Force: 0.04513327765368646, time: 1.3766515254974365
-Validation Loss Energy: 0.09400567232956254, Validation Loss Force: 0.036684195127269725, time: 62.89446473121643
-
-
-Training and Validation Results of Epoch Validation 1_4:
-================================
-Training Loss Energy: 0.16972368147464528, Training Loss Force: 0.04278107612363754, time: 1.3696842193603516
-Validation Loss Energy: 0.08512782215524534, Validation Loss Force: 0.0363396694248156, time: 62.64380502700806
-
-
-Training and Validation Results of Epoch Validation 1_5:
-================================
-Training Loss Energy: 0.12616564862189755, Training Loss Force: 0.040856953109464335, time: 1.3704829216003418
-Validation Loss Energy: 0.11182108505817223, Validation Loss Force: 0.03593312239572601, time: 62.812246561050415
-
-
-Training and Validation Results of Epoch Validation 1_6:
-================================
-Training Loss Energy: 0.1554752185099548, Training Loss Force: 0.03992587111649975, time: 1.374871015548706
-Validation Loss Energy: 0.021773712045275985, Validation Loss Force: 0.036066876035037006, time: 62.5380277633667
-
-
-Training and Validation Results of Epoch Validation 1_7:
-================================
-Training Loss Energy: 0.18271173173261265, Training Loss Force: 0.04007547204532931, time: 1.3702671527862549
-Validation Loss Energy: 0.00862979335866849, Validation Loss Force: 0.035459168736879126, time: 62.640973806381226
-
-
-Training and Validation Results of Epoch Validation 1_8:
-================================
-Training Loss Energy: 0.09564611147488317, Training Loss Force: 0.03889928061154581, time: 1.3728480339050293
-Validation Loss Energy: 0.05651592667852565, Validation Loss Force: 0.03567819489689246, time: 63.201319217681885
-
-
-Training and Validation Results of Epoch Validation 1_9:
-================================
-Training Loss Energy: 0.0897139682013902, Training Loss Force: 0.03770745954205913, time: 1.3890430927276611
-Validation Loss Energy: 0.03386774160129231, Validation Loss Force: 0.03548375602195582, time: 63.9729950428009
-
-No more uncertainty samples found.
-No more uncertainty samples found.
-No more uncertainty samples found.
-No more uncertainty samples found.
-No more uncertainty samples found.
-No more uncertainty samples found.
-No more uncertainty samples found.
-No more uncertainty samples found.
-No more uncertainty samples found.
-Found uncertainty sample after 2408 steps.
-Found uncertainty sample after 1023 steps.
-Found uncertainty sample after 1560 steps.
+Found uncertainty sample after 2225 steps.
 
 ============================= JOB FEEDBACK =============================
 
-NodeName=uc2n909
-Job ID: 24566948
+NodeName=uc2n901
+Job ID: 24612652
 Cluster: uc2
 User/Group: fq0795/iti
 State: CANCELLED (exit code 0)
 Nodes: 1
 Cores per node: 16
 CPU Utilized: 00:00:00
-CPU Efficiency: 0.00% of 1-05:35:44 core-walltime
-Job Wall-clock time: 01:50:59
-Memory Utilized: 2.07 GB
-Memory Efficiency: 1.66% of 124.51 GB
+CPU Efficiency: 0.00% of 03:48:48 core-walltime
+Job Wall-clock time: 00:14:18
+Memory Utilized: 2.24 GB
+Memory Efficiency: 1.80% of 124.51 GB

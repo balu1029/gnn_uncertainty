@@ -225,9 +225,9 @@ class ActiveLearning:
         trainset = MD17Dataset(f"{data_out_path}", subtract_self_energies=False, in_unit="kj/mol", scale=True, determine_norm=True, store_norm_path=f"{data_out_path}norms_dataset.csv")
         validset = MD17Dataset(f"datasets/files/active_learning_validation2", subtract_self_energies=False, in_unit="kj/mol", scale=True, load_norm_path=f"{data_out_path}norms_dataset.csv")
         self.calc.change_norm(f"{data_out_path}norms_dataset.csv")
-        validloader = torch.utils.data.DataLoader(validset, batch_size=32, shuffle=True)
+        validloader = torch.utils.data.DataLoader(validset, batch_size=512, shuffle=True)
         self.model.valid_epoch(validloader, criterion, self.device, self.dtype, force_weight=force_weight, energy_weight=energy_weight)
-        self.model.epoch_summary(epoch=f"Initital validation", use_wandb=use_wandb, additional_info={"dataset_size": len(trainset.coordinates)})                    
+        self.model.epoch_summary(epoch=f"Initital validation", use_wandb=use_wandb, additional_logs={"dataset_size": len(trainset.coordinates)})                    
         self.model.drop_metrics()
 
         for i in range(num_iter):
@@ -261,13 +261,13 @@ class ActiveLearning:
                 validset = MD17Dataset(f"datasets/files/active_learning_validation2", subtract_self_energies=False, in_unit="kj/mol", scale=True, load_norm_path=f"{data_out_path}norms{i}.csv")
                 self.calc.change_norm(f"{data_out_path}norms{i}.csv")
                 trainloader = torch.utils.data.DataLoader(trainset, batch_size=32, shuffle=True)
-                validloader = torch.utils.data.DataLoader(validset, batch_size=32, shuffle=True)
+                validloader = torch.utils.data.DataLoader(validset, batch_size=512, shuffle=True)
 
                 for epoch in range(epochs_per_iter):
                     self.model.train_epoch(trainloader, optimizer, criterion, epoch, self.device, self.dtype, force_weight=force_weight, energy_weight=energy_weight, log_interval=log_interval)
                     #self.trainer.train(num_epochs=2, learning_rate=1e-5, folder=data_out_path)
                     self.model.valid_epoch(validloader, criterion, self.device, self.dtype, force_weight=force_weight, energy_weight=energy_weight)
-                    self.model.epoch_summary(epoch=f"Validation {i}_{epoch}", use_wandb=use_wandb, additional_info={"dataset_size": len(trainset.coordinates)})                    
+                    self.model.epoch_summary(epoch=f"Validation {i}_{epoch}", use_wandb=use_wandb, additional_logs={"dataset_size": len(trainset.coordinates)})                    
                     self.model.drop_metrics()
                 
                 torch.save(self.trainer.model.state_dict(), f"{model_out_path}model_{i}.pt")
@@ -322,4 +322,4 @@ if __name__ == "__main__":
     #al.run_simulation(1000, show_traj=True)
     #print(len(al.calc.get_uncertainty_samples()))
 
-    al.improve_model(100, 100,run_idx=23, use_wandb=False, model_path=model_path)
+    al.improve_model(100, 100,run_idx=24, use_wandb=True, model_path=model_path)

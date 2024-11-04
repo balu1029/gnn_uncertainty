@@ -56,7 +56,8 @@ class OpenMMEnergyCalculation:
         positions =  positions 
         positions = [Vec3(position[0], position[1], position[2]) * nanometers for position in positions]
         self.simulation.context.setPositions(positions)
-        self.simulation.context.setVelocitiesToTemperature(self.temperature)
+        #self.simulation.context.setVelocitiesToTemperature(self.temperature)
+        self.simulation.context.setVelocities([(0.0, 0.0, 0.0)] * len(positions))
 
     def step(self, steps:int)->None:
         """
