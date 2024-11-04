@@ -47,7 +47,7 @@ class ALCalculator(Calculator):
         self.charge_power = 2
         self.charge_scale = torch.tensor(max(self.ground_charges.values())+1)
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        self.max_uncertainty = 10
+        self.max_uncertainty = max_uncertainty
         self.max_force = 300
         self.uncertainty_samples = []
         self.energy_unit = kJ / mol
@@ -98,6 +98,9 @@ class ALCalculator(Calculator):
         energy, force, uncertainty = self.model.predict(x=atom_positions, h0=nodes, edges=edges, edge_attr=None, node_mask=atom_mask, edge_mask=edge_mask, n_nodes=n_nodes)
         energy = energy * self.energy_std + self.energy_mean
         force = force * self.force_std + self.force_mean
+        uncertainty = uncertainty * self.force_std
+
+
 
         if uncertainty.item() > self.max_uncertainty:
             self.uncertainty_samples.append(positions * self.a_to_nm)
@@ -123,10 +126,10 @@ class ALCalculator(Calculator):
             reader = csv.reader(csvfile)
             data = {rows[0]: float(rows[1]) for rows in reader}
 
-        self.mean_energy = data["mean_energy"]
-        self.std_energy = data["std_energy"]
-        self.mean_forces = data["mean_forces"]
-        self.std_forces = data["std_forces"]
+        self.energy_mean = data["mean_energy"]
+        self.energy_std = data["std_energy"]
+        self.force_mean = data["mean_forces"]
+        self.force_std = data["std_forces"]
 
 
 class ActiveLearning:
@@ -238,7 +241,6 @@ class ActiveLearning:
                 j = 0
                 while len(self.calc.get_uncertainty_samples()) == k - number_not_found:
                     self.dyn.run(1)
-                    print(self.oracle.calc_energy([self.dyn.atoms.get_positions()*0.1]))
                     j += 1
                     if j > max_iterations:
                         print("No more uncertainty samples found.")
@@ -319,7 +321,7 @@ if __name__ == "__main__":
     #model = MVE(EGNN, in_node_nf=in_nf, in_edge_nf=0, hidden_nf=hidden_nf, n_layers=n_layers, multi_dec=True)
     model = ModelEnsemble(EGNN, num_models=num_ensembles, in_node_nf=in_nf, in_edge_nf=0, hidden_nf=hidden_nf, n_layers=n_layers)
     model.load_state_dict(torch.load(model_path, map_location=torch.device("cuda" if torch.cuda.is_available() else "cpu")))
-    al = ActiveLearning(max_uncertainty=1 ,num_ensembles=num_ensembles, in_nf=in_nf, hidden_nf=hidden_nf, n_layers=n_layers, model=model)
+    al = ActiveLearning(max_uncertainty=5 ,num_ensembles=num_ensembles, in_nf=in_nf, hidden_nf=hidden_nf, n_layers=n_layers, model=model)
     #al.run_simulation(1000, show_traj=True)
     #print(len(al.calc.get_uncertainty_samples()))
 
