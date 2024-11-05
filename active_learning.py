@@ -184,9 +184,43 @@ class ActiveLearning:
         - data_path (str): The path to the dataset file.
         """
         dataset = MD17Dataset(data_path, subtract_self_energies=False, in_unit="kj/mol", scale=False, determine_norm=True)
+        coordinates = self._read_coordinates(data_path)
         np.random.seed(None)
-        idx = np.random.randint(0, len(dataset))
-        self.atoms.positions = np.array(dataset.coordinates[idx])
+        idx = np.random.randint(0, len(coordinates))
+        self.atoms.positions = np.array(coordinates[idx])
+
+    def _read_coordinates(self, foldername:str, last_n:int=1):
+        all_atom_numbers = []
+        all_coordinates = []
+        files = [f for f in os.listdir(foldername) if f.endswith('.xyz') and f.startswith('data')]
+        files = [f for f in files if int(f.split('_')[1].split('.')[0]) >= len(files) - last_n]
+        if len(files) < last_n:
+            files.append("{foldername}/dataset.xyz")
+        for filename in files:
+                with open(os.path.join(foldername, filename), 'r') as file:
+                    while True:
+                        line = file.readline()
+                        if line == "":
+                            break
+                        num_atoms = int(line.strip())
+
+                        # Initialize lists to store atom types and coordinates
+                        atom_numbers = []
+
+                        coordinates = []
+
+                        # Read atom types and coordinates for each atom
+                        for _ in range(num_atoms):
+                            line = file.readline().split()
+                            atom_type = line[0]
+                            x, y, z = map(float, line[1:4])
+
+                            atom_numbers.append(int(self.type_to_number[atom_type]))
+                            coordinates.append([x, y, z]) 
+                        all_coordinates.append(coordinates)
+                        all_atom_numbers.append(atom_numbers)
+
+        return all_atom_numbers, all_coordinates
 
     def run_simulation(self, steps:int, show_traj:bool=False)->np.array:
 
