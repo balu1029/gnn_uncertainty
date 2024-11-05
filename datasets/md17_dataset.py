@@ -38,8 +38,8 @@ class MD17Dataset(torch.utils.data.Dataset):
                     elif row[0] == "std_forces":
                         self.std_forces = float(row[1])
         else:
-            self.mean_energy = -5.0381         # mean energy obtained from the training dataset (train_in2)
-            self.std_energy = 14.9411          # std energy obtained from the training dataset (train_in2)
+            self.mean_energy = -5.1623        # mean energy obtained from the training dataset (train_in)
+            self.std_energy = 14.9431          # std energy obtained from the training dataset (train_in)
             self.mean_forces = self.mean_energy
             self.std_forces = self.std_energy
         
