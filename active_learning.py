@@ -151,6 +151,8 @@ class ActiveLearning:
                                1: "C",
                                2: "N",
                                3: "O"}
+        
+        self.type_to_number = {v: k for k, v in self.number_to_type.items()}
 
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.dtype = torch.float32
@@ -181,21 +183,22 @@ class ActiveLearning:
         Samples a random position from the dataset and sets the atoms object to this position.
 
         Parameters:
-        - data_path (str): The path to the dataset file.
+        - data_path (str): The path to the dataset folder.
         """
-        dataset = MD17Dataset(data_path, subtract_self_energies=False, in_unit="kj/mol", scale=False, determine_norm=True)
-        coordinates = self._read_coordinates(data_path)
+        #dataset = MD17Dataset(data_path, subtract_self_energies=False, in_unit="kj/mol", scale=False, determine_norm=True)
+        coordinates = self._read_coordinates(data_path, 3)
         np.random.seed(None)
         idx = np.random.randint(0, len(coordinates))
-        self.atoms.positions = np.array(coordinates[idx])
+        self.atoms.positions = coordinates[idx]
 
     def _read_coordinates(self, foldername:str, last_n:int=1):
         all_atom_numbers = []
         all_coordinates = []
-        files = [f for f in os.listdir(foldername) if f.endswith('.xyz') and f.startswith('data')]
-        files = [f for f in files if int(f.split('_')[1].split('.')[0]) >= len(files) - last_n]
+        files = [f for f in os.listdir(foldername) if f.endswith('.xyz') and f.startswith('data_')]
+        if len(files) > 0:
+            files = [f for f in files if int(f.split('_')[1].split('.')[0]) >= len(files) - last_n]
         if len(files) < last_n:
-            files.append("{foldername}/dataset.xyz")
+            files.append("dataset.xyz")
         for filename in files:
                 with open(os.path.join(foldername, filename), 'r') as file:
                     while True:
@@ -203,6 +206,7 @@ class ActiveLearning:
                         if line == "":
                             break
                         num_atoms = int(line.strip())
+                        _ = file.readline()  # Skip the energy line
 
                         # Initialize lists to store atom types and coordinates
                         atom_numbers = []
@@ -220,7 +224,7 @@ class ActiveLearning:
                         all_coordinates.append(coordinates)
                         all_atom_numbers.append(atom_numbers)
 
-        return all_atom_numbers, all_coordinates
+        return np.array(all_coordinates)
 
     def run_simulation(self, steps:int, show_traj:bool=False)->np.array:
 
@@ -263,9 +267,9 @@ class ActiveLearning:
         validset = MD17Dataset(f"datasets/files/active_learning_validation2", subtract_self_energies=False, in_unit="kj/mol", scale=True, load_norm_path=f"{data_out_path}norms_dataset.csv")
         self.calc.change_norm(f"{data_out_path}norms_dataset.csv")
         validloader = torch.utils.data.DataLoader(validset, batch_size=512, shuffle=True)
-        self.model.valid_epoch(validloader, criterion, self.device, self.dtype, force_weight=force_weight, energy_weight=energy_weight)
-        self.model.epoch_summary(epoch=f"Initital validation", use_wandb=use_wandb, additional_logs={"dataset_size": len(trainset.coordinates)})                    
-        self.model.drop_metrics()
+        #self.model.valid_epoch(validloader, criterion, self.device, self.dtype, force_weight=force_weight, energy_weight=energy_weight)
+        #self.model.epoch_summary(epoch=f"Initital validation", use_wandb=use_wandb, additional_logs={"dataset_size": len(trainset.coordinates)})                    
+        #self.model.drop_metrics()
 
         for i in range(num_iter):
             #self.run_simulation(steps_per_iter, show_traj=False)
@@ -359,4 +363,4 @@ if __name__ == "__main__":
     #al.run_simulation(1000, show_traj=True)
     #print(len(al.calc.get_uncertainty_samples()))
 
-    al.improve_model(100, 100,run_idx=28, use_wandb=True, model_path=model_path)
+    al.improve_model(5, 5,run_idx=29, use_wandb=False, model_path=model_path)
