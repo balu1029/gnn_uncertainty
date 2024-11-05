@@ -351,6 +351,7 @@ if __name__ == "__main__":
     #model_path = "gnn/models/ala_converged_1000000_even_larger.pt"
     model_path = "gnn/models/ensemble3_6/model_0.pt"
     model_path = "gnn/models/ensemble3_20241018_101159/model_0.pt"
+    model_path = "gnn/models/ensemble3_20241105_094353/model_0.pt"
     
     num_ensembles = 3
     in_nf = 12
