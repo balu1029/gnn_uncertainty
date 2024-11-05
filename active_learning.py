@@ -267,9 +267,9 @@ class ActiveLearning:
         validset = MD17Dataset(f"datasets/files/active_learning_validation2", subtract_self_energies=False, in_unit="kj/mol", scale=True, load_norm_path=f"{data_out_path}norms_dataset.csv")
         self.calc.change_norm(f"{data_out_path}norms_dataset.csv")
         validloader = torch.utils.data.DataLoader(validset, batch_size=512, shuffle=True)
-        #self.model.valid_epoch(validloader, criterion, self.device, self.dtype, force_weight=force_weight, energy_weight=energy_weight)
-        #self.model.epoch_summary(epoch=f"Initital validation", use_wandb=use_wandb, additional_logs={"dataset_size": len(trainset.coordinates)})                    
-        #self.model.drop_metrics()
+        self.model.valid_epoch(validloader, criterion, self.device, self.dtype, force_weight=force_weight, energy_weight=energy_weight)
+        self.model.epoch_summary(epoch=f"Initital validation", use_wandb=use_wandb, additional_logs={"dataset_size": len(trainset.coordinates)})                    
+        self.model.drop_metrics()
 
         for i in range(num_iter):
             #self.run_simulation(steps_per_iter, show_traj=False)
@@ -363,4 +363,4 @@ if __name__ == "__main__":
     #al.run_simulation(1000, show_traj=True)
     #print(len(al.calc.get_uncertainty_samples()))
 
-    al.improve_model(5, 5,run_idx=29, use_wandb=False, model_path=model_path)
+    al.improve_model(100, 100,run_idx=29, use_wandb=True, model_path=model_path)
