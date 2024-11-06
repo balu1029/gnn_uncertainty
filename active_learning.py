@@ -186,7 +186,7 @@ class ActiveLearning:
         - data_path (str): The path to the dataset folder.
         """
         #dataset = MD17Dataset(data_path, subtract_self_energies=False, in_unit="kj/mol", scale=False, determine_norm=True)
-        coordinates = self._read_coordinates(data_path, 3)
+        coordinates = self._read_coordinates(data_path, last_n=3)
         np.random.seed(None)
         idx = np.random.randint(0, len(coordinates))
         self.atoms.positions = coordinates[idx]
@@ -239,7 +239,7 @@ class ActiveLearning:
             view(traj, block=True)
 
 
-    def improve_model(self, num_iter, steps_per_iter, use_wandb=False, run_idx=1, model_path="gnn/models/ala_converged_1000000.pt", max_iterations=5000):
+    def improve_model(self, num_iter, steps_per_iter, use_wandb=False, run_idx=1, model_path="gnn/models/ala_converged_1000000.pt", max_iterations=4000):
         model_out_path = f"al/run{run_idx}/models/"
         data_out_path = f"al/run{run_idx}/data/"
         if not os.path.exists(f"al/run{run_idx}"):
@@ -273,20 +273,16 @@ class ActiveLearning:
 
         for i in range(num_iter):
             #self.run_simulation(steps_per_iter, show_traj=False)
-            number_not_found = 0
+            num_uncertainty_samples = 0
             for k in range(steps_per_iter):
                 self.sample_rand_pos(data_out_path)
-                j = 0
-                while len(self.calc.get_uncertainty_samples()) == k - number_not_found:
+                for j in range(max_iterations):
                     self.dyn.run(1)
-                    j += 1
-                    if j > max_iterations:
-                        print("No more uncertainty samples found.")
-                        number_not_found += 1
+                    if len(self.calc.get_uncertainty_samples()) > num_uncertainty_samples:
+                        num_uncertainty_samples = len(self.calc.get_uncertainty_samples())
+                        print(f"Found uncertainty sample after {j} steps.", flush=True)
                         break
                 
-                if not j > max_iterations:
-                    print(f"Found uncertainty sample after {j} steps.", flush=True)
 
             samples = self.calc.get_uncertainty_samples()
             self.calc.reset_uncertainty_samples()
@@ -303,7 +299,7 @@ class ActiveLearning:
                 self.calc.change_norm(f"{data_out_path}norms{i}.csv")
                 trainloader = torch.utils.data.DataLoader(trainset, batch_size=32, shuffle=True)
                 validloader = torch.utils.data.DataLoader(validset, batch_size=512, shuffle=True)
-
+                self.model.fit(trainloader, validloader, optimizer, criterion, epochs_per_iter, self.device, self.dtype, force_weight=force_weight, energy_weight=energy_weight, log_interval=log_interval, use_wandb=use_wandb, additional_logs={"dataset_size": len(trainset.coordinates)})
                 for epoch in range(epochs_per_iter):
                     self.model.train_epoch(trainloader, optimizer, criterion, epoch, self.device, self.dtype, force_weight=force_weight, energy_weight=energy_weight, log_interval=log_interval)
                     #self.trainer.train(num_epochs=2, learning_rate=1e-5, folder=data_out_path)
@@ -360,8 +356,8 @@ if __name__ == "__main__":
     #model = MVE(EGNN, in_node_nf=in_nf, in_edge_nf=0, hidden_nf=hidden_nf, n_layers=n_layers, multi_dec=True)
     model = ModelEnsemble(EGNN, num_models=num_ensembles, in_node_nf=in_nf, in_edge_nf=0, hidden_nf=hidden_nf, n_layers=n_layers)
     model.load_state_dict(torch.load(model_path, map_location=torch.device("cuda" if torch.cuda.is_available() else "cpu")))
-    al = ActiveLearning(max_uncertainty=6 ,num_ensembles=num_ensembles, in_nf=in_nf, hidden_nf=hidden_nf, n_layers=n_layers, model=model)
+    al = ActiveLearning(max_uncertainty=10 ,num_ensembles=num_ensembles, in_nf=in_nf, hidden_nf=hidden_nf, n_layers=n_layers, model=model)
     #al.run_simulation(1000, show_traj=True)
     #print(len(al.calc.get_uncertainty_samples()))
 
-    al.improve_model(100, 100,run_idx=29, use_wandb=True, model_path=model_path)
+    al.improve_model(100, 100,run_idx=30, use_wandb=True, model_path=model_path)

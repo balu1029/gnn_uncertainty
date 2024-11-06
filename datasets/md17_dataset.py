@@ -115,7 +115,7 @@ class MD17Dataset(torch.utils.data.Dataset):
 
         if scale:
             self.energies = (self.energies - self.mean_energy) / self.std_energy
-            self.forces = (self.forces - self.mean_forces) / self.std_forces
+            self.forces = (self.forces) / self.std_forces
             
 
     def __len__(self):

@@ -281,3 +281,6 @@ class BaseUncertainty(nn.Module):
     def set_wandb_name(self, name):
         self.wandb_name = name
 
+    def load_best_model(self):
+        self.load_state_dict(self.best_model)
+
