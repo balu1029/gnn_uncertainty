@@ -28,7 +28,7 @@ class ModelEnsemble(BaseUncertainty):
         self.valid_losses_total = []
         self.valid_time = 0
 
-    def fit(self, epochs, train_loader, valid_loader, device, dtype, model_path="gnn/models/ensemble.pt", use_wandb=False, force_weight=1.0, energy_weight=1.0, log_interval=100, patience=200, factor=0.1, lr=1e-3, min_lr=1e-6): 
+    def fit(self, epochs, train_loader, valid_loader, device, dtype, model_path="gnn/models/ensemble.pt", use_wandb=False, force_weight=1.0, energy_weight=1.0, log_interval=100, patience=200, factor=0.1, lr=1e-3, min_lr=1e-6, best_on_train=False): 
 
         optimizer = torch.optim.AdamW(self.parameters(), lr=1e-3, weight_decay=1e-16)   
         criterion = nn.L1Loss()
@@ -43,11 +43,18 @@ class ModelEnsemble(BaseUncertainty):
             self.valid_epoch(valid_loader=valid_loader, criterion=criterion, device=device, dtype=dtype, force_weight=force_weight, energy_weight=energy_weight)
             self.epoch_summary(epoch, use_wandb=use_wandb, lr=optimizer.param_groups[0]['lr'])
 
-            if np.array(self.valid_losses_total).mean() < best_valid_loss:
-                best_valid_loss = np.array(self.valid_losses_total).mean()
-                if model_path is not None:
-                    torch.save(self.state_dict(), model_path)
-                self.best_model = self.state_dict()
+            if best_on_train:
+                if np.array(self.train_losses_total).mean() < best_valid_loss:
+                    best_valid_loss = np.array(self.train_losses_total).mean()
+                    if model_path is not None:
+                        torch.save(self.state_dict(), model_path)
+                    self.best_model = self.state_dict()
+            else:
+                if np.array(self.valid_losses_total).mean() < best_valid_loss:
+                    best_valid_loss = np.array(self.valid_losses_total).mean()
+                    if model_path is not None:
+                        torch.save(self.state_dict(), model_path)
+                    self.best_model = self.state_dict()
 
             self.lr_before = optimizer.param_groups[0]['lr']
             scheduler.step(np.array(self.valid_losses_total).mean())

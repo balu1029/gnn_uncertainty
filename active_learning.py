@@ -48,7 +48,7 @@ class ALCalculator(Calculator):
         self.charge_scale = torch.tensor(max(self.ground_charges.values())+1)
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.max_uncertainty = max_uncertainty
-        self.max_force = 300
+        self.max_force = 1000
         self.uncertainty_samples = []
         self.energy_unit = kJ / mol
         self.force_unit = self.energy_unit / Angstrom
@@ -250,23 +250,24 @@ class ActiveLearning:
             shutil.copy2("datasets/files/train_in2/dataset.xyz", data_out_path)
 
         batch_size = 32
-        lr=1e-3
+        val_batch_size = 256
+        lr=1e-4
         epochs_per_iter = 50
 
         log_interval = 100
         force_weight = 5
         energy_weight = 1
         
-        optimizer = torch.optim.AdamW(self.calc.model.parameters(), lr=1e-3)
+        optimizer = torch.optim.AdamW(self.calc.model.parameters(), lr=lr)
         criterion = torch.nn.L1Loss()
-        if use_wandb:
-            self.init_wandb(model=self.model, criterion=criterion, optimizer=optimizer, model_path=model_path, lr=lr, batch_size=batch_size, epochs_per_iter=epochs_per_iter)
+        #if use_wandb:
+            #self.init_wandb(model=self.model, criterion=criterion, optimizer=optimizer, model_path=model_path, lr=lr, batch_size=batch_size, epochs_per_iter=epochs_per_iter)
 
 
         trainset = MD17Dataset(f"{data_out_path}", subtract_self_energies=False, in_unit="kj/mol", scale=True, determine_norm=True, store_norm_path=f"{data_out_path}norms_dataset.csv")
         validset = MD17Dataset(f"datasets/files/active_learning_validation2", subtract_self_energies=False, in_unit="kj/mol", scale=True, load_norm_path=f"{data_out_path}norms_dataset.csv")
         self.calc.change_norm(f"{data_out_path}norms_dataset.csv")
-        validloader = torch.utils.data.DataLoader(validset, batch_size=512, shuffle=True)
+        validloader = torch.utils.data.DataLoader(validset, batch_size=val_batch_size, shuffle=True)
         self.model.valid_epoch(validloader, criterion, self.device, self.dtype, force_weight=force_weight, energy_weight=energy_weight)
         self.model.epoch_summary(epoch=f"Initital validation", use_wandb=use_wandb, additional_logs={"dataset_size": len(trainset.coordinates)})                    
         self.model.drop_metrics()
@@ -294,23 +295,18 @@ class ActiveLearning:
 
                 self.add_data(samples, energies, forces, f"{data_out_path}data_{i}.xyz")
 
-                trainset = MD17Dataset(f"{data_out_path}", subtract_self_energies=False, in_unit="kj/mol", scale=True, determine_norm=True, store_norm_path=f"{data_out_path}norms{i}.csv")
-                validset = MD17Dataset(f"datasets/files/active_learning_validation2", subtract_self_energies=False, in_unit="kj/mol", scale=True, load_norm_path=f"{data_out_path}norms{i}.csv")
-                self.calc.change_norm(f"{data_out_path}norms{i}.csv")
+                trainset = MD17Dataset(f"{data_out_path}", subtract_self_energies=False, in_unit="kj/mol", scale=True, determine_norm=False, load_norm_path=f"{data_out_path}norms_dataset.csv")#store_norm_path=f"{data_out_path}norms{i}.csv")
+                validset = MD17Dataset(f"datasets/files/active_learning_validation2", subtract_self_energies=False, in_unit="kj/mol", scale=True, load_norm_path=f"{data_out_path}norms_dataset.csv")
+                #self.calc.change_norm(f"{data_out_path}norms{i}.csv")
                 trainloader = torch.utils.data.DataLoader(trainset, batch_size=32, shuffle=True)
-                validloader = torch.utils.data.DataLoader(validset, batch_size=512, shuffle=True)
-                self.model.fit(trainloader, validloader, optimizer, criterion, epochs_per_iter, self.device, self.dtype, force_weight=force_weight, energy_weight=energy_weight, log_interval=log_interval, use_wandb=use_wandb, additional_logs={"dataset_size": len(trainset.coordinates)})
-                for epoch in range(epochs_per_iter):
-                    self.model.train_epoch(trainloader, optimizer, criterion, epoch, self.device, self.dtype, force_weight=force_weight, energy_weight=energy_weight, log_interval=log_interval)
-                    #self.trainer.train(num_epochs=2, learning_rate=1e-5, folder=data_out_path)
-                    self.model.valid_epoch(validloader, criterion, self.device, self.dtype, force_weight=force_weight, energy_weight=energy_weight)
-                    self.model.epoch_summary(epoch=f"Validation {i}_{epoch}", use_wandb=use_wandb, additional_logs={"dataset_size": len(trainset.coordinates)})                    
-                    self.model.drop_metrics()
+                validloader = torch.utils.data.DataLoader(validset, batch_size=val_batch_size, shuffle=True)
+                self.model.fit(epochs=epochs_per_iter, train_loader=trainloader, valid_loader=validloader, device=self.device, dtype=self.dtype, model_path=f"{model_out_path}model_{i}.pt", use_wandb=use_wandb, force_weight=force_weight, energy_weight=energy_weight, lr=lr, additional_logs={"dataset_size": len(trainset.coordinates)}, best_on_train=True)
+                self.model.load_best_model()
                 
-                torch.save(self.trainer.model.state_dict(), f"{model_out_path}model_{i}.pt")
+                torch.save(self.model.state_dict(), f"{model_out_path}model_{i}.pt")
                 
-        if use_wandb:
-            wandb.finish()
+        #if use_wandb:
+            #wandb.finish()
                 
     def add_data(self, samples, labels, forces, out_file):
         num_molecules = len(samples)
@@ -347,7 +343,7 @@ if __name__ == "__main__":
     #model_path = "gnn/models/ala_converged_1000000_even_larger.pt"
     model_path = "gnn/models/ensemble3_6/model_0.pt"
     model_path = "gnn/models/ensemble3_20241018_101159/model_0.pt"
-    model_path = "gnn/models/ensemble3_20241105_094353/model_0.pt"
+    model_path = "gnn/models/ensemble3_20241106_095153/model_0.pt"
     
     num_ensembles = 3
     in_nf = 12
@@ -360,4 +356,4 @@ if __name__ == "__main__":
     #al.run_simulation(1000, show_traj=True)
     #print(len(al.calc.get_uncertainty_samples()))
 
-    al.improve_model(100, 100,run_idx=30, use_wandb=True, model_path=model_path)
+    al.improve_model(50, 100,run_idx=32, use_wandb=True, model_path=model_path)

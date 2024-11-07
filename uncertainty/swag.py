@@ -44,7 +44,7 @@ class SWAG(BaseUncertainty):
         self.valid_losses_total = []
         self.valid_time = 0
     
-    def fit(self, epochs, swag_start_epoch, swag_freq, train_loader, valid_loader, device, dtype, model_path="gnn/models/swag.pt", use_wandb=False, force_weight=1.0, energy_weight=1.0, log_interval=100, patience=200, factor=0.1, lr=1e-3, min_lr=1e-6, additional_logs=None): 
+    def fit(self, epochs, swag_start_epoch, swag_freq, train_loader, valid_loader, device, dtype, model_path="gnn/models/swag.pt", use_wandb=False, force_weight=1.0, energy_weight=1.0, log_interval=100, patience=200, factor=0.1, lr=1e-3, min_lr=1e-6, additional_logs=None, best_on_train=False): 
 
         optimizer = torch.optim.AdamW(self.parameters(), lr=1e-3, weight_decay=1e-16)   
         criterion = nn.L1Loss()
@@ -63,9 +63,9 @@ class SWAG(BaseUncertainty):
 
             if np.array(self.valid_losses_total).mean() < best_valid_loss:
                 best_valid_loss = np.array(self.valid_losses_total).mean()
-                if model_path is not None:
-                    torch.save(self.state_dict(), model_path)
-            
+
+            if model_path is not None:
+                torch.save(self.state_dict(), model_path)
             self.best_model = self.state_dict() # For SWAG it does not make sense to take an intermediate model as "best" one because we sample the weights
 
             
