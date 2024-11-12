@@ -276,10 +276,6 @@ class BaseUncertainty(nn.Module):
         force_losses = force_losses.cpu().detach().numpy()
         force_losses = np.mean(force_losses.reshape(uncertainties.shape[0],-1,3),axis=(1,2))
         uncertainties = uncertainties.cpu().detach().numpy()
-        print(uncertainties.shape)
-        print(force_losses.shape)   
-
-        # Perform linear regression of uncertainties to force_losses
 
         # Reshape the data for linear regression
         uncertainties = uncertainties.reshape(-1, 1)
@@ -289,24 +285,10 @@ class BaseUncertainty(nn.Module):
         linear = LinearRegression()
         linear.fit(uncertainties, force_losses)
 
-        
-
         # Get the slope and intercept
         self.uncertainty_slope = linear.coef_[0][0]
         self.uncertainty_bias = linear.intercept_[0]
        
-
-
-        # Plot the data points and the regression line
-        plt.scatter(uncertainties, force_losses, color='blue', label='Data points')
-        
-        plt.plot(uncertainties, linear.predict(uncertainties), color='red', label='Regression line')
-        plt.xlabel('Uncertainties')
-        plt.ylabel('Force Losses')
-        plt.plot([0, max(uncertainties[0])], [0, max(uncertainties[0])], color='black', linestyle='--', label='y=x')
-        plt.title('Uncertainty Calibration')
-        plt.legend()
-        plt.show()
         print(f"Uncertainty Slope: {self.uncertainty_slope}, Uncertainty Bias: {self.uncertainty_bias}", flush=True)
 
     

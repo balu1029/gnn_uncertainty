@@ -158,7 +158,7 @@ class MVE(BaseUncertainty):
     def predict(self, x, *args, **kwargs):
         self.eval()
         energy, forces, uncertainty = self.forward(x=x, *args, **kwargs)
-        return energy, forces, (uncertainty - self.uncertainty_bias)/self.uncertainty_slope
+        return energy, forces, uncertainty*self.uncertainty_slope + self.uncertainty_bias
 
 
     def forward(self, x, *args, **kwargs):
