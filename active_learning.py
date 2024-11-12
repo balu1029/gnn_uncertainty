@@ -252,7 +252,7 @@ class ActiveLearning:
         batch_size = 32
         val_batch_size = 256
         lr=1e-4
-        epochs_per_iter = 50
+        epochs_per_iter = 40
 
         log_interval = 100
         force_weight = 5
@@ -260,8 +260,8 @@ class ActiveLearning:
         
         optimizer = torch.optim.AdamW(self.calc.model.parameters(), lr=lr)
         criterion = torch.nn.L1Loss()
-        #if use_wandb:
-            #self.init_wandb(model=self.model, criterion=criterion, optimizer=optimizer, model_path=model_path, lr=lr, batch_size=batch_size, epochs_per_iter=epochs_per_iter)
+        if use_wandb:
+            self.init_wandb(model=self.model, criterion=criterion, optimizer=optimizer, model_path=model_path, lr=lr, batch_size=batch_size, epochs_per_iter=epochs_per_iter)
 
 
         trainset = MD17Dataset(f"{data_out_path}", subtract_self_energies=False, in_unit="kj/mol", scale=True, determine_norm=True, store_norm_path=f"{data_out_path}norms_dataset.csv")
@@ -272,6 +272,8 @@ class ActiveLearning:
         self.model.epoch_summary(epoch=f"Initital validation", use_wandb=use_wandb, additional_logs={"dataset_size": len(trainset.coordinates)})                    
         self.model.drop_metrics()
 
+        if use_wandb:
+            wandb.finish()
         for i in range(num_iter):
             #self.run_simulation(steps_per_iter, show_traj=False)
             num_uncertainty_samples = 0
@@ -305,8 +307,7 @@ class ActiveLearning:
                 
                 torch.save(self.model.state_dict(), f"{model_out_path}model_{i}.pt")
                 
-        #if use_wandb:
-            #wandb.finish()
+        
                 
     def add_data(self, samples, labels, forces, out_file):
         num_molecules = len(samples)
@@ -356,4 +357,4 @@ if __name__ == "__main__":
     #al.run_simulation(1000, show_traj=True)
     #print(len(al.calc.get_uncertainty_samples()))
 
-    al.improve_model(50, 100,run_idx=32, use_wandb=True, model_path=model_path)
+    al.improve_model(50, 100,run_idx=36, use_wandb=True, model_path=model_path)

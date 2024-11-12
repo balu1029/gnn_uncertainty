@@ -12,6 +12,7 @@ import seaborn as sns
 from datasets.helper import utils as qm9_utils
 import csv
 import os
+import itertools
 
 
 class BaseUncertainty(nn.Module):
@@ -118,25 +119,28 @@ class BaseUncertainty(nn.Module):
     def evaluate_all(self, test_loader_in, device, dtype, test_loader_out=None, plot_name=None, csv_path=None, show_plot=None, best_model_available=True, use_energy_uncertainty=False, use_force_uncertainty=True):
         if best_model_available:
             self.load_state_dict(self.best_model)
+
         if use_energy_uncertainty:
-            energy_r2_in, forces_r2_in, energy_correlation_in_energy, energy_correlation_in_forces, energy_losses_in, forces_losses_in = self._eval_all(test_loader_in, device, dtype, plot_path=f"{plot_name}_in", plot_title=self.__class__.__name__+' In Distribution', use_force_uncertainty=False, plot_loss=True)
+            energy_r2_in, forces_r2_in, energy_correlation_in_energy, energy_correlation_in_force, energy_losses_in, force_losses_in, uncertainties_in = self._eval_all(test_loader_in, device, dtype, plot_path=f"{plot_name}_in", plot_title=self.__class__.__name__+' In Distribution', use_force_uncertainty=False, plot_loss=True, plot=not(test_loader_out is not None))
+            if test_loader_out is not None:
+                energy_r2_out, forces_r2_out, energy_correlation_out_energy, energy_correlation_out_forces, energy_losses_out, force_losses_out, uncertainties_out = self._eval_all(test_loader_out, device, dtype, plot_path=f"{plot_name}_out", plot_title=self.__class__.__name__+' Out Distribution', use_force_uncertainty=False, plot_loss=True, plot=False)
+                self._mulit_scatter_plot(uncertainties_in, energy_losses_in, uncertainties_out, energy_losses_out, self.__class__.__name__, 'Uncertainties', 'Energy Losses', text=f"Correlation in: {energy_correlation_in_energy}\nCorrelation Out: {energy_correlation_out_energy}", save_path=plot_name + "_energy_uncertainty_energy_loss.png", show_plot=show_plot)
+                self._mulit_scatter_plot(uncertainties_in, np.mean(force_losses_in.reshape(energy_losses_in.shape[0],-1,3),axis=(1,2)), uncertainties_out, np.mean(force_losses_out.reshape(energy_losses_out.shape[0],-1,3),axis=(1,2)), self.__class__.__name__, 'Uncertainties', 'Energy Losses', text=f"Correlation in: {energy_correlation_in_force}\nCorrelation Out: {energy_correlation_out_energy}", save_path=plot_name + "_energy_uncertainty_force_loss.png", show_plot=show_plot)
+
         if use_force_uncertainty:
-            energy_r2_in, forces_r2_in, force_correlation_in_energy, force_correlation_in_forces, energy_losses_in, forces_losses_in = self._eval_all(test_loader_in, device, dtype, plot_path=f"{plot_name}_in", plot_title=self.__class__.__name__+' In Distribution', use_force_uncertainty=True, plot_loss= not use_energy_uncertainty)
-
-
-        if test_loader_out is not None:
-            if use_energy_uncertainty:
-                energy_r2_out, forces_r2_out, energy_correlation_out_energy, energy_correlation_out_forces, energy_losses_out, forces_losses_out = self._eval_all(test_loader_out, device, dtype, plot_path=f"{plot_name}_out", plot_title=self.__class__.__name__+' Out Distribution', use_force_uncertainty=False, plot_loss=True)
-            if use_force_uncertainty:
-                energy_r2_out, forces_r2_out, force_correlation_out_energy, force_correlation_out_forces, energy_losses_out, forces_losses_out = self._eval_all(test_loader_out, device, dtype, plot_path=f"{plot_name}_out", plot_title=self.__class__.__name__+' Out Distribution', use_force_uncertainty=True)
+            energy_r2_in, forces_r2_in, force_correlation_in_energy, force_correlation_in_forces, energy_losses_in, force_losses_in, uncertainties_in = self._eval_all(test_loader_in, device, dtype, plot_path=f"{plot_name}_in", plot_title=self.__class__.__name__+' In Distribution', use_force_uncertainty=True, plot_loss= not use_energy_uncertainty, plot=not(test_loader_out is not None))
+            if test_loader_out is not None:
+                energy_r2_out, forces_r2_out, force_correlation_out_energy, force_correlation_out_forces, energy_losses_out, force_losses_out, uncertainties_out = self._eval_all(test_loader_out, device, dtype, plot_path=f"{plot_name}_out", plot_title=self.__class__.__name__+' Out Distribution', use_force_uncertainty=True, plot=False)
+                self._mulit_scatter_plot(uncertainties_in, energy_losses_in, uncertainties_out, energy_losses_out, self.__class__.__name__, 'Uncertainties', 'Energy Losses', text=f"Correlation in: {force_correlation_in_energy}\nCorrelation Out: {force_correlation_out_energy}", save_path=plot_name + "_force_uncertainty_energy_loss.png", show_plot=show_plot)
+                self._mulit_scatter_plot(uncertainties_in, np.mean(force_losses_in.reshape(energy_losses_in.shape[0],-1,3),axis=(1,2)), uncertainties_out, np.mean(force_losses_out.reshape(energy_losses_out.shape[0],-1,3),axis=(1,2)), self.__class__.__name__, 'Uncertainties', 'Energy Losses', text=f"Correlation in: {force_correlation_in_forces}\nCorrelation Out: {force_correlation_out_forces}", save_path=plot_name + "_force_uncertainty_force_loss.png", show_plot=show_plot)
         
         else:
             energy_r2_out, forces_r2_out, energy_correlation_out_energy, energy_correlation_out_forces, force_correlation_out_energy, force_correlation_out_forces, energy_losses_out, forces_losses_out  = 0, 0, 0, 0, 0, 0, np.array([0]), np.array([[[0]]])
 
         if csv_path:
-            row = [self.__class__.__name__, energy_r2_in, forces_r2_in, np.mean(energy_losses_in), np.mean(forces_losses_in), energy_r2_out, forces_r2_out, np.mean(energy_losses_out), np.mean(forces_losses_out)]
+            row = [self.__class__.__name__, energy_r2_in, forces_r2_in, np.mean(energy_losses_in), np.mean(force_losses_in), energy_r2_out, forces_r2_out, np.mean(energy_losses_out), np.mean(force_losses_out)]
             if use_energy_uncertainty:
-                row.extend([energy_correlation_in_energy, energy_correlation_in_forces, energy_correlation_out_energy, energy_correlation_out_forces])
+                row.extend([energy_correlation_in_energy, energy_correlation_in_force, energy_correlation_out_energy, energy_correlation_out_forces])
             if use_force_uncertainty:
                 row.extend([force_correlation_in_energy, force_correlation_in_forces, force_correlation_out_energy, force_correlation_out_forces])
             if os.path.exists(csv_path):
@@ -146,7 +150,7 @@ class BaseUncertainty(nn.Module):
             else:
                 with open(csv_path, 'w', newline='') as file:
                     writer = csv.writer(file)
-                    titles = ['Method', 'Energy R2 Score In Distribution', 'Forces R2 Score In Distribution', 'Energy Losses In Distribution', 'Forces Losses In Distribution', 'Energy R2 Score Out Distribution', 'Forces R2 Score Out Distribution', 'Energy Losses Out Distribution', 'Forces Losses Out Distribution']
+                    titles = ['Method', 'Energy R2 Score In Distribution', 'Forces R2 Score In Distribution', 'Energy Losses In Distribution', 'Force Losses In Distribution', 'Energy R2 Score Out Distribution', 'Force R2 Score Out Distribution', 'Energy Losses Out Distribution', 'Force Losses Out Distribution']
                     if use_energy_uncertainty:
                         titles.extend(['Energy Correlation In Distribution Energies', 'Energy Correlation In Distribution Forces', 'Energy Correlation Out Distribution Energy', 'Energy Correlation Out Distribution Forces'])
                     if use_force_uncertainty:
@@ -154,7 +158,7 @@ class BaseUncertainty(nn.Module):
                     writer.writerow(titles)
                     writer.writerow(row)
 
-    def _eval_all(self, dataloader, device, dtype, plot_path=None, plot_title=None, use_force_uncertainty=False, plot_loss=False):
+    def _eval_all(self, dataloader, device, dtype, plot_path=None, plot_title=None, use_force_uncertainty=False, plot_loss=False, plot=True):
         criterion = nn.L1Loss(reduction='none')
         predictions_energy = torch.Tensor()
         ground_truths_energy = torch.Tensor()
@@ -196,10 +200,11 @@ class BaseUncertainty(nn.Module):
             if plot_loss:
                 self._scatter_plot(ground_truths_energy, predictions_energy, plot_title, 'Ground Truth Energy', 'Predicted Energy', text=f"Energy R2 Score: {energy_r2}", save_path=plot_path + "_energy.png", show_plot=False)
             uncertainty_type = '_force' if use_force_uncertainty else '_energy'
-            self._scatter_plot(energy_losses, uncertainties, plot_title, 'Energy Losses', 'Uncertainties', text=f"Correlation: {correlation_energy}", save_path=plot_path + uncertainty_type + "_uncertainty_energy_loss.png", show_plot=False)
-            self._scatter_plot(np.mean(forces_losses.reshape(energy_losses.shape[0],-1,3),axis=(1,2)), uncertainties, plot_title, 'Force Losses', 'Uncertainties', text=f"Correlation: {correlation_forces}", save_path=plot_path + uncertainty_type + "_uncertainty_force_loss.png", show_plot=False)
+            if plot:
+                self._scatter_plot(energy_losses, uncertainties, plot_title, 'Energy Losses', 'Uncertainties', text=f"Correlation: {correlation_energy}", save_path=plot_path + uncertainty_type + "_uncertainty_energy_loss.png", show_plot=False)
+                self._scatter_plot(np.mean(forces_losses.reshape(energy_losses.shape[0],-1,3),axis=(1,2)), uncertainties, plot_title, 'Force Losses', 'Uncertainties', text=f"Correlation: {correlation_forces}", save_path=plot_path + uncertainty_type + "_uncertainty_force_loss.png", show_plot=False)
 
-        return energy_r2, forces_r2, correlation_energy, correlation_forces, energy_losses, forces_losses
+        return energy_r2, forces_r2, correlation_energy, correlation_forces, energy_losses, forces_losses, uncertainties
 
 
     def _scatter_plot(self, x, y, title, xlabel, ylabel, text="", save_path=None, show_plot=False):
@@ -215,6 +220,43 @@ class BaseUncertainty(nn.Module):
         if show_plot:
             plt.show()
         plt.close()
+
+
+    def _mulit_scatter_plot(self, x_in, y_in, x_out, y_out, title, xlabel, ylabel, text="", save_path=None, show_plot=False):
+
+        plt.figure(figsize=(10, 8))
+        
+        # Define a color cycle if colors aren't specified in the data_list
+        colors = itertools.cycle(sns.color_palette("hsv", 2))
+        
+        sns.kdeplot(x=x_in, y=y_in, cmap=sns.light_palette("blue", as_cmap=True), fill=True, label="In Distribution", alpha=1)  
+
+        sns.kdeplot(x=x_out, y=y_out, cmap=sns.light_palette("green", as_cmap=True), fill=True, label="Out of Distribution", alpha=0.5)
+
+        plt.xlabel(xlabel)
+        plt.ylabel(ylabel)
+        plt.title(title)
+        
+        # Add a diagonal line across the plot
+        min_val, max_val = np.percentile(np.concatenate((x_in, y_in, x_out, y_out)), [0, 99.9])
+        #max_val = max(max(x_in), max(y_in), max(x_out), max(y_out))
+        #min_val = min(min(x_in), min(y_in), min(x_out), min(y_out))
+        plt.plot([min_val, max_val], [min_val, max_val], color='red', linestyle='--')
+
+        plt.xlim(min_val, max_val)
+        plt.ylim(min_val, max_val)
+        
+        plt.text(0.1, 0.9, text, transform=plt.gca().transAxes)
+        
+        plt.legend()
+        plt.tight_layout()
+
+        if save_path is not None:
+            plt.savefig(save_path)
+        if show_plot:
+            plt.show()
+        plt.close()
+
 
     def calibrate_uncertainty(self, validation_loader, device, dtype):
         criterion = nn.L1Loss(reduction='none')
@@ -252,19 +294,9 @@ class BaseUncertainty(nn.Module):
         # Get the slope and intercept
         self.uncertainty_slope = linear.coef_[0][0]
         self.uncertainty_bias = linear.intercept_[0]
-        # Calculate the angle of the regression line
-        angle = np.arctan(self.uncertainty_slope)
-        print(f"Angle of the regression line: {angle} degrees", flush=True)
-        # Rotate the uncertainties from the calculated angle to 45 degrees
-        rotation_angle = np.pi / 4 - angle
-        rotation_matrix = np.array([[np.cos(rotation_angle), -np.sin(rotation_angle)], 
-                                    [np.sin(rotation_angle), np.cos(rotation_angle)]])
-        rotated_uncertainties = rotation_matrix @ np.hstack((uncertainties - self.uncertainty_bias, np.zeros_like(uncertainties))).T
-        
        
 
-        # Plot the rotated uncertainties
-        plt.scatter(rotated_uncertainties[0, :], force_losses, color='purple', label='Rotated Uncertainties')
+
         # Plot the data points and the regression line
         plt.scatter(uncertainties, force_losses, color='blue', label='Data points')
         
