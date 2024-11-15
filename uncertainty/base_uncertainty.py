@@ -124,6 +124,8 @@ class BaseUncertainty(nn.Module):
 
         if use_energy_uncertainty:
             energy_r2_in, forces_r2_in, energy_correlation_in_energy, energy_correlation_in_force, energy_losses_in, force_losses_in, uncertainties_in = self._eval_all(test_loader_in, device, dtype, plot_path=f"{plot_name}_in", plot_title=self.__class__.__name__+' In Distribution', use_force_uncertainty=False, plot_loss=True, plot=not(test_loader_out is not None))
+            print(np.min(force_losses_in), np.min(energy_losses_in))
+            print(np.min(uncertainties_in), np.max(uncertainties_in))
             if test_loader_out is not None:
                 energy_r2_out, forces_r2_out, energy_correlation_out_energy, energy_correlation_out_forces, energy_losses_out, force_losses_out, uncertainties_out = self._eval_all(test_loader_out, device, dtype, plot_path=f"{plot_name}_out", plot_title=self.__class__.__name__+' Out Distribution', use_force_uncertainty=False, plot_loss=True, plot=False)
                 self._mulit_scatter_plot(uncertainties_in, energy_losses_in, uncertainties_out, energy_losses_out, self.__class__.__name__, 'Energy Uncertainties', 'Energy Losses', text=f"Correlation in: {energy_correlation_in_energy}\nCorrelation Out: {energy_correlation_out_energy}", save_path=plot_name + "_energy_uncertainty_energy_loss.png", show_plot=show_plot)
@@ -136,8 +138,12 @@ class BaseUncertainty(nn.Module):
                 self._mulit_scatter_plot(uncertainties_in, energy_losses_in, uncertainties_out, energy_losses_out, self.__class__.__name__, 'Force Uncertainties', 'Energy Losses', text=f"Correlation in: {force_correlation_in_energy}\nCorrelation Out: {force_correlation_out_energy}", save_path=plot_name + "_force_uncertainty_energy_loss.png", show_plot=show_plot)
                 self._mulit_scatter_plot(uncertainties_in, np.mean(force_losses_in.reshape(energy_losses_in.shape[0],-1,3),axis=(1,2)), uncertainties_out, np.mean(force_losses_out.reshape(energy_losses_out.shape[0],-1,3),axis=(1,2)), self.__class__.__name__, 'Force Uncertainties', 'Force Losses', text=f"Correlation in: {force_correlation_in_forces}\nCorrelation Out: {force_correlation_out_forces}", save_path=plot_name + "_force_uncertainty_force_loss.png", show_plot=show_plot)
         
-        else:
-            energy_r2_out, forces_r2_out, energy_correlation_out_energy, energy_correlation_out_forces, force_correlation_out_energy, force_correlation_out_forces, energy_losses_out, forces_losses_out  = 0, 0, 0, 0, 0, 0, np.array([0]), np.array([[[0]]])
+        if not use_energy_uncertainty:
+            energy_correlation_out_energy, energy_correlation_out_forces  = 0, 0
+        if not use_force_uncertainty:
+            force_correlation_out_energy, force_correlation_out_forces = 0, 0
+        if test_loader_out is None:
+            energy_r2_out, forces_r2_out, energy_correlation_out_energy, energy_correlation_out_forces, energy_losses_out, force_losses_out = 0, 0, 0, 0, np.array([0]), np.array([[[0]]])
 
         if csv_path:
             row = [self.__class__.__name__, energy_r2_in, forces_r2_in, np.mean(energy_losses_in), np.mean(force_losses_in), energy_r2_out, forces_r2_out, np.mean(energy_losses_out), np.mean(force_losses_out)]
@@ -152,7 +158,7 @@ class BaseUncertainty(nn.Module):
             else:
                 with open(csv_path, 'w', newline='') as file:
                     writer = csv.writer(file)
-                    titles = ['Method', 'Energy R2 Score In Distribution', 'Forces R2 Score In Distribution', 'Energy Losses In Distribution', 'Force Losses In Distribution', 'Energy R2 Score Out Distribution', 'Force R2 Score Out Distribution', 'Energy Losses Out Distribution', 'Force Losses Out Distribution']
+                    titles = ['Method', 'Energy R2 Score In Distribution', 'Forces R2 Score In Distribution', 'Energy Errors In Distribution', 'Force LosErrorsses In Distribution', 'Energy R2 Score Out Distribution', 'Force R2 Score Out Distribution', 'Energy Errors Out Distribution', 'Force Errors Out Distribution']
                     if use_energy_uncertainty:
                         titles.extend(['Energy Correlation In Distribution Energies', 'Energy Correlation In Distribution Forces', 'Energy Correlation Out Distribution Energy', 'Energy Correlation Out Distribution Forces'])
                     if use_force_uncertainty:
@@ -203,8 +209,8 @@ class BaseUncertainty(nn.Module):
                 self._scatter_plot(ground_truths_energy, predictions_energy, plot_title, 'Ground Truth Energy', 'Predicted Energy', text=f"Energy R2 Score: {energy_r2}", save_path=plot_path + "_energy.png", show_plot=False)
             uncertainty_type = '_force' if use_force_uncertainty else '_energy'
             if plot:
-                self._scatter_plot(energy_losses, uncertainties, plot_title, 'Energy Losses', 'Uncertainties', text=f"Correlation: {correlation_energy}", save_path=plot_path + uncertainty_type + "_uncertainty_energy_loss.png", show_plot=False)
-                self._scatter_plot(np.mean(forces_losses.reshape(energy_losses.shape[0],-1,3),axis=(1,2)), uncertainties, plot_title, 'Force Losses', 'Uncertainties', text=f"Correlation: {correlation_forces}", save_path=plot_path + uncertainty_type + "_uncertainty_force_loss.png", show_plot=False)
+                self._scatter_plot(energy_losses, uncertainties, plot_title, 'Energy Errors', 'Uncertainties', text=f"Correlation: {correlation_energy}", save_path=plot_path + uncertainty_type + "_uncertainty_energy_loss.png", show_plot=False)
+                self._scatter_plot(np.mean(forces_losses.reshape(energy_losses.shape[0],-1,3),axis=(1,2)), uncertainties, plot_title, 'Force Errors', 'Uncertainties', text=f"Correlation: {correlation_forces}", save_path=plot_path + uncertainty_type + "_uncertainty_force_loss.png", show_plot=False)
 
         return energy_r2, forces_r2, correlation_energy, correlation_forces, energy_losses, forces_losses, uncertainties
 

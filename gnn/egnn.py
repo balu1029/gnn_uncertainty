@@ -58,7 +58,8 @@ class EGNN(nn.Module, BaseGNN):
                                         nn.Linear(self.hidden_nf, out_features)).to(self.device)
             graph_dec_variance = nn.Sequential(nn.Linear(self.hidden_nf, self.hidden_nf),
                                         act_fn,
-                                        nn.Linear(self.hidden_nf, out_features)).to(self.device)
+                                        nn.Linear(self.hidden_nf, out_features),
+                                        nn.Softplus()).to(self.device)
             self.graph_dec = nn.ModuleList([graph_dec_energy, graph_dec_variance])
 
         elif evidential:

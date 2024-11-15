@@ -89,9 +89,9 @@ class ModelEnsemble(BaseUncertainty):
             optimizer.step()
             
 
-            self.train_losses_energy.append(loss_energy.item())
+            self.train_losses_energy.append(loss_energy.item()*train_loader.dataset.std_energy)
             self.train_losses_force.append(loss_force.item()*train_loader.dataset.std_energy)
-            self.train_losses_total.append(total_loss.item()*train_loader.dataset.std_energy) 
+            self.train_losses_total.append(total_loss.item()) 
             
             if (i+1) % log_interval == 0:
                 print(f"Epoch {epoch}, Batch {i+1}/{len(train_loader)}, Loss: {loss_energy.item()}", flush=True)

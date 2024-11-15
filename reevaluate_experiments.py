@@ -20,9 +20,9 @@ n_layers = 4
 
 ensemble_size = 3
 uncertainty_method = "MVE"
-swag_sample_size = 20
+swag_sample_size = 5
 
-name = "mve_20241113_193426"
+name = "mve_20241115_105504"
 cal = True
 
 model_dir = f"gnn/models/{name}"
