@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/home/ws/fq0795/git/gnn_uncertainty/reevaluate_experiments.py", line 57, in <module>
+    for i, model_name in enumerate(os.listdir(model_dir)):
+                                   ^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'gnn/models/ensemble3_20241106_095153'

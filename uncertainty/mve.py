@@ -92,8 +92,8 @@ class MVE(BaseUncertainty):
                 optimizer.step()
                 
 
-                self.train_losses_energy.append(loss_energy.item())
-                self.train_losses_force.append(loss_force.item())
+                self.train_losses_energy.append(loss_energy.item()*train_loader.dataset.std_energy)
+                self.train_losses_force.append(loss_force.item()*train_loader.dataset.std_energy)
                 self.train_losses_total.append(total_loss.item())
 
                 
@@ -101,7 +101,7 @@ class MVE(BaseUncertainty):
                     print(f"Batch {i+1}/{len(train_loader)}, Loss: {loss_energy.item()}, Uncertainty: {uncertainty.item()}", flush=True) 
             self.train_time = time.time() - start
             lr = optimizer.param_groups[0]['lr']
-            self.epoch_summary(f"Warmup-{epoch}", False, lr)
+            self.epoch_summary(f"Warmup-{epoch}", use_wandb=False, lr=lr)
         print("Warmup phase finished", flush=True)
 
     def train_epoch(self, train_loader, optimizer, criterion, epoch, device, dtype, force_weight=1.0, energy_weight=1.0, log_interval=100, num_ensembles=3):
@@ -115,8 +115,7 @@ class MVE(BaseUncertainty):
             
             loss_energy = criterion(mean_energy, label_energy)
             loss_force = criterion(mean_force, label_forces)
-            total_loss = force_weight*loss_force + energy_weight*loss_energy
-            total_loss = 0.5 * torch.mean(torch.log(uncertainty) + total_loss/uncertainty)
+            total_loss = 0.5 * torch.mean(torch.log(uncertainty) + (loss_force*force_weight)/uncertainty) + loss_energy*energy_weight
 
             optimizer.zero_grad()
             total_loss.backward()
@@ -124,8 +123,8 @@ class MVE(BaseUncertainty):
             optimizer.step()
             
 
-            self.train_losses_energy.append(loss_energy.item())
-            self.train_losses_force.append(loss_force.item())
+            self.train_losses_energy.append(loss_energy.item()*train_loader.dataset.std_energy)
+            self.train_losses_force.append(loss_force.item()*train_loader.dataset.std_energy)
             self.train_losses_total.append(total_loss.item())
             
             if (i+1) % log_interval == 0:
@@ -145,17 +144,16 @@ class MVE(BaseUncertainty):
  
             loss_energy = criterion(mean_energy, label_energy)
             loss_force = criterion(mean_force, label_forces)
-            total_loss = force_weight*loss_force + energy_weight*loss_energy
-            total_loss = 0.5 * torch.mean(torch.log(uncertainty) + total_loss/uncertainty)
+            total_loss = force_weight * 0.5 * torch.mean(torch.log(uncertainty) + loss_force/uncertainty) + loss_energy*energy_weight
 
-            self.valid_losses_energy.append(loss_energy.item())
-            self.valid_losses_force.append(loss_force.item())
+            self.valid_losses_energy.append(loss_energy.item()*valid_loader.dataset.std_energy)
+            self.valid_losses_force.append(loss_force.item()*valid_loader.dataset.std_energy)
             self.valid_losses_total.append(total_loss.item())
 
         self.valid_time = time.time() - start
 
 
-    def predict(self, x, *args, **kwargs):
+    def predict(self, x, use_force_uncertainty=False, *args, **kwargs):
         self.eval()
         energy, forces, uncertainty = self.forward(x=x, *args, **kwargs)
         return energy, forces, uncertainty*self.uncertainty_slope + self.uncertainty_bias

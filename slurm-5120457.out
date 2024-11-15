@@ -1,0 +1,78 @@
+wandb: Currently logged in as: l-baer-99 (l-baer-99-Karlsruhe Institute of Technology). Use `wandb login --relogin` to force relogin
+wandb: wandb version 0.18.6 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.17.4
+wandb: Run data is saved locally in /home/ws/fq0795/git/gnn_uncertainty/wandb/run-20241113_193453-n66n1v7k
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run 20241113_193450_0
+wandb: ⭐️ View project at https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-SWAG
+wandb: 🚀 View run at https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-SWAG/runs/n66n1v7k
+/home/ws/fq0795/miniconda3/envs/torch/lib/python3.12/site-packages/torch/autograd/graph.py:744: UserWarning: Attempting to run cuBLAS, but there was no current CUDA context! Attempting to set the primary context... (Triggered internally at ../aten/src/ATen/cuda/CublasHandlePool.cpp:135.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+
+Training and Validation Results of Epoch 0:
+================================
+Training Loss Energy: 13.395775517276046, Training Loss Force: 63.06561796739769, time: 0.6766419410705566
+Validation Loss Energy: 13.600790489452226, Validation Loss Force: 63.783327371127264, time: 0.05175209045410156
+
+
+Training and Validation Results of Epoch 1:
+================================
+Training Loss Energy: 12.161036995652912, Training Loss Force: 63.06302374254035, time: 0.39988255500793457
+Validation Loss Energy: 13.296333025263037, Validation Loss Force: 63.78150835183008, time: 0.05008101463317871
+
+
+Training and Validation Results of Epoch 2:
+================================
+Training Loss Energy: 12.012319250729321, Training Loss Force: 63.06094682356262, time: 0.3839223384857178
+Validation Loss Energy: 13.161923327824045, Validation Loss Force: 63.78032044163431, time: 0.05063271522521973
+
+
+Training and Validation Results of Epoch 3:
+================================
+Training Loss Energy: 11.966882372836114, Training Loss Force: 63.05984380772017, time: 0.3540613651275635
+Validation Loss Energy: 13.149207879067317, Validation Loss Force: 63.78002829919542, time: 0.05907583236694336
+
+
+Training and Validation Results of Epoch 4:
+================================
+Training Loss Energy: 11.942573343004705, Training Loss Force: 63.06069401347159, time: 0.38411855697631836
+Validation Loss Energy: 13.201067615360873, Validation Loss Force: 63.781539907285136, time: 0.05858016014099121
+
+
+Training and Validation Results of Epoch 5:
+================================
+Training Loss Energy: 11.913458035646677, Training Loss Force: 63.06050761234474, time: 0.4295775890350342
+Validation Loss Energy: 13.132059016112768, Validation Loss Force: 63.77912133434159, time: 0.059134721755981445
+
+
+Training and Validation Results of Epoch 6:
+================================
+Training Loss Energy: 11.933390237336635, Training Loss Force: 63.05947642078972, time: 0.3841862678527832
+Validation Loss Energy: 13.122688063874412, Validation Loss Force: 63.78000590500151, time: 0.046526432037353516
+
+
+Training and Validation Results of Epoch 7:
+================================
+Training Loss Energy: 11.91737990538025, Training Loss Force: 63.05979079455565, time: 0.38524484634399414
+Validation Loss Energy: 13.152162131308659, Validation Loss Force: 63.77915594355038, time: 0.047089576721191406
+
+
+Training and Validation Results of Epoch 8:
+================================
+Training Loss Energy: 11.909408442663905, Training Loss Force: 63.059256102638244, time: 0.41126108169555664
+Validation Loss Energy: 13.122630551512751, Validation Loss Force: 63.77923025155748, time: 0.049170732498168945
+
+slurmstepd: error: *** JOB 5120457 ON aimat01 CANCELLED AT 2024-11-13T19:35:02 ***
+
+Training and Validation Results of Epoch 9:
+================================
+Training Loss Energy: 11.909374917537688, Training Loss Force: 63.05890040140532, time: 0.42795634269714355
+Validation Loss Energy: 13.147390641126462, Validation Loss Force: 63.77824287118911, time: 0.07032918930053711
+
+
+Training and Validation Results of Epoch 10:
+================================
+Training Loss Energy: 11.935918943907975, Training Loss Force: 63.05821949575997, time: 0.5644655227661133
+Validation Loss Energy: 13.069226506516761, Validation Loss Force: 63.778349752569206, time: 0.07149410247802734
+

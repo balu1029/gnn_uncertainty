@@ -159,8 +159,8 @@ class EvidentialRegression(BaseUncertainty):
             optimizer.step()
             
 
-            self.train_losses_energy.append(loss_energy.item())
-            self.train_losses_force.append(loss_force.item())
+            self.train_losses_energy.append(loss_energy.item()*train_loader.dataset.std_energy)
+            self.train_losses_force.append(loss_force.item()*train_loader.dataset.std_energy)
             self.train_losses_total.append(total_loss.item())
             
             if (i+1) % log_interval == 0:
@@ -184,14 +184,14 @@ class EvidentialRegression(BaseUncertainty):
             loss_force = force_criterion(force, label_forces)
             total_loss = force_weight*loss_force + energy_weight*evidential_loss_energy
 
-            self.valid_losses_energy.append(loss_energy.item())
-            self.valid_losses_force.append(loss_force.item())
+            self.valid_losses_energy.append(loss_energy.item()*valid_loader.dataset.std_energy)
+            self.valid_losses_force.append(loss_force.item()*valid_loader.dataset.std_energy)
             self.valid_losses_total.append(total_loss.item())
 
         self.valid_time = time.time() - start
 
 
-    def predict(self, x, *args, **kwargs):
+    def predict(self, x, *args, use_force_uncertainty=False, **kwargs):
         self.eval()
         energy, force, v, alpha, beta = self.forward(x=x, *args, **kwargs)
         variance = torch.sqrt(beta / (v * (alpha - 1)))

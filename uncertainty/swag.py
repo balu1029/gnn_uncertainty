@@ -101,8 +101,8 @@ class SWAG(BaseUncertainty):
             optimizer.step()
             
 
-            self.train_losses_energy.append(loss_energy.item())
-            self.train_losses_force.append(loss_force.item())
+            self.train_losses_energy.append(loss_energy.item()*train_loader.dataset.std_energy)
+            self.train_losses_force.append(loss_force.item()*train_loader.dataset.std_energy)
             self.train_losses_total.append(total_loss.item())
 
             
@@ -125,8 +125,8 @@ class SWAG(BaseUncertainty):
             loss_force = criterion(force, label_forces)
             total_loss = force_weight*loss_force + energy_weight*loss_energy
 
-            self.valid_losses_energy.append(loss_energy.item())
-            self.valid_losses_force.append(loss_force.item())
+            self.valid_losses_energy.append(loss_energy.item()*valid_loader.dataset.std_energy)
+            self.valid_losses_force.append(loss_force.item()*valid_loader.dataset.std_energy)
             self.valid_losses_total.append(total_loss.item())
 
         self.valid_time = time.time() - start

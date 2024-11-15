@@ -90,8 +90,8 @@ class ModelEnsemble(BaseUncertainty):
             
 
             self.train_losses_energy.append(loss_energy.item())
-            self.train_losses_force.append(loss_force.item())
-            self.train_losses_total.append(total_loss.item()) 
+            self.train_losses_force.append(loss_force.item()*train_loader.dataset.std_energy)
+            self.train_losses_total.append(total_loss.item()*train_loader.dataset.std_energy) 
             
             if (i+1) % log_interval == 0:
                 print(f"Epoch {epoch}, Batch {i+1}/{len(train_loader)}, Loss: {loss_energy.item()}", flush=True)
@@ -113,8 +113,8 @@ class ModelEnsemble(BaseUncertainty):
             loss_force = criterion(mean_force, label_forces)
             total_loss = force_weight*stacked_loss_force + energy_weight*stacked_loss_energy
 
-            self.valid_losses_energy.append(loss_energy.item())
-            self.valid_losses_force.append(loss_force.item())
+            self.valid_losses_energy.append(loss_energy.item()*valid_loader.dataset.std_energy)
+            self.valid_losses_force.append(loss_force.item()*valid_loader.dataset.std_energy)
             self.valid_losses_total.append(total_loss.item())
 
         self.valid_time = time.time() - start

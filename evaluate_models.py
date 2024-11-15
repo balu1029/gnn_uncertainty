@@ -59,7 +59,7 @@ n_layers = 4
 
 batch_size = 32
 lr = 1e-3
-patience = 800
+patience = 500
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
 
@@ -97,6 +97,7 @@ if uncertainty_method == "MVE":
         mve = MVE(EGNN, multi_dec=True, out_features=1, in_node_nf=in_node_nf, in_edge_nf=in_edge_nf, hidden_nf=hidden_nf, n_layers=n_layers, device=device)
         mve.set_wandb_name(f"{timestamp}_{i}")
         mve.fit(epochs=epochs, warmup_steps=warmup_steps, train_loader=trainloader, valid_loader=validloader, device=device, dtype=torch.float32, use_wandb=use_wandb, patience=patience, model_path=model_path, force_weight=force_weight, energy_weight=energy_weight)
+        mve.calibrate_uncertainty(validloader,device,dtype=torch.float32)
         mve.evaluate_all(testloader_in, device=device, dtype=torch.float32, plot_name=f"{log_path}/plot_{i}", csv_path=f"{log_path}/eval.csv", test_loader_out=testloader_out, use_energy_uncertainty=True, use_force_uncertainty=False)
 
 if uncertainty_method == "SWAG":
@@ -112,6 +113,7 @@ if uncertainty_method == "SWAG":
         swag = SWAG(EGNN, in_node_nf=in_node_nf, in_edge_nf=in_edge_nf, hidden_nf=hidden_nf, n_layers=n_layers, device=device, sample_size = swag_sample_size)
         swag.set_wandb_name(f"{timestamp}_{i}")
         swag.fit(epochs=epochs, swag_start_epoch=swag_start_epoch, swag_freq=1, train_loader=trainloader, valid_loader=validloader, device=device, dtype=torch.float32, use_wandb=use_wandb, patience=patience, model_path=model_path, force_weight=force_weight, energy_weight=energy_weight)
+        swag.calibrate_uncertainty(validloader,device,dtype=torch.float32)
         swag.evaluate_all(testloader_in, device=device, dtype=torch.float32, plot_name=f"{log_path}/plot_{i}", csv_path=f"{log_path}/eval.csv", test_loader_out=testloader_out, use_energy_uncertainty=True, use_force_uncertainty=True)
 
 if uncertainty_method == "ENS":
@@ -127,6 +129,7 @@ if uncertainty_method == "ENS":
         ens = ModelEnsemble(EGNN, num_models=ensemble_size, in_node_nf=in_node_nf, in_edge_nf=in_edge_nf, hidden_nf=hidden_nf, n_layers=n_layers, device=device)
         ens.set_wandb_name(f"{timestamp}_{i}")
         ens.fit(epochs=epochs, train_loader=trainloader, valid_loader=validloader, device=device, dtype=torch.float32, use_wandb=use_wandb, patience=patience, model_path=model_path, force_weight=force_weight, energy_weight=energy_weight)
+        ens.calibrate_uncertainty(validloader,device,dtype=torch.float32)
         ens.evaluate_all(testloader_in, device=device, dtype=torch.float32, plot_name=f"{log_path}/plot_{i}", csv_path=f"{log_path}/eval.csv", test_loader_out=testloader_out, use_energy_uncertainty=True, use_force_uncertainty=True)
 
 if uncertainty_method == "EVI":
@@ -142,6 +145,7 @@ if uncertainty_method == "EVI":
         evi = EvidentialRegression(EGNN, in_node_nf=in_node_nf, in_edge_nf=in_edge_nf, hidden_nf=hidden_nf, n_layers=n_layers, device=device)
         evi.set_wandb_name(f"{timestamp}_{i}")
         evi.fit(epochs=epochs, train_loader=trainloader, valid_loader=validloader, device=device, dtype=torch.float32, use_wandb=use_wandb, patience=patience, model_path=model_path, force_weight=force_weight, energy_weight=energy_weight)
+        evi.calibrate_uncertainty(validloader,device,dtype=torch.float32)
         evi.evaluate_all(testloader_in, device=device, dtype=torch.float32, plot_name=f"{log_path}/plot_{i}", csv_path=f"{log_path}/eval.csv", test_loader_out=testloader_out, use_energy_uncertainty=True, use_force_uncertainty=False)
 
 
