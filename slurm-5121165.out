@@ -1,0 +1,27 @@
+/home/ws/fq0795/miniconda3/envs/torch/lib/python3.12/site-packages/torch/autograd/graph.py:744: UserWarning: Attempting to run cuBLAS, but there was no current CUDA context! Attempting to set the primary context... (Triggered internally at ../aten/src/ATen/cuda/CublasHandlePool.cpp:135.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+/home/ws/fq0795/miniconda3/envs/torch/lib/python3.12/site-packages/sklearn/utils/validation.py:1300: DataConversionWarning: A column-vector y was passed when a 1d array was expected. Please change the shape of y to (n_samples, ), for example using ravel().
+  y = column_or_1d(y, warn=True)
+Uncertainty Slope: 0.029056679078485723, Uncertainty Bias: 0.17337786545746967
+/home/ws/fq0795/miniconda3/envs/torch/lib/python3.12/site-packages/sklearn/utils/validation.py:1300: DataConversionWarning: A column-vector y was passed when a 1d array was expected. Please change the shape of y to (n_samples, ), for example using ravel().
+  y = column_or_1d(y, warn=True)
+0.0 5.6236982e-05
+0.10438946 0.32624626
+Uncertainty Slope: 0.07537354125038985, Uncertainty Bias: 0.15762401315060745
+/home/ws/fq0795/miniconda3/envs/torch/lib/python3.12/site-packages/sklearn/utils/validation.py:1300: DataConversionWarning: A column-vector y was passed when a 1d array was expected. Please change the shape of y to (n_samples, ), for example using ravel().
+  y = column_or_1d(y, warn=True)
+2.2649765e-06 0.0068056583
+0.027925894 0.6046535
+Uncertainty Slope: 0.07037558296512297, Uncertainty Bias: 0.22403283145512243
+/home/ws/fq0795/miniconda3/envs/torch/lib/python3.12/site-packages/sklearn/utils/validation.py:1300: DataConversionWarning: A column-vector y was passed when a 1d array was expected. Please change the shape of y to (n_samples, ), for example using ravel().
+  y = column_or_1d(y, warn=True)
+0.0 0.00023293495
+0.030141294 0.6651436
+Uncertainty Slope: 0.030960374922827216, Uncertainty Bias: 0.14507332683480353
+/home/ws/fq0795/miniconda3/envs/torch/lib/python3.12/site-packages/sklearn/utils/validation.py:1300: DataConversionWarning: A column-vector y was passed when a 1d array was expected. Please change the shape of y to (n_samples, ), for example using ravel().
+  y = column_or_1d(y, warn=True)
+9.536743e-07 0.00024843216
+0.08132177 0.32998347
+Uncertainty Slope: 0.13368147635665334, Uncertainty Bias: 0.08746971525059642
+1.4305115e-06 0.007350564
+-0.16551729 0.84120905

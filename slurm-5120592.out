@@ -1,0 +1,22 @@
+Traceback (most recent call last):
+  File "/home/ws/fq0795/git/gnn_uncertainty/reevaluate_experiments.py", line 61, in <module>
+    mve = MVE(EGNN, multi_dec=True, out_features=1, in_node_nf=in_node_nf, in_edge_nf=in_edge_nf, hidden_nf=hidden_nf, n_layers=n_layers, device=device)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ws/fq0795/git/gnn_uncertainty/uncertainty/mve.py", line 19, in __init__
+    self.model = base_model_class(*args, **kwargs, multi_dec=multi_dec)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ws/fq0795/git/gnn_uncertainty/gnn/egnn.py", line 62, in __init__
+    torch.exp()).to(self.device)
+    ^^^^^^^^^^^
+TypeError: exp() missing 1 required positional arguments: "input"
+Traceback (most recent call last):
+  File "/home/ws/fq0795/git/gnn_uncertainty/evaluate_models.py", line 97, in <module>
+    mve = MVE(EGNN, multi_dec=True, out_features=1, in_node_nf=in_node_nf, in_edge_nf=in_edge_nf, hidden_nf=hidden_nf, n_layers=n_layers, device=device)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ws/fq0795/git/gnn_uncertainty/uncertainty/mve.py", line 19, in __init__
+    self.model = base_model_class(*args, **kwargs, multi_dec=multi_dec)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ws/fq0795/git/gnn_uncertainty/gnn/egnn.py", line 62, in __init__
+    torch.exp()).to(self.device)
+    ^^^^^^^^^^^
+TypeError: exp() missing 1 required positional arguments: "input"

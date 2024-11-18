@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/home/ws/fq0795/git/gnn_uncertainty/reevaluate_experiments.py", line 64, in <module>
+    mve.calibrate_uncertainty(testloader_in, device=device, dtype=torch.float32, path=f"{out_path}/calibration{i}.png")
+  File "/home/ws/fq0795/git/gnn_uncertainty/uncertainty/base_uncertainty.py", line 305, in calibrate_uncertainty
+    linear = RANSACRegressor(epsilon=1.15,alpha=0)#LinearRegression()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: RANSACRegressor.__init__() got an unexpected keyword argument 'epsilon'

@@ -1,0 +1,17 @@
+Uncertainty Slope: [0.46654537], Uncertainty Bias: [-0.2903658]
+Traceback (most recent call last):
+  File "/home/ws/fq0795/git/gnn_uncertainty/reevaluate_experiments.py", line 65, in <module>
+    mve.evaluate_all(testloader_in, device=device, dtype=torch.float32, plot_name=f"{out_path}/plot_{i}", csv_path=f"{out_path}/eval.csv", test_loader_out=testloader_out, best_model_available=False, use_energy_uncertainty=True, use_force_uncertainty=False)
+  File "/home/ws/fq0795/git/gnn_uncertainty/uncertainty/base_uncertainty.py", line 126, in evaluate_all
+    energy_r2_in, forces_r2_in, energy_correlation_in_energy, energy_correlation_in_force, energy_losses_in, force_losses_in, uncertainties_in = self._eval_all(test_loader_in, device, dtype, plot_path=f"{plot_name}_in", plot_title=self.__class__.__name__+' In Distribution', use_force_uncertainty=False, plot_loss=True, plot=not(test_loader_out is not None))
+                                                                                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ws/fq0795/git/gnn_uncertainty/uncertainty/base_uncertainty.py", line 185, in _eval_all
+    energy, forces, uncertainty = self.predict(x=atom_positions, h0=nodes, edges=edges, edge_attr=None, node_mask=atom_mask, edge_mask=edge_mask, n_nodes=n_nodes, use_force_uncertainty=False)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ws/fq0795/git/gnn_uncertainty/uncertainty/mve.py", line 159, in predict
+    return energy, forces, uncertainty*self.uncertainty_slope + self.uncertainty_bias
+                           ~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~
+  File "/home/ws/fq0795/miniconda3/envs/torch/lib/python3.12/site-packages/torch/_tensor.py", line 1087, in __array__
+    return self.numpy()
+           ^^^^^^^^^^^^
+TypeError: can't convert cuda:0 device type tensor to numpy. Use Tensor.cpu() to copy the tensor to host memory first.

@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/ws/fq0795/git/gnn_uncertainty/evaluate_models.py", line 140, in <module>
+    log_path = setup_log_folder(name, timestamp)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ws/fq0795/git/gnn_uncertainty/evaluate_models.py", line 17, in setup_log_folder
+    os.makedirs(path)
+  File "<frozen os>", line 225, in makedirs
+FileExistsError: [Errno 17] File exists: 'logs/evi_20241118_134122'

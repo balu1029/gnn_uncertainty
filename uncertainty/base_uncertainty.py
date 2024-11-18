@@ -5,7 +5,7 @@ from abc import abstractmethod
 
 import numpy as np
 from sklearn.metrics import r2_score
-from sklearn.linear_model import LinearRegression, Ridge, HuberRegressor
+from sklearn.linear_model import LinearRegression, Ridge, HuberRegressor, RANSACRegressor
 from matplotlib import pyplot as plt
 import seaborn as sns
 from scipy.odr import ODR, Model, RealData
@@ -128,15 +128,15 @@ class BaseUncertainty(nn.Module):
             print(np.min(uncertainties_in), np.max(uncertainties_in))
             if test_loader_out is not None:
                 energy_r2_out, forces_r2_out, energy_correlation_out_energy, energy_correlation_out_forces, energy_losses_out, force_losses_out, uncertainties_out = self._eval_all(test_loader_out, device, dtype, plot_path=f"{plot_name}_out", plot_title=self.__class__.__name__+' Out Distribution', use_force_uncertainty=False, plot_loss=True, plot=False)
-                self._mulit_scatter_plot(uncertainties_in, energy_losses_in, uncertainties_out, energy_losses_out, self.__class__.__name__, 'Energy Uncertainties', 'Energy Losses', text=f"Correlation in: {energy_correlation_in_energy}\nCorrelation Out: {energy_correlation_out_energy}", save_path=plot_name + "_energy_uncertainty_energy_loss.png", show_plot=show_plot)
-                self._mulit_scatter_plot(uncertainties_in, np.mean(force_losses_in.reshape(energy_losses_in.shape[0],-1,3),axis=(1,2)), uncertainties_out, np.mean(force_losses_out.reshape(energy_losses_out.shape[0],-1,3),axis=(1,2)), self.__class__.__name__, 'Energy Uncertainties', 'Force Losses', text=f"Correlation in: {energy_correlation_in_force}\nCorrelation Out: {energy_correlation_out_forces}", save_path=plot_name + "_energy_uncertainty_force_loss.png", show_plot=show_plot)
+                self._mulit_scatter_plot(uncertainties_in, energy_losses_in, uncertainties_out, energy_losses_out, self.__class__.__name__, 'Energy Uncertainties', 'Energy Errors', text=f"Correlation in: {energy_correlation_in_energy}\nCorrelation Out: {energy_correlation_out_energy}", save_path=plot_name + "_energy_uncertainty_energy_loss.pdf", show_plot=show_plot)
+                self._mulit_scatter_plot(uncertainties_in, np.mean(force_losses_in.reshape(energy_losses_in.shape[0],-1,3),axis=(1,2)), uncertainties_out, np.mean(force_losses_out.reshape(energy_losses_out.shape[0],-1,3),axis=(1,2)), self.__class__.__name__, 'Energy Uncertainties', 'Force Errors', text=f"Correlation in: {energy_correlation_in_force}\nCorrelation Out: {energy_correlation_out_forces}", save_path=plot_name + "_energy_uncertainty_force_loss.pdf", show_plot=show_plot)
 
         if use_force_uncertainty:
             energy_r2_in, forces_r2_in, force_correlation_in_energy, force_correlation_in_forces, energy_losses_in, force_losses_in, uncertainties_in = self._eval_all(test_loader_in, device, dtype, plot_path=f"{plot_name}_in", plot_title=self.__class__.__name__+' In Distribution', use_force_uncertainty=True, plot_loss= not use_energy_uncertainty, plot=not(test_loader_out is not None))
             if test_loader_out is not None:
                 energy_r2_out, forces_r2_out, force_correlation_out_energy, force_correlation_out_forces, energy_losses_out, force_losses_out, uncertainties_out = self._eval_all(test_loader_out, device, dtype, plot_path=f"{plot_name}_out", plot_title=self.__class__.__name__+' Out Distribution', use_force_uncertainty=True, plot=False)
-                self._mulit_scatter_plot(uncertainties_in, energy_losses_in, uncertainties_out, energy_losses_out, self.__class__.__name__, 'Force Uncertainties', 'Energy Losses', text=f"Correlation in: {force_correlation_in_energy}\nCorrelation Out: {force_correlation_out_energy}", save_path=plot_name + "_force_uncertainty_energy_loss.png", show_plot=show_plot)
-                self._mulit_scatter_plot(uncertainties_in, np.mean(force_losses_in.reshape(energy_losses_in.shape[0],-1,3),axis=(1,2)), uncertainties_out, np.mean(force_losses_out.reshape(energy_losses_out.shape[0],-1,3),axis=(1,2)), self.__class__.__name__, 'Force Uncertainties', 'Force Losses', text=f"Correlation in: {force_correlation_in_forces}\nCorrelation Out: {force_correlation_out_forces}", save_path=plot_name + "_force_uncertainty_force_loss.png", show_plot=show_plot)
+                self._mulit_scatter_plot(uncertainties_in, energy_losses_in, uncertainties_out, energy_losses_out, self.__class__.__name__, 'Force Uncertainties', 'Energy Errors', text=f"Correlation in: {force_correlation_in_energy}\nCorrelation Out: {force_correlation_out_energy}", save_path=plot_name + "_force_uncertainty_energy_loss.pdf", show_plot=show_plot)
+                self._mulit_scatter_plot(uncertainties_in, np.mean(force_losses_in.reshape(energy_losses_in.shape[0],-1,3),axis=(1,2)), uncertainties_out, np.mean(force_losses_out.reshape(energy_losses_out.shape[0],-1,3),axis=(1,2)), self.__class__.__name__, 'Force Uncertainties', 'Force Errors', text=f"Correlation in: {force_correlation_in_forces}\nCorrelation Out: {force_correlation_out_forces}", save_path=plot_name + "_force_uncertainty_force_loss.pdf", show_plot=show_plot)
         
         if not use_energy_uncertainty:
             energy_correlation_out_energy, energy_correlation_out_forces  = 0, 0
@@ -237,9 +237,9 @@ class BaseUncertainty(nn.Module):
         # Define a color cycle if colors aren't specified in the data_list
         colors = itertools.cycle(sns.color_palette("hsv", 2))
         
-        sns.kdeplot(x=x_in, y=y_in, cmap=sns.light_palette("blue", as_cmap=True), fill=True, label="In Distribution", alpha=1)  
+        sns.kdeplot(x=x_in, y=y_in, cmap=sns.light_palette("blue", as_cmap=True), fill=True, label="In Distribution", alpha=1, legend=True)  
 
-        sns.kdeplot(x=x_out, y=y_out, cmap=sns.light_palette("green", as_cmap=True), fill=True, label="Out of Distribution", alpha=0.5)
+        sns.kdeplot(x=x_out, y=y_out, cmap=sns.light_palette("green", as_cmap=True), fill=True, label="Out of Distribution", alpha=0.5, legend=True)
 
         plt.xlabel(xlabel)
         plt.ylabel(ylabel)
@@ -292,8 +292,8 @@ class BaseUncertainty(nn.Module):
         model = Model(linear_model)
         linear = ODR(data, model, beta0=[1., 1.])
         # Reshape the data for linear regression
-        #uncertainties = uncertainties.reshape(-1, 1)
-        #force_losses = force_losses.reshape(-1, 1)
+        uncertainties = uncertainties.reshape(-1, 1)
+        force_losses = force_losses.reshape(-1, 1)
 
         
 
@@ -302,19 +302,24 @@ class BaseUncertainty(nn.Module):
 
 
         # Create and fit the model
-        #linear = LinearRegression()
-        #linear.fit(uncertainties, force_losses)
+        linear = LinearRegression()
+        linear.fit(uncertainties, force_losses)
 
         # Get the slope and intercept
+        slope = linear.coef_[0][0]  # Coefficient for the feature
+        bias = linear.intercept_[0]  # Intercept (bias term)
         self.uncertainty_slope = slope#linear.coef_[0][0]
         self.uncertainty_bias = bias#linear.intercept_[0]
+        #self.uncertainty_slope = linear.coef_[0]
+        #self.uncertainty_bias = linear.intercept_
        
         print(f"Uncertainty Slope: {self.uncertainty_slope}, Uncertainty Bias: {self.uncertainty_bias}", flush=True)
 
         if path is not None:
             plt.figure(figsize=(10, 8))
-            sns.kdeplot(x=uncertainties, y=force_losses, cmap=sns.light_palette("blue", as_cmap=True), fill=True)
-            plt.plot(uncertainties, slope*uncertainties+bias, color='red', label='Regression Line')
+            #sns.kdeplot(x=uncertainties, y=force_losses, cmap=sns.light_palette("blue", as_cmap=True), fill=True)
+            plt.scatter(uncertainties, force_losses, label='Data')
+            plt.plot(uncertainties, self.uncertainty_slope*uncertainties+self.uncertainty_bias, color='red', label='Regression Line')
             plt.xlabel('Uncertainties')
             plt.ylabel('Force Losses')
             plt.title('Uncertainty Calibration')

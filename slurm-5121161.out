@@ -1,0 +1,22 @@
+Traceback (most recent call last):
+  File "/home/ws/fq0795/git/gnn_uncertainty/reevaluate_experiments.py", line 64, in <module>
+    mve.calibrate_uncertainty(testloader_in, device=device, dtype=torch.float32, path=f"{out_path}/calibration{i}.png")
+  File "/home/ws/fq0795/git/gnn_uncertainty/uncertainty/base_uncertainty.py", line 306, in calibrate_uncertainty
+    linear.fit(uncertainties, force_losses)
+  File "/home/ws/fq0795/miniconda3/envs/torch/lib/python3.12/site-packages/sklearn/base.py", line 1474, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ws/fq0795/miniconda3/envs/torch/lib/python3.12/site-packages/sklearn/linear_model/_huber.py", line 297, in fit
+    X, y = self._validate_data(
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/ws/fq0795/miniconda3/envs/torch/lib/python3.12/site-packages/sklearn/base.py", line 650, in _validate_data
+    X, y = check_X_y(X, y, **check_params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ws/fq0795/miniconda3/envs/torch/lib/python3.12/site-packages/sklearn/utils/validation.py", line 1263, in check_X_y
+    X = check_array(
+        ^^^^^^^^^^^^
+  File "/home/ws/fq0795/miniconda3/envs/torch/lib/python3.12/site-packages/sklearn/utils/validation.py", line 1035, in check_array
+    raise ValueError(msg)
+ValueError: Expected 2D array, got 1D array instead:
+array=[1.2120429 1.2054601 1.2498317 ... 1.2275445 1.1825784 1.2049689].
+Reshape your data either using array.reshape(-1, 1) if your data has a single feature or array.reshape(1, -1) if it contains a single sample.

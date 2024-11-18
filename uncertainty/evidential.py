@@ -93,10 +93,12 @@ class EvidentialRegression(BaseUncertainty):
         self.coeff = 5e-4
 
 
-    def fit(self, epochs, train_loader, valid_loader, device, dtype, model_path="gnn/models/evidential.pt", use_wandb=False, warmup_steps=0, force_weight=1.0, energy_weight=1.0, log_interval=100, patience=200, factor=0.1, lr=1e-3, min_lr=1e-6, additional_logs=None, best_on_train=False): 
+    def fit(self, epochs, train_loader, valid_loader, device, dtype, model_path="gnn/models/evidential.pt", use_wandb=False, warmup_steps=0, force_weight=1.0, energy_weight=1.0, log_interval=100, patience=200, factor=0.1, lr=1e-3, min_lr=1e-6, additional_logs=None, best_on_train=False, coeff=None): 
 
         optimizer = torch.optim.AdamW(self.parameters(), lr=1e-3, weight_decay=1e-16)   
-        criterion = EvidentialRegressionLoss(coeff=self.coeff)
+        if coeff is None:
+            coeff = self.coeff
+        criterion = EvidentialRegressionLoss(coeff=coeff)
         scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=factor, patience=patience)
         
         if use_wandb:
