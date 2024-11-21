@@ -103,14 +103,15 @@ class MD17Dataset(torch.utils.data.Dataset):
             if load_norm_path is not None:
                 print("WARNING: load_norm_path is not None, so the normalization parameters are not determined from dataset.")
             else:
-                self.mean_energy = self.mean_forces = self.energies.mean()
+                self.mean_energy = self.energies.mean()
+                self.mean_forces = 0
                 self.std_energy = self.std_forces = self.energies.std()
         if store_norm_path is not None:
             with open(store_norm_path, 'w', newline='') as csvfile:
                 writer = csv.writer(csvfile)
                 writer.writerow(["mean_energy", self.mean_energy.item()])
                 writer.writerow(["std_energy", self.std_energy.item()])
-                writer.writerow(["mean_forces", self.mean_forces.item()])
+                writer.writerow(["mean_forces", self.mean_forces])
                 writer.writerow(["std_forces", self.std_forces.item()])
 
         if scale:

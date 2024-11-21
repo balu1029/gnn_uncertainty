@@ -1,0 +1,17 @@
+Traceback (most recent call last):
+  File "/home/ws/fq0795/git/gnn_uncertainty/active_learning.py", line 389, in <module>
+    al = ActiveLearning(max_uncertainty=10 ,num_ensembles=num_ensembles, in_nf=in_nf, hidden_nf=hidden_nf, n_layers=n_layers, model=model)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ws/fq0795/git/gnn_uncertainty/active_learning.py", line 172, in __init__
+    self.atoms = read(molecule_path)
+                 ^^^^^^^^^^^^^^^^^^^
+  File "/home/ws/fq0795/miniconda3/envs/torch/lib/python3.12/site-packages/ase/io/formats.py", line 793, in read
+    format = format or filetype(filename, read=isinstance(filename, str))
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ws/fq0795/miniconda3/envs/torch/lib/python3.12/site-packages/ase/io/formats.py", line 965, in filetype
+    fd = open_with_compression(filename, 'rb')
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ws/fq0795/miniconda3/envs/torch/lib/python3.12/site-packages/ase/io/formats.py", line 597, in open_with_compression
+    return open(filename, mode)
+           ^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'datasets/files/ala_converged_1000000/start_pos.xyz'

@@ -22,7 +22,7 @@ ensemble_size = 3
 uncertainty_method = "EVI"
 swag_sample_size = 5
 
-name = "evi_20241113_160948"
+name = "evi_20241120_094042"
 cal = True
 
 model_dir = f"gnn/models/{name}"

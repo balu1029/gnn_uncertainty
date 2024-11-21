@@ -1,0 +1,100 @@
+/home/ws/fq0795/git/gnn_uncertainty/active_learning.py:173: DeprecationWarning: Please use atoms.calc = calc
+  self.atoms.set_calculator(self.calc)
+['H1', 'CH3', 'H2', 'H3', 'C', 'O', 'N', 'H', 'CA', 'HA', 'CB', 'HB1', 'HB2', 'HB3', 'C', 'O', 'N', 'H', 'C', 'H1', 'H2', 'H3']
+Uncertainty Slope: 0.6569401025772095, Uncertainty Bias: 0.026700317859649658
+
+Training and Validation Results of Epoch Initital validation:
+================================
+Training Loss Energy: 0.0, Training Loss Force: 0.0, time: 0
+Validation Loss Energy: 0.0, Validation Loss Force: 0.0, time: 0
+Test Loss Energy: 12.430876614124555, Test Loss Force: 10.724611763552575, time: 15.015947103500366
+
+Found uncertainty sample after 50 steps.
+Found uncertainty sample after 14 steps.
+Found uncertainty sample after 113 steps.
+Found uncertainty sample after 35 steps.
+Found uncertainty sample after 33 steps.
+Found uncertainty sample after 13 steps.
+Found uncertainty sample after 65 steps.
+Found uncertainty sample after 27 steps.
+Found uncertainty sample after 232 steps.
+Found uncertainty sample after 10 steps.
+Training model 0. Added 10 samples to the dataset.
+
+Training and Validation Results of Epoch 0:
+================================
+Training Loss Energy: 55.74413755178231, Training Loss Force: 19.418761554741508, time: 1.0622951984405518
+Validation Loss Energy: 34.552390796071855, Validation Loss Force: 11.26205140019244, time: 0.06386137008666992
+Test Loss Energy: 32.70887302902887, Test Loss Force: 15.787369006293153, time: 15.71080756187439
+
+
+Training and Validation Results of Epoch 1:
+================================
+Training Loss Energy: 7.969110208681394, Training Loss Force: 10.4562722071887, time: 0.978135347366333
+Validation Loss Energy: 3.2749069090712317, Validation Loss Force: 7.210139615729609, time: 0.06868433952331543
+Test Loss Energy: 11.258305820701016, Test Loss Force: 12.822020504784263, time: 15.675596952438354
+
+
+Training and Validation Results of Epoch 2:
+================================
+Training Loss Energy: 3.984122282624101, Training Loss Force: 7.042777194987126, time: 0.9963290691375732
+Validation Loss Energy: 2.0942318191015232, Validation Loss Force: 5.864690248449922, time: 0.07101774215698242
+Test Loss Energy: 10.725974321522981, Test Loss Force: 11.946172347845415, time: 16.118173837661743
+
+
+Training and Validation Results of Epoch 3:
+================================
+Training Loss Energy: 4.480891781718999, Training Loss Force: 5.727251409295298, time: 1.0330743789672852
+Validation Loss Energy: 2.3241394936251316, Validation Loss Force: 4.695793020284919, time: 0.06575989723205566
+Test Loss Energy: 10.378105855279978, Test Loss Force: 11.23422716268272, time: 15.850552320480347
+
+
+Training and Validation Results of Epoch 4:
+================================
+Training Loss Energy: 6.251296641239751, Training Loss Force: 4.77606646350799, time: 0.9988820552825928
+Validation Loss Energy: 5.682547777757575, Validation Loss Force: 4.182304164288392, time: 0.06736373901367188
+Test Loss Energy: 11.055105890278462, Test Loss Force: 10.818309284712983, time: 16.07018494606018
+
+
+Training and Validation Results of Epoch 5:
+================================
+Training Loss Energy: 5.38680354683219, Training Loss Force: 4.441702268961646, time: 1.0029315948486328
+Validation Loss Energy: 9.513507195407723, Validation Loss Force: 3.862934261667085, time: 0.07018494606018066
+Test Loss Energy: 12.209239496553277, Test Loss Force: 10.511529361406438, time: 16.261319875717163
+
+
+Training and Validation Results of Epoch 6:
+================================
+Training Loss Energy: 5.4943102016621435, Training Loss Force: 4.12227672474645, time: 1.0198736190795898
+Validation Loss Energy: 1.6345537455827712, Validation Loss Force: 3.741611196155162, time: 0.06995773315429688
+Test Loss Energy: 10.127865932284115, Test Loss Force: 10.532557708603075, time: 16.04677128791809
+
+
+Training and Validation Results of Epoch 7:
+================================
+Training Loss Energy: 6.4164807239844155, Training Loss Force: 4.106258728551405, time: 0.9769659042358398
+Validation Loss Energy: 9.099438777053077, Validation Loss Force: 4.037921482024188, time: 0.06860113143920898
+Test Loss Energy: 12.465539489760149, Test Loss Force: 10.735694009277017, time: 16.059834957122803
+
+
+Training and Validation Results of Epoch 8:
+================================
+Training Loss Energy: 4.704104051950496, Training Loss Force: 4.226852261427685, time: 1.032189130783081
+Validation Loss Energy: 5.819383311989704, Validation Loss Force: 3.907710800221704, time: 0.06995272636413574
+Test Loss Energy: 11.589638852851282, Test Loss Force: 10.801845557080075, time: 16.18778920173645
+
+
+Training and Validation Results of Epoch 9:
+================================
+Training Loss Energy: 4.6777611957699055, Training Loss Force: 4.019874164875136, time: 0.989670991897583
+Validation Loss Energy: 6.222043499321884, Validation Loss Force: 3.781582979878951, time: 0.07183194160461426
+Test Loss Energy: 11.130622715830118, Test Loss Force: 10.248704117660774, time: 16.226821660995483
+
+
+Training and Validation Results of Epoch 10:
+================================
+Training Loss Energy: 7.833626798581118, Training Loss Force: 3.860646139216125, time: 0.9990823268890381
+Validation Loss Energy: 1.4428583231918304, Validation Loss Force: 3.568606844542546, time: 0.0720829963684082
+Test Loss Energy: 10.555774401533606, Test Loss Force: 10.26271165772241, time: 16.313846111297607
+
+slurmstepd: error: *** JOB 5122132 ON aimat01 CANCELLED AT 2024-11-20T18:54:53 ***

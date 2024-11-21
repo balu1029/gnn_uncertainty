@@ -1,0 +1,52 @@
+[I 2024-11-21 09:07:33.736 ServerApp] jupyter_lsp | extension was successfully linked.
+[I 2024-11-21 09:07:33.743 ServerApp] jupyter_server_terminals | extension was successfully linked.
+[I 2024-11-21 09:07:33.749 ServerApp] jupyterlab | extension was successfully linked.
+[I 2024-11-21 09:07:33.754 ServerApp] notebook | extension was successfully linked.
+[I 2024-11-21 09:07:34.363 ServerApp] notebook_shim | extension was successfully linked.
+[I 2024-11-21 09:07:34.423 ServerApp] notebook_shim | extension was successfully loaded.
+[I 2024-11-21 09:07:34.426 ServerApp] jupyter_lsp | extension was successfully loaded.
+[I 2024-11-21 09:07:34.428 ServerApp] jupyter_server_terminals | extension was successfully loaded.
+[I 2024-11-21 09:07:34.447 LabApp] JupyterLab extension loaded from /home/ws/fq0795/miniconda3/envs/torch/lib/python3.12/site-packages/jupyterlab
+[I 2024-11-21 09:07:34.447 LabApp] JupyterLab application directory is /home/ws/fq0795/miniconda3/envs/torch/share/jupyter/lab
+[I 2024-11-21 09:07:34.448 LabApp] Extension Manager is 'pypi'.
+[I 2024-11-21 09:07:34.481 ServerApp] jupyterlab | extension was successfully loaded.
+[I 2024-11-21 09:07:34.487 ServerApp] notebook | extension was successfully loaded.
+[I 2024-11-21 09:07:34.487 ServerApp] Serving notebooks from local directory: /home/ws/fq0795/git/gnn_uncertainty
+[I 2024-11-21 09:07:34.487 ServerApp] Jupyter Server 2.14.2 is running at:
+[I 2024-11-21 09:07:34.487 ServerApp] http://aimat01.int-nano.int.kit.edu:8888/tree?token=f1cc36a2520dba4b8c21f90250cae4f30126af29a4c0c7ee
+[I 2024-11-21 09:07:34.487 ServerApp]     http://127.0.0.1:8888/tree?token=f1cc36a2520dba4b8c21f90250cae4f30126af29a4c0c7ee
+[I 2024-11-21 09:07:34.487 ServerApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).
+[C 2024-11-21 09:07:34.494 ServerApp] 
+    
+    To access the server, open this file in a browser:
+        file:///home/ws/fq0795/.local/share/jupyter/runtime/jpserver-121459-open.html
+    Or copy and paste one of these URLs:
+        http://aimat01.int-nano.int.kit.edu:8888/tree?token=f1cc36a2520dba4b8c21f90250cae4f30126af29a4c0c7ee
+        http://127.0.0.1:8888/tree?token=f1cc36a2520dba4b8c21f90250cae4f30126af29a4c0c7ee
+[I 2024-11-21 09:07:34.522 ServerApp] Skipped non-installed server(s): bash-language-server, dockerfile-language-server-nodejs, javascript-typescript-langserver, jedi-language-server, julia-language-server, pyright, python-language-server, python-lsp-server, r-languageserver, sql-language-server, texlab, typescript-language-server, unified-language-server, vscode-css-languageserver-bin, vscode-html-languageserver-bin, vscode-json-languageserver-bin, yaml-language-server
+[I 2024-11-21 09:09:11.871 ServerApp] 302 GET / (@10.0.0.1) 0.59ms
+[I 2024-11-21 09:09:11.884 JupyterNotebookApp] 302 GET /tree? (@10.0.0.1) 0.67ms
+[I 2024-11-21 09:10:25.618 ServerApp] Wrote hashed password to /home/ws/fq0795/.jupyter/jupyter_server_config.json
+[I 2024-11-21 09:10:25.618 ServerApp] User 5be7c82137294d8983574af18899a05d logged in.
+[I 2024-11-21 09:10:25.619 ServerApp] 302 POST /login?next=%2Ftree%3F (5be7c82137294d8983574af18899a05d@10.0.0.1) 154.92ms
+0.00s - Debugger warning: It seems that frozen modules are being used, which may
+0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off
+0.00s - to python to disable frozen modules.
+0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.
+[I 2024-11-21 09:11:03.820 ServerApp] Writing notebook-signing key to /home/ws/fq0795/.local/share/jupyter/notebook_secret
+[W 2024-11-21 09:11:03.827 ServerApp] Notebook datasets/helper/cv_visualizer.ipynb is not trusted
+[W 2024-11-21 09:11:04.343 ServerApp] Notebook datasets/helper/cv_visualizer.ipynb is not trusted
+[I 2024-11-21 09:11:05.391 ServerApp] Kernel started: 96d822a5-a5aa-4d15-95ec-dd244a363051
+0.00s - Debugger warning: It seems that frozen modules are being used, which may
+0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off
+0.00s - to python to disable frozen modules.
+0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.
+[I 2024-11-21 09:11:06.983 ServerApp] Connecting to kernel 96d822a5-a5aa-4d15-95ec-dd244a363051.
+[I 2024-11-21 09:11:06.985 ServerApp] Connecting to kernel 96d822a5-a5aa-4d15-95ec-dd244a363051.
+[I 2024-11-21 09:11:06.988 ServerApp] Connecting to kernel 96d822a5-a5aa-4d15-95ec-dd244a363051.
+[I 2024-11-21 09:13:04.679 ServerApp] Saving file at /datasets/helper/cv_visualizer.ipynb
+[W 2024-11-21 09:13:04.680 ServerApp] Notebook datasets/helper/cv_visualizer.ipynb is not trusted
+[I 2024-11-21 09:15:56.404 ServerApp] Starting buffering for 96d822a5-a5aa-4d15-95ec-dd244a363051:234480a0-ee62-448c-9091-4cf36126abce
+[I 2024-11-21 09:16:06.392 ServerApp] Connecting to kernel 96d822a5-a5aa-4d15-95ec-dd244a363051.
+[I 2024-11-21 09:16:06.426 ServerApp] Starting buffering for 96d822a5-a5aa-4d15-95ec-dd244a363051:1a80f8da-7585-4590-9e58-aa46cef0bb16
+slurmstepd: error: *** JOB 5122404 ON aimat01 CANCELLED AT 2024-11-21T09:16:31 ***

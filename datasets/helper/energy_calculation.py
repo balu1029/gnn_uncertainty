@@ -7,7 +7,7 @@ import numpy as np
 import multiprocessing
 import torch
 
-sys.path.append(os.path.abspath('/home/kit/iti/fq0795/gnn_uncertainty/'))
+sys.path.append(os.path.abspath('/home/ws/fq0795/git/gnn_uncertainty/'))
 from datasets.md17_dataset import MD17Dataset
 
 kjpmol_to_kcalpmol = 0.239006
@@ -345,8 +345,8 @@ if __name__ == "__main__":
     xyz_out = "datasets/files/active_learning_validation/dataset2.xyz"
 
     dataset = "datasets/files/train_in"
-    out_path = "datasets/files/train_in2/dataset.xyz"
-    trainset = MD17Dataset(dataset,subtract_self_energies=False, in_unit="kj/mol",train=True, train_ratio=0.8)
+    out_path = "datasets/files/train_in2/valid.xyz"
+    trainset = MD17Dataset(dataset,subtract_self_energies=False, in_unit="kj/mol",train=False, train_ratio=0.8)
     
     energy_calculation.generate_from_dataset(trainset, out_path)
     #energy_calculation.generate_validation_uniform(npy_in, xyz_out, 300, 1)

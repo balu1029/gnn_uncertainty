@@ -29,8 +29,13 @@ class MVE(BaseUncertainty):
         self.valid_losses_total = []
         self.valid_time = 0
 
+        self.test_losses_energy = []
+        self.test_losses_force = []
+        self.test_losses_total = []
+        self.test_time = 0
 
-    def fit(self, epochs, train_loader, valid_loader, device, dtype, model_path="gnn/models/mve.pt", use_wandb=False, warmup_steps=0, force_weight=1.0, energy_weight=1.0, log_interval=100, patience=200, factor=0.1, lr=1e-3, min_lr=1e-6, additional_logs=None, best_on_train=False): 
+
+    def fit(self, epochs, train_loader, valid_loader, device, dtype, model_path="gnn/models/mve.pt", use_wandb=False, warmup_steps=0, force_weight=1.0, energy_weight=1.0, log_interval=100, patience=200, factor=0.1, lr=1e-3, min_lr=1e-6, additional_logs=None, best_on_train=False, test_loader=None): 
 
         optimizer = torch.optim.AdamW(self.parameters(), lr=1e-3, weight_decay=1e-16)   
         criterion = nn.L1Loss()
@@ -47,6 +52,8 @@ class MVE(BaseUncertainty):
         for epoch in range(epochs):
             self.train_epoch(train_loader=train_loader, optimizer=optimizer, criterion=criterion, epoch=epoch, device=device, dtype=dtype, force_weight=force_weight, energy_weight=energy_weight, log_interval=log_interval)
             self.valid_epoch(valid_loader=valid_loader, criterion=criterion, device=device, dtype=dtype, force_weight=force_weight, energy_weight=energy_weight)
+            if test_loader is not None:
+                self.valid_epoch(valid_loader=test_loader, criterion=criterion, device=device, dtype=dtype, force_weight=force_weight, energy_weight=energy_weight, test=True)
             self.epoch_summary(epoch, use_wandb=use_wandb, lr=optimizer.param_groups[0]['lr'], additional_logs=additional_logs)
 
             if best_on_train:
@@ -133,7 +140,7 @@ class MVE(BaseUncertainty):
         self.train_time = time.time() - start
 
 
-    def valid_epoch(self, valid_loader, criterion, device, dtype, force_weight=1.0, energy_weight=1.0):
+    def valid_epoch(self, valid_loader, criterion, device, dtype, force_weight=1.0, energy_weight=1.0, test=False):
         start = time.time()
         self.eval()
         for i,data in enumerate(valid_loader):
@@ -146,11 +153,18 @@ class MVE(BaseUncertainty):
             loss_force = criterion(mean_force, label_forces)
             total_loss = force_weight * 0.5 * torch.mean(torch.log(uncertainty) + loss_force/uncertainty) + loss_energy*energy_weight
 
-            self.valid_losses_energy.append(loss_energy.item()*valid_loader.dataset.std_energy)
-            self.valid_losses_force.append(loss_force.item()*valid_loader.dataset.std_energy)
-            self.valid_losses_total.append(total_loss.item())
-
-        self.valid_time = time.time() - start
+            if not test:
+                self.valid_losses_energy.append(loss_energy.item()*valid_loader.dataset.std_energy)
+                self.valid_losses_force.append(loss_force.item()*valid_loader.dataset.std_energy)
+                self.valid_losses_total.append(total_loss.item())
+            else:
+                self.test_losses_energy.append(loss_energy.item()*valid_loader.dataset.std_energy)
+                self.test_losses_force.append(loss_force.item()*valid_loader.dataset.std_energy)
+                self.test_losses_total.append(total_loss.item())
+        if not test:
+            self.valid_time = time.time() - start
+        else:
+            self.test_time = time.time() - start
 
 
     def predict(self, x, use_force_uncertainty=False, *args, **kwargs):
@@ -178,6 +192,11 @@ class MVE(BaseUncertainty):
         self.valid_losses_force = []
         self.valid_losses_total = []
         self.valid_time = 0
+        
+        self.test_losses_energy = []
+        self.test_losses_force = []
+        self.test_losses_total = []
+        self.test_time = 0
 
     
     def epoch_summary(self, epoch, additional_logs=None, use_wandb=False, lr=None):
@@ -187,7 +206,10 @@ class MVE(BaseUncertainty):
             'train_losses_total',
             'valid_losses_energy',
             'valid_losses_force',
-            'valid_losses_total'
+            'valid_losses_total',
+            'test_losses_energy',
+            'test_losses_force',
+            'test_losses_total'
         ]
 
         for attr in attributes:
@@ -200,15 +222,22 @@ class MVE(BaseUncertainty):
         print(f"Training Loss Energy: {np.array(self.train_losses_energy).mean()}, Training Loss Force: {np.array(self.train_losses_force).mean()}, time: {self.train_time}", flush=True)
         if len(self.valid_losses_energy) > 0:
             print(f"Validation Loss Energy: {np.array(self.valid_losses_energy).mean()}, Validation Loss Force: {np.array(self.valid_losses_force).mean()}, time: {self.valid_time}", flush=True)
+        if len(self.test_losses_energy) > 0:
+            print(f"Test Loss Energy: {np.array(self.test_losses_energy).mean()}, Test Loss Force: {np.array(self.test_losses_force).mean()}, time: {self.test_time}", flush=True)
         print("", flush=True)
 
-        logs = {"train_loss_energy": np.array(self.train_losses_energy).mean(),
-                "train_loss_force": np.array(self.train_losses_force).mean(),
-                "train_loss_total": np.array(self.train_losses_total).mean(),
-                "valid_loss_energy": np.array(self.valid_losses_energy).mean(),
-                "valid_loss_force": np.array(self.valid_losses_force).mean(),
-                "valid_loss_total": np.array(self.valid_losses_total).mean(),
-                "lr" : lr}
+        logs = {
+            "train_error_energy": np.array(self.train_losses_energy).mean(),
+            "train_error_force": np.array(self.train_losses_force).mean(),
+            "train_error_total": np.array(self.train_losses_total).mean(),
+            "valid_error_energy": np.array(self.valid_losses_energy).mean(),
+            "valid_error_force": np.array(self.valid_losses_force).mean(),
+            "valid_error_total": np.array(self.valid_losses_total).mean(),
+            "test_error_energy": np.array(self.test_losses_energy).mean(),
+            "test_error_force": np.array(self.test_losses_force).mean(),
+            "test_error_total": np.array(self.test_losses_total).mean(),
+            "lr" : lr 
+            }
         
         if additional_logs is not None:
             logs.update(additional_logs)

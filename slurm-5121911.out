@@ -1,0 +1,46 @@
+/home/ws/fq0795/git/gnn_uncertainty/active_learning.py:173: DeprecationWarning: Please use atoms.calc = calc
+  self.atoms.set_calculator(self.calc)
+wandb: Currently logged in as: l-baer-99 (l-baer-99-Karlsruhe Institute of Technology). Use `wandb login --relogin` to force relogin
+wandb: wandb version 0.18.7 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.17.4
+wandb: Run data is saved locally in /home/ws/fq0795/git/gnn_uncertainty/wandb/run-20241120_163327-9jkxwzcy
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run fine-fog-38
+wandb: ⭐️ View project at https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/ActiveLearning
+wandb: 🚀 View run at https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/ActiveLearning/runs/9jkxwzcy
+['H1', 'CH3', 'H2', 'H3', 'C', 'O', 'N', 'H', 'CA', 'HA', 'CB', 'HB1', 'HB2', 'HB3', 'C', 'O', 'N', 'H', 'C', 'H1', 'H2', 'H3']
+Uncertainty Slope: 0.6569397449493408, Uncertainty Bias: 0.02670048177242279
+Traceback (most recent call last):
+  File "/home/ws/fq0795/git/gnn_uncertainty/active_learning.py", line 393, in <module>
+    al.improve_model(2, 10,run_idx=37, use_wandb=True, model_path=model_path)
+  File "/home/ws/fq0795/git/gnn_uncertainty/active_learning.py", line 281, in improve_model
+    self.model.calibrate_uncertainty(validloader, device=self.device, dtype=self.dtype, path=f"{data_out_path}/plots/calibration.pdf")
+  File "/home/ws/fq0795/git/gnn_uncertainty/uncertainty/base_uncertainty.py", line 328, in calibrate_uncertainty
+    plt.savefig(path)
+  File "/home/ws/fq0795/miniconda3/envs/torch/lib/python3.12/site-packages/matplotlib/pyplot.py", line 1134, in savefig
+    res = fig.savefig(*args, **kwargs)  # type: ignore[func-returns-value]
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ws/fq0795/miniconda3/envs/torch/lib/python3.12/site-packages/matplotlib/figure.py", line 3390, in savefig
+    self.canvas.print_figure(fname, **kwargs)
+  File "/home/ws/fq0795/miniconda3/envs/torch/lib/python3.12/site-packages/matplotlib/backend_bases.py", line 2193, in print_figure
+    result = print_method(
+             ^^^^^^^^^^^^^
+  File "/home/ws/fq0795/miniconda3/envs/torch/lib/python3.12/site-packages/matplotlib/backend_bases.py", line 2043, in <lambda>
+    print_method = functools.wraps(meth)(lambda *args, **kwargs: meth(
+                                                                 ^^^^^
+  File "/home/ws/fq0795/miniconda3/envs/torch/lib/python3.12/site-packages/matplotlib/backends/backend_pdf.py", line 2800, in print_pdf
+    file = PdfFile(filename, metadata=metadata)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ws/fq0795/miniconda3/envs/torch/lib/python3.12/site-packages/matplotlib/backends/backend_pdf.py", line 688, in __init__
+    fh, opened = cbook.to_filehandle(filename, "wb", return_opened=True)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ws/fq0795/miniconda3/envs/torch/lib/python3.12/site-packages/matplotlib/cbook.py", line 483, in to_filehandle
+    fh = open(fname, flag, encoding=encoding)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'al/run37/data//plots/calibration.pdf'
+wandb: - 0.039 MB of 0.039 MB uploadedwandb: \ 0.039 MB of 0.039 MB uploadedwandb: | 0.039 MB of 0.039 MB uploadedwandb: / 0.039 MB of 0.039 MB uploadedwandb: - 0.039 MB of 0.039 MB uploadedwandb: \ 0.043 MB of 0.046 MB uploadedwandb: | 0.043 MB of 0.056 MB uploadedwandb: 🚀 View run fine-fog-38 at: https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/ActiveLearning/runs/9jkxwzcy
+wandb: ⭐️ View project at: https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/ActiveLearning
+wandb: Synced 6 W&B file(s), 0 media file(s), 2 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20241120_163327-9jkxwzcy/logs
+wandb: WARNING The new W&B backend becomes opt-out in version 0.18.0; try it out with `wandb.require("core")`! See https://wandb.me/wandb-core for more information.

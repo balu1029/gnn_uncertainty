@@ -206,11 +206,11 @@ class BaseUncertainty(nn.Module):
 
         if plot_path:
             if plot_loss:
-                self._scatter_plot(ground_truths_energy, predictions_energy, plot_title, 'Ground Truth Energy', 'Predicted Energy', text=f"Energy R2 Score: {energy_r2}", save_path=plot_path + "_energy.png", show_plot=False)
+                self._scatter_plot(ground_truths_energy, predictions_energy, plot_title, 'Ground Truth Energy', 'Predicted Energy', text=f"Energy R2 Score: {energy_r2}", save_path=plot_path + "_energy.pdf", show_plot=False)
             uncertainty_type = '_force' if use_force_uncertainty else '_energy'
             if plot:
-                self._scatter_plot(energy_losses, uncertainties, plot_title, 'Energy Errors', 'Uncertainties', text=f"Correlation: {correlation_energy}", save_path=plot_path + uncertainty_type + "_uncertainty_energy_loss.png", show_plot=False)
-                self._scatter_plot(np.mean(forces_losses.reshape(energy_losses.shape[0],-1,3),axis=(1,2)), uncertainties, plot_title, 'Force Errors', 'Uncertainties', text=f"Correlation: {correlation_forces}", save_path=plot_path + uncertainty_type + "_uncertainty_force_loss.png", show_plot=False)
+                self._scatter_plot(energy_losses, uncertainties, plot_title, 'Energy Errors', 'Uncertainties', text=f"Correlation: {correlation_energy}", save_path=plot_path + uncertainty_type + "_uncertainty_energy_loss.pdf", show_plot=False)
+                self._scatter_plot(np.mean(forces_losses.reshape(energy_losses.shape[0],-1,3),axis=(1,2)), uncertainties, plot_title, 'Force Errors', 'Uncertainties', text=f"Correlation: {correlation_forces}", save_path=plot_path + uncertainty_type + "_uncertainty_force_loss.pdf", show_plot=False)
 
         return energy_r2, forces_r2, correlation_energy, correlation_forces, energy_losses, forces_losses, uncertainties
 
@@ -321,7 +321,7 @@ class BaseUncertainty(nn.Module):
             plt.scatter(uncertainties, force_losses, label='Data')
             plt.plot(uncertainties, self.uncertainty_slope*uncertainties+self.uncertainty_bias, color='red', label='Regression Line')
             plt.xlabel('Uncertainties')
-            plt.ylabel('Force Losses')
+            plt.ylabel('Force Errors')
             plt.title('Uncertainty Calibration')
             plt.legend()
             plt.tight_layout()
@@ -352,4 +352,7 @@ class BaseUncertainty(nn.Module):
 
         
         return NotImplementedError
+    
+    def prepare_al_iteration(self):
+        pass
 

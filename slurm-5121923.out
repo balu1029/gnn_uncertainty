@@ -1,0 +1,64 @@
+/home/ws/fq0795/git/gnn_uncertainty/active_learning.py:173: DeprecationWarning: Please use atoms.calc = calc
+  self.atoms.set_calculator(self.calc)
+wandb: Currently logged in as: l-baer-99 (l-baer-99-Karlsruhe Institute of Technology). Use `wandb login --relogin` to force relogin
+wandb: wandb version 0.18.7 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.17.4
+wandb: Run data is saved locally in /home/ws/fq0795/git/gnn_uncertainty/wandb/run-20241120_163851-61kvmd5r
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run youthful-galaxy-41
+wandb: ⭐️ View project at https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/ActiveLearning
+wandb: 🚀 View run at https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/ActiveLearning/runs/61kvmd5r
+['H1', 'CH3', 'H2', 'H3', 'C', 'O', 'N', 'H', 'CA', 'HA', 'CB', 'HB1', 'HB2', 'HB3', 'C', 'O', 'N', 'H', 'C', 'H1', 'H2', 'H3']
+Uncertainty Slope: 0.6569403409957886, Uncertainty Bias: 0.02670028805732727
+
+Training and Validation Results of Epoch Initital validation:
+================================
+Training Loss Energy: 0.0, Training Loss Force: 0.0, time: 0
+Validation Loss Energy: 12.436345797365536, Validation Loss Force: 10.722518090677331, time: 13.887341499328613
+Test Loss Energy: 0.0, Test Loss Force: 0.0, time: 0
+
+wandb: - 0.039 MB of 0.039 MB uploadedwandb: \ 0.039 MB of 0.039 MB uploadedwandb: | 0.039 MB of 0.039 MB uploadedwandb: / 0.044 MB of 0.046 MB uploaded (0.003 MB deduped)wandb: - 0.044 MB of 0.046 MB uploaded (0.003 MB deduped)wandb: \ 0.056 MB of 0.056 MB uploaded (0.003 MB deduped)wandb:                                                                                
+wandb: W&B sync reduced upload amount by 5.4%             
+wandb: 
+wandb: Run history:
+wandb:      dataset_size ▁
+wandb:  test_loss_energy ▁
+wandb:   test_loss_force ▁
+wandb:   test_loss_total ▁
+wandb: train_loss_energy ▁
+wandb:  train_loss_force ▁
+wandb:  train_loss_total ▁
+wandb: valid_loss_energy ▁
+wandb:  valid_loss_force ▁
+wandb:  valid_loss_total ▁
+wandb: 
+wandb: Run summary:
+wandb:      dataset_size 800
+wandb:  test_loss_energy 0.0
+wandb:   test_loss_force 0.0
+wandb:   test_loss_total 0.0
+wandb: train_loss_energy 0.0
+wandb:  train_loss_force 0.0
+wandb:  train_loss_total 0.0
+wandb: valid_loss_energy 12.43635
+wandb:  valid_loss_force 10.72252
+wandb:  valid_loss_total 6.04437
+wandb: 
+wandb: 🚀 View run youthful-galaxy-41 at: https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/ActiveLearning/runs/61kvmd5r
+wandb: ⭐️ View project at: https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/ActiveLearning
+wandb: Synced 6 W&B file(s), 0 media file(s), 2 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20241120_163851-61kvmd5r/logs
+wandb: WARNING The new W&B backend becomes opt-out in version 0.18.0; try it out with `wandb.require("core")`! See https://wandb.me/wandb-core for more information.
+Traceback (most recent call last):
+  File "/home/ws/fq0795/git/gnn_uncertainty/active_learning.py", line 394, in <module>
+    al.improve_model(2, 10,run_idx=37, use_wandb=True, model_path=model_path)
+  File "/home/ws/fq0795/git/gnn_uncertainty/active_learning.py", line 293, in improve_model
+    self.sample_rand_pos(train_out_path)
+  File "/home/ws/fq0795/git/gnn_uncertainty/active_learning.py", line 190, in sample_rand_pos
+    coordinates = self._read_coordinates(data_path, last_n=3)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ws/fq0795/git/gnn_uncertainty/active_learning.py", line 204, in _read_coordinates
+    with open(os.path.join(foldername, filename), 'r') as file:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'al/run37/data/train/dataset.xyz'

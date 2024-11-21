@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/home/ws/fq0795/git/gnn_uncertainty/evaluate_models.py", line 4, in <module>
+    from uncertainty.evidential import EvidentialRegression
+  File "/home/ws/fq0795/git/gnn_uncertainty/uncertainty/evidential.py", line 102
+    self.coeff = coeff
+IndentationError: unexpected indent

@@ -28,8 +28,6 @@ class SWAG(BaseUncertainty):
         self.register_buffer("second_moment", torch.zeros_like(new_weights))
         #self.register_buffer("cov_matrix", torch.zeros(size=(new_weights.shape[0], new_weights.shape[0])))
 
-        
-
         self.low_rank = low_rank
 
         self.sample_size = sample_size
@@ -43,8 +41,13 @@ class SWAG(BaseUncertainty):
         self.valid_losses_force = []
         self.valid_losses_total = []
         self.valid_time = 0
+
+        self.test_losses_energy = []
+        self.test_losses_force = []
+        self.test_losses_total = []
+        self.test_time = 0
     
-    def fit(self, epochs, swag_start_epoch, swag_freq, train_loader, valid_loader, device, dtype, model_path="gnn/models/swag.pt", use_wandb=False, force_weight=1.0, energy_weight=1.0, log_interval=100, patience=200, factor=0.1, lr=1e-3, min_lr=1e-6, additional_logs=None, best_on_train=False): 
+    def fit(self, epochs, train_loader, valid_loader, device, dtype, swag_start_epoch=None, swag_freq=1, model_path="gnn/models/swag.pt", use_wandb=False, force_weight=1.0, energy_weight=1.0, log_interval=100, patience=200, factor=0.1, lr=1e-3, min_lr=1e-6, additional_logs=None, best_on_train=False, test_loader=None): 
 
         optimizer = torch.optim.AdamW(self.parameters(), lr=1e-3, weight_decay=1e-16)   
         criterion = nn.L1Loss()
@@ -54,11 +57,16 @@ class SWAG(BaseUncertainty):
 
         best_valid_loss = np.inf
 
+        if swag_start_epoch is None:
+            swag_start_epoch = int(epochs/4*3)
+
         for epoch in range(epochs):
             #if epoch > swag_start_epoch:
             #    optimizer = torch.optim.SGD(self.parameters(), lr=lr)
             self.train_epoch(train_loader=train_loader, optimizer=optimizer, criterion=criterion, epoch=epoch, device=device, dtype=dtype, force_weight=force_weight, energy_weight=energy_weight, log_interval=log_interval)
             self.valid_epoch(valid_loader=valid_loader, criterion=criterion, device=device, dtype=dtype, force_weight=force_weight, energy_weight=energy_weight)
+            if test_loader is not None:
+                self.valid_epoch(valid_loader=test_loader, criterion=criterion, device=device, dtype=dtype, force_weight=force_weight, energy_weight=energy_weight, test=True)
             self.epoch_summary(epoch, use_wandb=use_wandb, lr=optimizer.param_groups[0]['lr'], additional_logs=additional_logs)
 
             if np.array(self.valid_losses_total).mean() < best_valid_loss:
@@ -112,7 +120,7 @@ class SWAG(BaseUncertainty):
         self.train_time = time.time() - start
 
 
-    def valid_epoch(self, valid_loader, criterion, device, dtype, force_weight=1.0, energy_weight=1.0):
+    def valid_epoch(self, valid_loader, criterion, device, dtype, force_weight=1.0, energy_weight=1.0, test=False):
         start = time.time()
         self.eval()
         for i,data in enumerate(valid_loader):
@@ -125,11 +133,18 @@ class SWAG(BaseUncertainty):
             loss_force = criterion(force, label_forces)
             total_loss = force_weight*loss_force + energy_weight*loss_energy
 
-            self.valid_losses_energy.append(loss_energy.item()*valid_loader.dataset.std_energy)
-            self.valid_losses_force.append(loss_force.item()*valid_loader.dataset.std_energy)
-            self.valid_losses_total.append(total_loss.item())
-
-        self.valid_time = time.time() - start
+            if not test:
+                self.valid_losses_energy.append(loss_energy.item()*valid_loader.dataset.std_energy)
+                self.valid_losses_force.append(loss_force.item()*valid_loader.dataset.std_energy)
+                self.valid_losses_total.append(total_loss.item())
+            else:
+                self.test_losses_energy.append(loss_energy.item()*valid_loader.dataset.std_energy)
+                self.test_losses_force.append(loss_force.item()*valid_loader.dataset.std_energy)
+                self.test_losses_total.append(total_loss.item())
+        if not test:
+            self.valid_time = time.time() - start
+        else:
+            self.test_time = time.time() - start
 
 
     def predict(self, x, use_force_uncertainty=True, *args, **kwargs):
@@ -151,7 +166,7 @@ class SWAG(BaseUncertainty):
             uncertainty = torch.std(uncertainty_forces,dim=0)
             uncertainty = torch.mean(uncertainty, dim=(1,2))
         else:
-            uncertainty = torch.mean(energies, dim=0)
+            uncertainty = torch.std(energies, dim=0)
         
         self._load_mean_swag_weights()
         energy, force = self.forward(x, *args, **kwargs)
@@ -161,7 +176,7 @@ class SWAG(BaseUncertainty):
         
     def forward(self, x, *args, **kwargs):
         output = self.model.forward(x=x, *args, **kwargs)
-        energy = output.squeeze()
+        energy = output
         grad_output = torch.ones_like(energy)
         force = -torch.autograd.grad(outputs=energy, inputs=x, grad_outputs=grad_output, create_graph=True)[0]
         return energy, force
@@ -221,6 +236,11 @@ class SWAG(BaseUncertainty):
         self.valid_losses_force = []
         self.valid_losses_total = []
         self.valid_time = 0
+        
+        self.test_losses_energy = []
+        self.test_losses_force = []
+        self.test_losses_total = []
+        self.test_time = 0
 
     
     def epoch_summary(self, epoch, additional_logs=None, use_wandb=False, lr=None):
@@ -230,7 +250,10 @@ class SWAG(BaseUncertainty):
             'train_losses_total',
             'valid_losses_energy',
             'valid_losses_force',
-            'valid_losses_total'
+            'valid_losses_total',
+            'test_losses_energy',
+            'test_losses_force',
+            'test_losses_total'
         ]
 
         for attr in attributes:
@@ -243,16 +266,23 @@ class SWAG(BaseUncertainty):
         print(f"Training Loss Energy: {np.array(self.train_losses_energy).mean()}, Training Loss Force: {np.array(self.train_losses_force).mean()}, time: {self.train_time}", flush=True)
         if len(self.valid_losses_energy) > 0:
             print(f"Validation Loss Energy: {np.array(self.valid_losses_energy).mean()}, Validation Loss Force: {np.array(self.valid_losses_force).mean()}, time: {self.valid_time}", flush=True)
+        if len(self.test_losses_energy) > 0:
+            print(f"Test Loss Energy: {np.array(self.test_losses_energy).mean()}, Test Loss Force: {np.array(self.test_losses_force).mean()}, time: {self.test_time}", flush=True)
 
         print("", flush=True)
 
-        logs = {"train_loss_energy": np.array(self.train_losses_energy).mean(),
-                "train_loss_force": np.array(self.train_losses_force).mean(),
-                "train_loss_total": np.array(self.train_losses_total).mean(),
-                "valid_loss_energy": np.array(self.valid_losses_energy).mean(),
-                "valid_loss_force": np.array(self.valid_losses_force).mean(),
-                "valid_loss_total": np.array(self.valid_losses_total).mean(),
-                "lr" : lr}
+        logs = {
+            "train_error_energy": np.array(self.train_losses_energy).mean(),
+            "train_error_force": np.array(self.train_losses_force).mean(),
+            "train_error_total": np.array(self.train_losses_total).mean(),
+            "valid_error_energy": np.array(self.valid_losses_energy).mean(),
+            "valid_error_force": np.array(self.valid_losses_force).mean(),
+            "valid_error_total": np.array(self.valid_losses_total).mean(),
+            "test_error_energy": np.array(self.test_losses_energy).mean(),
+            "test_error_force": np.array(self.test_losses_force).mean(),
+            "test_error_total": np.array(self.test_losses_total).mean(),
+            "lr" : lr 
+            }
         
         if additional_logs is not None:
             logs.update(additional_logs)
@@ -287,6 +317,9 @@ class SWAG(BaseUncertainty):
                 "energy_weight": energy_weight,
                 "swag_sample_size": self.sample_size,
                 })
+        
+    def prepare_al_iteration(self):
+        self.num_samples = 0
                 
 
 

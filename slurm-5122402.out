@@ -1,0 +1,28 @@
+[I 2024-11-21 09:01:31.949 ServerApp] jupyter_lsp | extension was successfully linked.
+[I 2024-11-21 09:01:31.957 ServerApp] jupyter_server_terminals | extension was successfully linked.
+[I 2024-11-21 09:01:31.963 ServerApp] jupyterlab | extension was successfully linked.
+[I 2024-11-21 09:01:31.969 ServerApp] notebook | extension was successfully linked.
+[I 2024-11-21 09:01:31.977 ServerApp] Writing Jupyter server cookie secret to /home/ws/fq0795/.local/share/jupyter/runtime/jupyter_cookie_secret
+[I 2024-11-21 09:01:32.662 ServerApp] notebook_shim | extension was successfully linked.
+[I 2024-11-21 09:01:32.740 ServerApp] notebook_shim | extension was successfully loaded.
+[I 2024-11-21 09:01:32.743 ServerApp] jupyter_lsp | extension was successfully loaded.
+[I 2024-11-21 09:01:32.745 ServerApp] jupyter_server_terminals | extension was successfully loaded.
+[I 2024-11-21 09:01:32.807 LabApp] JupyterLab extension loaded from /home/ws/fq0795/miniconda3/envs/torch/lib/python3.12/site-packages/jupyterlab
+[I 2024-11-21 09:01:32.807 LabApp] JupyterLab application directory is /home/ws/fq0795/miniconda3/envs/torch/share/jupyter/lab
+[I 2024-11-21 09:01:32.808 LabApp] Extension Manager is 'pypi'.
+[I 2024-11-21 09:01:32.845 ServerApp] jupyterlab | extension was successfully loaded.
+[I 2024-11-21 09:01:32.851 ServerApp] notebook | extension was successfully loaded.
+[I 2024-11-21 09:01:32.851 ServerApp] Serving notebooks from local directory: /home/ws/fq0795/git/gnn_uncertainty
+[I 2024-11-21 09:01:32.851 ServerApp] Jupyter Server 2.14.2 is running at:
+[I 2024-11-21 09:01:32.851 ServerApp] http://aimat01.int-nano.int.kit.edu:8888/tree?token=b03026c1e09a336b3ec5072510e511bab4391bdaaab12c42
+[I 2024-11-21 09:01:32.851 ServerApp]     http://127.0.0.1:8888/tree?token=b03026c1e09a336b3ec5072510e511bab4391bdaaab12c42
+[I 2024-11-21 09:01:32.851 ServerApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).
+[C 2024-11-21 09:01:32.866 ServerApp] 
+    
+    To access the server, open this file in a browser:
+        file:///home/ws/fq0795/.local/share/jupyter/runtime/jpserver-121318-open.html
+    Or copy and paste one of these URLs:
+        http://aimat01.int-nano.int.kit.edu:8888/tree?token=b03026c1e09a336b3ec5072510e511bab4391bdaaab12c42
+        http://127.0.0.1:8888/tree?token=b03026c1e09a336b3ec5072510e511bab4391bdaaab12c42
+[I 2024-11-21 09:01:32.907 ServerApp] Skipped non-installed server(s): bash-language-server, dockerfile-language-server-nodejs, javascript-typescript-langserver, jedi-language-server, julia-language-server, pyright, python-language-server, python-lsp-server, r-languageserver, sql-language-server, texlab, typescript-language-server, unified-language-server, vscode-css-languageserver-bin, vscode-html-languageserver-bin, vscode-json-languageserver-bin, yaml-language-server
+slurmstepd: error: *** JOB 5122402 ON aimat01 CANCELLED AT 2024-11-21T09:04:32 ***
