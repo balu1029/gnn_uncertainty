@@ -1,0 +1,45 @@
+wandb: Currently logged in as: l-baer-99 (l-baer-99-Karlsruhe Institute of Technology). Use `wandb login --relogin` to force relogin
+wandb: wandb version 0.18.7 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.17.4
+wandb: Run data is saved locally in /home/ws/fq0795/git/gnn_uncertainty/wandb/run-20241123_151430-4drmfh85
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run al_54
+wandb: ⭐️ View project at https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/ActiveLearning
+wandb: 🚀 View run at https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/ActiveLearning/runs/4drmfh85
+['H1', 'CH3', 'H2', 'H3', 'C', 'O', 'N', 'H', 'CA', 'HA', 'CB', 'HB1', 'HB2', 'HB3', 'C', 'O', 'N', 'H', 'C', 'H1', 'H2', 'H3']
+53
+Uncertainty Slope: 0.6569396257400513, Uncertainty Bias: 0.026700347661972046
+/home/ws/fq0795/miniconda3/envs/torch/lib/python3.12/site-packages/numpy/lib/function_base.py:2742: RuntimeWarning: invalid value encountered in subtract
+  X -= avg[:, None]
+No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+/home/ws/fq0795/miniconda3/envs/torch/lib/python3.12/site-packages/numpy/lib/function_base.py:4655: RuntimeWarning: invalid value encountered in subtract
+  diff_b_a = subtract(b, a)
+0.0004272461 0.0067310333
+0.029495938 0.1928168
+Traceback (most recent call last):
+  File "/home/ws/fq0795/git/gnn_uncertainty/active_learning.py", line 448, in <module>
+    al.improve_model(200, 100,run_idx=max_idx+1, use_wandb=True, model_path=model_path, epochs_per_iter=20, calibrate=True, force_uncertainty=True)
+  File "/home/ws/fq0795/git/gnn_uncertainty/active_learning.py", line 292, in improve_model
+    self.model.evaluate_all(validloader, device=self.device, dtype=torch.float32, plot_name=f"al/run{run_idx}/plots/plot_init", csv_path=f"al/run{run_idx}/eval/eval.csv", test_loader_out=testloader, best_model_available=False, use_energy_uncertainty=True, use_force_uncertainty=force_uncertainty)
+  File "/home/ws/fq0795/git/gnn_uncertainty/uncertainty/base_uncertainty.py", line 132, in evaluate_all
+    self._mulit_scatter_plot(uncertainties_in, energy_losses_in, uncertainties_out, energy_losses_out, self.__class__.__name__, 'Energy Uncertainties', 'Energy Errors', text=f"Correlation in: {energy_correlation_in_energy}\nCorrelation Out: {energy_correlation_out_energy}", save_path=plot_name + "_energy_uncertainty_energy_loss.svg", show_plot=show_plot)
+  File "/home/ws/fq0795/git/gnn_uncertainty/uncertainty/base_uncertainty.py", line 268, in _mulit_scatter_plot
+    plt.xlim(min_val, max_val)
+  File "/home/ws/fq0795/miniconda3/envs/torch/lib/python3.12/site-packages/matplotlib/pyplot.py", line 1961, in xlim
+    ret = ax.set_xlim(*args, **kwargs)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ws/fq0795/miniconda3/envs/torch/lib/python3.12/site-packages/matplotlib/axes/_base.py", line 3664, in set_xlim
+    return self.xaxis._set_lim(left, right, emit=emit, auto=auto)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ws/fq0795/miniconda3/envs/torch/lib/python3.12/site-packages/matplotlib/axis.py", line 1211, in _set_lim
+    v1 = self.axes._validate_converted_limits(v1, self.convert_units)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ws/fq0795/miniconda3/envs/torch/lib/python3.12/site-packages/matplotlib/axes/_base.py", line 3585, in _validate_converted_limits
+    raise ValueError("Axis limits cannot be NaN or Inf")
+ValueError: Axis limits cannot be NaN or Inf
+wandb: - 0.043 MB of 0.057 MB uploaded (0.003 MB deduped)wandb: \ 0.057 MB of 0.057 MB uploaded (0.003 MB deduped)wandb: 🚀 View run al_54 at: https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/ActiveLearning/runs/4drmfh85
+wandb: ⭐️ View project at: https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/ActiveLearning
+wandb: Synced 6 W&B file(s), 0 media file(s), 2 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20241123_151430-4drmfh85/logs
+wandb: WARNING The new W&B backend becomes opt-out in version 0.18.0; try it out with `wandb.require("core")`! See https://wandb.me/wandb-core for more information.

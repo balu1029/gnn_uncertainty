@@ -229,13 +229,13 @@ class MVE(BaseUncertainty):
         logs = {
             "train_error_energy": np.array(self.train_losses_energy).mean(),
             "train_error_force": np.array(self.train_losses_force).mean(),
-            "train_error_total": np.array(self.train_losses_total).mean(),
+            "train_loss": np.array(self.train_losses_total).mean(),
             "valid_error_energy": np.array(self.valid_losses_energy).mean(),
             "valid_error_force": np.array(self.valid_losses_force).mean(),
-            "valid_error_total": np.array(self.valid_losses_total).mean(),
+            "valid_loss": np.array(self.valid_losses_total).mean(),
             "test_error_energy": np.array(self.test_losses_energy).mean(),
             "test_error_force": np.array(self.test_losses_force).mean(),
-            "test_error_total": np.array(self.test_losses_total).mean(),
+            "test_loss": np.array(self.test_losses_total).mean(),
             "lr" : lr 
             }
         

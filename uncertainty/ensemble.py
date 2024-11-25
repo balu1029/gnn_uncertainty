@@ -11,6 +11,8 @@ import time
 
 from sklearn.metrics import r2_score
 
+from concurrent.futures import ThreadPoolExecutor, as_completed
+
 
 
 class ModelEnsemble(BaseUncertainty):
@@ -150,8 +152,15 @@ class ModelEnsemble(BaseUncertainty):
         # Collect the outputs from all models
         if leave_out is not None:
             energies = torch.stack([model(x=x, *args,**kwargs) for i, model in enumerate(self.models) if i != leave_out])
+            '''with ThreadPoolExecutor as executor:
+                futures = [executor.submit(model, x=x, *args, **kwargs) for i, model in enumerate(self.models) if i != leave_out]
+                results = [f.result() for f in as_completed(futures)]'''
         else:
             energies = torch.stack([model(x=x,*args,**kwargs) for model in self.models])
+            '''with ThreadPoolExecutor as executor:
+                futures = [executor.submit(model, x=x, *args, **kwargs) for model in self.models]
+                results = [f.result() for f in as_completed(futures)]'''
+        #energies = torch.stack(results)
         mean_energy = torch.mean(energies, dim=0)
         grad_outputs = torch.ones_like(mean_energy)
         forces = torch.stack([-torch.autograd.grad(outputs=e, inputs=x, grad_outputs=grad_outputs, create_graph=True)[0] for e in energies])
@@ -205,13 +214,13 @@ class ModelEnsemble(BaseUncertainty):
         logs = {
             "train_error_energy": np.array(self.train_losses_energy).mean(),
             "train_error_force": np.array(self.train_losses_force).mean(),
-            "train_error_total": np.array(self.train_losses_total).mean(),
+            "train_loss": np.array(self.train_losses_total).mean(),
             "valid_error_energy": np.array(self.valid_losses_energy).mean(),
             "valid_error_force": np.array(self.valid_losses_force).mean(),
-            "valid_error_total": np.array(self.valid_losses_total).mean(),
+            "valid_loss": np.array(self.valid_losses_total).mean(),
             "test_error_energy": np.array(self.test_losses_energy).mean(),
             "test_error_force": np.array(self.test_losses_force).mean(),
-            "test_error_total": np.array(self.test_losses_total).mean(),
+            "test_loss": np.array(self.test_losses_total).mean(),
             "lr" : lr 
             }
         if additional_logs is not None:

@@ -4,6 +4,7 @@ import numpy as np
 import os
 import shutil
 import wandb
+import csv
 
 from ase.calculators.calculator import Calculator, all_properties
 from ase.units import eV, fs, Angstrom, nm, kJ, mol
@@ -23,7 +24,7 @@ from gnn.egnn import EGNN
 from datasets.helper import utils as qm9_utils
 from datasets.helper.energy_calculation import OpenMMEnergyCalculation
 from trainer import ModelTrainer
-import csv
+from datasets.helper.cv_visualizer import get_al_animation
 
 
 
@@ -137,7 +138,7 @@ class ALCalculator(Calculator):
 
 class ActiveLearning:
     
-    def __init__(self, model, max_uncertainty=10, num_ensembles:int=3, in_nf:int=12, hidden_nf:int=16, n_layers:int=2, molecule_path:str="al/base_data/start_pos.xyz", norm_file="al/base_data/norms_dataset.csv") -> None:
+    def __init__(self, model, max_uncertainty=10, num_ensembles:int=3, in_nf:int=12, hidden_nf:int=16, n_layers:int=2, molecule_path:str="al/base_data/start_pos.xyz", norm_file="al/base_data/norms_dataset.csv", lr=1e-4) -> None:
         """
         Initializes an instance of the ActiveLearning class.
 
@@ -155,12 +156,18 @@ class ActiveLearning:
                                2: "N",
                                3: "O"}
         
+        self.cov_radii = {0: 0.32, 1: 0.75, 2: 0.71, 3: 0.63}
+
+        self.bonds = [(0, 1), (1, 2), (1, 3), (1, 4), (4, 5), (4, 6), (6, 7), (6, 8), (8, 9), (8, 10), (8, 14), (10, 11), (10, 12), (10, 13), (14, 15), (14, 16), (16, 17), (16, 18), (18, 19), (18, 20), (18, 21)]
+        
         self.type_to_number = {v: k for k, v in self.number_to_type.items()}
 
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.dtype = torch.float32
         self.temperature = 300
         self.timestep = 0.5 * fs
+
+        self.lr  = lr
 
         # Instantiate the model
         self.num_ensembles = num_ensembles
@@ -172,7 +179,7 @@ class ActiveLearning:
         if norm_file is not None:
             self.calc.change_norm(norm_file)
         self.atoms = read(molecule_path)
-        self.atoms.set_calculator(self.calc)
+        self.atoms.calc = self.calc
 
         MaxwellBoltzmannDistribution(self.atoms, temperature_K=self.temperature)
 
@@ -242,7 +249,7 @@ class ActiveLearning:
             view(traj, block=True)
 
 
-    def improve_model(self, num_iter, steps_per_iter, use_wandb=False, run_idx=1, model_path="gnn/models/ala_converged_1000000.pt", max_iterations=4000):
+    def improve_model(self, num_iter, steps_per_iter, use_wandb=False, run_idx=1, model_path="gnn/models/ala_converged_1000000.pt", max_iterations=4000, epochs_per_iter=20, calibrate=False, force_uncertainty=False):
         model_out_path = f"al/run{run_idx}/models/"
         data_out_path = f"al/run{run_idx}/data/"
         train_out_path = f"al/run{run_idx}/data/train/"
@@ -254,14 +261,14 @@ class ActiveLearning:
             os.makedirs(train_out_path)
             os.makedirs(valid_out_path)
             os.makedirs(f"al/run{run_idx}/plots")
+            os.makedirs(f"al/run{run_idx}/eval")
             # Copy the file to the directory
             shutil.copy2("al/base_data/train/train.xyz", train_out_path)
             shutil.copy2("al/base_data/valid/valid.xyz", valid_out_path)
 
         batch_size = 32
         val_batch_size = 256
-        lr=0.001
-        epochs_per_iter = 20
+        lr = self.lr
 
         log_interval = 100
         force_weight = 5
@@ -270,7 +277,7 @@ class ActiveLearning:
         optimizer = torch.optim.AdamW(self.calc.model.parameters(), lr=lr)
         criterion = torch.nn.L1Loss()
         if use_wandb:
-            self.init_wandb(model=self.model, criterion=criterion, optimizer=optimizer, model_path=model_path, lr=lr, batch_size=batch_size, epochs_per_iter=epochs_per_iter)
+            self.init_wandb(model=self.model, criterion=criterion, optimizer=optimizer, model_path=model_path, lr=lr, batch_size=batch_size, epochs_per_iter=epochs_per_iter, name=f"al_{run_idx}")
 
 
         trainset = MD17Dataset(f"{train_out_path}", subtract_self_energies=False, in_unit="kj/mol", scale=True, determine_norm=True, store_norm_path=f"{data_out_path}norms_dataset.csv")
@@ -281,9 +288,10 @@ class ActiveLearning:
         testloader = torch.utils.data.DataLoader(testset, batch_size=val_batch_size, shuffle=True)
 
 
-        self.model.calibrate_uncertainty(validloader, device=self.device, dtype=self.dtype, path=f"al/run{run_idx}/plots/calibration.pdf")
+        self.model.calibrate_uncertainty(validloader, device=self.device, dtype=self.dtype, path=f"al/run{run_idx}/plots/calibration_init.svg")
+        self.model.evaluate_all(validloader, device=self.device, dtype=torch.float32, plot_name=f"al/run{run_idx}/plots/plot_init", csv_path=f"al/run{run_idx}/eval/eval.csv", test_loader_out=testloader, best_model_available=False, use_energy_uncertainty=True, use_force_uncertainty=force_uncertainty)
         self.model.valid_epoch(testloader, criterion, self.device, self.dtype, force_weight=force_weight, energy_weight=energy_weight, test=True)
-        self.model.epoch_summary(epoch=f"Initital validation", use_wandb=use_wandb, additional_logs={"dataset_size": len(trainset.coordinates)})                    
+        self.model.epoch_summary(epoch=f"Initital validation", use_wandb=use_wandb, additional_logs={"dataset_size": len(trainset.coordinates), "max_uncertainty": self.calc.max_uncertainty})                    
         self.model.drop_metrics()
 
         if use_wandb:
@@ -294,11 +302,14 @@ class ActiveLearning:
             for k in range(steps_per_iter):
                 self.sample_rand_pos(train_out_path)
                 for j in range(max_iterations):
-                    self.dyn.run(1)
                     if len(self.calc.get_uncertainty_samples()) > num_uncertainty_samples:
                         num_uncertainty_samples = len(self.calc.get_uncertainty_samples())
-                        print(f"Found uncertainty sample after {j} steps.", flush=True)
+                        print(f"Found uncertainty sample {k} after {j} steps.", flush=True)
                         break
+                    if not self.check_atomic_distances():
+                        print(f"Atomic distances for sample {k} are too large or too small. Resetting this trajectory.")
+                        break
+                    self.dyn.run(1)
                 
 
             samples = self.calc.get_uncertainty_samples()
@@ -318,11 +329,17 @@ class ActiveLearning:
                 validloader = torch.utils.data.DataLoader(validset, batch_size=val_batch_size, shuffle=True)
                 self.model.set_wandb_name(f"al_{run_idx}_{i}")
                 self.model.prepare_al_iteration()
-                self.model.fit(epochs=epochs_per_iter, train_loader=trainloader, valid_loader=validloader, test_loader=testloader, device=self.device, dtype=self.dtype, model_path=f"{model_out_path}model_{i}.pt", use_wandb=use_wandb, force_weight=force_weight, energy_weight=energy_weight, lr=lr, additional_logs={"dataset_size": len(trainset.coordinates)})
+                self.model.fit(epochs=epochs_per_iter, train_loader=trainloader, valid_loader=validloader, test_loader=testloader, device=self.device, dtype=self.dtype, model_path=f"{model_out_path}model_{i}.pt", use_wandb=use_wandb, force_weight=force_weight, energy_weight=energy_weight, lr=lr, additional_logs={"dataset_size": len(trainset.coordinates), "max_uncertainty": self.calc.max_uncertainty})
                 self.model.load_best_model()
-                self.model.calibrate_uncertainty(validloader, device=self.device, dtype=self.dtype, path=f"al/run{run_idx}/plots/calibration_{i}.pdf")
+                if calibrate:
+                    self.model.calibrate_uncertainty(validloader, device=self.device, dtype=self.dtype, path=f"al/run{run_idx}/plots/calibration_{i}.svg")
+                    self.model.evaluate_all(validloader, device=self.device, dtype=torch.float32, plot_name=f"al/run{run_idx}/plots/plot_{i}", csv_path=f"al/run{run_idx}/eval/eval.csv", test_loader_out=testloader, best_model_available=False, use_energy_uncertainty=True, use_force_uncertainty=force_uncertainty)
                 
                 torch.save(self.model.state_dict(), f"{model_out_path}model_{i}.pt")
+                get_al_animation(f"al/run{run_idx}/data/train/")
+            else:
+                print(f"No uncertainty samples found in iteration {i}.")
+
                 
         
                 
@@ -354,10 +371,11 @@ class ActiveLearning:
                     for j in range(len(valid_samples[i])):
                         file.write(f"{self.number_to_type[self.atom_numbers[j]]} {valid_samples[i][j][0]} {valid_samples[i][j][1]} {valid_samples[i][j][2]} {valid_forces[i][j][0]} {valid_forces[i][j][1]} {valid_forces[i][j][2]}\n")
 
-    def init_wandb(self, model, criterion, optimizer, model_path, lr, batch_size, epochs_per_iter):
+    def init_wandb(self, model, criterion, optimizer, model_path, lr, batch_size, epochs_per_iter, name="al"):
         wandb.init(
                 # set the wandb project where this run will be logged
                 project="ActiveLearning",
+                name=name,
 
                 # track hyperparameters and run metadata
                 config={
@@ -369,7 +387,36 @@ class ActiveLearning:
                 "model_checkpoint": model_path,
                 "model" : type(model).__name__,
                 "epochs_per_iter": epochs_per_iter,
+                "max_uncertainty": self.calc.max_uncertainty,
                 })
+
+    def check_atomic_distances(self):
+        coords = self.atoms.get_positions()
+        atom_numbers = self.calc.atom_numbers
+        distances = np.linalg.norm(coords[:, np.newaxis] - coords, axis=2)
+        for i,j in self.bonds:
+            dist = distances[i, j]
+            cov_a = self.cov_radii[atom_numbers[i]]
+            cov_b = self.cov_radii[atom_numbers[j]]
+
+            max_dist = (cov_a + cov_b) * 1.5
+            min_dist = (cov_a + cov_b) * 0.5
+
+            if dist > max_dist:
+                print(f"Distance between {i} and {j} is {dist} which is too large.")
+                return False
+        for i in range(len(coords)):
+            for j in range(i + 1, len(coords)):
+                dist = distances[i, j]
+                cov_a = self.cov_radii[atom_numbers[i]]
+                cov_b = self.cov_radii[atom_numbers[j]]
+                min_dist = (cov_a + cov_b) * 0.5
+
+            if dist < min_dist:
+                print(f"Distance between {i} and {j} is {dist} which is too small.")
+                return False
+        return True
+
         
 
 
@@ -392,8 +439,10 @@ if __name__ == "__main__":
     #model = SWAG(EGNN, in_node_nf=in_nf, in_edge_nf=0, hidden_nf=hidden_nf, n_layers=n_layers, sample_size=5)
     #model = MVE(EGNN, in_node_nf=in_nf, in_edge_nf=0, hidden_nf=hidden_nf, n_layers=n_layers, multi_dec=True)
     model.load_state_dict(torch.load(model_path, map_location=torch.device("cuda" if torch.cuda.is_available() else "cpu")))
-    al = ActiveLearning(max_uncertainty=5 ,num_ensembles=num_ensembles, in_nf=in_nf, hidden_nf=hidden_nf, n_layers=n_layers, model=model)
+    al = ActiveLearning(max_uncertainty=8 ,num_ensembles=num_ensembles, in_nf=in_nf, hidden_nf=hidden_nf, n_layers=n_layers, model=model, lr=1e-4)
     #al.run_simulation(1000, show_traj=True)
     #print(len(al.calc.get_uncertainty_samples()))
+    max_idx = np.array([int(x.split("run")[1]) for x in os.listdir("al/") if x.startswith("run") and not x.endswith("_")]).max()
+    print(max_idx)
 
-    al.improve_model(200, 100,run_idx=43, use_wandb=True, model_path=model_path)
+    al.improve_model(200, 100,run_idx=max_idx+1, use_wandb=True, model_path=model_path, epochs_per_iter=20, calibrate=True, force_uncertainty=True)

@@ -1179,3 +1179,4 @@ wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other fil
 wandb: Find logs at: ./wandb/run-20241121_105306-5s3fgtfg/logs
 wandb: WARNING The new W&B backend becomes opt-out in version 0.18.0; try it out with `wandb.require("core")`! See https://wandb.me/wandb-core for more information.
 Uncertainty Slope: 0.27196669578552246, Uncertainty Bias: -34.151424407958984
+slurmstepd: error: *** JOB 5122420 ON aimat01 CANCELLED AT 2024-11-21T11:17:32 ***

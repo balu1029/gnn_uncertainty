@@ -1,0 +1,196 @@
+wandb: Currently logged in as: l-baer-99 (l-baer-99-Karlsruhe Institute of Technology). Use `wandb login --relogin` to force relogin
+wandb: wandb version 0.18.7 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.17.4
+wandb: Run data is saved locally in /home/ws/fq0795/git/gnn_uncertainty/wandb/run-20241121_171502-iz4wf06d
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run gallant-hill-62
+wandb: ⭐️ View project at https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/ActiveLearning
+wandb: 🚀 View run at https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/ActiveLearning/runs/iz4wf06d
+['H1', 'CH3', 'H2', 'H3', 'C', 'O', 'N', 'H', 'CA', 'HA', 'CB', 'HB1', 'HB2', 'HB3', 'C', 'O', 'N', 'H', 'C', 'H1', 'H2', 'H3']
+Uncertainty Slope: 0.6569397449493408, Uncertainty Bias: 0.026700392365455627
+No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+2.7894974e-05 0.00045204163
+0.02949372 0.1928149
+
+Training and Validation Results of Epoch Initital validation:
+================================
+Training Loss Energy: 0.0, Training Loss Force: 0.0, time: 0
+Validation Loss Energy: 0.0, Validation Loss Force: 0.0, time: 0
+Test Loss Energy: 12.440402502778362, Test Loss Force: 10.72408134932568, time: 14.011981725692749
+
+wandb: - 0.039 MB of 0.039 MB uploadedwandb: \ 0.039 MB of 0.039 MB uploadedwandb: | 0.039 MB of 0.039 MB uploadedwandb: / 0.044 MB of 0.056 MB uploaded (0.003 MB deduped)wandb: - 0.044 MB of 0.056 MB uploaded (0.003 MB deduped)wandb: \ 0.056 MB of 0.056 MB uploaded (0.003 MB deduped)wandb:                                                                                
+wandb: W&B sync reduced upload amount by 5.3%             
+wandb: 
+wandb: Run history:
+wandb:       dataset_size ▁
+wandb:  test_error_energy ▁
+wandb:   test_error_force ▁
+wandb:          test_loss ▁
+wandb: train_error_energy ▁
+wandb:  train_error_force ▁
+wandb:         train_loss ▁
+wandb: valid_error_energy ▁
+wandb:  valid_error_force ▁
+wandb:         valid_loss ▁
+wandb: 
+wandb: Run summary:
+wandb:       dataset_size 800
+wandb:  test_error_energy 12.4404
+wandb:   test_error_force 10.72408
+wandb:          test_loss 6.04557
+wandb: train_error_energy 0.0
+wandb:  train_error_force 0.0
+wandb:         train_loss 0.0
+wandb: valid_error_energy 0.0
+wandb:  valid_error_force 0.0
+wandb:         valid_loss 0.0
+wandb: 
+wandb: 🚀 View run gallant-hill-62 at: https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/ActiveLearning/runs/iz4wf06d
+wandb: ⭐️ View project at: https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/ActiveLearning
+wandb: Synced 6 W&B file(s), 0 media file(s), 2 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20241121_171502-iz4wf06d/logs
+wandb: WARNING The new W&B backend becomes opt-out in version 0.18.0; try it out with `wandb.require("core")`! See https://wandb.me/wandb-core for more information.
+Found uncertainty sample 0 after 41 steps.
+Found uncertainty sample 1 after 684 steps.
+Found uncertainty sample 2 after 143 steps.
+Found uncertainty sample 3 after 413 steps.
+Found uncertainty sample 4 after 3440 steps.
+wandb: wandb version 0.18.7 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.17.4
+wandb: Run data is saved locally in /home/ws/fq0795/git/gnn_uncertainty/wandb/run-20241121_172116-72k19hfx
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run al_47_0
+wandb: ⭐️ View project at https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-Ensemble
+wandb: 🚀 View run at https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-Ensemble/runs/72k19hfx
+Training model 0. Added 5 samples to the dataset.
+
+Training and Validation Results of Epoch 0:
+================================
+Training Loss Energy: 4.073032792245478, Training Loss Force: 2.6772565153810044, time: 1.0022504329681396
+Validation Loss Energy: 2.985157346917822, Validation Loss Force: 2.665200265758703, time: 0.06130051612854004
+Test Loss Energy: 13.778087452898289, Test Loss Force: 10.638182051397775, time: 14.978711605072021
+
+
+Training and Validation Results of Epoch 1:
+================================
+Training Loss Energy: 1.7136595278624687, Training Loss Force: 2.4105257273199947, time: 0.9000442028045654
+Validation Loss Energy: 1.2058174425784254, Validation Loss Force: 2.585250240905893, time: 0.06343889236450195
+Test Loss Energy: 11.995819667878761, Test Loss Force: 10.636820598612449, time: 14.72786808013916
+
+
+Training and Validation Results of Epoch 2:
+================================
+Training Loss Energy: 1.2192785482402266, Training Loss Force: 2.2981970136973144, time: 0.8853836059570312
+Validation Loss Energy: 1.4147914340204977, Validation Loss Force: 2.5751873768631244, time: 0.0602877140045166
+Test Loss Energy: 11.884740663135654, Test Loss Force: 10.60633643242874, time: 14.625809907913208
+
+
+Training and Validation Results of Epoch 3:
+================================
+Training Loss Energy: 1.131064194434148, Training Loss Force: 2.2927635610971557, time: 0.8866043090820312
+Validation Loss Energy: 1.0103881926139946, Validation Loss Force: 2.5644556147059885, time: 0.06196260452270508
+Test Loss Energy: 12.296526156162317, Test Loss Force: 10.524424786830677, time: 14.765273094177246
+
+
+Training and Validation Results of Epoch 4:
+================================
+Training Loss Energy: 1.1933178800970763, Training Loss Force: 2.3093089320359343, time: 0.8878262042999268
+Validation Loss Energy: 2.2722969950627863, Validation Loss Force: 2.610423210522175, time: 0.06026196479797363
+Test Loss Energy: 11.58002724473694, Test Loss Force: 10.727296878322004, time: 14.685801029205322
+
+
+Training and Validation Results of Epoch 5:
+================================
+Training Loss Energy: 1.7184810417581042, Training Loss Force: 2.2743009402983554, time: 0.9192554950714111
+Validation Loss Energy: 1.0911324783103291, Validation Loss Force: 2.573772537109899, time: 0.06207275390625
+Test Loss Energy: 12.054087636720583, Test Loss Force: 10.622422788320618, time: 14.803778648376465
+
+
+Training and Validation Results of Epoch 6:
+================================
+Training Loss Energy: 1.0573735748394255, Training Loss Force: 2.243769155066789, time: 0.9055919647216797
+Validation Loss Energy: 1.0009341060161925, Validation Loss Force: 2.5708972104285337, time: 0.06176257133483887
+Test Loss Energy: 12.124595954680617, Test Loss Force: 10.659936985504679, time: 14.653498411178589
+
+
+Training and Validation Results of Epoch 7:
+================================
+Training Loss Energy: 1.0362541364460474, Training Loss Force: 2.2625213528077697, time: 0.9014983177185059
+Validation Loss Energy: 1.3060996098150477, Validation Loss Force: 2.588876407947327, time: 0.0614933967590332
+Test Loss Energy: 12.575255358292551, Test Loss Force: 10.566388463811302, time: 14.768625974655151
+
+wandb: - 0.039 MB of 0.039 MB uploadedwandb: \ 0.039 MB of 0.039 MB uploadedwandb: | 0.039 MB of 0.039 MB uploadedwandb: / 0.039 MB of 0.039 MB uploadedwandb: - 0.059 MB of 0.059 MB uploaded (0.003 MB deduped)wandb:                                                                                
+wandb: W&B sync reduced upload amount by 5.0%             
+wandb: 
+wandb: Run history:
+wandb:       dataset_size ▁▁▁▁▁▁▁▁
+wandb:                 lr ▁▁▁▁▁▁▁▁
+wandb:  test_error_energy █▂▂▃▁▃▃▄
+wandb:   test_error_force ▅▅▄▁█▄▆▂
+wandb:          test_loss █▂▁▁▂▂▃▂
+wandb: train_error_energy █▃▁▁▁▃▁▁
+wandb:  train_error_force █▄▂▂▂▁▁▁
+wandb:         train_loss █▃▁▁▁▂▁▁
+wandb: valid_error_energy █▂▂▁▅▁▁▂
+wandb:  valid_error_force █▂▂▁▄▂▁▃
+wandb:         valid_loss █▂▂▁▃▁▂▂
+wandb: 
+wandb: Run summary:
+wandb:       dataset_size 804
+wandb:                 lr 0.0001
+wandb:  test_error_energy 12.57526
+wandb:   test_error_force 10.56639
+wandb:          test_loss 5.9684
+wandb: train_error_energy 1.03625
+wandb:  train_error_force 2.26252
+wandb:         train_loss 1.01617
+wandb: valid_error_energy 1.3061
+wandb:  valid_error_force 2.58888
+wandb:         valid_loss 1.28097
+wandb: 
+wandb: 🚀 View run al_47_0 at: https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-Ensemble/runs/72k19hfx
+wandb: ⭐️ View project at: https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-Ensemble
+wandb: Synced 6 W&B file(s), 0 media file(s), 2 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20241121_172116-72k19hfx/logs
+wandb: WARNING The new W&B backend becomes opt-out in version 0.18.0; try it out with `wandb.require("core")`! See https://wandb.me/wandb-core for more information.
+Uncertainty Slope: 0.6471081376075745, Uncertainty Bias: 0.032838791608810425
+No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+6.67572e-06 0.0038394332
+0.038902417 0.22724213
+Found uncertainty sample 0 after 19 steps.
+Found uncertainty sample 1 after 720 steps.
+Found uncertainty sample 2 after 2295 steps.
+Found uncertainty sample 3 after 416 steps.
+Found uncertainty sample 4 after 485 steps.
+wandb: wandb version 0.18.7 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.17.4
+wandb: Run data is saved locally in /home/ws/fq0795/git/gnn_uncertainty/wandb/run-20241121_172855-0xh4a61z
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run al_47_1
+wandb: ⭐️ View project at https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-Ensemble
+wandb: 🚀 View run at https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-Ensemble/runs/0xh4a61z
+Training model 1. Added 5 samples to the dataset.
+
+Training and Validation Results of Epoch 0:
+================================
+Training Loss Energy: 5.56936460554419, Training Loss Force: 2.7039714431402433, time: 0.8828225135803223
+Validation Loss Energy: 1.0376612662800948, Validation Loss Force: 2.8503098028205374, time: 0.0651693344116211
+Test Loss Energy: 11.854193622646301, Test Loss Force: 10.432724246509057, time: 14.438040018081665
+
+
+Training and Validation Results of Epoch 1:
+================================
+Training Loss Energy: 1.3622613202892304, Training Loss Force: 2.4279829797965355, time: 0.8735294342041016
+Validation Loss Energy: 1.2633537025367172, Validation Loss Force: 2.580451720811149, time: 0.062261104583740234
+Test Loss Energy: 11.735046132617882, Test Loss Force: 10.495241353538074, time: 14.656131982803345
+
+slurmstepd: error: *** JOB 5122566 ON aimat01 CANCELLED AT 2024-11-21T17:29:30 ***
