@@ -1,0 +1,1868 @@
+wandb: Currently logged in as: l-baer-99 (l-baer-99-Karlsruhe Institute of Technology). Use `wandb login --relogin` to force relogin
+wandb: wandb version 0.18.7 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.17.4
+wandb: Run data is saved locally in /home/ws/fq0795/git/gnn_uncertainty/wandb/run-20241127_143859-ohrd9ri2
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run al_57
+wandb: ⭐️ View project at https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/ActiveLearning
+wandb: 🚀 View run at https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/ActiveLearning/runs/ohrd9ri2
+['H1', 'CH3', 'H2', 'H3', 'C', 'O', 'N', 'H', 'CA', 'HA', 'CB', 'HB1', 'HB2', 'HB3', 'C', 'O', 'N', 'H', 'C', 'H1', 'H2', 'H3']
+56
+Uncertainty Slope: -0.09702660143375397, Uncertainty Bias: 0.29242900013923645
+4.5776367e-05 0.12717247
+2.9786732 3.3093483
+
+Training and Validation Results of Epoch Initital validation:
+================================
+Training Loss Energy: 0.0, Training Loss Force: 0.0, time: 0
+Validation Loss Energy: 0.0, Validation Loss Force: 0.0, time: 0
+Test Loss Energy: 15.941480406652774, Test Loss Force: 16.43347742088186, time: 7.548640727996826
+
+wandb: - 0.039 MB of 0.039 MB uploadedwandb: \ 0.039 MB of 0.047 MB uploadedwandb: | 0.039 MB of 0.047 MB uploadedwandb: / 0.050 MB of 0.050 MB uploadedwandb:                                                                                
+wandb: 
+wandb: Run history:
+wandb:       dataset_size ▁
+wandb:    max_uncertainty ▁
+wandb:  test_error_energy ▁
+wandb:   test_error_force ▁
+wandb:          test_loss ▁
+wandb: train_error_energy ▁
+wandb:  train_error_force ▁
+wandb:         train_loss ▁
+wandb: valid_error_energy ▁
+wandb:  valid_error_force ▁
+wandb:         valid_loss ▁
+wandb: 
+wandb: Run summary:
+wandb:       dataset_size 800
+wandb:    max_uncertainty 4
+wandb:  test_error_energy 15.94148
+wandb:   test_error_force 16.43348
+wandb:          test_loss 4.44694
+wandb: train_error_energy 0.0
+wandb:  train_error_force 0.0
+wandb:         train_loss 0.0
+wandb: valid_error_energy 0.0
+wandb:  valid_error_force 0.0
+wandb:         valid_loss 0.0
+wandb: 
+wandb: 🚀 View run al_57 at: https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/ActiveLearning/runs/ohrd9ri2
+wandb: ⭐️ View project at: https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/ActiveLearning
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20241127_143859-ohrd9ri2/logs
+wandb: WARNING The new W&B backend becomes opt-out in version 0.18.0; try it out with `wandb.require("core")`! See https://wandb.me/wandb-core for more information.
+Distance between 8 and 9 is 1.7492944421758976 which is too large.
+Atomic distances for sample 0 are too large or too small. Resetting this trajectory.
+Distance between 8 and 9 is 1.632549887132325 which is too large.
+Atomic distances for sample 1 are too large or too small. Resetting this trajectory.
+Distance between 6 and 7 is 1.5861320595850281 which is too large.
+Atomic distances for sample 2 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6277071847771298 which is too large.
+Atomic distances for sample 3 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.628346974568135 which is too large.
+Atomic distances for sample 4 are too large or too small. Resetting this trajectory.
+Distance between 8 and 9 is 1.6610565389880483 which is too large.
+Atomic distances for sample 5 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6321017320158369 which is too large.
+Atomic distances for sample 6 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6084190063079464 which is too large.
+Atomic distances for sample 7 are too large or too small. Resetting this trajectory.
+Distance between 8 and 9 is 1.6271269786630964 which is too large.
+Atomic distances for sample 8 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6721718506976206 which is too large.
+Atomic distances for sample 9 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6363973472949447 which is too large.
+Atomic distances for sample 10 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.606710691431115 which is too large.
+Atomic distances for sample 11 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6160676690995404 which is too large.
+Atomic distances for sample 12 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6117296269002963 which is too large.
+Atomic distances for sample 13 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.617842133412333 which is too large.
+Atomic distances for sample 14 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6186460537756102 which is too large.
+Atomic distances for sample 15 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6284943534018543 which is too large.
+Atomic distances for sample 16 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6306702661277026 which is too large.
+Atomic distances for sample 17 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6057641299337655 which is too large.
+Atomic distances for sample 18 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6243524207133662 which is too large.
+Atomic distances for sample 19 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6353289094704233 which is too large.
+Atomic distances for sample 20 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6170861708434903 which is too large.
+Atomic distances for sample 21 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6378107477449653 which is too large.
+Atomic distances for sample 22 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6055646409145525 which is too large.
+Atomic distances for sample 23 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6184751530125556 which is too large.
+Atomic distances for sample 24 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.673375346073573 which is too large.
+Atomic distances for sample 25 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6089989938024476 which is too large.
+Atomic distances for sample 26 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6081427914874953 which is too large.
+Atomic distances for sample 27 are too large or too small. Resetting this trajectory.
+Distance between 16 and 17 is 1.5655386025533304 which is too large.
+Atomic distances for sample 28 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6170483703069434 which is too large.
+Atomic distances for sample 29 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6202272131543805 which is too large.
+Atomic distances for sample 30 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.605351087011592 which is too large.
+Atomic distances for sample 31 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.633346131886092 which is too large.
+Atomic distances for sample 32 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6220567554917749 which is too large.
+Atomic distances for sample 33 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.609107286904235 which is too large.
+Atomic distances for sample 34 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6219094256104045 which is too large.
+Atomic distances for sample 35 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6302315986192837 which is too large.
+Atomic distances for sample 36 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6159887562472621 which is too large.
+Atomic distances for sample 37 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6271307586239756 which is too large.
+Atomic distances for sample 38 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6618849260999393 which is too large.
+Atomic distances for sample 39 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6084820004975706 which is too large.
+Atomic distances for sample 40 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6159264238497046 which is too large.
+Atomic distances for sample 41 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6357141665688235 which is too large.
+Atomic distances for sample 42 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6290133029933376 which is too large.
+Atomic distances for sample 43 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6468860935005767 which is too large.
+Atomic distances for sample 44 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.627325782999185 which is too large.
+Atomic distances for sample 45 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6288008194397166 which is too large.
+Atomic distances for sample 46 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6059073965904562 which is too large.
+Atomic distances for sample 47 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6163270371717815 which is too large.
+Atomic distances for sample 48 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6053232264744832 which is too large.
+Atomic distances for sample 49 are too large or too small. Resetting this trajectory.
+Distance between 16 and 17 is 1.5538321394077212 which is too large.
+Atomic distances for sample 50 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6616502378828535 which is too large.
+Atomic distances for sample 51 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6148271886443393 which is too large.
+Atomic distances for sample 52 are too large or too small. Resetting this trajectory.
+Distance between 16 and 17 is 1.5597203144297573 which is too large.
+Atomic distances for sample 53 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.639982975486587 which is too large.
+Atomic distances for sample 54 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6099344182337505 which is too large.
+Atomic distances for sample 55 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6061155146373534 which is too large.
+Atomic distances for sample 56 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.605636365014377 which is too large.
+Atomic distances for sample 57 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6074469878997633 which is too large.
+Atomic distances for sample 58 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6147171865998118 which is too large.
+Atomic distances for sample 59 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6128465391858018 which is too large.
+Atomic distances for sample 60 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6222451239892772 which is too large.
+Atomic distances for sample 61 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6167155213566267 which is too large.
+Atomic distances for sample 62 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6053634267084456 which is too large.
+Atomic distances for sample 63 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6424547303494965 which is too large.
+Atomic distances for sample 64 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6454120441174227 which is too large.
+Atomic distances for sample 65 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.637100105837291 which is too large.
+Atomic distances for sample 66 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6097110211279944 which is too large.
+Atomic distances for sample 67 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6129917577452515 which is too large.
+Atomic distances for sample 68 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6350648940360395 which is too large.
+Atomic distances for sample 69 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6074547432375352 which is too large.
+Atomic distances for sample 70 are too large or too small. Resetting this trajectory.
+Distance between 16 and 17 is 1.5828437278611518 which is too large.
+Atomic distances for sample 71 are too large or too small. Resetting this trajectory.
+Distance between 16 and 17 is 1.585724609969922 which is too large.
+Atomic distances for sample 72 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6097170803028282 which is too large.
+Atomic distances for sample 73 are too large or too small. Resetting this trajectory.
+Distance between 16 and 17 is 1.5947166726754667 which is too large.
+Atomic distances for sample 74 are too large or too small. Resetting this trajectory.
+Distance between 16 and 17 is 1.5608686924938764 which is too large.
+Atomic distances for sample 75 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6086652478206371 which is too large.
+Atomic distances for sample 76 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6276214338430726 which is too large.
+Atomic distances for sample 77 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6220199607434043 which is too large.
+Atomic distances for sample 78 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6150282741165412 which is too large.
+Atomic distances for sample 79 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6116660742272757 which is too large.
+Atomic distances for sample 80 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6607068376448324 which is too large.
+Atomic distances for sample 81 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6108495039381971 which is too large.
+Atomic distances for sample 82 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6533095056960514 which is too large.
+Atomic distances for sample 83 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.620710706624907 which is too large.
+Atomic distances for sample 84 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6227172540682784 which is too large.
+Atomic distances for sample 85 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6518561320942347 which is too large.
+Atomic distances for sample 86 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6336624090254643 which is too large.
+Atomic distances for sample 87 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6297557360948987 which is too large.
+Atomic distances for sample 88 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.651676518586238 which is too large.
+Atomic distances for sample 89 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.647497638541403 which is too large.
+Atomic distances for sample 90 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6360024637862822 which is too large.
+Atomic distances for sample 91 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6126661579056403 which is too large.
+Atomic distances for sample 92 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6132493405298793 which is too large.
+Atomic distances for sample 93 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6095834506144517 which is too large.
+Atomic distances for sample 94 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.635437466821969 which is too large.
+Atomic distances for sample 95 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.614243427054203 which is too large.
+Atomic distances for sample 96 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6222478345388704 which is too large.
+Atomic distances for sample 97 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6493455812528215 which is too large.
+Atomic distances for sample 98 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.628224804181493 which is too large.
+Atomic distances for sample 99 are too large or too small. Resetting this trajectory.
+No uncertainty samples found in iteration 0.
+Distance between 0 and 1 is 1.6518393354387035 which is too large.
+Atomic distances for sample 0 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6301327636778937 which is too large.
+Atomic distances for sample 1 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6622197127527805 which is too large.
+Atomic distances for sample 2 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6583601244662094 which is too large.
+Atomic distances for sample 3 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6417115430303306 which is too large.
+Atomic distances for sample 4 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6093557073407165 which is too large.
+Atomic distances for sample 5 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6357873934322704 which is too large.
+Atomic distances for sample 6 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6243573261305 which is too large.
+Atomic distances for sample 7 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6406218919564923 which is too large.
+Atomic distances for sample 8 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.677511826589323 which is too large.
+Atomic distances for sample 9 are too large or too small. Resetting this trajectory.
+Distance between 16 and 17 is 1.547811579514193 which is too large.
+Atomic distances for sample 10 are too large or too small. Resetting this trajectory.
+Distance between 16 and 17 is 1.5837247233936989 which is too large.
+Atomic distances for sample 11 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6438390771192706 which is too large.
+Atomic distances for sample 12 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6199368265469942 which is too large.
+Atomic distances for sample 13 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.678255806403278 which is too large.
+Atomic distances for sample 14 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6385971861665654 which is too large.
+Atomic distances for sample 15 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6165673000888905 which is too large.
+Atomic distances for sample 16 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6435476984840756 which is too large.
+Atomic distances for sample 17 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.62546888052965 which is too large.
+Atomic distances for sample 18 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.613841776288946 which is too large.
+Atomic distances for sample 19 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6263413389284014 which is too large.
+Atomic distances for sample 20 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6054354704835232 which is too large.
+Atomic distances for sample 21 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.610013771611672 which is too large.
+Atomic distances for sample 22 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6096036928935846 which is too large.
+Atomic distances for sample 23 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6284249155855888 which is too large.
+Atomic distances for sample 24 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.622282967468553 which is too large.
+Atomic distances for sample 25 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.627060511437198 which is too large.
+Atomic distances for sample 26 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6261886746063274 which is too large.
+Atomic distances for sample 27 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.611290415861383 which is too large.
+Atomic distances for sample 28 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6540681533529316 which is too large.
+Atomic distances for sample 29 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6428312820460629 which is too large.
+Atomic distances for sample 30 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.645238428546395 which is too large.
+Atomic distances for sample 31 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6135615204428284 which is too large.
+Atomic distances for sample 32 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6140729323450334 which is too large.
+Atomic distances for sample 33 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6282351467093426 which is too large.
+Atomic distances for sample 34 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.638346979086313 which is too large.
+Atomic distances for sample 35 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6421352843194363 which is too large.
+Atomic distances for sample 36 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6104082919436322 which is too large.
+Atomic distances for sample 37 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.636506088241938 which is too large.
+Atomic distances for sample 38 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6426305968719364 which is too large.
+Atomic distances for sample 39 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6261563416375862 which is too large.
+Atomic distances for sample 40 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6273792120054724 which is too large.
+Atomic distances for sample 41 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6327181279641754 which is too large.
+Atomic distances for sample 42 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6416511034936176 which is too large.
+Atomic distances for sample 43 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6322470789156347 which is too large.
+Atomic distances for sample 44 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6193392565061837 which is too large.
+Atomic distances for sample 45 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6553431346604857 which is too large.
+Atomic distances for sample 46 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6380899237437885 which is too large.
+Atomic distances for sample 47 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6410953917726883 which is too large.
+Atomic distances for sample 48 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6124158962526216 which is too large.
+Atomic distances for sample 49 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6129188996263948 which is too large.
+Atomic distances for sample 50 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6170400828317928 which is too large.
+Atomic distances for sample 51 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6738000689574315 which is too large.
+Atomic distances for sample 52 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6142517768342928 which is too large.
+Atomic distances for sample 53 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6167566183632485 which is too large.
+Atomic distances for sample 54 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6190905153941368 which is too large.
+Atomic distances for sample 55 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6385430655619273 which is too large.
+Atomic distances for sample 56 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6238844915542654 which is too large.
+Atomic distances for sample 57 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6180125239416472 which is too large.
+Atomic distances for sample 58 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.639375816544805 which is too large.
+Atomic distances for sample 59 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.60888860505527 which is too large.
+Atomic distances for sample 60 are too large or too small. Resetting this trajectory.
+Distance between 16 and 17 is 1.5641728109540245 which is too large.
+Atomic distances for sample 61 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6105625942288355 which is too large.
+Atomic distances for sample 62 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.636888721794475 which is too large.
+Atomic distances for sample 63 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6164405283860528 which is too large.
+Atomic distances for sample 64 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6058096221160687 which is too large.
+Atomic distances for sample 65 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6301350494803486 which is too large.
+Atomic distances for sample 66 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6269707313750994 which is too large.
+Atomic distances for sample 67 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6614522530726574 which is too large.
+Atomic distances for sample 68 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6300487831662647 which is too large.
+Atomic distances for sample 69 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6126143354856606 which is too large.
+Atomic distances for sample 70 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.62703553432211 which is too large.
+Atomic distances for sample 71 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6657090658708313 which is too large.
+Atomic distances for sample 72 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.661143327150629 which is too large.
+Atomic distances for sample 73 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6278319302655966 which is too large.
+Atomic distances for sample 74 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6333008522281423 which is too large.
+Atomic distances for sample 75 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6112538485992158 which is too large.
+Atomic distances for sample 76 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6063625486182564 which is too large.
+Atomic distances for sample 77 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6457908722978494 which is too large.
+Atomic distances for sample 78 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6169640995809829 which is too large.
+Atomic distances for sample 79 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6357749078724424 which is too large.
+Atomic distances for sample 80 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.626164244491875 which is too large.
+Atomic distances for sample 81 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6145523011849072 which is too large.
+Atomic distances for sample 82 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6381401757719594 which is too large.
+Atomic distances for sample 83 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.645580687956341 which is too large.
+Atomic distances for sample 84 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6665026875189575 which is too large.
+Atomic distances for sample 85 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6584021966131404 which is too large.
+Atomic distances for sample 86 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6209386318112475 which is too large.
+Atomic distances for sample 87 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6357500173437391 which is too large.
+Atomic distances for sample 88 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6555574894333105 which is too large.
+Atomic distances for sample 89 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.614902093818805 which is too large.
+Atomic distances for sample 90 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6081060842695574 which is too large.
+Atomic distances for sample 91 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6143783732022141 which is too large.
+Atomic distances for sample 92 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6141623624735164 which is too large.
+Atomic distances for sample 93 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6059087718799856 which is too large.
+Atomic distances for sample 94 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6329380184084907 which is too large.
+Atomic distances for sample 95 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6095758533907047 which is too large.
+Atomic distances for sample 96 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.613529514911321 which is too large.
+Atomic distances for sample 97 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.687891026908831 which is too large.
+Atomic distances for sample 98 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6826471584289864 which is too large.
+Atomic distances for sample 99 are too large or too small. Resetting this trajectory.
+No uncertainty samples found in iteration 1.
+Distance between 18 and 19 is 1.689550626676537 which is too large.
+Atomic distances for sample 0 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6817031332139076 which is too large.
+Atomic distances for sample 1 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6532654293299145 which is too large.
+Atomic distances for sample 2 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6487235691241502 which is too large.
+Atomic distances for sample 3 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6142709483891373 which is too large.
+Atomic distances for sample 4 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.608859991383133 which is too large.
+Atomic distances for sample 5 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.644990436075824 which is too large.
+Atomic distances for sample 6 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6321577690125413 which is too large.
+Atomic distances for sample 7 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.610817542613534 which is too large.
+Atomic distances for sample 8 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6540298604430226 which is too large.
+Atomic distances for sample 9 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6081509035601513 which is too large.
+Atomic distances for sample 10 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6104495247794661 which is too large.
+Atomic distances for sample 11 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6143771391158355 which is too large.
+Atomic distances for sample 12 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6272585593696451 which is too large.
+Atomic distances for sample 13 are too large or too small. Resetting this trajectory.
+Distance between 16 and 17 is 1.5686180656277562 which is too large.
+Atomic distances for sample 14 are too large or too small. Resetting this trajectory.
+Distance between 16 and 17 is 1.569573582391291 which is too large.
+Atomic distances for sample 15 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.633775367884084 which is too large.
+Atomic distances for sample 16 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6205944009417839 which is too large.
+Atomic distances for sample 17 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6170312720088311 which is too large.
+Atomic distances for sample 18 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6572701043944926 which is too large.
+Atomic distances for sample 19 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6200918157882318 which is too large.
+Atomic distances for sample 20 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6240460883427315 which is too large.
+Atomic distances for sample 21 are too large or too small. Resetting this trajectory.
+Distance between 16 and 17 is 1.5517056967474194 which is too large.
+Atomic distances for sample 22 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6230558007099176 which is too large.
+Atomic distances for sample 23 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6390546485993596 which is too large.
+Atomic distances for sample 24 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.628727795389922 which is too large.
+Atomic distances for sample 25 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6456962047564 which is too large.
+Atomic distances for sample 26 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6175725400776797 which is too large.
+Atomic distances for sample 27 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6151496732275143 which is too large.
+Atomic distances for sample 28 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6074478312817455 which is too large.
+Atomic distances for sample 29 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.644924147108871 which is too large.
+Atomic distances for sample 30 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6161614088824756 which is too large.
+Atomic distances for sample 31 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6057474499456788 which is too large.
+Atomic distances for sample 32 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.615290270746382 which is too large.
+Atomic distances for sample 33 are too large or too small. Resetting this trajectory.
+Distance between 16 and 17 is 1.5852671867503194 which is too large.
+Atomic distances for sample 34 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6126860276342387 which is too large.
+Atomic distances for sample 35 are too large or too small. Resetting this trajectory.
+Distance between 16 and 17 is 1.5489200839040174 which is too large.
+Atomic distances for sample 36 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6152900917515496 which is too large.
+Atomic distances for sample 37 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.696678727128622 which is too large.
+Atomic distances for sample 38 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.642119459530504 which is too large.
+Atomic distances for sample 39 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6550367758907782 which is too large.
+Atomic distances for sample 40 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.636174777926955 which is too large.
+Atomic distances for sample 41 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6227256530587226 which is too large.
+Atomic distances for sample 42 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6058111768776728 which is too large.
+Atomic distances for sample 43 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6337833743140635 which is too large.
+Atomic distances for sample 44 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.615411985052019 which is too large.
+Atomic distances for sample 45 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.607936111581718 which is too large.
+Atomic distances for sample 46 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6144673330238744 which is too large.
+Atomic distances for sample 47 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6158504771690394 which is too large.
+Atomic distances for sample 48 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6208878045828103 which is too large.
+Atomic distances for sample 49 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6416781949943628 which is too large.
+Atomic distances for sample 50 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.641503794223802 which is too large.
+Atomic distances for sample 51 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6470831847403922 which is too large.
+Atomic distances for sample 52 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6400205368292413 which is too large.
+Atomic distances for sample 53 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6638075928264984 which is too large.
+Atomic distances for sample 54 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6341148736915942 which is too large.
+Atomic distances for sample 55 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6158394593339134 which is too large.
+Atomic distances for sample 56 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6736525767501358 which is too large.
+Atomic distances for sample 57 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.642789341590519 which is too large.
+Atomic distances for sample 58 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6636043636502844 which is too large.
+Atomic distances for sample 59 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6378365796428271 which is too large.
+Atomic distances for sample 60 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6236346914188364 which is too large.
+Atomic distances for sample 61 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6083858861810427 which is too large.
+Atomic distances for sample 62 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6398896962681069 which is too large.
+Atomic distances for sample 63 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.626408806427373 which is too large.
+Atomic distances for sample 64 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6516585144207288 which is too large.
+Atomic distances for sample 65 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.637080477160988 which is too large.
+Atomic distances for sample 66 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6204744715095634 which is too large.
+Atomic distances for sample 67 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6361230719730298 which is too large.
+Atomic distances for sample 68 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6392358263038032 which is too large.
+Atomic distances for sample 69 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.622363887583785 which is too large.
+Atomic distances for sample 70 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6332139712776506 which is too large.
+Atomic distances for sample 71 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6229814108918252 which is too large.
+Atomic distances for sample 72 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6113531807548975 which is too large.
+Atomic distances for sample 73 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6339936560329722 which is too large.
+Atomic distances for sample 74 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.623564611981885 which is too large.
+Atomic distances for sample 75 are too large or too small. Resetting this trajectory.
+Distance between 16 and 17 is 1.5450429492564783 which is too large.
+Atomic distances for sample 76 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6281173172805843 which is too large.
+Atomic distances for sample 77 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6386875021943368 which is too large.
+Atomic distances for sample 78 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6080537187803279 which is too large.
+Atomic distances for sample 79 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.609314614041823 which is too large.
+Atomic distances for sample 80 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6276713265016058 which is too large.
+Atomic distances for sample 81 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6314686083963414 which is too large.
+Atomic distances for sample 82 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6488677344900435 which is too large.
+Atomic distances for sample 83 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6321599756389216 which is too large.
+Atomic distances for sample 84 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.609602471133529 which is too large.
+Atomic distances for sample 85 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6196623321245458 which is too large.
+Atomic distances for sample 86 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6403555046532725 which is too large.
+Atomic distances for sample 87 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6091251767145989 which is too large.
+Atomic distances for sample 88 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.651646215335768 which is too large.
+Atomic distances for sample 89 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6110125524034553 which is too large.
+Atomic distances for sample 90 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6277589971214808 which is too large.
+Atomic distances for sample 91 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6479524069811433 which is too large.
+Atomic distances for sample 92 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.638525028797468 which is too large.
+Atomic distances for sample 93 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6157372866373214 which is too large.
+Atomic distances for sample 94 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6266687143855791 which is too large.
+Atomic distances for sample 95 are too large or too small. Resetting this trajectory.
+Distance between 16 and 17 is 1.560046542460698 which is too large.
+Atomic distances for sample 96 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6133304773512627 which is too large.
+Atomic distances for sample 97 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.633613916775386 which is too large.
+Atomic distances for sample 98 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6475757699168696 which is too large.
+Atomic distances for sample 99 are too large or too small. Resetting this trajectory.
+No uncertainty samples found in iteration 2.
+Distance between 1 and 3 is 1.6050152946222964 which is too large.
+Atomic distances for sample 0 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6385525017070501 which is too large.
+Atomic distances for sample 1 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.623903977947962 which is too large.
+Atomic distances for sample 2 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.634157976379966 which is too large.
+Atomic distances for sample 3 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.611800715880855 which is too large.
+Atomic distances for sample 4 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6076874006531912 which is too large.
+Atomic distances for sample 5 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6590963689583489 which is too large.
+Atomic distances for sample 6 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6340871843443694 which is too large.
+Atomic distances for sample 7 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6073129828210135 which is too large.
+Atomic distances for sample 8 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6066158479178776 which is too large.
+Atomic distances for sample 9 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6149043261862592 which is too large.
+Atomic distances for sample 10 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6153354617012885 which is too large.
+Atomic distances for sample 11 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6290313654685402 which is too large.
+Atomic distances for sample 12 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6297716007584533 which is too large.
+Atomic distances for sample 13 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.611136225692778 which is too large.
+Atomic distances for sample 14 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6594330828297021 which is too large.
+Atomic distances for sample 15 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6119209258593132 which is too large.
+Atomic distances for sample 16 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.637676043089396 which is too large.
+Atomic distances for sample 17 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6411810430176783 which is too large.
+Atomic distances for sample 18 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6161352136907137 which is too large.
+Atomic distances for sample 19 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6424299524498693 which is too large.
+Atomic distances for sample 20 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.607817698644627 which is too large.
+Atomic distances for sample 21 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6362688852162022 which is too large.
+Atomic distances for sample 22 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6086476525001336 which is too large.
+Atomic distances for sample 23 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.620673508894458 which is too large.
+Atomic distances for sample 24 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6285140541489704 which is too large.
+Atomic distances for sample 25 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6585079365952744 which is too large.
+Atomic distances for sample 26 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6422183490676543 which is too large.
+Atomic distances for sample 27 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6530830307402784 which is too large.
+Atomic distances for sample 28 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6885030120109068 which is too large.
+Atomic distances for sample 29 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6513349554043277 which is too large.
+Atomic distances for sample 30 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6185770150615704 which is too large.
+Atomic distances for sample 31 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6050660747411258 which is too large.
+Atomic distances for sample 32 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6171787167601839 which is too large.
+Atomic distances for sample 33 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6480379412739092 which is too large.
+Atomic distances for sample 34 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6298661598137647 which is too large.
+Atomic distances for sample 35 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6393280919577615 which is too large.
+Atomic distances for sample 36 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6341287085330363 which is too large.
+Atomic distances for sample 37 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6341177758470147 which is too large.
+Atomic distances for sample 38 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.624566411035288 which is too large.
+Atomic distances for sample 39 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6309396786820773 which is too large.
+Atomic distances for sample 40 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6248600319232838 which is too large.
+Atomic distances for sample 41 are too large or too small. Resetting this trajectory.
+Distance between 16 and 17 is 1.5493581390474476 which is too large.
+Atomic distances for sample 42 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.65799348888806 which is too large.
+Atomic distances for sample 43 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6065118921181496 which is too large.
+Atomic distances for sample 44 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6231568939773815 which is too large.
+Atomic distances for sample 45 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6065754385285262 which is too large.
+Atomic distances for sample 46 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.60506067467968 which is too large.
+Atomic distances for sample 47 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6379844850736383 which is too large.
+Atomic distances for sample 48 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6123667945048543 which is too large.
+Atomic distances for sample 49 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6437227670325356 which is too large.
+Atomic distances for sample 50 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.612308126750742 which is too large.
+Atomic distances for sample 51 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6090553609617448 which is too large.
+Atomic distances for sample 52 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.610959048595381 which is too large.
+Atomic distances for sample 53 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6378364016007805 which is too large.
+Atomic distances for sample 54 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.619009281837527 which is too large.
+Atomic distances for sample 55 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6055439282077364 which is too large.
+Atomic distances for sample 56 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6223300758911605 which is too large.
+Atomic distances for sample 57 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6076636552708685 which is too large.
+Atomic distances for sample 58 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6161453249005686 which is too large.
+Atomic distances for sample 59 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6339563072732188 which is too large.
+Atomic distances for sample 60 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6223320243177877 which is too large.
+Atomic distances for sample 61 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6179575370187405 which is too large.
+Atomic distances for sample 62 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6499831298422762 which is too large.
+Atomic distances for sample 63 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6218661047001477 which is too large.
+Atomic distances for sample 64 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6170671261483855 which is too large.
+Atomic distances for sample 65 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6239960208791235 which is too large.
+Atomic distances for sample 66 are too large or too small. Resetting this trajectory.
+Distance between 16 and 17 is 1.5556371146142627 which is too large.
+Atomic distances for sample 67 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6311941600096038 which is too large.
+Atomic distances for sample 68 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6196868392217245 which is too large.
+Atomic distances for sample 69 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6427942988890083 which is too large.
+Atomic distances for sample 70 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.647384242204964 which is too large.
+Atomic distances for sample 71 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6136751709780335 which is too large.
+Atomic distances for sample 72 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6117975115325034 which is too large.
+Atomic distances for sample 73 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6492678041199391 which is too large.
+Atomic distances for sample 74 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6552546848625873 which is too large.
+Atomic distances for sample 75 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.612377675847364 which is too large.
+Atomic distances for sample 76 are too large or too small. Resetting this trajectory.
+Distance between 16 and 17 is 1.5483313678891868 which is too large.
+Atomic distances for sample 77 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6326705962135806 which is too large.
+Atomic distances for sample 78 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6089613611156077 which is too large.
+Atomic distances for sample 79 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.627596492698997 which is too large.
+Atomic distances for sample 80 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6544218730084483 which is too large.
+Atomic distances for sample 81 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6225207256029899 which is too large.
+Atomic distances for sample 82 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6637475426140544 which is too large.
+Atomic distances for sample 83 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6145825478023368 which is too large.
+Atomic distances for sample 84 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.611849315757076 which is too large.
+Atomic distances for sample 85 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6122337766609958 which is too large.
+Atomic distances for sample 86 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6325084889569006 which is too large.
+Atomic distances for sample 87 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6117364511121308 which is too large.
+Atomic distances for sample 88 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6182038379520216 which is too large.
+Atomic distances for sample 89 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6235558334162108 which is too large.
+Atomic distances for sample 90 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6117775944547204 which is too large.
+Atomic distances for sample 91 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6095793382841246 which is too large.
+Atomic distances for sample 92 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6384552211553838 which is too large.
+Atomic distances for sample 93 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6200516496184485 which is too large.
+Atomic distances for sample 94 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6083239055413707 which is too large.
+Atomic distances for sample 95 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6181065790520766 which is too large.
+Atomic distances for sample 96 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6336642754195696 which is too large.
+Atomic distances for sample 97 are too large or too small. Resetting this trajectory.
+Distance between 16 and 17 is 1.5842969248619714 which is too large.
+Atomic distances for sample 98 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6069729439728127 which is too large.
+Atomic distances for sample 99 are too large or too small. Resetting this trajectory.
+No uncertainty samples found in iteration 3.
+Distance between 18 and 21 is 1.616430864400749 which is too large.
+Atomic distances for sample 0 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6571113472546957 which is too large.
+Atomic distances for sample 1 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.626967621122698 which is too large.
+Atomic distances for sample 2 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6091707324684494 which is too large.
+Atomic distances for sample 3 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6358875832743913 which is too large.
+Atomic distances for sample 4 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6392195184183893 which is too large.
+Atomic distances for sample 5 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6323771025371447 which is too large.
+Atomic distances for sample 6 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6166115477041605 which is too large.
+Atomic distances for sample 7 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6146865936912962 which is too large.
+Atomic distances for sample 8 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6680658419892693 which is too large.
+Atomic distances for sample 9 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.61593772629584 which is too large.
+Atomic distances for sample 10 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6334174966797133 which is too large.
+Atomic distances for sample 11 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.625294113190669 which is too large.
+Atomic distances for sample 12 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.644321816859806 which is too large.
+Atomic distances for sample 13 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6167976536451603 which is too large.
+Atomic distances for sample 14 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6189202253752584 which is too large.
+Atomic distances for sample 15 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6320430092767293 which is too large.
+Atomic distances for sample 16 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6235396499681445 which is too large.
+Atomic distances for sample 17 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.660957057321279 which is too large.
+Atomic distances for sample 18 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6179396056594708 which is too large.
+Atomic distances for sample 19 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.610393655492403 which is too large.
+Atomic distances for sample 20 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6113629401168355 which is too large.
+Atomic distances for sample 21 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6139165696089053 which is too large.
+Atomic distances for sample 22 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6160202398219008 which is too large.
+Atomic distances for sample 23 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6136850399629559 which is too large.
+Atomic distances for sample 24 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6588754952534366 which is too large.
+Atomic distances for sample 25 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.639295773013861 which is too large.
+Atomic distances for sample 26 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6255952454615668 which is too large.
+Atomic distances for sample 27 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6232261316754228 which is too large.
+Atomic distances for sample 28 are too large or too small. Resetting this trajectory.
+Distance between 16 and 17 is 1.57052152295893 which is too large.
+Atomic distances for sample 29 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.605445907194362 which is too large.
+Atomic distances for sample 30 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6441758698922677 which is too large.
+Atomic distances for sample 31 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6368627965596563 which is too large.
+Atomic distances for sample 32 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6249723337267585 which is too large.
+Atomic distances for sample 33 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6090141271450484 which is too large.
+Atomic distances for sample 34 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6078308885908206 which is too large.
+Atomic distances for sample 35 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6265773328407926 which is too large.
+Atomic distances for sample 36 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6220484651967764 which is too large.
+Atomic distances for sample 37 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6445076572620863 which is too large.
+Atomic distances for sample 38 are too large or too small. Resetting this trajectory.
+Distance between 16 and 17 is 1.5569180754381906 which is too large.
+Atomic distances for sample 39 are too large or too small. Resetting this trajectory.
+Distance between 16 and 17 is 1.5662508991288986 which is too large.
+Atomic distances for sample 40 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6465676564010499 which is too large.
+Atomic distances for sample 41 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6544467284007356 which is too large.
+Atomic distances for sample 42 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6115832358645266 which is too large.
+Atomic distances for sample 43 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.633473278168154 which is too large.
+Atomic distances for sample 44 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6052996713950682 which is too large.
+Atomic distances for sample 45 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6201038042409392 which is too large.
+Atomic distances for sample 46 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6395086462425221 which is too large.
+Atomic distances for sample 47 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6363448001067626 which is too large.
+Atomic distances for sample 48 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6149288394444914 which is too large.
+Atomic distances for sample 49 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6158508951350072 which is too large.
+Atomic distances for sample 50 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6636913849613142 which is too large.
+Atomic distances for sample 51 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6329709491788256 which is too large.
+Atomic distances for sample 52 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6417305491040923 which is too large.
+Atomic distances for sample 53 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6178740988115274 which is too large.
+Atomic distances for sample 54 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6640119712481618 which is too large.
+Atomic distances for sample 55 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6203651523311566 which is too large.
+Atomic distances for sample 56 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6357914574029653 which is too large.
+Atomic distances for sample 57 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6312558115228384 which is too large.
+Atomic distances for sample 58 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6473281328927027 which is too large.
+Atomic distances for sample 59 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.61978545429427 which is too large.
+Atomic distances for sample 60 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6238834934129367 which is too large.
+Atomic distances for sample 61 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.611685146559404 which is too large.
+Atomic distances for sample 62 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.634138867196331 which is too large.
+Atomic distances for sample 63 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6503060615644944 which is too large.
+Atomic distances for sample 64 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.637801294602916 which is too large.
+Atomic distances for sample 65 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.629347059883927 which is too large.
+Atomic distances for sample 66 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6640669127614176 which is too large.
+Atomic distances for sample 67 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6377042387077883 which is too large.
+Atomic distances for sample 68 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6092190807550633 which is too large.
+Atomic distances for sample 69 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.625998918904567 which is too large.
+Atomic distances for sample 70 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6387587071688374 which is too large.
+Atomic distances for sample 71 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6164989233148817 which is too large.
+Atomic distances for sample 72 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6486359740301255 which is too large.
+Atomic distances for sample 73 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.616445821850135 which is too large.
+Atomic distances for sample 74 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6589240421322584 which is too large.
+Atomic distances for sample 75 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6178430884837869 which is too large.
+Atomic distances for sample 76 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6150707211508164 which is too large.
+Atomic distances for sample 77 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6575213386189975 which is too large.
+Atomic distances for sample 78 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.640250259833067 which is too large.
+Atomic distances for sample 79 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6113089630098134 which is too large.
+Atomic distances for sample 80 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6286468979358637 which is too large.
+Atomic distances for sample 81 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.640646911490058 which is too large.
+Atomic distances for sample 82 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6600710545032755 which is too large.
+Atomic distances for sample 83 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.649723906505172 which is too large.
+Atomic distances for sample 84 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6367570931746778 which is too large.
+Atomic distances for sample 85 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.633117480555429 which is too large.
+Atomic distances for sample 86 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.626922369425538 which is too large.
+Atomic distances for sample 87 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6181707385650372 which is too large.
+Atomic distances for sample 88 are too large or too small. Resetting this trajectory.
+Distance between 16 and 17 is 1.558916176138511 which is too large.
+Atomic distances for sample 89 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6143980439892196 which is too large.
+Atomic distances for sample 90 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6132699287378645 which is too large.
+Atomic distances for sample 91 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6090430055422107 which is too large.
+Atomic distances for sample 92 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6570225904483438 which is too large.
+Atomic distances for sample 93 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6452719755290315 which is too large.
+Atomic distances for sample 94 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.611656748998965 which is too large.
+Atomic distances for sample 95 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6121704623214268 which is too large.
+Atomic distances for sample 96 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6517144713574647 which is too large.
+Atomic distances for sample 97 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.616878613426239 which is too large.
+Atomic distances for sample 98 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6060635503998615 which is too large.
+Atomic distances for sample 99 are too large or too small. Resetting this trajectory.
+No uncertainty samples found in iteration 4.
+Distance between 18 and 21 is 1.6345361831624519 which is too large.
+Atomic distances for sample 0 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6448146994208115 which is too large.
+Atomic distances for sample 1 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6148174835002294 which is too large.
+Atomic distances for sample 2 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.614400876969378 which is too large.
+Atomic distances for sample 3 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6413392497098598 which is too large.
+Atomic distances for sample 4 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6358634016927331 which is too large.
+Atomic distances for sample 5 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6331800363345088 which is too large.
+Atomic distances for sample 6 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6181998722048065 which is too large.
+Atomic distances for sample 7 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.617465867638279 which is too large.
+Atomic distances for sample 8 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6231460525437138 which is too large.
+Atomic distances for sample 9 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.617926528941287 which is too large.
+Atomic distances for sample 10 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6064374519091849 which is too large.
+Atomic distances for sample 11 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6407615498614105 which is too large.
+Atomic distances for sample 12 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6348447131963741 which is too large.
+Atomic distances for sample 13 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.65664295052575 which is too large.
+Atomic distances for sample 14 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6536284691292595 which is too large.
+Atomic distances for sample 15 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.643993373814297 which is too large.
+Atomic distances for sample 16 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6185111752255774 which is too large.
+Atomic distances for sample 17 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6508439909573187 which is too large.
+Atomic distances for sample 18 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6438939724270791 which is too large.
+Atomic distances for sample 19 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6322825675482584 which is too large.
+Atomic distances for sample 20 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.623574257873415 which is too large.
+Atomic distances for sample 21 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6070688894522018 which is too large.
+Atomic distances for sample 22 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6256160158829565 which is too large.
+Atomic distances for sample 23 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6063157325147284 which is too large.
+Atomic distances for sample 24 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6368764410267316 which is too large.
+Atomic distances for sample 25 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6316298153036344 which is too large.
+Atomic distances for sample 26 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6168854823059402 which is too large.
+Atomic distances for sample 27 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.634625398558448 which is too large.
+Atomic distances for sample 28 are too large or too small. Resetting this trajectory.
+Distance between 16 and 17 is 1.5468609969207574 which is too large.
+Atomic distances for sample 29 are too large or too small. Resetting this trajectory.
+Distance between 16 and 17 is 1.58572424307717 which is too large.
+Atomic distances for sample 30 are too large or too small. Resetting this trajectory.
+Distance between 16 and 17 is 1.579203981611447 which is too large.
+Atomic distances for sample 31 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6111278241697833 which is too large.
+Atomic distances for sample 32 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.628338405841009 which is too large.
+Atomic distances for sample 33 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.675953332334514 which is too large.
+Atomic distances for sample 34 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6153332873834862 which is too large.
+Atomic distances for sample 35 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.663208225589823 which is too large.
+Atomic distances for sample 36 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.623979308122241 which is too large.
+Atomic distances for sample 37 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.624377912747851 which is too large.
+Atomic distances for sample 38 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6169824512573943 which is too large.
+Atomic distances for sample 39 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.654307467952792 which is too large.
+Atomic distances for sample 40 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6134918422342939 which is too large.
+Atomic distances for sample 41 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.648983004928381 which is too large.
+Atomic distances for sample 42 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6235968173153732 which is too large.
+Atomic distances for sample 43 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6075838969935774 which is too large.
+Atomic distances for sample 44 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6483113274352743 which is too large.
+Atomic distances for sample 45 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.629891649255854 which is too large.
+Atomic distances for sample 46 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6320041198139923 which is too large.
+Atomic distances for sample 47 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6283485320700668 which is too large.
+Atomic distances for sample 48 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6086493946169362 which is too large.
+Atomic distances for sample 49 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.644239495430281 which is too large.
+Atomic distances for sample 50 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6140176926041696 which is too large.
+Atomic distances for sample 51 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6132448963813988 which is too large.
+Atomic distances for sample 52 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6114205954805843 which is too large.
+Atomic distances for sample 53 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6307917150994888 which is too large.
+Atomic distances for sample 54 are too large or too small. Resetting this trajectory.
+Distance between 16 and 17 is 1.549099583289087 which is too large.
+Atomic distances for sample 55 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6191542507863326 which is too large.
+Atomic distances for sample 56 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6498321460785044 which is too large.
+Atomic distances for sample 57 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6265464038811324 which is too large.
+Atomic distances for sample 58 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6760019316924102 which is too large.
+Atomic distances for sample 59 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6330236340135118 which is too large.
+Atomic distances for sample 60 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6082407459231356 which is too large.
+Atomic distances for sample 61 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6497943967138085 which is too large.
+Atomic distances for sample 62 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6053305193125658 which is too large.
+Atomic distances for sample 63 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6456218951713506 which is too large.
+Atomic distances for sample 64 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6244543419380255 which is too large.
+Atomic distances for sample 65 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.620589087291496 which is too large.
+Atomic distances for sample 66 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6147266346408458 which is too large.
+Atomic distances for sample 67 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6456278333454493 which is too large.
+Atomic distances for sample 68 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6409723002089625 which is too large.
+Atomic distances for sample 69 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6150498303949488 which is too large.
+Atomic distances for sample 70 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6348022053329594 which is too large.
+Atomic distances for sample 71 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6588980972089948 which is too large.
+Atomic distances for sample 72 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.620349449444047 which is too large.
+Atomic distances for sample 73 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6253494193394802 which is too large.
+Atomic distances for sample 74 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6283669207030815 which is too large.
+Atomic distances for sample 75 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6246779028569174 which is too large.
+Atomic distances for sample 76 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6097238006812664 which is too large.
+Atomic distances for sample 77 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6229294109213606 which is too large.
+Atomic distances for sample 78 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6278809307311641 which is too large.
+Atomic distances for sample 79 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6204094251739785 which is too large.
+Atomic distances for sample 80 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6062605253695463 which is too large.
+Atomic distances for sample 81 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6627401764461711 which is too large.
+Atomic distances for sample 82 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6230065144330619 which is too large.
+Atomic distances for sample 83 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.609140962812088 which is too large.
+Atomic distances for sample 84 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6206897333029802 which is too large.
+Atomic distances for sample 85 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6406091846340172 which is too large.
+Atomic distances for sample 86 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6313255162491969 which is too large.
+Atomic distances for sample 87 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6587749682071025 which is too large.
+Atomic distances for sample 88 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6129739327096477 which is too large.
+Atomic distances for sample 89 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.610637307342531 which is too large.
+Atomic distances for sample 90 are too large or too small. Resetting this trajectory.
+Distance between 8 and 9 is 1.64951039410759 which is too large.
+Atomic distances for sample 91 are too large or too small. Resetting this trajectory.
+Distance between 8 and 9 is 1.7269033759909782 which is too large.
+Atomic distances for sample 92 are too large or too small. Resetting this trajectory.
+Distance between 8 and 9 is 1.615840390278303 which is too large.
+Atomic distances for sample 93 are too large or too small. Resetting this trajectory.
+Distance between 8 and 9 is 1.6807174438634689 which is too large.
+Atomic distances for sample 94 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6412277511302156 which is too large.
+Atomic distances for sample 95 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6389420848979481 which is too large.
+Atomic distances for sample 96 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6162482975870365 which is too large.
+Atomic distances for sample 97 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6220284780449978 which is too large.
+Atomic distances for sample 98 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.639085878873346 which is too large.
+Atomic distances for sample 99 are too large or too small. Resetting this trajectory.
+No uncertainty samples found in iteration 5.
+Distance between 0 and 1 is 1.6188796057514978 which is too large.
+Atomic distances for sample 0 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6659445441853515 which is too large.
+Atomic distances for sample 1 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.609870351101698 which is too large.
+Atomic distances for sample 2 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6133905986067811 which is too large.
+Atomic distances for sample 3 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.608540352959844 which is too large.
+Atomic distances for sample 4 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6199870638717846 which is too large.
+Atomic distances for sample 5 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6094605714250532 which is too large.
+Atomic distances for sample 6 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6552933391687263 which is too large.
+Atomic distances for sample 7 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6532971057808705 which is too large.
+Atomic distances for sample 8 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.634554631605262 which is too large.
+Atomic distances for sample 9 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6576308559943627 which is too large.
+Atomic distances for sample 10 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6214435588940084 which is too large.
+Atomic distances for sample 11 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6109967303463173 which is too large.
+Atomic distances for sample 12 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6237385101565895 which is too large.
+Atomic distances for sample 13 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.617667222076789 which is too large.
+Atomic distances for sample 14 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.643539051417009 which is too large.
+Atomic distances for sample 15 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6678542234094014 which is too large.
+Atomic distances for sample 16 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6136703684885605 which is too large.
+Atomic distances for sample 17 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6319534992644371 which is too large.
+Atomic distances for sample 18 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6160599960606088 which is too large.
+Atomic distances for sample 19 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6216328411498715 which is too large.
+Atomic distances for sample 20 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6358956363648927 which is too large.
+Atomic distances for sample 21 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6462088952689267 which is too large.
+Atomic distances for sample 22 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.622931665751197 which is too large.
+Atomic distances for sample 23 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.62813467275056 which is too large.
+Atomic distances for sample 24 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.642450288563978 which is too large.
+Atomic distances for sample 25 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6076273856960415 which is too large.
+Atomic distances for sample 26 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6572665079865365 which is too large.
+Atomic distances for sample 27 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6539373992951936 which is too large.
+Atomic distances for sample 28 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6057819727940008 which is too large.
+Atomic distances for sample 29 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6199663716911907 which is too large.
+Atomic distances for sample 30 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6468917644739838 which is too large.
+Atomic distances for sample 31 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6261637363887196 which is too large.
+Atomic distances for sample 32 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6506338445123983 which is too large.
+Atomic distances for sample 33 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6325873159048965 which is too large.
+Atomic distances for sample 34 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6323764694332052 which is too large.
+Atomic distances for sample 35 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6062148899310635 which is too large.
+Atomic distances for sample 36 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6052304680174285 which is too large.
+Atomic distances for sample 37 are too large or too small. Resetting this trajectory.
+Distance between 16 and 17 is 1.6014661684583038 which is too large.
+Atomic distances for sample 38 are too large or too small. Resetting this trajectory.
+Distance between 16 and 17 is 1.5834462051156117 which is too large.
+Atomic distances for sample 39 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6099692601244417 which is too large.
+Atomic distances for sample 40 are too large or too small. Resetting this trajectory.
+Distance between 16 and 17 is 1.5671856395200543 which is too large.
+Atomic distances for sample 41 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6357662445595094 which is too large.
+Atomic distances for sample 42 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6257821212492574 which is too large.
+Atomic distances for sample 43 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6083127133772555 which is too large.
+Atomic distances for sample 44 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6125712267023713 which is too large.
+Atomic distances for sample 45 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.662376032929577 which is too large.
+Atomic distances for sample 46 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6527384206885911 which is too large.
+Atomic distances for sample 47 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6295016807425333 which is too large.
+Atomic distances for sample 48 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.64441792983027 which is too large.
+Atomic distances for sample 49 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6111321382359027 which is too large.
+Atomic distances for sample 50 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6162523295360047 which is too large.
+Atomic distances for sample 51 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.608835225793194 which is too large.
+Atomic distances for sample 52 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6191262806412594 which is too large.
+Atomic distances for sample 53 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6343051859865543 which is too large.
+Atomic distances for sample 54 are too large or too small. Resetting this trajectory.
+Distance between 16 and 17 is 1.5660104290869576 which is too large.
+Atomic distances for sample 55 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6322634099972284 which is too large.
+Atomic distances for sample 56 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6552677651674814 which is too large.
+Atomic distances for sample 57 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6307012263386236 which is too large.
+Atomic distances for sample 58 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6095148233570455 which is too large.
+Atomic distances for sample 59 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6107441077516444 which is too large.
+Atomic distances for sample 60 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6054835579959423 which is too large.
+Atomic distances for sample 61 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6131266538063007 which is too large.
+Atomic distances for sample 62 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.617968422340484 which is too large.
+Atomic distances for sample 63 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6343262658777225 which is too large.
+Atomic distances for sample 64 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6108193873643197 which is too large.
+Atomic distances for sample 65 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6337210637290447 which is too large.
+Atomic distances for sample 66 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6247190067508663 which is too large.
+Atomic distances for sample 67 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6096155517688546 which is too large.
+Atomic distances for sample 68 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6364561424738584 which is too large.
+Atomic distances for sample 69 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6457253221584842 which is too large.
+Atomic distances for sample 70 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6157519456064902 which is too large.
+Atomic distances for sample 71 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6342943298868324 which is too large.
+Atomic distances for sample 72 are too large or too small. Resetting this trajectory.
+Distance between 16 and 17 is 1.5520374090363973 which is too large.
+Atomic distances for sample 73 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6117040104868414 which is too large.
+Atomic distances for sample 74 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6417290968172296 which is too large.
+Atomic distances for sample 75 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6391977663250774 which is too large.
+Atomic distances for sample 76 are too large or too small. Resetting this trajectory.
+Distance between 16 and 17 is 1.5796399088297217 which is too large.
+Atomic distances for sample 77 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6241554199829764 which is too large.
+Atomic distances for sample 78 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6293570887914701 which is too large.
+Atomic distances for sample 79 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6393445961685391 which is too large.
+Atomic distances for sample 80 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6399533358367524 which is too large.
+Atomic distances for sample 81 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.640151029142493 which is too large.
+Atomic distances for sample 82 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6200032930203982 which is too large.
+Atomic distances for sample 83 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6100017621701246 which is too large.
+Atomic distances for sample 84 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.620007041369293 which is too large.
+Atomic distances for sample 85 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6346649170350356 which is too large.
+Atomic distances for sample 86 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6272776937304725 which is too large.
+Atomic distances for sample 87 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.656395525221646 which is too large.
+Atomic distances for sample 88 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6159797119111623 which is too large.
+Atomic distances for sample 89 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6225012613236067 which is too large.
+Atomic distances for sample 90 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6079136936127498 which is too large.
+Atomic distances for sample 91 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.618108674108195 which is too large.
+Atomic distances for sample 92 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6206957225210556 which is too large.
+Atomic distances for sample 93 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6286743947783222 which is too large.
+Atomic distances for sample 94 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6414274917731975 which is too large.
+Atomic distances for sample 95 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6273745819306533 which is too large.
+Atomic distances for sample 96 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6144488821653282 which is too large.
+Atomic distances for sample 97 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6200386047721156 which is too large.
+Atomic distances for sample 98 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.633827203171723 which is too large.
+Atomic distances for sample 99 are too large or too small. Resetting this trajectory.
+No uncertainty samples found in iteration 6.
+Distance between 1 and 2 is 1.64111935922664 which is too large.
+Atomic distances for sample 0 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.643794384123366 which is too large.
+Atomic distances for sample 1 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.65503648786909 which is too large.
+Atomic distances for sample 2 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6410118167515633 which is too large.
+Atomic distances for sample 3 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.650858004557876 which is too large.
+Atomic distances for sample 4 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.642970484261909 which is too large.
+Atomic distances for sample 5 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.617747368592553 which is too large.
+Atomic distances for sample 6 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6268020767580318 which is too large.
+Atomic distances for sample 7 are too large or too small. Resetting this trajectory.
+Distance between 16 and 17 is 1.5511549369450024 which is too large.
+Atomic distances for sample 8 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6082785854621195 which is too large.
+Atomic distances for sample 9 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6211574841072505 which is too large.
+Atomic distances for sample 10 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6211878617700546 which is too large.
+Atomic distances for sample 11 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6104135519054736 which is too large.
+Atomic distances for sample 12 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6091311786759839 which is too large.
+Atomic distances for sample 13 are too large or too small. Resetting this trajectory.
+Distance between 16 and 17 is 1.5699770489900158 which is too large.
+Atomic distances for sample 14 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6282023287860838 which is too large.
+Atomic distances for sample 15 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6099101293739204 which is too large.
+Atomic distances for sample 16 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.632749402047806 which is too large.
+Atomic distances for sample 17 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6195018255619003 which is too large.
+Atomic distances for sample 18 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6324034859207237 which is too large.
+Atomic distances for sample 19 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6167018490486254 which is too large.
+Atomic distances for sample 20 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6296780073873431 which is too large.
+Atomic distances for sample 21 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.64330058341229 which is too large.
+Atomic distances for sample 22 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6164071162000504 which is too large.
+Atomic distances for sample 23 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6139133662007015 which is too large.
+Atomic distances for sample 24 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6239844392673632 which is too large.
+Atomic distances for sample 25 are too large or too small. Resetting this trajectory.
+Distance between 16 and 17 is 1.5853428007973234 which is too large.
+Atomic distances for sample 26 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6419727766079535 which is too large.
+Atomic distances for sample 27 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.681982227706951 which is too large.
+Atomic distances for sample 28 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6407365352508032 which is too large.
+Atomic distances for sample 29 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6122044527496575 which is too large.
+Atomic distances for sample 30 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6419093648344598 which is too large.
+Atomic distances for sample 31 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6180635067456073 which is too large.
+Atomic distances for sample 32 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.620024766148321 which is too large.
+Atomic distances for sample 33 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.633317943752713 which is too large.
+Atomic distances for sample 34 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6154676122980096 which is too large.
+Atomic distances for sample 35 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6105956804324628 which is too large.
+Atomic distances for sample 36 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6088307445586183 which is too large.
+Atomic distances for sample 37 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6355953063403155 which is too large.
+Atomic distances for sample 38 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6209923771560932 which is too large.
+Atomic distances for sample 39 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.606363617020814 which is too large.
+Atomic distances for sample 40 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6152376495266143 which is too large.
+Atomic distances for sample 41 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6112947772122552 which is too large.
+Atomic distances for sample 42 are too large or too small. Resetting this trajectory.
+Distance between 16 and 17 is 1.5457109042167065 which is too large.
+Atomic distances for sample 43 are too large or too small. Resetting this trajectory.
+Distance between 16 and 17 is 1.557218766980672 which is too large.
+Atomic distances for sample 44 are too large or too small. Resetting this trajectory.
+Distance between 16 and 17 is 1.550243785779566 which is too large.
+Atomic distances for sample 45 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6387083838684007 which is too large.
+Atomic distances for sample 46 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.643153932473893 which is too large.
+Atomic distances for sample 47 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6113387339253185 which is too large.
+Atomic distances for sample 48 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6141003178749482 which is too large.
+Atomic distances for sample 49 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.630497156766131 which is too large.
+Atomic distances for sample 50 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.613813362448302 which is too large.
+Atomic distances for sample 51 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6121111984449648 which is too large.
+Atomic distances for sample 52 are too large or too small. Resetting this trajectory.
+Distance between 1 and 4 is 2.259797676533043 which is too large.
+Atomic distances for sample 53 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6682800257190729 which is too large.
+Atomic distances for sample 54 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6583675245424656 which is too large.
+Atomic distances for sample 55 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6599139497863824 which is too large.
+Atomic distances for sample 56 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.656679617071761 which is too large.
+Atomic distances for sample 57 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.611692332147704 which is too large.
+Atomic distances for sample 58 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6166013501640957 which is too large.
+Atomic distances for sample 59 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6116480528663713 which is too large.
+Atomic distances for sample 60 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6074614623049612 which is too large.
+Atomic distances for sample 61 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6510454813188788 which is too large.
+Atomic distances for sample 62 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6460764502142877 which is too large.
+Atomic distances for sample 63 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6237799148910468 which is too large.
+Atomic distances for sample 64 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6494787978911143 which is too large.
+Atomic distances for sample 65 are too large or too small. Resetting this trajectory.
+Distance between 16 and 17 is 1.5602723020139013 which is too large.
+Atomic distances for sample 66 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.64231764144975 which is too large.
+Atomic distances for sample 67 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6171195195014474 which is too large.
+Atomic distances for sample 68 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6692807881925105 which is too large.
+Atomic distances for sample 69 are too large or too small. Resetting this trajectory.
+Distance between 16 and 17 is 1.5596169129851452 which is too large.
+Atomic distances for sample 70 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.629987254657336 which is too large.
+Atomic distances for sample 71 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6341365802597596 which is too large.
+Atomic distances for sample 72 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6352411268836498 which is too large.
+Atomic distances for sample 73 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.634177834213647 which is too large.
+Atomic distances for sample 74 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.638701351408885 which is too large.
+Atomic distances for sample 75 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6482947426614376 which is too large.
+Atomic distances for sample 76 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6288748757190368 which is too large.
+Atomic distances for sample 77 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6196727317351014 which is too large.
+Atomic distances for sample 78 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6187681855145848 which is too large.
+Atomic distances for sample 79 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6107496265277106 which is too large.
+Atomic distances for sample 80 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6273688014656789 which is too large.
+Atomic distances for sample 81 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6069938806987347 which is too large.
+Atomic distances for sample 82 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6459440262409537 which is too large.
+Atomic distances for sample 83 are too large or too small. Resetting this trajectory.
+Distance between 16 and 17 is 1.5712225875572623 which is too large.
+Atomic distances for sample 84 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6138696680848021 which is too large.
+Atomic distances for sample 85 are too large or too small. Resetting this trajectory.
+Distance between 16 and 17 is 1.5766087251454022 which is too large.
+Atomic distances for sample 86 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6324743428786015 which is too large.
+Atomic distances for sample 87 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.644386912954592 which is too large.
+Atomic distances for sample 88 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6307138859855306 which is too large.
+Atomic distances for sample 89 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6409324479080232 which is too large.
+Atomic distances for sample 90 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.626864026336738 which is too large.
+Atomic distances for sample 91 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6702462565523366 which is too large.
+Atomic distances for sample 92 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6296184190841636 which is too large.
+Atomic distances for sample 93 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6397746305512944 which is too large.
+Atomic distances for sample 94 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6527753929775013 which is too large.
+Atomic distances for sample 95 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6238232122760345 which is too large.
+Atomic distances for sample 96 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.632085669966096 which is too large.
+Atomic distances for sample 97 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.632191661034291 which is too large.
+Atomic distances for sample 98 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6070062739603594 which is too large.
+Atomic distances for sample 99 are too large or too small. Resetting this trajectory.
+No uncertainty samples found in iteration 7.
+Distance between 1 and 3 is 1.6621302061134493 which is too large.
+Atomic distances for sample 0 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6126452469401618 which is too large.
+Atomic distances for sample 1 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.653179732794737 which is too large.
+Atomic distances for sample 2 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6130279181504836 which is too large.
+Atomic distances for sample 3 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6088345036570724 which is too large.
+Atomic distances for sample 4 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6369548476764648 which is too large.
+Atomic distances for sample 5 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6320726267524732 which is too large.
+Atomic distances for sample 6 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.663102911547803 which is too large.
+Atomic distances for sample 7 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6581653978073119 which is too large.
+Atomic distances for sample 8 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.624626186721506 which is too large.
+Atomic distances for sample 9 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6378210018636263 which is too large.
+Atomic distances for sample 10 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6319223112466936 which is too large.
+Atomic distances for sample 11 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6337138051155056 which is too large.
+Atomic distances for sample 12 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6104669217122778 which is too large.
+Atomic distances for sample 13 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6369402982832755 which is too large.
+Atomic distances for sample 14 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6380685170805769 which is too large.
+Atomic distances for sample 15 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6141910868658187 which is too large.
+Atomic distances for sample 16 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6219482484767416 which is too large.
+Atomic distances for sample 17 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.642803815705594 which is too large.
+Atomic distances for sample 18 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6221275888060829 which is too large.
+Atomic distances for sample 19 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6530835782148947 which is too large.
+Atomic distances for sample 20 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.623298983522309 which is too large.
+Atomic distances for sample 21 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.614352594987856 which is too large.
+Atomic distances for sample 22 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6260167766200753 which is too large.
+Atomic distances for sample 23 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6073860452544653 which is too large.
+Atomic distances for sample 24 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6349563903017506 which is too large.
+Atomic distances for sample 25 are too large or too small. Resetting this trajectory.
+Distance between 16 and 17 is 1.546576632131761 which is too large.
+Atomic distances for sample 26 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6249419686843953 which is too large.
+Atomic distances for sample 27 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6318038097108534 which is too large.
+Atomic distances for sample 28 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6091084007804335 which is too large.
+Atomic distances for sample 29 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6500853842711427 which is too large.
+Atomic distances for sample 30 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6533926883359933 which is too large.
+Atomic distances for sample 31 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6200613637542831 which is too large.
+Atomic distances for sample 32 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6306146480382273 which is too large.
+Atomic distances for sample 33 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6271650461386924 which is too large.
+Atomic distances for sample 34 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6311668568881041 which is too large.
+Atomic distances for sample 35 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6179890568728075 which is too large.
+Atomic distances for sample 36 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6321221418845766 which is too large.
+Atomic distances for sample 37 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6139963349444792 which is too large.
+Atomic distances for sample 38 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.624097935289433 which is too large.
+Atomic distances for sample 39 are too large or too small. Resetting this trajectory.
+Did not find any uncertainty samples for sample 40.
+Did not find any uncertainty samples for sample 41.
+Found uncertainty sample 42 after 1915 steps.
+Distance between 18 and 21 is 1.605549150958345 which is too large.
+Atomic distances for sample 43 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6363740747385265 which is too large.
+Atomic distances for sample 44 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.615510845505213 which is too large.
+Atomic distances for sample 45 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6072971292988243 which is too large.
+Atomic distances for sample 46 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6067949716210912 which is too large.
+Atomic distances for sample 47 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.655864675603382 which is too large.
+Atomic distances for sample 48 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6132584067735698 which is too large.
+Atomic distances for sample 49 are too large or too small. Resetting this trajectory.
+Distance between 16 and 17 is 1.5785803466438446 which is too large.
+Atomic distances for sample 50 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.621078247612779 which is too large.
+Atomic distances for sample 51 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6172880863639418 which is too large.
+Atomic distances for sample 52 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6089952606795412 which is too large.
+Atomic distances for sample 53 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6353581210716008 which is too large.
+Atomic distances for sample 54 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6218078180882995 which is too large.
+Atomic distances for sample 55 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6268696413360102 which is too large.
+Atomic distances for sample 56 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6216424869493538 which is too large.
+Atomic distances for sample 57 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6141854601701326 which is too large.
+Atomic distances for sample 58 are too large or too small. Resetting this trajectory.
+Distance between 16 and 17 is 1.563588298240707 which is too large.
+Atomic distances for sample 59 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6307984628280083 which is too large.
+Atomic distances for sample 60 are too large or too small. Resetting this trajectory.
+Distance between 16 and 17 is 1.5606023181192783 which is too large.
+Atomic distances for sample 61 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6081755717872708 which is too large.
+Atomic distances for sample 62 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6190918325144568 which is too large.
+Atomic distances for sample 63 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.62079344056739 which is too large.
+Atomic distances for sample 64 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6141877314593456 which is too large.
+Atomic distances for sample 65 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6100660242312361 which is too large.
+Atomic distances for sample 66 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.6426084388236875 which is too large.
+Atomic distances for sample 67 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6105355823384764 which is too large.
+Atomic distances for sample 68 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6053378369369797 which is too large.
+Atomic distances for sample 69 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6375450840039538 which is too large.
+Atomic distances for sample 70 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6055242128005123 which is too large.
+Atomic distances for sample 71 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6154775769949452 which is too large.
+Atomic distances for sample 72 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.606275221437601 which is too large.
+Atomic distances for sample 73 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.6239712629609373 which is too large.
+Atomic distances for sample 74 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6225001072947518 which is too large.
+Atomic distances for sample 75 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6312963684475357 which is too large.
+Atomic distances for sample 76 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6511723790216504 which is too large.
+Atomic distances for sample 77 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.630839983814919 which is too large.
+Atomic distances for sample 78 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6199529831820842 which is too large.
+Atomic distances for sample 79 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6479675348963023 which is too large.
+Atomic distances for sample 80 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6466079621536027 which is too large.
+Atomic distances for sample 81 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6270111307495303 which is too large.
+Atomic distances for sample 82 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.651047205524446 which is too large.
+Atomic distances for sample 83 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.616072613513407 which is too large.
+Atomic distances for sample 84 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6329772138816607 which is too large.
+Atomic distances for sample 85 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6315048555542204 which is too large.
+Atomic distances for sample 86 are too large or too small. Resetting this trajectory.
+Distance between 16 and 17 is 1.5696280268541882 which is too large.
+Atomic distances for sample 87 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6116418483479302 which is too large.
+Atomic distances for sample 88 are too large or too small. Resetting this trajectory.
+Distance between 18 and 19 is 1.609545852933294 which is too large.
+Atomic distances for sample 89 are too large or too small. Resetting this trajectory.
+Distance between 0 and 1 is 1.622905875322929 which is too large.
+Atomic distances for sample 90 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6620366259407717 which is too large.
+Atomic distances for sample 91 are too large or too small. Resetting this trajectory.
+Distance between 1 and 2 is 1.6194462895009867 which is too large.
+Atomic distances for sample 92 are too large or too small. Resetting this trajectory.
+Distance between 18 and 20 is 1.6394518395929891 which is too large.
+Atomic distances for sample 93 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.624946056724679 which is too large.
+Atomic distances for sample 94 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6686082717327384 which is too large.
+Atomic distances for sample 95 are too large or too small. Resetting this trajectory.
+Distance between 18 and 21 is 1.6573126091973707 which is too large.
+Atomic distances for sample 96 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.660009278139972 which is too large.
+Atomic distances for sample 97 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6075973710546636 which is too large.
+Atomic distances for sample 98 are too large or too small. Resetting this trajectory.
+Distance between 1 and 3 is 1.6430876093862283 which is too large.
+Atomic distances for sample 99 are too large or too small. Resetting this trajectory.
+Traceback (most recent call last):
+  File "/home/ws/fq0795/git/gnn_uncertainty/active_learning.py", line 546, in <module>
+    al.improve_model(200, 100, run_idx=max_idx+1, use_wandb=True, model_path=model_path, epochs_per_iter=20, calibrate=True, force_uncertainty=False)
+  File "/home/ws/fq0795/git/gnn_uncertainty/active_learning.py", line 321, in improve_model
+    self._log_md_steps(i, steps, f"al/run{run_idx}/eval/md_steps.csv")
+  File "/home/ws/fq0795/git/gnn_uncertainty/active_learning.py", line 389, in _log_md_steps
+    writer.writerow([iteration, sample, steps[sample]])
+                                        ~~~~~^^^^^^^^
+KeyError: 0

@@ -40,6 +40,7 @@ class MVE(BaseUncertainty):
         optimizer = torch.optim.AdamW(self.parameters(), lr=1e-3, weight_decay=1e-16)   
         criterion = nn.L1Loss()
         scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=factor, patience=patience)
+        scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=1700, gamma=1/(np.sqrt(10)))
 
         if warmup_steps > 0:
             self.warmup(train_loader, optimizer, criterion, device, dtype, epochs=warmup_steps, force_weight=force_weight, energy_weight=energy_weight, log_interval=log_interval)
@@ -70,7 +71,8 @@ class MVE(BaseUncertainty):
                     self.best_model = self.state_dict()
 
             self.lr_before = optimizer.param_groups[0]['lr']
-            scheduler.step(np.array(self.valid_losses_total).mean())
+            #scheduler.step(np.array(self.valid_losses_total).mean())
+            scheduler.step()
             self.lr_after = optimizer.param_groups[0]['lr']
             self.drop_metrics()
 
@@ -122,7 +124,7 @@ class MVE(BaseUncertainty):
             
             loss_energy = criterion(mean_energy, label_energy)
             loss_force = criterion(mean_force, label_forces)
-            total_loss = 0.5 * torch.mean(torch.log(uncertainty) + (loss_force*force_weight)/uncertainty) + loss_energy*energy_weight
+            total_loss = 0.5 * torch.mean(torch.log(uncertainty) + (loss_force)/uncertainty)*force_weight + loss_energy*energy_weight
 
             optimizer.zero_grad()
             total_loss.backward()
