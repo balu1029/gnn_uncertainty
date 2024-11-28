@@ -127,7 +127,7 @@ class EvidentialRegression(BaseUncertainty):
         test_loader=None,
     ):
 
-        optimizer = torch.optim.AdamW(self.parameters(), lr=1e-3, weight_decay=1e-16)
+        optimizer = torch.optim.AdamW(self.parameters(), lr=lr, weight_decay=1e-16)
         if coeff is None:
             coeff = self.coeff
         else:

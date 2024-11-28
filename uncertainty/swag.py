@@ -72,7 +72,7 @@ class SWAG(BaseUncertainty):
         test_loader=None,
     ):
 
-        optimizer = torch.optim.AdamW(self.parameters(), lr=1e-3, weight_decay=1e-16)
+        optimizer = torch.optim.AdamW(self.parameters(), lr=lr, weight_decay=1e-16)
         criterion = nn.L1Loss()
         scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(
             optimizer, mode="min", factor=factor, patience=patience

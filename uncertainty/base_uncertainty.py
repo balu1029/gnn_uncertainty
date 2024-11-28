@@ -802,8 +802,9 @@ class BaseUncertainty(nn.Module):
             # sns.kdeplot(x=uncertainties, y=force_losses, cmap=sns.light_palette("blue", as_cmap=True), fill=True)
             plt.scatter(uncertainties / scaling, force_losses / scaling, label="Data")
             plt.plot(
-                uncertainties,
-                self.uncertainty_slope * uncertainties + self.uncertainty_bias,
+                uncertainties / scaling,
+                self.uncertainty_slope * uncertainties / scaling
+                + self.uncertainty_bias,
                 color="red",
                 label="Regression Line",
             )

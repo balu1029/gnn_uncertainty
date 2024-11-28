@@ -834,7 +834,7 @@ if __name__ == "__main__":
     model_path = "gnn/models/ensemble3_6/model_0.pt"
     model_path = "gnn/models/ensemble3_20241018_101159/model_0.pt"
     model_path = "gnn/models/ensemble3_20241106_095153/model_0.pt"
-    model_path = "gnn/models/mve_20241115_153051/model_2.pt"
+    model_path = "gnn/models/mve_20241127_164156/model_3.pt"
     # model_path = "gnn/models/swag5_20241113_193532/model_4.pt"
 
     num_ensembles = 3
