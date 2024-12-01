@@ -1,0 +1,61 @@
+wandb_version: 1
+
+name:
+  desc: null
+  value: alaninedipeptide
+learning_rate_start:
+  desc: null
+  value: 0.0001
+optimizer:
+  desc: null
+  value: AdamW
+batch_size:
+  desc: null
+  value: 32
+loss_fn:
+  desc: null
+  value: L1Loss
+model_checkpoint:
+  desc: null
+  value: gnn/models/mve_20241127_164156/model_3.pt
+model:
+  desc: null
+  value: MVE
+epochs_per_iter:
+  desc: null
+  value: 20
+max_uncertainty:
+  desc: null
+  value: 8
+_wandb:
+  desc: null
+  value:
+    python_version: 3.12.4
+    cli_version: 0.17.4
+    framework: torch
+    is_jupyter_run: false
+    is_kaggle_kernel: false
+    start_time: 1733007105
+    t:
+      1:
+      - 1
+      - 5
+      - 51
+      - 53
+      - 55
+      2:
+      - 1
+      - 5
+      - 51
+      - 53
+      - 55
+      3:
+      - 2
+      - 13
+      - 16
+      - 23
+      4: 3.12.4
+      5: 0.17.4
+      8:
+      - 5
+      13: linux-x86_64

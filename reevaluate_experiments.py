@@ -18,10 +18,10 @@ hidden_nf = 32
 n_layers = 4
 
 ensemble_size = 3
-uncertainty_method = "ENS"
+uncertainty_method = "EVI"
 swag_sample_size = 5
 
-name = "ensemble3_20241106_095153"
+name = "evi_20241129_113422"
 cal = True
 
 model_dir = f"gnn/models/{name}"
@@ -105,6 +105,13 @@ for i, model_name in enumerate(os.listdir(model_dir)):
             use_energy_uncertainty=True,
             use_force_uncertainty=False,
         )
+        mve.valid_on_cv(
+            testloader,
+            device=device,
+            dtype=torch.float32,
+            save_path=f"{out_path}/heatmap_{i}",
+            use_force_uncertainty=False,
+        )
 
     if uncertainty_method == "SWAG":
 
@@ -136,6 +143,13 @@ for i, model_name in enumerate(os.listdir(model_dir)):
             use_energy_uncertainty=True,
             use_force_uncertainty=True,
         )
+        swag.valid_on_cv(
+            testloader,
+            device=device,
+            dtype=torch.float32,
+            save_path=f"{out_path}/heatmap_{i}",
+            use_force_uncertainty=True,
+        )
 
     if uncertainty_method == "ENS":
         ens = ModelEnsemble(
@@ -155,12 +169,23 @@ for i, model_name in enumerate(os.listdir(model_dir)):
                 dtype=torch.float32,
                 path=f"{out_path}/calibration{i}.pdf",
             )
-        # ens.evaluate_all(testloader_in, device=device, dtype=torch.float32, plot_name=f"{out_path}/plot_{i}", csv_path=f"{out_path}/eval.csv", test_loader_out=testloader_out, best_model_available=False, use_energy_uncertainty=True, use_force_uncertainty=True)
-        ens.valid_on_cv(
-            validationloader=testloader,
-            save_path=f"{out_path}/heatmap_{i}",
+        ens.evaluate_all(
+            testloader_in,
             device=device,
             dtype=torch.float32,
+            plot_name=f"{out_path}/plot_{i}",
+            csv_path=f"{out_path}/eval.csv",
+            test_loader_out=testloader_out,
+            best_model_available=False,
+            use_energy_uncertainty=True,
+            use_force_uncertainty=True,
+        )
+
+        ens.valid_on_cv(
+            testloader,
+            device=device,
+            dtype=torch.float32,
+            save_path=f"{out_path}/heatmap_{i}",
             use_force_uncertainty=True,
         )
 
@@ -191,5 +216,12 @@ for i, model_name in enumerate(os.listdir(model_dir)):
             test_loader_out=testloader_out,
             best_model_available=False,
             use_energy_uncertainty=True,
+            use_force_uncertainty=False,
+        )
+        evi.valid_on_cv(
+            testloader,
+            device=device,
+            dtype=torch.float32,
+            save_path=f"{out_path}/heatmap_{i}",
             use_force_uncertainty=False,
         )

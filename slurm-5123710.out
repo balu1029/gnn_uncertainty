@@ -1,0 +1,16 @@
+['H1', 'CH3', 'H2', 'H3', 'C', 'O', 'N', 'H', 'CA', 'HA', 'CB', 'HB1', 'HB2', 'HB3', 'C', 'O', 'N', 'H', 'C', 'H1', 'H2', 'H3']
+59
+Traceback (most recent call last):
+  File "/home/ws/fq0795/git/gnn_uncertainty/active_learning.py", line 928, in <module>
+    al.eval_on_cv(58, model, al.device, al.dtype, use_force_uncertainty=False)
+  File "/home/ws/fq0795/git/gnn_uncertainty/active_learning.py", line 752, in eval_on_cv
+    tmp_path = self._create_temp_intermediate_dataset(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ws/fq0795/git/gnn_uncertainty/active_learning.py", line 725, in _create_temp_intermediate_dataset
+    shutil.copy2(file, f"{temp_folder}valid.xyz")
+  File "/home/ws/fq0795/miniconda3/envs/torch/lib/python3.12/shutil.py", line 475, in copy2
+    copyfile(src, dst, follow_symlinks=follow_symlinks)
+  File "/home/ws/fq0795/miniconda3/envs/torch/lib/python3.12/shutil.py", line 260, in copyfile
+    with open(src, 'rb') as fsrc:
+         ^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'al/run58/data/valid.xyz'

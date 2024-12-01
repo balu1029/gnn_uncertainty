@@ -99,6 +99,7 @@ device = "cuda" if torch.cuda.is_available() else "cpu"
 dataset = "datasets/files/train_in"
 testset_in = "datasets/files/validation_in"
 testset_out = "datasets/files/validation_out"
+testset_uniform = "al/base_data/test"
 model_path = None  # "./gnn/models/ala_converged_1000000_forces_mve.pt"
 trainset = MD17Dataset(
     dataset, subtract_self_energies=False, in_unit="kj/mol", train=True, train_ratio=0.8
@@ -112,6 +113,10 @@ validset = MD17Dataset(
 )
 testset_in = MD17Dataset(testset_in, subtract_self_energies=False, in_unit="kj/mol")
 testset_out = MD17Dataset(testset_out, subtract_self_energies=False, in_unit="kj/mol")
+
+testset_uniform = MD17Dataset(
+    testset_uniform, subtract_self_energies=False, in_unit="kj/mol"
+)
 
 
 # Create data loaders for train and validation sets
@@ -128,7 +133,9 @@ testloader_in = torch.utils.data.DataLoader(
 testloader_out = torch.utils.data.DataLoader(
     testset_out, batch_size=batch_size, shuffle=False
 )
-
+testloader_uniform = torch.utils.data.DataLoader(
+    testset_uniform, batch_size=batch_size, shuffle=False
+)
 
 model_path = None
 
@@ -184,6 +191,13 @@ if uncertainty_method == "MVE":
             use_energy_uncertainty=True,
             use_force_uncertainty=False,
         )
+        mve.valid_on_cv(
+            testloader_uniform,
+            device=device,
+            dtype=torch.float32,
+            save_path=f"{log_path}/heatmap_{i}",
+            use_force_uncertainty=False,
+        )
 
 if uncertainty_method == "SWAG":
     name = f"swag{swag_sample_size}"
@@ -236,6 +250,13 @@ if uncertainty_method == "SWAG":
             use_energy_uncertainty=True,
             use_force_uncertainty=True,
         )
+        swag.valid_on_cv(
+            testloader_uniform,
+            device=device,
+            dtype=torch.float32,
+            save_path=f"{log_path}/heatmap_{i}",
+            use_force_uncertainty=True,
+        )
 
 if uncertainty_method == "ENS":
     name = f"ensemble{ensemble_size}"
@@ -286,6 +307,13 @@ if uncertainty_method == "ENS":
             use_energy_uncertainty=True,
             use_force_uncertainty=True,
         )
+        ens.valid_on_cv(
+            testloader_uniform,
+            device=device,
+            dtype=torch.float32,
+            save_path=f"{log_path}/heatmap_{i}",
+            use_force_uncertainty=True,
+        )
 
 if uncertainty_method == "EVI":
     name = "evi"
@@ -334,5 +362,12 @@ if uncertainty_method == "EVI":
             csv_path=f"{log_path}/eval.csv",
             test_loader_out=testloader_out,
             use_energy_uncertainty=True,
+            use_force_uncertainty=False,
+        )
+        evi.valid_on_cv(
+            testloader_uniform,
+            device=device,
+            dtype=torch.float32,
+            save_path=f"{log_path}/heatmap_{i}",
             use_force_uncertainty=False,
         )

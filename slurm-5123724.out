@@ -1,0 +1,87 @@
+['H1', 'CH3', 'H2', 'H3', 'C', 'O', 'N', 'H', 'CA', 'HA', 'CB', 'HB1', 'HB2', 'HB3', 'C', 'O', 'N', 'H', 'C', 'H1', 'H2', 'H3']
+59
+Uncertainty Slope: 17.06214141845703, Uncertainty Bias: -1.7496907711029053
+(48745, 22, 3)
+Uncertainty Slope: 16.727989196777344, Uncertainty Bias: -1.768530249595642
+(48745, 22, 3)
+Uncertainty Slope: 18.3216552734375, Uncertainty Bias: -1.9562398195266724
+(48745, 22, 3)
+Uncertainty Slope: 17.97317886352539, Uncertainty Bias: -1.9170284271240234
+(48745, 22, 3)
+Uncertainty Slope: 18.285947799682617, Uncertainty Bias: -1.9773057699203491
+(48745, 22, 3)
+Uncertainty Slope: 17.187437057495117, Uncertainty Bias: -1.9020320177078247
+(48745, 22, 3)
+Uncertainty Slope: 18.767459869384766, Uncertainty Bias: -2.0581068992614746
+/home/ws/fq0795/git/gnn_uncertainty/uncertainty/base_uncertainty.py:925: RuntimeWarning: More than 20 figures have been opened. Figures created through the pyplot interface (`matplotlib.pyplot.figure`) are retained until explicitly closed and may consume too much memory. (To control this warning, see the rcParam `figure.max_open_warning`). Consider using `matplotlib.pyplot.close()`.
+  plt.figure(figsize=(10, 8))
+(48745, 22, 3)
+Uncertainty Slope: 19.786884307861328, Uncertainty Bias: -2.194180488586426
+(48745, 22, 3)
+Uncertainty Slope: 19.326906204223633, Uncertainty Bias: -2.1464903354644775
+(48745, 22, 3)
+Uncertainty Slope: 21.16516876220703, Uncertainty Bias: -2.3565049171447754
+(48745, 22, 3)
+Uncertainty Slope: 21.57670783996582, Uncertainty Bias: -2.41802716255188
+(48745, 22, 3)
+Uncertainty Slope: 22.312725067138672, Uncertainty Bias: -2.538862466812134
+(48745, 22, 3)
+Uncertainty Slope: 22.406166076660156, Uncertainty Bias: -2.5631189346313477
+(48745, 22, 3)
+Uncertainty Slope: 20.81508445739746, Uncertainty Bias: -2.3892834186553955
+(48745, 22, 3)
+Uncertainty Slope: 20.459087371826172, Uncertainty Bias: -2.38999605178833
+(48745, 22, 3)
+Uncertainty Slope: 20.643325805664062, Uncertainty Bias: -2.3783013820648193
+(48745, 22, 3)
+Uncertainty Slope: 20.856529235839844, Uncertainty Bias: -2.4229469299316406
+(48745, 22, 3)
+Uncertainty Slope: 22.766138076782227, Uncertainty Bias: -2.6918914318084717
+(48745, 22, 3)
+Uncertainty Slope: 22.281936645507812, Uncertainty Bias: -2.6588282585144043
+(48745, 22, 3)
+Uncertainty Slope: 23.68266487121582, Uncertainty Bias: -2.7996666431427
+(48745, 22, 3)
+Uncertainty Slope: 21.26001739501953, Uncertainty Bias: -2.549753427505493
+(48745, 22, 3)
+Uncertainty Slope: 23.457630157470703, Uncertainty Bias: -2.797222137451172
+(48745, 22, 3)
+Uncertainty Slope: 23.09674835205078, Uncertainty Bias: -2.799436092376709
+(48745, 22, 3)
+Uncertainty Slope: 22.998010635375977, Uncertainty Bias: -2.7447667121887207
+(48745, 22, 3)
+Uncertainty Slope: 24.683191299438477, Uncertainty Bias: -2.954012155532837
+(48745, 22, 3)
+Uncertainty Slope: 23.92053985595703, Uncertainty Bias: -2.8356170654296875
+(48745, 22, 3)
+Uncertainty Slope: 24.35953712463379, Uncertainty Bias: -2.9579553604125977
+(48745, 22, 3)
+Uncertainty Slope: 23.433469772338867, Uncertainty Bias: -2.8307430744171143
+(48745, 22, 3)
+Uncertainty Slope: 25.694059371948242, Uncertainty Bias: -3.0758159160614014
+(48745, 22, 3)
+Uncertainty Slope: 24.103456497192383, Uncertainty Bias: -2.887295722961426
+(48745, 22, 3)
+Uncertainty Slope: 22.48658561706543, Uncertainty Bias: -2.7547144889831543
+(48745, 22, 3)
+Uncertainty Slope: 26.050140380859375, Uncertainty Bias: -3.147373676300049
+(48745, 22, 3)
+Uncertainty Slope: 23.73035430908203, Uncertainty Bias: -2.8333513736724854
+(48745, 22, 3)
+Uncertainty Slope: 25.563501358032227, Uncertainty Bias: -3.076260566711426
+(48745, 22, 3)
+Uncertainty Slope: 24.670547485351562, Uncertainty Bias: -2.9442341327667236
+(48745, 22, 3)
+Uncertainty Slope: 26.812288284301758, Uncertainty Bias: -3.224440097808838
+(48745, 22, 3)
+Uncertainty Slope: 21.787227630615234, Uncertainty Bias: -2.5584044456481934
+(48745, 22, 3)
+Traceback (most recent call last):
+  File "/home/ws/fq0795/git/gnn_uncertainty/active_learning.py", line 927, in <module>
+    al.eval_on_cv(59, model, al.device, al.dtype, use_force_uncertainty=False)
+  File "/home/ws/fq0795/git/gnn_uncertainty/active_learning.py", line 773, in eval_on_cv
+    model.calibrate_uncertainty(
+  File "/home/ws/fq0795/git/gnn_uncertainty/uncertainty/base_uncertainty.py", line 757, in calibrate_uncertainty
+    uncertainties = torch.cat(
+                    ^^^^^^^^^^
+RuntimeError: zero-dimensional tensor (at position 1) cannot be concatenated

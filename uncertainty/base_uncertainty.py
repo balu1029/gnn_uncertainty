@@ -245,7 +245,7 @@ class BaseUncertainty(nn.Module):
                 energy_correlation_in_energy,
                 energy_correlation_in_force,
                 energy_losses_in,
-                force_losses_in,
+                force_errors_in,
                 uncertainties_in,
             ) = self._eval_all(
                 test_loader_in,
@@ -257,7 +257,7 @@ class BaseUncertainty(nn.Module):
                 plot_loss=True,
                 plot=not (test_loader_out is not None),
             )
-            print(np.min(force_losses_in), np.min(energy_losses_in))
+            print(np.min(force_errors_in), np.min(energy_losses_in))
             print(np.min(uncertainties_in), np.max(uncertainties_in))
             if test_loader_out is not None:
                 (
@@ -266,7 +266,7 @@ class BaseUncertainty(nn.Module):
                     energy_correlation_out_energy,
                     energy_correlation_out_forces,
                     energy_losses_out,
-                    force_losses_out,
+                    force_errors_out,
                     uncertainties_out,
                 ) = self._eval_all(
                     test_loader_out,
@@ -293,12 +293,12 @@ class BaseUncertainty(nn.Module):
                 self._mulit_scatter_plot(
                     uncertainties_in,
                     np.mean(
-                        force_losses_in.reshape(energy_losses_in.shape[0], -1, 3),
+                        force_errors_in.reshape(energy_losses_in.shape[0], -1, 3),
                         axis=(1, 2),
                     ),
                     uncertainties_out,
                     np.mean(
-                        force_losses_out.reshape(energy_losses_out.shape[0], -1, 3),
+                        force_errors_out.reshape(energy_losses_out.shape[0], -1, 3),
                         axis=(1, 2),
                     ),
                     self.__class__.__name__,
@@ -316,7 +316,7 @@ class BaseUncertainty(nn.Module):
                 force_correlation_in_energy,
                 force_correlation_in_forces,
                 energy_losses_in,
-                force_losses_in,
+                force_errors_in,
                 uncertainties_in,
             ) = self._eval_all(
                 test_loader_in,
@@ -335,7 +335,7 @@ class BaseUncertainty(nn.Module):
                     force_correlation_out_energy,
                     force_correlation_out_forces,
                     energy_losses_out,
-                    force_losses_out,
+                    force_errors_out,
                     uncertainties_out,
                 ) = self._eval_all(
                     test_loader_out,
@@ -361,12 +361,12 @@ class BaseUncertainty(nn.Module):
                 self._mulit_scatter_plot(
                     uncertainties_in,
                     np.mean(
-                        force_losses_in.reshape(energy_losses_in.shape[0], -1, 3),
+                        force_errors_in.reshape(energy_losses_in.shape[0], -1, 3),
                         axis=(1, 2),
                     ),
                     uncertainties_out,
                     np.mean(
-                        force_losses_out.reshape(energy_losses_out.shape[0], -1, 3),
+                        force_errors_out.reshape(energy_losses_out.shape[0], -1, 3),
                         axis=(1, 2),
                     ),
                     self.__class__.__name__,
@@ -388,7 +388,7 @@ class BaseUncertainty(nn.Module):
                 energy_correlation_out_energy,
                 energy_correlation_out_forces,
                 energy_losses_out,
-                force_losses_out,
+                force_errors_out,
             ) = (0, 0, 0, 0, np.array([0]), np.array([[[0]]]))
 
         if csv_path:
@@ -397,11 +397,11 @@ class BaseUncertainty(nn.Module):
                 energy_r2_in,
                 forces_r2_in,
                 np.mean(energy_losses_in),
-                np.mean(force_losses_in),
+                np.mean(force_errors_in),
                 energy_r2_out,
                 forces_r2_out,
                 np.mean(energy_losses_out),
-                np.mean(force_losses_out),
+                np.mean(force_errors_out),
             ]
             if use_energy_uncertainty:
                 row.extend(
@@ -831,8 +831,8 @@ class BaseUncertainty(nn.Module):
             ground_truths_energy,
             predictions_forces,
             ground_truths_forces,
-            energy_losses,
-            forces_losses,
+            energy_errors,
+            force_errors,
             uncertainties,
         ) = data
         coords = self._get_coords_from_dataloader(validationloader, device, dtype)
@@ -844,12 +844,10 @@ class BaseUncertainty(nn.Module):
         psi = self._calculate_dihedrals_batch(coords, indices_psi)
         phi = self._calculate_dihedrals_batch(coords, indices_phi)
 
-        print(psi.shape)
-
         self._heatmap(
             psi,
             -phi,
-            energy_losses,
+            energy_errors,
             "Energy",
             "φ",
             "Ψ",
@@ -866,6 +864,20 @@ class BaseUncertainty(nn.Module):
             "Ψ",
             save_path + "_uncertainties.svg",
             "Uncertainty",
+            num_bins=200,
+        )
+        self._heatmap(
+            psi,
+            -phi,
+            np.mean(
+                force_errors.reshape(energy_errors.shape[0], -1, 3),
+                axis=(1, 2),
+            ),
+            "Forces",
+            "φ",
+            "Ψ",
+            save_path + "_force_error.svg",
+            "Force Error",
             num_bins=200,
         )
 

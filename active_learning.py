@@ -167,6 +167,9 @@ class ALCalculator(Calculator):
     def reset_uncertainty_samples(self):
         self.uncertainty_samples = []
 
+    def drop_uncertainty_sample(self, index):
+        self.uncertainty_samples.pop(index)
+
     def change_norm(self, norm_file):
         with open(norm_file, "r") as csvfile:
             reader = csv.reader(csvfile)
@@ -300,6 +303,8 @@ class ActiveLearning:
         np.random.seed(None)
         idx = np.random.randint(0, len(coordinates))
         self.atoms.positions = coordinates[idx]
+        # Set velocities to zero
+        MaxwellBoltzmannDistribution(self.atoms, temperature_K=self.temperature)
 
     def _read_coordinates(self, foldername: str, last_n: int = 1):
         all_atom_numbers = []
@@ -461,6 +466,13 @@ class ActiveLearning:
             energy_weight=energy_weight,
             test=True,
         )
+        self.model.valid_on_cv(
+            validationloader=testloader,
+            save_path=f"al/run{run_idx}/plots/heatmap_init",
+            device=device,
+            dtype=self.dtype,
+            use_force_uncertainty=force_uncertainty,
+        )
         self.model.epoch_summary(
             epoch=f"Initital validation",
             use_wandb=use_wandb,
@@ -484,6 +496,19 @@ class ActiveLearning:
                         len(self.calc.get_uncertainty_samples())
                         > num_uncertainty_samples
                     ):
+                        num_new_samples = (
+                            len(self.calc.get_uncertainty_samples())
+                            - num_uncertainty_samples
+                        )
+                        if num_new_samples > 1:
+                            print(
+                                f"Found {num_new_samples} uncertainty samples at step {j}. Dropping index -2"
+                            )
+                            # print(
+                            #    "this should only happen at step 1 because setting resetting the position causes ase to do 2 energy calculations."
+                            # )
+                            self.calc.drop_uncertainty_sample(-2)
+
                         num_uncertainty_samples = len(
                             self.calc.get_uncertainty_samples()
                         )
@@ -496,6 +521,7 @@ class ActiveLearning:
                         print(
                             f"Atomic distances for sample {k} are too large or too small. Resetting this trajectory."
                         )
+                        steps[k] = j
                         break
                     self.dyn.run(1)
                     if j == max_iterations - 1:
@@ -515,14 +541,19 @@ class ActiveLearning:
                 print(
                     f"Training model {i}. Added {len(samples)} samples to the dataset."
                 )
-
+                if len(samples) == 1:
+                    valid_ratio = None
+                    valid_file = None
+                else:
+                    valid_ratio = 0.1
+                    valid_file = f"{valid_out_path}valid{i}.xyz"
                 self.add_data(
                     samples,
                     energies,
                     forces,
                     f"{train_out_path}train{i}.xyz",
-                    valid_ratio=0.1,
-                    valid_file=f"{valid_out_path}valid{i}.xyz",
+                    valid_ratio=valid_ratio,
+                    valid_file=valid_file,
                 )
 
                 trainset = MD17Dataset(
@@ -540,7 +571,6 @@ class ActiveLearning:
                     scale=True,
                     load_norm_path=f"{data_out_path}norms_dataset.csv",
                 )
-                # self.calc.change_norm(f"{data_out_path}norms{i}.csv")
                 trainloader = torch.utils.data.DataLoader(
                     trainset, batch_size=32, shuffle=True
                 )
@@ -709,6 +739,21 @@ class ActiveLearning:
                 return False
         return True
 
+    def _create_temp_intermediate_dataset(self, data_path, i):
+        # loads the first n valid_i.xyz files in a temporary folder to create a dataset from this folder
+        temp_folder = f"al/run{i}/data/temp/"
+        if not os.path.exists(temp_folder):
+            os.makedirs(temp_folder)
+        file = f"{data_path}valid.xyz"
+        shutil.copy2(file, f"{temp_folder}valid.xyz")
+        for j in range(i):
+            file = f"{data_path}valid{j}.xyz"
+            shutil.copy2(file, f"{temp_folder}valid{j}.xyz")
+        return temp_folder
+
+    def _remove_temp_intermediate_dataset(self, temp_folder):
+        shutil.rmtree(temp_folder)
+
     def eval_on_cv(self, run_idx, model, device, dtype, use_force_uncertainty=False):
         model_out_path = f"al/run{run_idx}/models/"
         data_out_path = f"al/run{run_idx}/data/"
@@ -721,28 +766,38 @@ class ActiveLearning:
             scale=True,
             load_norm_path=f"{data_out_path}norms_dataset.csv",
         )
-        validset = MD17Dataset(
-            f"al/base_data/valid",
-            subtract_self_energies=False,
-            in_unit="kj/mol",
-            scale=True,
-            load_norm_path=f"{data_out_path}norms_dataset.csv",
-        )
         self.calc.change_norm(f"{data_out_path}norms_dataset.csv")
         testloader = torch.utils.data.DataLoader(
             testset, batch_size=val_batch_size, shuffle=False
         )
-        validloader = torch.utils.data.DataLoader(
-            validset, batch_size=val_batch_size, shuffle=True
-        )
 
         for i in range(len(os.listdir(model_out_path))):
+            tmp_path = self._create_temp_intermediate_dataset(
+                f"al/run{run_idx}/data/valid/", i + 1
+            )
+            validset = MD17Dataset(
+                tmp_path,
+                subtract_self_energies=False,
+                in_unit="kj/mol",
+                scale=True,
+                load_norm_path=f"{data_out_path}norms_dataset.csv",
+            )
+            validloader = torch.utils.data.DataLoader(
+                validset, batch_size=val_batch_size, shuffle=True
+            )
+            self._remove_temp_intermediate_dataset(tmp_path)
+
             model_path = f"{model_out_path}model_{i}.pt"
             model.load_state_dict(
                 torch.load(model_path, map_location=torch.device(self.device))
             )
+
             model.eval()
-            model.calibrate_uncertainty(validloader, device=device, dtype=dtype)
+            model.calibrate_uncertainty(
+                validloader,
+                device=device,
+                dtype=dtype,
+            )
             model.valid_on_cv(
                 validationloader=testloader,
                 save_path=f"al/run{run_idx}/plots/heatmap_{i}",
@@ -835,6 +890,7 @@ if __name__ == "__main__":
     model_path = "gnn/models/ensemble3_20241018_101159/model_0.pt"
     model_path = "gnn/models/ensemble3_20241106_095153/model_0.pt"
     model_path = "gnn/models/mve_20241127_164156/model_3.pt"
+    # model_path = "gnn/models/evi_20241129_140558/model_0.pt"
     # model_path = "gnn/models/swag5_20241113_193532/model_4.pt"
 
     num_ensembles = 3
@@ -842,7 +898,14 @@ if __name__ == "__main__":
     hidden_nf = 32
     n_layers = 4
     # model = MVE(EGNN, in_node_nf=in_nf, in_edge_nf=0, hidden_nf=hidden_nf, n_layers=n_layers, multi_dec=True)
-    # model = ModelEnsemble(EGNN, num_models=num_ensembles, in_node_nf=in_nf, in_edge_nf=0, hidden_nf=hidden_nf, n_layers=n_layers)
+    # model = ModelEnsemble(
+    #     EGNN,
+    #     num_models=num_ensembles,
+    #     in_node_nf=in_nf,
+    #     in_edge_nf=0,
+    #     hidden_nf=hidden_nf,
+    #     n_layers=n_layers,
+    # )
     # model = SWAG(EGNN, in_node_nf=in_nf, in_edge_nf=0, hidden_nf=hidden_nf, n_layers=n_layers, sample_size=5)
     model = MVE(
         EGNN,
@@ -852,11 +915,18 @@ if __name__ == "__main__":
         n_layers=n_layers,
         multi_dec=True,
     )
+    # model = EvidentialRegression(
+    #     EGNN,
+    #     in_node_nf=in_nf,
+    #     in_edge_nf=0,
+    #     hidden_nf=hidden_nf,
+    #     n_layers=n_layers,
+    # )
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model.to(device)
     model.load_state_dict(torch.load(model_path, map_location=device))
     al = ActiveLearning(
-        max_uncertainty=4,
+        max_uncertainty=8,
         num_ensembles=num_ensembles,
         in_nf=in_nf,
         hidden_nf=hidden_nf,
@@ -885,5 +955,5 @@ if __name__ == "__main__":
         calibrate=True,
         force_uncertainty=False,
     )
-    # al.eval_on_cv(54, model, al.device, al.dtype, use_force_uncertainty=True)
+    # al.eval_on_cv(59, model, al.device, al.dtype, use_force_uncertainty=False)
     # al.create_gif_from_svgs(54, duration=1000, loop=0, img_type="energy_error")

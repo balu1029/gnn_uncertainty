@@ -77,6 +77,12 @@ class EvidentialRegressionLoss(nn.Module):
         Forward pass to compute the total loss which includes both NLL and regularization.
         """
         gamma, v, alpha, beta = evidential_output
+        gamma, v, alpha, beta = (
+            gamma.squeeze(0),
+            v.squeeze(0),
+            alpha.squeeze(0),
+            beta.squeeze(0),
+        )
         loss_nll = self.NIG_NLL(y_true, gamma, v, alpha, beta)
         loss_reg = self.NIG_Reg(y_true, gamma, v, alpha, beta)
         return loss_nll + self.coeff * loss_reg
@@ -132,9 +138,12 @@ class EvidentialRegression(BaseUncertainty):
             coeff = self.coeff
         else:
             self.coeff = coeff
-        criterion = EvidentialRegressionLoss(coeff=coeff)
+        criterion = torch.nn.L1Loss()
         scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(
             optimizer, mode="min", factor=factor, patience=patience
+        )
+        scheduler = torch.optim.lr_scheduler.StepLR(
+            optimizer, step_size=2001, gamma=1 / (np.sqrt(10))
         )
 
         if use_wandb:
@@ -207,7 +216,8 @@ class EvidentialRegression(BaseUncertainty):
                     self.best_model = self.state_dict()
 
             self.lr_before = optimizer.param_groups[0]["lr"]
-            scheduler.step(np.array(self.valid_losses_total).mean())
+            # scheduler.step(np.array(self.valid_losses_total).mean())
+            scheduler.step()
             self.lr_after = optimizer.param_groups[0]["lr"]
             self.drop_metrics()
 
@@ -228,7 +238,8 @@ class EvidentialRegression(BaseUncertainty):
     ):
         start = time.time()
         self.train()
-        force_criterion = nn.L1Loss()
+        force_criterion = criterion
+        evi_criterion = EvidentialRegressionLoss(coeff=self.coeff)
         for i, data in enumerate(train_loader):
 
             (
@@ -253,7 +264,9 @@ class EvidentialRegression(BaseUncertainty):
             )
             variance = torch.sqrt(beta / (v * (alpha - 1)))
 
-            evidential_loss_energy = criterion((energy, v, alpha, beta), label_energy)
+            evidential_loss_energy = evi_criterion(
+                (energy, v, alpha, beta), label_energy
+            )
             loss_energy = force_criterion(energy, label_energy)
             loss_force = force_criterion(force, label_forces)
             total_loss = (
@@ -293,7 +306,8 @@ class EvidentialRegression(BaseUncertainty):
     ):
         start = time.time()
         self.eval()
-        force_criterion = nn.L1Loss()
+        force_criterion = criterion
+        evi_criterion = EvidentialRegressionLoss(coeff=self.coeff)
         for i, data in enumerate(valid_loader):
             (
                 atom_positions,
@@ -316,7 +330,9 @@ class EvidentialRegression(BaseUncertainty):
                 n_nodes=n_nodes,
             )
 
-            evidential_loss_energy = criterion((energy, v, alpha, beta), label_energy)
+            evidential_loss_energy = evi_criterion(
+                (energy, v, alpha, beta), label_energy
+            )
             loss_energy = force_criterion(energy, label_energy)
             loss_force = force_criterion(force, label_forces)
             total_loss = (
@@ -348,7 +364,6 @@ class EvidentialRegression(BaseUncertainty):
         self.eval()
         energy, force, v, alpha, beta = self.forward(x=x, *args, **kwargs)
         variance = torch.sqrt(beta / (v * (alpha - 1)))
-        print(self.uncertainty_bias, self.uncertainty_slope, flush=True)
         return energy, force, variance * self.uncertainty_slope + self.uncertainty_bias
 
     def forward(self, x, *args, **kwargs):
