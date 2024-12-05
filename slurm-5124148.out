@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/home/ws/fq0795/git/gnn_uncertainty/datasets/helper/cv_visualizer.py", line 345, in <module>
+    get_al_animation("al/run69/data/train/")
+  File "/home/ws/fq0795/git/gnn_uncertainty/datasets/helper/cv_visualizer.py", line 328, in get_al_animation
+    base_path + all_paths,
+    ~~~~~~~~~~^~~~~~~~~~~
+TypeError: can only concatenate str (not "list") to str

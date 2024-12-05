@@ -883,15 +883,9 @@ class ActiveLearning:
 
 
 if __name__ == "__main__":
-    model_path = "gnn/models/mve_2/model_0.pt"
-    # model_path = "al/run10/models/model_19.pt"
-    # model_path = "gnn/models/ala_converged_1000000_even_larger.pt"
-    model_path = "gnn/models/ensemble3_6/model_0.pt"
-    model_path = "gnn/models/ensemble3_20241018_101159/model_0.pt"
-    model_path = "gnn/models/ensemble3_20241106_095153/model_0.pt"
-    model_path = "gnn/models/mve_20241127_164156/model_3.pt"
-    # model_path = "gnn/models/evi_20241129_140558/model_0.pt"
-    # model_path = "gnn/models/swag5_20241113_193532/model_4.pt"
+    # model_path = "gnn/models/ensemble3_20241106_095153/model_0.pt"
+    # model_path = "gnn/models/mve_20241127_164156/model_3.pt"
+    model_path = "gnn/models/evi_20241129_140558/model_0.pt"
 
     num_ensembles = 3
     in_nf = 12
@@ -907,21 +901,21 @@ if __name__ == "__main__":
     #     n_layers=n_layers,
     # )
     # model = SWAG(EGNN, in_node_nf=in_nf, in_edge_nf=0, hidden_nf=hidden_nf, n_layers=n_layers, sample_size=5)
-    model = MVE(
-        EGNN,
-        in_node_nf=in_nf,
-        in_edge_nf=0,
-        hidden_nf=hidden_nf,
-        n_layers=n_layers,
-        multi_dec=True,
-    )
-    # model = EvidentialRegression(
+    # model = MVE(
     #     EGNN,
     #     in_node_nf=in_nf,
     #     in_edge_nf=0,
     #     hidden_nf=hidden_nf,
     #     n_layers=n_layers,
+    #     multi_dec=True,
     # )
+    model = EvidentialRegression(
+        EGNN,
+        in_node_nf=in_nf,
+        in_edge_nf=0,
+        hidden_nf=hidden_nf,
+        n_layers=n_layers,
+    )
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model.to(device)
     model.load_state_dict(torch.load(model_path, map_location=device))

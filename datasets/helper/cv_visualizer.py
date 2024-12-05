@@ -322,8 +322,18 @@ def animate_active_learning(base_path, paths, fps=15):
 def get_al_animation(base_path):
     added_files = [f for f in os.listdir(base_path) if f.startswith("train")]
     num_files = len(added_files) - 1
-    paths = [base_path + "train.xyz"]
-    paths.extend([base_path + f"train{i}.xyz" for i in range(num_files)])
+    # paths.extend([base_path + f"train{i}.xyz" for i in range(num_files)])
+    all_paths = os.listdir(base_path)
+    paths = sorted(
+        all_paths,
+        key=lambda x: (
+            int(x.split("train")[-1].split(".xyz")[0])
+            if "train" in x and x.split("train")[-1].split(".xyz")[0].isdigit()
+            else -1
+        ),
+    )
+    paths = [os.path.join(base_path, p) for p in paths]
+
     paths = np.array(paths)
 
     # multi_scatter(paths[[-3,-2,-1]])
@@ -332,4 +342,4 @@ def get_al_animation(base_path):
 
 
 if __name__ == "__main__":
-    get_al_animation("al/run48/data/train/")
+    get_al_animation("al/run69/data/train/")

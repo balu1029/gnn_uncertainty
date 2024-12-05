@@ -108,7 +108,7 @@ class EvidentialRegression(BaseUncertainty):
         self.test_losses_total = []
         self.test_time = 0
 
-        self.coeff = 5e-4
+        self.coeff = 1e-6
 
     def fit(
         self,

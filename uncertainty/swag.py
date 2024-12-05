@@ -77,6 +77,9 @@ class SWAG(BaseUncertainty):
         scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(
             optimizer, mode="min", factor=factor, patience=patience
         )
+        scheduler = torch.optim.lr_scheduler.StepLR(
+            optimizer, step_size=2000, gamma=1 / np.sqrt(10)
+        )
         if use_wandb:
             self.init_wandb(
                 scheduler,
@@ -146,14 +149,15 @@ class SWAG(BaseUncertainty):
                 self.state_dict()
             )  # For SWAG it does not make sense to take an intermediate model as "best" one because we sample the weights
 
-            if (
-                epoch >= swag_start_epoch
-                and (epoch - swag_start_epoch) % swag_freq == 0
-            ):
-                self._sample_swag_moments()
+            if epoch >= swag_start_epoch:
+                optimizer.param_groups[0]["lr"] = 1e-3
+                self.lr_after = self.lr_before = 1e-3
+                if (epoch - swag_start_epoch) % swag_freq == 0:
+                    self._sample_swag_moments()
             else:  # do not change learning rate after starting to sample weights
                 self.lr_before = optimizer.param_groups[0]["lr"]
-                scheduler.step(np.array(self.valid_losses_total).mean())
+                # scheduler.step(np.array(self.valid_losses_total).mean())
+                scheduler.step()
                 self.lr_after = optimizer.param_groups[0]["lr"]
             self.drop_metrics()
 

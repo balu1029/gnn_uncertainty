@@ -52,6 +52,7 @@ class MVE(BaseUncertainty):
         additional_logs=None,
         best_on_train=False,
         test_loader=None,
+        force_uncerainty=True,
     ):
 
         optimizer = torch.optim.AdamW(self.parameters(), lr=lr, weight_decay=1e-16)
@@ -105,6 +106,7 @@ class MVE(BaseUncertainty):
                 force_weight=force_weight,
                 energy_weight=energy_weight,
                 log_interval=log_interval,
+                force_uncertainty=force_uncerainty,
             )
             self.valid_epoch(
                 valid_loader=valid_loader,
@@ -113,6 +115,7 @@ class MVE(BaseUncertainty):
                 dtype=dtype,
                 force_weight=force_weight,
                 energy_weight=energy_weight,
+                force_uncertainty=force_uncerainty,
             )
             if test_loader is not None:
                 self.valid_epoch(
@@ -123,6 +126,7 @@ class MVE(BaseUncertainty):
                     force_weight=force_weight,
                     energy_weight=energy_weight,
                     test=True,
+                    force_uncertainty=force_uncerainty,
                 )
             self.epoch_summary(
                 epoch,
@@ -233,7 +237,9 @@ class MVE(BaseUncertainty):
         energy_weight=1.0,
         log_interval=100,
         num_ensembles=3,
+        force_uncertainty=True,
     ):
+        mse_fn = nn.MSELoss()
         start = time.time()
         self.train()
         for i, data in enumerate(train_loader):
@@ -261,9 +267,14 @@ class MVE(BaseUncertainty):
 
             loss_energy = criterion(mean_energy, label_energy)
             loss_force = criterion(mean_force, label_forces)
+            if force_uncertainty:
+                mse = mse_fn(mean_force, label_forces)
+            else:
+                mse = mse_fn(mean_energy, label_energy)
+
             total_loss = (
                 0.5
-                * torch.mean(torch.log(uncertainty) + (loss_force) / uncertainty)
+                * torch.mean(torch.log(uncertainty) + mse / uncertainty)
                 * force_weight
                 + loss_energy * energy_weight
             )
@@ -298,6 +309,7 @@ class MVE(BaseUncertainty):
         force_weight=1.0,
         energy_weight=1.0,
         test=False,
+        force_uncertainty=True,
     ):
         start = time.time()
         self.eval()
@@ -313,6 +325,8 @@ class MVE(BaseUncertainty):
                 n_nodes,
             ) = self.prepare_data(data, device, dtype)
 
+            mse_fn = nn.MSELoss()
+
             mean_energy, mean_force, uncertainty = self.forward(
                 x=atom_positions,
                 h0=nodes,
@@ -325,10 +339,15 @@ class MVE(BaseUncertainty):
 
             loss_energy = criterion(mean_energy, label_energy)
             loss_force = criterion(mean_force, label_forces)
+            if force_uncertainty:
+                mse = mse_fn(mean_force, label_forces)
+            else:
+                mse = mse_fn(mean_energy, label_energy)
+
             total_loss = (
-                force_weight
-                * 0.5
-                * torch.mean(torch.log(uncertainty) + loss_force / uncertainty)
+                0.5
+                * torch.mean(torch.log(uncertainty) + mse / uncertainty)
+                * force_weight
                 + loss_energy * energy_weight
             )
 
@@ -356,6 +375,7 @@ class MVE(BaseUncertainty):
     def predict(self, x, use_force_uncertainty=False, *args, **kwargs):
         self.eval()
         energy, forces, uncertainty = self.forward(x=x, *args, **kwargs)
+        uncertainty = torch.sqrt(uncertainty)
         return (
             energy,
             forces,
