@@ -1,0 +1,11 @@
+0.0 4.196167e-05
+0.017242003 20.29447
+Traceback (most recent call last):
+  File "/home/ws/fq0795/git/gnn_uncertainty/reevaluate_experiments.py", line 172, in <module>
+    ens.evaluate_all(
+  File "/home/ws/fq0795/git/gnn_uncertainty/uncertainty/base_uncertainty.py", line 388, in evaluate_all
+    self._scatter_plot(
+  File "/home/ws/fq0795/git/gnn_uncertainty/uncertainty/base_uncertainty.py", line 666, in _scatter_plot
+    plt.plot([x_min, x_max], [y_min, y_max], color="red", linestyle="--")
+              ^^^^^
+UnboundLocalError: cannot access local variable 'x_min' where it is not associated with a value

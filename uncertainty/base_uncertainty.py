@@ -51,6 +51,7 @@ class BaseUncertainty(nn.Module):
 
     def __init__(self):
         super(BaseUncertainty, self).__init__()
+        plt.rcParams.update({"font.size": 22})
         self.best_model = self.state_dict()
         self.uncertainty_slope = 1.0
         self.uncertainty_bias = 0.0
@@ -142,7 +143,7 @@ class BaseUncertainty(nn.Module):
             self.__class__.__name__,
             "Energy Losses",
             "Uncertainties",
-            text=f"Correlation: {correlation}",
+            text="Correlation: {:.3f}".format(correlation),
             save_path=plot_path,
             show_plot=show_plot,
         )
@@ -204,9 +205,9 @@ class BaseUncertainty(nn.Module):
             ground_truths_energy,
             predictions_energy,
             self.__class__.__name__,
-            "Ground Truth Energy",
-            "Predicted Energy",
-            text=f"Energy R2 Score: {energy_r2}",
+            "Ground Truth Energy [kJ/mol]",
+            "Predicted Energy [kJ/mol]",
+            text="R2 Score: {:.3f}".format(energy_r2),
             save_path=plot_path,
             show_plot=show_plot,
         )
@@ -218,7 +219,7 @@ class BaseUncertainty(nn.Module):
             else:
                 with open(csv_path, "w", newline="") as file:
                     writer = csv.writer(file)
-                    writer.writerow(["Method", "Energy R2 Score"])
+                    writer.writerow(["Method", "R2 Score"])
                     writer.writerow([self.__class__.__name__, energy_r2])
 
     def evaluate_all(
@@ -273,7 +274,7 @@ class BaseUncertainty(nn.Module):
                     device,
                     dtype,
                     plot_path=f"{plot_name}_out",
-                    plot_title=self.__class__.__name__ + " Out Distribution",
+                    plot_title=None,  # self.__class__.__name__ + " Out Distribution",
                     use_force_uncertainty=False,
                     plot_loss=True,
                     plot=False,
@@ -283,10 +284,12 @@ class BaseUncertainty(nn.Module):
                     energy_losses_in,
                     uncertainties_out,
                     energy_losses_out,
-                    self.__class__.__name__,
+                    None,  # self.__class__.__name__,
                     "Energy Uncertainties",
-                    "Energy Errors",
-                    text=f"Correlation in: {energy_correlation_in_energy}\nCorrelation Out: {energy_correlation_out_energy}",
+                    "Energy Errors [kJ/mol]",
+                    text="Correlation in: {:.3f}\nCorrelation Out: {:.3f}".format(
+                        energy_correlation_in_energy, energy_correlation_out_energy
+                    ),
                     save_path=plot_name + "_energy_uncertainty_energy_loss.svg",
                     show_plot=show_plot,
                 )
@@ -301,10 +304,12 @@ class BaseUncertainty(nn.Module):
                         force_errors_out.reshape(energy_losses_out.shape[0], -1, 3),
                         axis=(1, 2),
                     ),
-                    self.__class__.__name__,
+                    None,  # self.__class__.__name__,
                     "Energy Uncertainties",
-                    "Force Errors",
-                    text=f"Correlation in: {energy_correlation_in_force}\nCorrelation Out: {energy_correlation_out_forces}",
+                    "Force Errors [kJ/(mol*A)]",
+                    text="Correlation in: {:.3f}\nCorrelation Out: {:.3f}".format(
+                        energy_correlation_in_force, energy_correlation_out_forces
+                    ),
                     save_path=plot_name + "_energy_uncertainty_force_loss.svg",
                     show_plot=show_plot,
                 )
@@ -323,7 +328,7 @@ class BaseUncertainty(nn.Module):
                 device,
                 dtype,
                 plot_path=f"{plot_name}_in",
-                plot_title=self.__class__.__name__ + " In Distribution",
+                plot_title=None,  # self.__class__.__name__ + " In Distribution",
                 use_force_uncertainty=True,
                 plot_loss=not use_energy_uncertainty,
                 plot=not (test_loader_out is not None),
@@ -342,7 +347,7 @@ class BaseUncertainty(nn.Module):
                     device,
                     dtype,
                     plot_path=f"{plot_name}_out",
-                    plot_title=self.__class__.__name__ + " Out Distribution",
+                    plot_title=None,  # self.__class__.__name__ + " Out Distribution",
                     use_force_uncertainty=True,
                     plot=False,
                 )
@@ -351,10 +356,12 @@ class BaseUncertainty(nn.Module):
                     energy_losses_in,
                     uncertainties_out,
                     energy_losses_out,
-                    self.__class__.__name__,
+                    None,  # self.__class__.__name__,
                     "Force Uncertainties",
-                    "Energy Errors",
-                    text=f"Correlation in: {force_correlation_in_energy}\nCorrelation Out: {force_correlation_out_energy}",
+                    "Energy Errors[kJ/mol]",
+                    text="Correlation in: {:.3f}\nCorrelation Out: {:.3f}".format(
+                        force_correlation_in_energy, force_correlation_out_energy
+                    ),
                     save_path=plot_name + "_force_uncertainty_energy_loss.svg",
                     show_plot=show_plot,
                 )
@@ -369,12 +376,28 @@ class BaseUncertainty(nn.Module):
                         force_errors_out.reshape(energy_losses_out.shape[0], -1, 3),
                         axis=(1, 2),
                     ),
-                    self.__class__.__name__,
+                    None,  # self.__class__.__name__,
                     "Force Uncertainties",
-                    "Force Errors",
-                    text=f"Correlation in: {force_correlation_in_forces}\nCorrelation Out: {force_correlation_out_forces}",
+                    "Force Errors [kJ/(mol*A)]",
+                    text="Correlation in: {:.3f}\nCorrelation Out: {:.3f}".format(
+                        force_correlation_in_forces, force_correlation_out_forces
+                    ),
                     save_path=plot_name + "_force_uncertainty_force_loss.svg",
                     show_plot=show_plot,
+                )
+                self._scatter_plot(
+                    uncertainties_in,
+                    np.mean(
+                        force_errors_in.reshape(energy_losses_in.shape[0], -1, 3),
+                        axis=(1, 2),
+                    ),
+                    None,  # self.__class__.__name__,
+                    "Force Uncertainties",
+                    "Force Errors [kJ/(mol*A)]",
+                    text="Correlation in: {:.3f}".format(force_correlation_in_forces),
+                    save_path=plot_name + "_force_uncertainty_force_loss_in_dist.svg",
+                    show_plot=show_plot,
+                    set_limits=False,
                 )
 
         if not use_energy_uncertainty:
@@ -569,9 +592,9 @@ class BaseUncertainty(nn.Module):
                     ground_truths_energy,
                     predictions_energy,
                     plot_title,
-                    "Ground Truth Energy",
-                    "Predicted Energy",
-                    text=f"Energy R2 Score: {energy_r2}",
+                    "Ground Truth Energy [kJ/mol]",
+                    "Predicted Energy [kJ/mol]",
+                    text="R2 Score: {:.3f}".format(energy_r2),
                     save_path=plot_path + "_energy.svg",
                     show_plot=False,
                 )
@@ -581,9 +604,9 @@ class BaseUncertainty(nn.Module):
                     energy_losses,
                     uncertainties,
                     plot_title,
-                    "Energy Errors",
+                    "Energy Errors [kJ/mol]",
                     "Uncertainties",
-                    text=f"Correlation: {correlation_energy}",
+                    text="Correlation: {:.3f}".format(correlation_energy),
                     save_path=plot_path
                     + uncertainty_type
                     + "_uncertainty_energy_loss.svg",
@@ -596,9 +619,9 @@ class BaseUncertainty(nn.Module):
                     ),
                     uncertainties,
                     plot_title,
-                    "Force Errors",
+                    "Force Errors [kJ/(mol*A)]",
                     "Uncertainties",
-                    text=f"Correlation: {correlation_forces}",
+                    text="Correlation: {:.3f}".format(correlation_forces),
                     save_path=plot_path
                     + uncertainty_type
                     + "_uncertainty_force_loss.svg",
@@ -616,16 +639,38 @@ class BaseUncertainty(nn.Module):
         )
 
     def _scatter_plot(
-        self, x, y, title, xlabel, ylabel, text="", save_path=None, show_plot=False
+        self,
+        x,
+        y,
+        title,
+        xlabel,
+        ylabel,
+        text="",
+        save_path=None,
+        show_plot=False,
+        set_limits=True,
     ):
         # plt.scatter(x, y)
         plt.figure(figsize=(10, 8))
         sns.kdeplot(x=x, y=y, cmap="Blues", fill=True)  # Density plot
         plt.xlabel(xlabel)
         plt.ylabel(ylabel)
-        plt.title(title)
-        plt.plot([min(x), max(x)], [min(x), max(x)], color="red", linestyle="--")
+
+        if set_limits:
+            x_min = y_min = -80
+            x_max = y_max = 80
+        else:
+            x_min = min(min(x), min(y))
+            x_max = max(max(x), max(y))
+            y_min = x_min
+            y_max = x_max
+
+        plt.xlim(x_min, x_max)
+        plt.ylim(y_min, y_max)
+        # plt.title(title)
+        plt.plot([x_min, x_max], [y_min, y_max], color="red", linestyle="--")
         plt.text(0.1, 0.9, text, transform=plt.gca().transAxes)
+        plt.tight_layout()
         if save_path is not None:
             plt.savefig(save_path)
         if show_plot:
@@ -672,12 +717,16 @@ class BaseUncertainty(nn.Module):
         )
         plt.xlabel(xlabel)
         plt.ylabel(ylabel)
-        plt.title(title)
+        # plt.title(title)
 
         # Add a diagonal line across the plot
         min_val, max_val = np.percentile(
-            np.concatenate((x_in, y_in, x_out, y_out)), [0, 99.9]
+            np.concatenate((x_in, y_in, x_out, y_out))[
+                np.isfinite(np.concatenate((x_in, y_in, x_out, y_out)))
+            ],
+            [0, 100],
         )
+        # max_val = min(max_val, 15)
         # max_val = max(max(x_in), max(y_in), max(x_out), max(y_out))
         # min_val = min(min(x_in), min(y_in), min(x_out), min(y_out))
         plt.plot([min_val, max_val], [min_val, max_val], color="red", linestyle="--")
@@ -707,7 +756,7 @@ class BaseUncertainty(nn.Module):
         plt.xlim(min_val, max_val)
         plt.ylim(min_val, max_val)
 
-        plt.text(0.1, 0.9, text, transform=plt.gca().transAxes)
+        plt.text(0.08, 0.9, text, transform=plt.gca().transAxes)
 
         plt.tight_layout()
 
@@ -809,8 +858,8 @@ class BaseUncertainty(nn.Module):
                 label="Regression Line",
             )
             plt.xlabel("Uncertainties")
-            plt.ylabel("Force Errors")
-            plt.title("Uncertainty Calibration")
+            plt.ylabel("Force Errors [kJ/(mol*A)]")
+            # plt.title("Uncertainty Calibration")
             plt.legend()
             plt.tight_layout()
             plt.savefig(path)
@@ -852,7 +901,7 @@ class BaseUncertainty(nn.Module):
             "φ",
             "Ψ",
             save_path + "_energy_error.svg",
-            "Energy Error",
+            "Energy Error [kJ/mol]",
             num_bins=200,
         )
         self._heatmap(
@@ -877,7 +926,7 @@ class BaseUncertainty(nn.Module):
             "φ",
             "Ψ",
             save_path + "_force_error.svg",
-            "Force Error",
+            "Force Error [kJ/(mol*A)]",
             num_bins=200,
         )
 
@@ -934,7 +983,8 @@ class BaseUncertainty(nn.Module):
             plt.colorbar(label=data_label)
         plt.xlabel(x_label)
         plt.ylabel(y_label)
-        plt.title(title)
+        plt.tight_layout()
+        # plt.title(title)
         plt.savefig(save_path)
 
     def _calc_all(self, dataloader, device, dtype, use_force_uncertainty=None):

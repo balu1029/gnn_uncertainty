@@ -18,14 +18,14 @@ hidden_nf = 32
 n_layers = 4
 
 ensemble_size = 3
-uncertainty_method = "EVI"
-swag_sample_size = 5
+uncertainty_method = "ENS"
+swag_sample_size = 3
 
-name = "evi_20241129_113422"
-cal = True
+name = "ensemble3_20241115_105146"
+cal = False
 
 model_dir = f"gnn/models/{name}"
-out_path = f"logs/{name}_heatmap{"_cal" if cal else ""}"
+out_path = f"logs/{name}_reeval_thesis_cal_{cal}"
 
 if not os.path.exists(out_path):
     os.makedirs(out_path)

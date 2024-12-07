@@ -1,0 +1,780 @@
+wandb: Currently logged in as: l-baer-99 (l-baer-99-Karlsruhe Institute of Technology). Use `wandb login --relogin` to force relogin
+wandb: wandb version 0.19.0 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.17.4
+wandb: Run data is saved locally in /home/ws/fq0795/git/gnn_uncertainty/wandb/run-20241206_213632-xqi7r6f0
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run al_76
+wandb: ⭐️ View project at https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/ActiveLearning
+wandb: 🚀 View run at https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/ActiveLearning/runs/xqi7r6f0
+/home/ws/fq0795/miniconda3/envs/torch/lib/python3.12/site-packages/torch/autograd/graph.py:744: UserWarning: Attempting to run cuBLAS, but there was no current CUDA context! Attempting to set the primary context... (Triggered internally at ../aten/src/ATen/cuda/CublasHandlePool.cpp:135.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+['H1', 'CH3', 'H2', 'H3', 'C', 'O', 'N', 'H', 'CA', 'HA', 'CB', 'HB1', 'HB2', 'HB3', 'C', 'O', 'N', 'H', 'C', 'H1', 'H2', 'H3']
+75
+Uncertainty Slope: 1.1986088752746582, Uncertainty Bias: 0.041317395865917206
+7.6293945e-06 0.0021033287
+3.7391036 5.036994
+(48745, 22, 3)
+
+Training and Validation Results of Epoch Initital validation:
+================================
+Training Loss Energy: 0.0, Training Loss Force: 0.0, time: 0
+Validation Loss Energy: 0.0, Validation Loss Force: 0.0, time: 0
+Test Loss Energy: 14.464109999720712, Test Loss Force: 12.648549362864324, time: 8.399757862091064
+
+wandb: - 0.039 MB of 0.048 MB uploadedwandb: \ 0.051 MB of 0.051 MB uploadedwandb: | 0.051 MB of 0.051 MB uploadedwandb: / 0.051 MB of 0.051 MB uploadedwandb:                                                                                
+wandb: 
+wandb: Run history:
+wandb:       dataset_size ▁
+wandb:    max_uncertainty ▁
+wandb:  test_error_energy ▁
+wandb:   test_error_force ▁
+wandb:          test_loss ▁
+wandb: train_error_energy ▁
+wandb:  train_error_force ▁
+wandb:         train_loss ▁
+wandb: valid_error_energy ▁
+wandb:  valid_error_force ▁
+wandb:         valid_loss ▁
+wandb: 
+wandb: Run summary:
+wandb:       dataset_size 800
+wandb:    max_uncertainty 8
+wandb:  test_error_energy 14.46411
+wandb:   test_error_force 12.64855
+wandb:          test_loss 5.20019
+wandb: train_error_energy 0.0
+wandb:  train_error_force 0.0
+wandb:         train_loss 0.0
+wandb: valid_error_energy 0.0
+wandb:  valid_error_force 0.0
+wandb:         valid_loss 0.0
+wandb: 
+wandb: 🚀 View run al_76 at: https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/ActiveLearning/runs/xqi7r6f0
+wandb: ⭐️ View project at: https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/ActiveLearning
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20241206_213632-xqi7r6f0/logs
+wandb: WARNING The new W&B backend becomes opt-out in version 0.18.0; try it out with `wandb.require("core")`! See https://wandb.me/wandb-core for more information.
+Did not find any uncertainty samples for sample 0.
+Did not find any uncertainty samples for sample 1.
+Did not find any uncertainty samples for sample 2.
+Did not find any uncertainty samples for sample 3.
+Did not find any uncertainty samples for sample 4.
+Did not find any uncertainty samples for sample 5.
+Did not find any uncertainty samples for sample 6.
+Found uncertainty sample 7 after 1692 steps.
+Did not find any uncertainty samples for sample 8.
+Did not find any uncertainty samples for sample 9.
+Did not find any uncertainty samples for sample 10.
+Did not find any uncertainty samples for sample 11.
+Did not find any uncertainty samples for sample 12.
+Did not find any uncertainty samples for sample 13.
+Did not find any uncertainty samples for sample 14.
+Did not find any uncertainty samples for sample 15.
+Did not find any uncertainty samples for sample 16.
+Did not find any uncertainty samples for sample 17.
+Did not find any uncertainty samples for sample 18.
+Did not find any uncertainty samples for sample 19.
+Did not find any uncertainty samples for sample 20.
+Did not find any uncertainty samples for sample 21.
+Did not find any uncertainty samples for sample 22.
+Did not find any uncertainty samples for sample 23.
+Did not find any uncertainty samples for sample 24.
+Did not find any uncertainty samples for sample 25.
+Did not find any uncertainty samples for sample 26.
+Did not find any uncertainty samples for sample 27.
+Did not find any uncertainty samples for sample 28.
+Did not find any uncertainty samples for sample 29.
+Did not find any uncertainty samples for sample 30.
+Did not find any uncertainty samples for sample 31.
+Did not find any uncertainty samples for sample 32.
+Did not find any uncertainty samples for sample 33.
+Did not find any uncertainty samples for sample 34.
+Did not find any uncertainty samples for sample 35.
+Did not find any uncertainty samples for sample 36.
+Did not find any uncertainty samples for sample 37.
+Did not find any uncertainty samples for sample 38.
+Did not find any uncertainty samples for sample 39.
+Did not find any uncertainty samples for sample 40.
+Did not find any uncertainty samples for sample 41.
+Did not find any uncertainty samples for sample 42.
+Did not find any uncertainty samples for sample 43.
+Did not find any uncertainty samples for sample 44.
+Did not find any uncertainty samples for sample 45.
+Did not find any uncertainty samples for sample 46.
+Did not find any uncertainty samples for sample 47.
+Did not find any uncertainty samples for sample 48.
+Did not find any uncertainty samples for sample 49.
+Did not find any uncertainty samples for sample 50.
+Did not find any uncertainty samples for sample 51.
+Did not find any uncertainty samples for sample 52.
+Did not find any uncertainty samples for sample 53.
+Did not find any uncertainty samples for sample 54.
+Did not find any uncertainty samples for sample 55.
+Did not find any uncertainty samples for sample 56.
+Did not find any uncertainty samples for sample 57.
+Did not find any uncertainty samples for sample 58.
+Did not find any uncertainty samples for sample 59.
+Did not find any uncertainty samples for sample 60.
+Did not find any uncertainty samples for sample 61.
+Did not find any uncertainty samples for sample 62.
+Did not find any uncertainty samples for sample 63.
+Did not find any uncertainty samples for sample 64.
+Did not find any uncertainty samples for sample 65.
+Did not find any uncertainty samples for sample 66.
+Did not find any uncertainty samples for sample 67.
+Did not find any uncertainty samples for sample 68.
+Did not find any uncertainty samples for sample 69.
+Did not find any uncertainty samples for sample 70.
+Did not find any uncertainty samples for sample 71.
+Did not find any uncertainty samples for sample 72.
+Did not find any uncertainty samples for sample 73.
+Did not find any uncertainty samples for sample 74.
+Did not find any uncertainty samples for sample 75.
+Did not find any uncertainty samples for sample 76.
+Did not find any uncertainty samples for sample 77.
+Did not find any uncertainty samples for sample 78.
+Did not find any uncertainty samples for sample 79.
+Did not find any uncertainty samples for sample 80.
+Did not find any uncertainty samples for sample 81.
+Did not find any uncertainty samples for sample 82.
+Did not find any uncertainty samples for sample 83.
+Did not find any uncertainty samples for sample 84.
+Did not find any uncertainty samples for sample 85.
+Did not find any uncertainty samples for sample 86.
+Did not find any uncertainty samples for sample 87.
+Did not find any uncertainty samples for sample 88.
+Did not find any uncertainty samples for sample 89.
+Did not find any uncertainty samples for sample 90.
+Did not find any uncertainty samples for sample 91.
+Did not find any uncertainty samples for sample 92.
+Did not find any uncertainty samples for sample 93.
+Did not find any uncertainty samples for sample 94.
+Did not find any uncertainty samples for sample 95.
+Did not find any uncertainty samples for sample 96.
+Did not find any uncertainty samples for sample 97.
+Did not find any uncertainty samples for sample 98.
+Did not find any uncertainty samples for sample 99.
+wandb: wandb version 0.19.0 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.17.4
+wandb: Run data is saved locally in /home/ws/fq0795/git/gnn_uncertainty/wandb/run-20241206_234317-c4kvrg8h
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run al_76_0
+wandb: ⭐️ View project at https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-SWAG
+wandb: 🚀 View run at https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-SWAG/runs/c4kvrg8h
+Training model 0. Added 1 samples to the dataset.
+
+Training and Validation Results of Epoch 0:
+================================
+Training Loss Energy: 29.52211073638562, Training Loss Force: 36.010491233383945, time: 0.47115159034729004
+Validation Loss Energy: 10.216124543880934, Validation Loss Force: 21.645017481734147, time: 0.0394899845123291
+Test Loss Energy: 24.177648615884472, Test Loss Force: 25.917400658328003, time: 9.400134563446045
+
+
+Training and Validation Results of Epoch 1:
+================================
+Training Loss Energy: 19.268564664201804, Training Loss Force: 15.712888045679327, time: 0.36484742164611816
+Validation Loss Energy: 3.232349268555783, Validation Loss Force: 14.385973932161, time: 0.035880088806152344
+Test Loss Energy: 15.461217440867957, Test Loss Force: 20.107376631838672, time: 9.097046613693237
+
+
+Training and Validation Results of Epoch 2:
+================================
+Training Loss Energy: 10.433533576574469, Training Loss Force: 11.237611406019365, time: 0.40247297286987305
+Validation Loss Energy: 14.603811157622156, Validation Loss Force: 9.423105303514207, time: 0.039380550384521484
+Test Loss Energy: 13.77595564880616, Test Loss Force: 15.740896869005855, time: 9.351265668869019
+
+
+Training and Validation Results of Epoch 3:
+================================
+Training Loss Energy: 11.213687952879656, Training Loss Force: 7.20247207220317, time: 0.398545503616333
+Validation Loss Energy: 19.099839671006002, Validation Loss Force: 7.1610188021379395, time: 0.04129648208618164
+Test Loss Energy: 23.44263262222185, Test Loss Force: 14.039293367339887, time: 8.879311800003052
+
+
+Training and Validation Results of Epoch 4:
+================================
+Training Loss Energy: 16.45466936847169, Training Loss Force: 9.126375628873024, time: 0.4069674015045166
+Validation Loss Energy: 5.30304161889555, Validation Loss Force: 7.301576473813396, time: 0.04030871391296387
+Test Loss Energy: 11.076876362261686, Test Loss Force: 14.0722962456584, time: 9.327453374862671
+
+
+Training and Validation Results of Epoch 5:
+================================
+Training Loss Energy: 19.926376475746242, Training Loss Force: 8.990302256870615, time: 0.3847169876098633
+Validation Loss Energy: 8.698590671230457, Validation Loss Force: 13.533043331390944, time: 0.0433964729309082
+Test Loss Energy: 15.668061241111952, Test Loss Force: 18.342594478940175, time: 9.390227794647217
+
+
+Training and Validation Results of Epoch 6:
+================================
+Training Loss Energy: 19.678535439291107, Training Loss Force: 9.525812937243838, time: 0.4040102958679199
+Validation Loss Energy: 25.178319019844114, Validation Loss Force: 11.984066793982297, time: 0.04123997688293457
+Test Loss Energy: 17.542916391210323, Test Loss Force: 18.094400276844112, time: 8.380753755569458
+
+
+Training and Validation Results of Epoch 7:
+================================
+Training Loss Energy: 19.091792356686987, Training Loss Force: 9.963126198823385, time: 0.37473320960998535
+Validation Loss Energy: 14.987088886477906, Validation Loss Force: 7.080325285006877, time: 0.03253436088562012
+Test Loss Energy: 13.239248502723445, Test Loss Force: 13.343486411819425, time: 8.46452283859253
+
+
+Training and Validation Results of Epoch 8:
+================================
+Training Loss Energy: 16.58842851434788, Training Loss Force: 6.869713604817496, time: 0.3974020481109619
+Validation Loss Energy: 22.550090961744406, Validation Loss Force: 10.94430787301299, time: 0.037961483001708984
+Test Loss Energy: 31.08544135255635, Test Loss Force: 15.72183965437417, time: 9.26372504234314
+
+
+Training and Validation Results of Epoch 9:
+================================
+Training Loss Energy: 16.00674944197403, Training Loss Force: 6.952273877297642, time: 0.4102134704589844
+Validation Loss Energy: 21.57134784014223, Validation Loss Force: 10.404743124013445, time: 0.03840827941894531
+Test Loss Energy: 32.99793557642641, Test Loss Force: 15.760356016601433, time: 7.950527906417847
+
+
+Training and Validation Results of Epoch 10:
+================================
+Training Loss Energy: 14.336063953423569, Training Loss Force: 7.983333029093572, time: 0.3924398422241211
+Validation Loss Energy: 7.48664615309811, Validation Loss Force: 6.045270917752732, time: 0.03561878204345703
+Test Loss Energy: 13.495867129649104, Test Loss Force: 12.391273948227902, time: 7.667237281799316
+
+
+Training and Validation Results of Epoch 11:
+================================
+Training Loss Energy: 32.20860471554223, Training Loss Force: 10.09096490611307, time: 0.37433481216430664
+Validation Loss Energy: 41.950275683543644, Validation Loss Force: 15.334035917484078, time: 0.03442788124084473
+Test Loss Energy: 40.81800039980786, Test Loss Force: 21.276035802204728, time: 7.2705652713775635
+
+
+Training and Validation Results of Epoch 12:
+================================
+Training Loss Energy: 19.897710289697038, Training Loss Force: 10.008130682069849, time: 0.38466572761535645
+Validation Loss Energy: 18.617196281118268, Validation Loss Force: 10.00507694601741, time: 0.036403656005859375
+Test Loss Energy: 15.491682455173502, Test Loss Force: 14.894885883319143, time: 7.260885000228882
+
+
+Training and Validation Results of Epoch 13:
+================================
+Training Loss Energy: 13.105872854949157, Training Loss Force: 7.399916246704904, time: 0.3754734992980957
+Validation Loss Energy: 5.8123785859971075, Validation Loss Force: 6.799128444748554, time: 0.03287243843078613
+Test Loss Energy: 16.45496356651607, Test Loss Force: 12.895278276073022, time: 7.588918685913086
+
+
+Training and Validation Results of Epoch 14:
+================================
+Training Loss Energy: 9.83580301342751, Training Loss Force: 4.86882967605209, time: 0.3912515640258789
+Validation Loss Energy: 14.77017796466381, Validation Loss Force: 4.695259950349567, time: 0.03708004951477051
+Test Loss Energy: 13.155099216406322, Test Loss Force: 11.596131199651992, time: 7.291629076004028
+
+
+Training and Validation Results of Epoch 15:
+================================
+Training Loss Energy: 9.635947246433402, Training Loss Force: 4.259064196699849, time: 0.35581040382385254
+Validation Loss Energy: 18.14907091954503, Validation Loss Force: 4.468216246380883, time: 0.03224039077758789
+Test Loss Energy: 25.443472170416857, Test Loss Force: 11.69735428975604, time: 7.286482810974121
+
+
+Training and Validation Results of Epoch 16:
+================================
+Training Loss Energy: 22.780449305773075, Training Loss Force: 5.638893080616933, time: 0.372143030166626
+Validation Loss Energy: 34.75133588051591, Validation Loss Force: 9.825650148228798, time: 0.03229022026062012
+Test Loss Energy: 24.602224425172036, Test Loss Force: 15.415145068143444, time: 7.234887599945068
+
+
+Training and Validation Results of Epoch 17:
+================================
+Training Loss Energy: 27.224454748763524, Training Loss Force: 10.297291592643404, time: 0.4159584045410156
+Validation Loss Energy: 2.9640957404119503, Validation Loss Force: 10.675440223364689, time: 0.036214590072631836
+Test Loss Energy: 13.472217847692578, Test Loss Force: 15.134485881773784, time: 7.384843587875366
+
+
+Training and Validation Results of Epoch 18:
+================================
+Training Loss Energy: 8.883566975065246, Training Loss Force: 7.476060650313058, time: 0.39658403396606445
+Validation Loss Energy: 29.259432972118788, Validation Loss Force: 8.420378042865858, time: 0.03594160079956055
+Test Loss Energy: 35.596151946622314, Test Loss Force: 13.562442909973246, time: 7.295826435089111
+
+
+Training and Validation Results of Epoch 19:
+================================
+Training Loss Energy: 18.027105479239697, Training Loss Force: 8.53768664060264, time: 0.3662118911743164
+Validation Loss Energy: 10.663194311015243, Validation Loss Force: 10.383262676844081, time: 0.03487086296081543
+Test Loss Energy: 12.028482214477732, Test Loss Force: 14.881897286595727, time: 7.290184259414673
+
+wandb: - 0.039 MB of 0.039 MB uploadedwandb: \ 0.039 MB of 0.039 MB uploadedwandb: | 0.039 MB of 0.055 MB uploadedwandb: / 0.039 MB of 0.055 MB uploadedwandb: - 0.058 MB of 0.058 MB uploadedwandb:                                                                                
+wandb: 
+wandb: Run history:
+wandb:       dataset_size ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:                 lr ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:    max_uncertainty ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:  test_error_energy ▄▂▂▄▁▂▃▂▆▆▂█▂▂▁▄▄▂▇▁
+wandb:   test_error_force █▅▃▂▂▄▄▂▃▃▁▆▃▂▁▁▃▃▂▃
+wandb:          test_loss █▅▃▃▂▄▄▂▄▄▁▇▃▂▁▂▄▃▄▂
+wandb: train_error_energy ▇▄▁▂▃▄▄▄▃▃▃█▄▂▁▁▅▇▁▄
+wandb:  train_error_force █▄▃▂▂▂▂▂▂▂▂▂▂▂▁▁▁▂▂▂
+wandb:         train_loss █▄▂▂▂▂▂▂▂▂▂▃▃▂▁▁▂▃▂▂
+wandb: valid_error_energy ▂▁▃▄▁▂▅▃▅▄▂█▄▂▃▄▇▁▆▂
+wandb:  valid_error_force █▅▃▂▂▅▄▂▄▃▂▅▃▂▁▁▃▄▃▃
+wandb:         valid_loss █▄▃▂▁▄▅▂▄▄▁█▄▁▁▁▅▃▄▃
+wandb: 
+wandb: Run summary:
+wandb:       dataset_size 801
+wandb:                 lr 0.001
+wandb:    max_uncertainty 8
+wandb:  test_error_energy 12.02848
+wandb:   test_error_force 14.8819
+wandb:          test_loss 5.78448
+wandb: train_error_energy 18.02711
+wandb:  train_error_force 8.53769
+wandb:         train_loss 4.06312
+wandb: valid_error_energy 10.66319
+wandb:  valid_error_force 10.38326
+wandb:         valid_loss 4.18786
+wandb: 
+wandb: 🚀 View run al_76_0 at: https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-SWAG/runs/c4kvrg8h
+wandb: ⭐️ View project at: https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-SWAG
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20241206_234317-c4kvrg8h/logs
+wandb: WARNING The new W&B backend becomes opt-out in version 0.18.0; try it out with `wandb.require("core")`! See https://wandb.me/wandb-core for more information.
+Uncertainty Slope: 0.6202818155288696, Uncertainty Bias: 0.2343844324350357
+0.0009994507 1.1959743
+3.5164683 4.6288
+(48745, 22, 3)
+Did not find any uncertainty samples for sample 0.
+Did not find any uncertainty samples for sample 1.
+Did not find any uncertainty samples for sample 2.
+Did not find any uncertainty samples for sample 3.
+Did not find any uncertainty samples for sample 4.
+Did not find any uncertainty samples for sample 5.
+Did not find any uncertainty samples for sample 6.
+Did not find any uncertainty samples for sample 7.
+Did not find any uncertainty samples for sample 8.
+Did not find any uncertainty samples for sample 9.
+Did not find any uncertainty samples for sample 10.
+Did not find any uncertainty samples for sample 11.
+Did not find any uncertainty samples for sample 12.
+Did not find any uncertainty samples for sample 13.
+Did not find any uncertainty samples for sample 14.
+Did not find any uncertainty samples for sample 15.
+Did not find any uncertainty samples for sample 16.
+Did not find any uncertainty samples for sample 17.
+Did not find any uncertainty samples for sample 18.
+Did not find any uncertainty samples for sample 19.
+Did not find any uncertainty samples for sample 20.
+Did not find any uncertainty samples for sample 21.
+Did not find any uncertainty samples for sample 22.
+Did not find any uncertainty samples for sample 23.
+Did not find any uncertainty samples for sample 24.
+Did not find any uncertainty samples for sample 25.
+Did not find any uncertainty samples for sample 26.
+Did not find any uncertainty samples for sample 27.
+Did not find any uncertainty samples for sample 28.
+Did not find any uncertainty samples for sample 29.
+Did not find any uncertainty samples for sample 30.
+Did not find any uncertainty samples for sample 31.
+Did not find any uncertainty samples for sample 32.
+Did not find any uncertainty samples for sample 33.
+Did not find any uncertainty samples for sample 34.
+Did not find any uncertainty samples for sample 35.
+Did not find any uncertainty samples for sample 36.
+Did not find any uncertainty samples for sample 37.
+Did not find any uncertainty samples for sample 38.
+Did not find any uncertainty samples for sample 39.
+Did not find any uncertainty samples for sample 40.
+Did not find any uncertainty samples for sample 41.
+Did not find any uncertainty samples for sample 42.
+Did not find any uncertainty samples for sample 43.
+Did not find any uncertainty samples for sample 44.
+Did not find any uncertainty samples for sample 45.
+Did not find any uncertainty samples for sample 46.
+Did not find any uncertainty samples for sample 47.
+Did not find any uncertainty samples for sample 48.
+Did not find any uncertainty samples for sample 49.
+Did not find any uncertainty samples for sample 50.
+Did not find any uncertainty samples for sample 51.
+Did not find any uncertainty samples for sample 52.
+Did not find any uncertainty samples for sample 53.
+Did not find any uncertainty samples for sample 54.
+Did not find any uncertainty samples for sample 55.
+Did not find any uncertainty samples for sample 56.
+Did not find any uncertainty samples for sample 57.
+Did not find any uncertainty samples for sample 58.
+Did not find any uncertainty samples for sample 59.
+Did not find any uncertainty samples for sample 60.
+Did not find any uncertainty samples for sample 61.
+Did not find any uncertainty samples for sample 62.
+Did not find any uncertainty samples for sample 63.
+Did not find any uncertainty samples for sample 64.
+Did not find any uncertainty samples for sample 65.
+Did not find any uncertainty samples for sample 66.
+Did not find any uncertainty samples for sample 67.
+Did not find any uncertainty samples for sample 68.
+Did not find any uncertainty samples for sample 69.
+Did not find any uncertainty samples for sample 70.
+Did not find any uncertainty samples for sample 71.
+Did not find any uncertainty samples for sample 72.
+Did not find any uncertainty samples for sample 73.
+Did not find any uncertainty samples for sample 74.
+Did not find any uncertainty samples for sample 75.
+Did not find any uncertainty samples for sample 76.
+Did not find any uncertainty samples for sample 77.
+Did not find any uncertainty samples for sample 78.
+Did not find any uncertainty samples for sample 79.
+Did not find any uncertainty samples for sample 80.
+Did not find any uncertainty samples for sample 81.
+Did not find any uncertainty samples for sample 82.
+Did not find any uncertainty samples for sample 83.
+Did not find any uncertainty samples for sample 84.
+Did not find any uncertainty samples for sample 85.
+Did not find any uncertainty samples for sample 86.
+Did not find any uncertainty samples for sample 87.
+Did not find any uncertainty samples for sample 88.
+Did not find any uncertainty samples for sample 89.
+Did not find any uncertainty samples for sample 90.
+Did not find any uncertainty samples for sample 91.
+Did not find any uncertainty samples for sample 92.
+Did not find any uncertainty samples for sample 93.
+Did not find any uncertainty samples for sample 94.
+Did not find any uncertainty samples for sample 95.
+Did not find any uncertainty samples for sample 96.
+Did not find any uncertainty samples for sample 97.
+Did not find any uncertainty samples for sample 98.
+Did not find any uncertainty samples for sample 99.
+No uncertainty samples found in iteration 1.
+Did not find any uncertainty samples for sample 0.
+Did not find any uncertainty samples for sample 1.
+Did not find any uncertainty samples for sample 2.
+Did not find any uncertainty samples for sample 3.
+Did not find any uncertainty samples for sample 4.
+Did not find any uncertainty samples for sample 5.
+Did not find any uncertainty samples for sample 6.
+Did not find any uncertainty samples for sample 7.
+Did not find any uncertainty samples for sample 8.
+Did not find any uncertainty samples for sample 9.
+Did not find any uncertainty samples for sample 10.
+Did not find any uncertainty samples for sample 11.
+Did not find any uncertainty samples for sample 12.
+Did not find any uncertainty samples for sample 13.
+Did not find any uncertainty samples for sample 14.
+Did not find any uncertainty samples for sample 15.
+Did not find any uncertainty samples for sample 16.
+Did not find any uncertainty samples for sample 17.
+Did not find any uncertainty samples for sample 18.
+Did not find any uncertainty samples for sample 19.
+Did not find any uncertainty samples for sample 20.
+Did not find any uncertainty samples for sample 21.
+Did not find any uncertainty samples for sample 22.
+Did not find any uncertainty samples for sample 23.
+Did not find any uncertainty samples for sample 24.
+Did not find any uncertainty samples for sample 25.
+Did not find any uncertainty samples for sample 26.
+Did not find any uncertainty samples for sample 27.
+Did not find any uncertainty samples for sample 28.
+Did not find any uncertainty samples for sample 29.
+Did not find any uncertainty samples for sample 30.
+Did not find any uncertainty samples for sample 31.
+Did not find any uncertainty samples for sample 32.
+Did not find any uncertainty samples for sample 33.
+Did not find any uncertainty samples for sample 34.
+Did not find any uncertainty samples for sample 35.
+Did not find any uncertainty samples for sample 36.
+Did not find any uncertainty samples for sample 37.
+Did not find any uncertainty samples for sample 38.
+Did not find any uncertainty samples for sample 39.
+Did not find any uncertainty samples for sample 40.
+Did not find any uncertainty samples for sample 41.
+Did not find any uncertainty samples for sample 42.
+Did not find any uncertainty samples for sample 43.
+Did not find any uncertainty samples for sample 44.
+Did not find any uncertainty samples for sample 45.
+Did not find any uncertainty samples for sample 46.
+Did not find any uncertainty samples for sample 47.
+Did not find any uncertainty samples for sample 48.
+Did not find any uncertainty samples for sample 49.
+Did not find any uncertainty samples for sample 50.
+Did not find any uncertainty samples for sample 51.
+Did not find any uncertainty samples for sample 52.
+Did not find any uncertainty samples for sample 53.
+Did not find any uncertainty samples for sample 54.
+Did not find any uncertainty samples for sample 55.
+Did not find any uncertainty samples for sample 56.
+Did not find any uncertainty samples for sample 57.
+Did not find any uncertainty samples for sample 58.
+Did not find any uncertainty samples for sample 59.
+Did not find any uncertainty samples for sample 60.
+Did not find any uncertainty samples for sample 61.
+Did not find any uncertainty samples for sample 62.
+Did not find any uncertainty samples for sample 63.
+Did not find any uncertainty samples for sample 64.
+Did not find any uncertainty samples for sample 65.
+Did not find any uncertainty samples for sample 66.
+Did not find any uncertainty samples for sample 67.
+Did not find any uncertainty samples for sample 68.
+Did not find any uncertainty samples for sample 69.
+Did not find any uncertainty samples for sample 70.
+Did not find any uncertainty samples for sample 71.
+Did not find any uncertainty samples for sample 72.
+Did not find any uncertainty samples for sample 73.
+Did not find any uncertainty samples for sample 74.
+Did not find any uncertainty samples for sample 75.
+Did not find any uncertainty samples for sample 76.
+Did not find any uncertainty samples for sample 77.
+Did not find any uncertainty samples for sample 78.
+Did not find any uncertainty samples for sample 79.
+Did not find any uncertainty samples for sample 80.
+Did not find any uncertainty samples for sample 81.
+Did not find any uncertainty samples for sample 82.
+Did not find any uncertainty samples for sample 83.
+Did not find any uncertainty samples for sample 84.
+Did not find any uncertainty samples for sample 85.
+Did not find any uncertainty samples for sample 86.
+Did not find any uncertainty samples for sample 87.
+Did not find any uncertainty samples for sample 88.
+Did not find any uncertainty samples for sample 89.
+Did not find any uncertainty samples for sample 90.
+Did not find any uncertainty samples for sample 91.
+Did not find any uncertainty samples for sample 92.
+Did not find any uncertainty samples for sample 93.
+Did not find any uncertainty samples for sample 94.
+Did not find any uncertainty samples for sample 95.
+Did not find any uncertainty samples for sample 96.
+Did not find any uncertainty samples for sample 97.
+Did not find any uncertainty samples for sample 98.
+Did not find any uncertainty samples for sample 99.
+No uncertainty samples found in iteration 2.
+Did not find any uncertainty samples for sample 0.
+Did not find any uncertainty samples for sample 1.
+Did not find any uncertainty samples for sample 2.
+Did not find any uncertainty samples for sample 3.
+Did not find any uncertainty samples for sample 4.
+Did not find any uncertainty samples for sample 5.
+Did not find any uncertainty samples for sample 6.
+Did not find any uncertainty samples for sample 7.
+Did not find any uncertainty samples for sample 8.
+Did not find any uncertainty samples for sample 9.
+Did not find any uncertainty samples for sample 10.
+Did not find any uncertainty samples for sample 11.
+Did not find any uncertainty samples for sample 12.
+Did not find any uncertainty samples for sample 13.
+Did not find any uncertainty samples for sample 14.
+Did not find any uncertainty samples for sample 15.
+Did not find any uncertainty samples for sample 16.
+Did not find any uncertainty samples for sample 17.
+Did not find any uncertainty samples for sample 18.
+Did not find any uncertainty samples for sample 19.
+Did not find any uncertainty samples for sample 20.
+Did not find any uncertainty samples for sample 21.
+Did not find any uncertainty samples for sample 22.
+Did not find any uncertainty samples for sample 23.
+Did not find any uncertainty samples for sample 24.
+Did not find any uncertainty samples for sample 25.
+Did not find any uncertainty samples for sample 26.
+Did not find any uncertainty samples for sample 27.
+Did not find any uncertainty samples for sample 28.
+Did not find any uncertainty samples for sample 29.
+Did not find any uncertainty samples for sample 30.
+Did not find any uncertainty samples for sample 31.
+Did not find any uncertainty samples for sample 32.
+Did not find any uncertainty samples for sample 33.
+Did not find any uncertainty samples for sample 34.
+Did not find any uncertainty samples for sample 35.
+Did not find any uncertainty samples for sample 36.
+Did not find any uncertainty samples for sample 37.
+Did not find any uncertainty samples for sample 38.
+Did not find any uncertainty samples for sample 39.
+Did not find any uncertainty samples for sample 40.
+Did not find any uncertainty samples for sample 41.
+Did not find any uncertainty samples for sample 42.
+Did not find any uncertainty samples for sample 43.
+Did not find any uncertainty samples for sample 44.
+Did not find any uncertainty samples for sample 45.
+Did not find any uncertainty samples for sample 46.
+Did not find any uncertainty samples for sample 47.
+Did not find any uncertainty samples for sample 48.
+Did not find any uncertainty samples for sample 49.
+Did not find any uncertainty samples for sample 50.
+Did not find any uncertainty samples for sample 51.
+Did not find any uncertainty samples for sample 52.
+Did not find any uncertainty samples for sample 53.
+Did not find any uncertainty samples for sample 54.
+Did not find any uncertainty samples for sample 55.
+Did not find any uncertainty samples for sample 56.
+Did not find any uncertainty samples for sample 57.
+Did not find any uncertainty samples for sample 58.
+Did not find any uncertainty samples for sample 59.
+Did not find any uncertainty samples for sample 60.
+Did not find any uncertainty samples for sample 61.
+Did not find any uncertainty samples for sample 62.
+Did not find any uncertainty samples for sample 63.
+Did not find any uncertainty samples for sample 64.
+Did not find any uncertainty samples for sample 65.
+Did not find any uncertainty samples for sample 66.
+Did not find any uncertainty samples for sample 67.
+Did not find any uncertainty samples for sample 68.
+Did not find any uncertainty samples for sample 69.
+Did not find any uncertainty samples for sample 70.
+Did not find any uncertainty samples for sample 71.
+Did not find any uncertainty samples for sample 72.
+Did not find any uncertainty samples for sample 73.
+Did not find any uncertainty samples for sample 74.
+Did not find any uncertainty samples for sample 75.
+Did not find any uncertainty samples for sample 76.
+Did not find any uncertainty samples for sample 77.
+Did not find any uncertainty samples for sample 78.
+Did not find any uncertainty samples for sample 79.
+Did not find any uncertainty samples for sample 80.
+Did not find any uncertainty samples for sample 81.
+Did not find any uncertainty samples for sample 82.
+Did not find any uncertainty samples for sample 83.
+Did not find any uncertainty samples for sample 84.
+Did not find any uncertainty samples for sample 85.
+Did not find any uncertainty samples for sample 86.
+Did not find any uncertainty samples for sample 87.
+Did not find any uncertainty samples for sample 88.
+Did not find any uncertainty samples for sample 89.
+Did not find any uncertainty samples for sample 90.
+Did not find any uncertainty samples for sample 91.
+Did not find any uncertainty samples for sample 92.
+Did not find any uncertainty samples for sample 93.
+Did not find any uncertainty samples for sample 94.
+Did not find any uncertainty samples for sample 95.
+Did not find any uncertainty samples for sample 96.
+Did not find any uncertainty samples for sample 97.
+Did not find any uncertainty samples for sample 98.
+Did not find any uncertainty samples for sample 99.
+No uncertainty samples found in iteration 3.
+Did not find any uncertainty samples for sample 0.
+Did not find any uncertainty samples for sample 1.
+Did not find any uncertainty samples for sample 2.
+Did not find any uncertainty samples for sample 3.
+Did not find any uncertainty samples for sample 4.
+Did not find any uncertainty samples for sample 5.
+Did not find any uncertainty samples for sample 6.
+Did not find any uncertainty samples for sample 7.
+Did not find any uncertainty samples for sample 8.
+Did not find any uncertainty samples for sample 9.
+Did not find any uncertainty samples for sample 10.
+Did not find any uncertainty samples for sample 11.
+Did not find any uncertainty samples for sample 12.
+Did not find any uncertainty samples for sample 13.
+Did not find any uncertainty samples for sample 14.
+Did not find any uncertainty samples for sample 15.
+Did not find any uncertainty samples for sample 16.
+Did not find any uncertainty samples for sample 17.
+Did not find any uncertainty samples for sample 18.
+Did not find any uncertainty samples for sample 19.
+Did not find any uncertainty samples for sample 20.
+Did not find any uncertainty samples for sample 21.
+Did not find any uncertainty samples for sample 22.
+Did not find any uncertainty samples for sample 23.
+Did not find any uncertainty samples for sample 24.
+Did not find any uncertainty samples for sample 25.
+Did not find any uncertainty samples for sample 26.
+Did not find any uncertainty samples for sample 27.
+Did not find any uncertainty samples for sample 28.
+Did not find any uncertainty samples for sample 29.
+Did not find any uncertainty samples for sample 30.
+Did not find any uncertainty samples for sample 31.
+Did not find any uncertainty samples for sample 32.
+Did not find any uncertainty samples for sample 33.
+Did not find any uncertainty samples for sample 34.
+Did not find any uncertainty samples for sample 35.
+Did not find any uncertainty samples for sample 36.
+Did not find any uncertainty samples for sample 37.
+Did not find any uncertainty samples for sample 38.
+Did not find any uncertainty samples for sample 39.
+Did not find any uncertainty samples for sample 40.
+Did not find any uncertainty samples for sample 41.
+Did not find any uncertainty samples for sample 42.
+Did not find any uncertainty samples for sample 43.
+Did not find any uncertainty samples for sample 44.
+Did not find any uncertainty samples for sample 45.
+Did not find any uncertainty samples for sample 46.
+Did not find any uncertainty samples for sample 47.
+Did not find any uncertainty samples for sample 48.
+Did not find any uncertainty samples for sample 49.
+Did not find any uncertainty samples for sample 50.
+Did not find any uncertainty samples for sample 51.
+Did not find any uncertainty samples for sample 52.
+Did not find any uncertainty samples for sample 53.
+Did not find any uncertainty samples for sample 54.
+Did not find any uncertainty samples for sample 55.
+Did not find any uncertainty samples for sample 56.
+Did not find any uncertainty samples for sample 57.
+Did not find any uncertainty samples for sample 58.
+Did not find any uncertainty samples for sample 59.
+Did not find any uncertainty samples for sample 60.
+Did not find any uncertainty samples for sample 61.
+Did not find any uncertainty samples for sample 62.
+Did not find any uncertainty samples for sample 63.
+Did not find any uncertainty samples for sample 64.
+Did not find any uncertainty samples for sample 65.
+Did not find any uncertainty samples for sample 66.
+Did not find any uncertainty samples for sample 67.
+Did not find any uncertainty samples for sample 68.
+Did not find any uncertainty samples for sample 69.
+Did not find any uncertainty samples for sample 70.
+Did not find any uncertainty samples for sample 71.
+Did not find any uncertainty samples for sample 72.
+Did not find any uncertainty samples for sample 73.
+Did not find any uncertainty samples for sample 74.
+Did not find any uncertainty samples for sample 75.
+Did not find any uncertainty samples for sample 76.
+Did not find any uncertainty samples for sample 77.
+Did not find any uncertainty samples for sample 78.
+Did not find any uncertainty samples for sample 79.
+Did not find any uncertainty samples for sample 80.
+Did not find any uncertainty samples for sample 81.
+Did not find any uncertainty samples for sample 82.
+Did not find any uncertainty samples for sample 83.
+Did not find any uncertainty samples for sample 84.
+Did not find any uncertainty samples for sample 85.
+Did not find any uncertainty samples for sample 86.
+Did not find any uncertainty samples for sample 87.
+Did not find any uncertainty samples for sample 88.
+Did not find any uncertainty samples for sample 89.
+Did not find any uncertainty samples for sample 90.
+Did not find any uncertainty samples for sample 91.
+Did not find any uncertainty samples for sample 92.
+Did not find any uncertainty samples for sample 93.
+Did not find any uncertainty samples for sample 94.
+Did not find any uncertainty samples for sample 95.
+Did not find any uncertainty samples for sample 96.
+Did not find any uncertainty samples for sample 97.
+Did not find any uncertainty samples for sample 98.
+Did not find any uncertainty samples for sample 99.
+No uncertainty samples found in iteration 4.
+Did not find any uncertainty samples for sample 0.
+Did not find any uncertainty samples for sample 1.
+Did not find any uncertainty samples for sample 2.
+Did not find any uncertainty samples for sample 3.
+Did not find any uncertainty samples for sample 4.
+Did not find any uncertainty samples for sample 5.
+Did not find any uncertainty samples for sample 6.
+Did not find any uncertainty samples for sample 7.
+Did not find any uncertainty samples for sample 8.
+Did not find any uncertainty samples for sample 9.
+Did not find any uncertainty samples for sample 10.
+Did not find any uncertainty samples for sample 11.
+Did not find any uncertainty samples for sample 12.
+Did not find any uncertainty samples for sample 13.
+Did not find any uncertainty samples for sample 14.
+Did not find any uncertainty samples for sample 15.
+Did not find any uncertainty samples for sample 16.
+Did not find any uncertainty samples for sample 17.
+Did not find any uncertainty samples for sample 18.
+Did not find any uncertainty samples for sample 19.
+Did not find any uncertainty samples for sample 20.
+Did not find any uncertainty samples for sample 21.
+Did not find any uncertainty samples for sample 22.
+Did not find any uncertainty samples for sample 23.
+Did not find any uncertainty samples for sample 24.
+Did not find any uncertainty samples for sample 25.
+Did not find any uncertainty samples for sample 26.
+Did not find any uncertainty samples for sample 27.
+Did not find any uncertainty samples for sample 28.
+Did not find any uncertainty samples for sample 29.
+slurmstepd: error: *** JOB 5124864 ON aimat01 CANCELLED AT 2024-12-07T08:53:54 ***

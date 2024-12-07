@@ -67,6 +67,12 @@ parser.add_argument(
     default=5e-1,
     help="coefficient for regularizing the Evidential Regression Loss",
 )
+parser.add_argument(
+    "--mve_force_uncertainty",
+    type=bool,
+    default=True,
+    help="if mve is either trained on force uncertainty or energy uncertainty",
+)
 
 
 args = parser.parse_args()
@@ -82,6 +88,7 @@ force_weight = args.force_weight
 energy_weight = args.energy_weight
 use_wandb = args.use_wandb
 coeff = args.evi_coeff
+mve_force_uncertainty = False  # args.mve_force_uncertainty
 
 in_node_nf = 12
 in_edge_nf = 0
@@ -142,6 +149,7 @@ model_path = None
 timestamp = time.strftime("%Y%m%d_%H%M%S")
 
 if uncertainty_method == "MVE":
+    print(mve_force_uncertainty)
     name = "mve"
     log_path = setup_log_folder(name, timestamp)
     if save_model:
@@ -174,6 +182,7 @@ if uncertainty_method == "MVE":
             force_weight=force_weight,
             energy_weight=energy_weight,
             factor=factor,
+            force_uncertainty=mve_force_uncertainty,
         )
         mve.calibrate_uncertainty(
             validloader,
@@ -188,8 +197,8 @@ if uncertainty_method == "MVE":
             plot_name=f"{log_path}/plot_{i}",
             csv_path=f"{log_path}/eval.csv",
             test_loader_out=testloader_out,
-            use_energy_uncertainty=True,
-            use_force_uncertainty=False,
+            use_energy_uncertainty=not mve_force_uncertainty,
+            use_force_uncertainty=mve_force_uncertainty,
         )
         mve.valid_on_cv(
             testloader_uniform,

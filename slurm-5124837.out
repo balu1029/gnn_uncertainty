@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "/home/ws/fq0795/git/gnn_uncertainty/reevaluate_experiments.py", line 172, in <module>
+    ens.evaluate_all(
+  File "/home/ws/fq0795/git/gnn_uncertainty/uncertainty/base_uncertainty.py", line 251, in evaluate_all
+    ) = self._eval_all(
+        ^^^^^^^^^^^^^^^
+  File "/home/ws/fq0795/git/gnn_uncertainty/uncertainty/base_uncertainty.py", line 569, in _eval_all
+    self._scatter_plot(
+  File "/home/ws/fq0795/git/gnn_uncertainty/uncertainty/base_uncertainty.py", line 628, in _scatter_plot
+    x_min, y_min = -80
+    ^^^^^^^^^^^^
+TypeError: cannot unpack non-iterable int object

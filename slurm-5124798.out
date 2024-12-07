@@ -1,0 +1,28 @@
+/home/ws/fq0795/miniconda3/envs/torch/lib/python3.12/site-packages/numpy/lib/function_base.py:2742: RuntimeWarning: invalid value encountered in subtract
+  X -= avg[:, None]
+/home/ws/fq0795/miniconda3/envs/torch/lib/python3.12/site-packages/numpy/lib/function_base.py:4655: RuntimeWarning: invalid value encountered in subtract
+  diff_b_a = subtract(b, a)
+0.0 0.00040245056
+1.1290903 48.433624
+(48745, 22, 3)
+7.6293945e-06 0.00047683716
+0.86515343 458944.72
+Traceback (most recent call last):
+  File "/home/ws/fq0795/git/gnn_uncertainty/reevaluate_experiments.py", line 210, in <module>
+    evi.evaluate_all(
+  File "/home/ws/fq0795/git/gnn_uncertainty/uncertainty/base_uncertainty.py", line 281, in evaluate_all
+    self._mulit_scatter_plot(
+  File "/home/ws/fq0795/git/gnn_uncertainty/uncertainty/base_uncertainty.py", line 708, in _mulit_scatter_plot
+    plt.xlim(min_val, max_val)
+  File "/home/ws/fq0795/miniconda3/envs/torch/lib/python3.12/site-packages/matplotlib/pyplot.py", line 1961, in xlim
+    ret = ax.set_xlim(*args, **kwargs)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ws/fq0795/miniconda3/envs/torch/lib/python3.12/site-packages/matplotlib/axes/_base.py", line 3664, in set_xlim
+    return self.xaxis._set_lim(left, right, emit=emit, auto=auto)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ws/fq0795/miniconda3/envs/torch/lib/python3.12/site-packages/matplotlib/axis.py", line 1211, in _set_lim
+    v1 = self.axes._validate_converted_limits(v1, self.convert_units)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ws/fq0795/miniconda3/envs/torch/lib/python3.12/site-packages/matplotlib/axes/_base.py", line 3585, in _validate_converted_limits
+    raise ValueError("Axis limits cannot be NaN or Inf")
+ValueError: Axis limits cannot be NaN or Inf

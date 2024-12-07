@@ -99,7 +99,7 @@ class SWAG(BaseUncertainty):
         best_valid_loss = np.inf
 
         if swag_start_epoch is None:
-            swag_start_epoch = int(epochs / 4 * 3)
+            swag_start_epoch = 5  # int(epochs / 4 * 3)
 
         for epoch in range(epochs):
             # if epoch > swag_start_epoch:
