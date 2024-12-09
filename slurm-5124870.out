@@ -1,0 +1,13 @@
+wandb: Currently logged in as: l-baer-99 (l-baer-99-Karlsruhe Institute of Technology). Use `wandb login --relogin` to force relogin
+wandb: wandb version 0.19.0 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.17.4
+wandb: Run data is saved locally in /home/ws/fq0795/git/gnn_uncertainty/wandb/run-20241207_091046-q8zpvh53
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run 20241207_091041_0
+wandb: ⭐️ View project at https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-Ensemble
+wandb: 🚀 View run at https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-Ensemble/runs/q8zpvh53
+Number of Cores: 384
+Sequential time: 0.16204404830932617
+/var/lib/slurmd/job5124870/slurm_script: line 14: 280259 Killed                  python3 evaluate_models.py --uncertainty_method=ENS --save_model=True --use_wandb=True --force_weight=5 --energy_weight=1 --epochs=20 --num_samples=5 --swag_start_epoch=5000 --mve_warmup=2000 --evi_coeff=1e-6 --mve_force_uncertainty=False --ensemble_size=8
+slurmstepd: error: Detected 26 oom-kill event(s) in step 5124870.batch cgroup. Some of your processes may have been killed by the cgroup out-of-memory handler.

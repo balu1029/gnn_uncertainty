@@ -1,0 +1,16 @@
+/home/ws/fq0795/miniconda3/envs/torch/lib/python3.12/site-packages/torch/autograd/graph.py:744: UserWarning: Attempting to run cuBLAS, but there was no current CUDA context! Attempting to set the primary context... (Triggered internally at ../aten/src/ATen/cuda/CublasHandlePool.cpp:135.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+Uncertainty Slope: 0.3339359760284424, Uncertainty Bias: -0.07004591822624207
+0.0 0.003235817
+0.46517727 12.179871
+(48745, 22, 3)
+Uncertainty Slope: 0.28556033968925476, Uncertainty Bias: 0.03078189492225647
+7.6293945e-06 2.2888184e-05
+1.9780034 9.533899
+(48745, 22, 3)
+Uncertainty Slope: 0.3681018054485321, Uncertainty Bias: -0.08307641744613647
+1.1444092e-05 0.010692596
+1.8380756 15.284354
+(48745, 22, 3)
+Uncertainty Slope: 0.39647236466407776, Uncertainty Bias: -0.09148305654525757
+slurmstepd: error: *** JOB 5124965 ON aimat01 CANCELLED AT 2024-12-08T20:09:57 ***

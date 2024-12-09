@@ -1,0 +1,114 @@
+wandb: Currently logged in as: l-baer-99 (l-baer-99-Karlsruhe Institute of Technology). Use `wandb login --relogin` to force relogin
+wandb: wandb version 0.19.0 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.17.4
+wandb: Run data is saved locally in /home/ws/fq0795/git/gnn_uncertainty/wandb/run-20241208_150522-i9tyn0or
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run al_80
+wandb: ⭐️ View project at https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/ActiveLearning
+wandb: 🚀 View run at https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/ActiveLearning/runs/i9tyn0or
+['H1', 'CH3', 'H2', 'H3', 'C', 'O', 'N', 'H', 'CA', 'HA', 'CB', 'HB1', 'HB2', 'HB3', 'C', 'O', 'N', 'H', 'C', 'H1', 'H2', 'H3']
+79
+Uncertainty Slope: 0.6569403409957886, Uncertainty Bias: 0.02670028805732727
+0.0004119873 0.0067443848
+0.4407606 2.881254
+(48745, 22, 3)
+
+Training and Validation Results of Epoch Initital validation:
+================================
+Training Loss Energy: 0.0, Training Loss Force: 0.0, time: 0
+Validation Loss Energy: 0.0, Validation Loss Force: 0.0, time: 0
+Test Loss Energy: 12.426627648476801, Test Loss Force: 10.718952311275114, time: 14.177751779556274
+
+wandb: - 0.039 MB of 0.039 MB uploadedwandb: \ 0.039 MB of 0.050 MB uploadedwandb: | 0.039 MB of 0.050 MB uploadedwandb: / 0.050 MB of 0.050 MB uploadedwandb:                                                                                
+wandb: 
+wandb: Run history:
+wandb:       dataset_size ▁
+wandb:    max_uncertainty ▁
+wandb:  test_error_energy ▁
+wandb:   test_error_force ▁
+wandb:          test_loss ▁
+wandb: train_error_energy ▁
+wandb:  train_error_force ▁
+wandb:         train_loss ▁
+wandb: valid_error_energy ▁
+wandb:  valid_error_force ▁
+wandb:         valid_loss ▁
+wandb: 
+wandb: Run summary:
+wandb:       dataset_size 800
+wandb:    max_uncertainty 6
+wandb:  test_error_energy 12.42663
+wandb:   test_error_force 10.71895
+wandb:          test_loss 6.04287
+wandb: train_error_energy 0.0
+wandb:  train_error_force 0.0
+wandb:         train_loss 0.0
+wandb: valid_error_energy 0.0
+wandb:  valid_error_force 0.0
+wandb:         valid_loss 0.0
+wandb: 
+wandb: 🚀 View run al_80 at: https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/ActiveLearning/runs/i9tyn0or
+wandb: ⭐️ View project at: https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/ActiveLearning
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20241208_150522-i9tyn0or/logs
+wandb: WARNING The new W&B backend becomes opt-out in version 0.18.0; try it out with `wandb.require("core")`! See https://wandb.me/wandb-core for more information.
+Did not find any uncertainty samples for sample 0.
+Found uncertainty sample 1 after 3041 steps.
+Found uncertainty sample 2 after 3579 steps.
+Did not find any uncertainty samples for sample 3.
+Did not find any uncertainty samples for sample 4.
+Found uncertainty sample 5 after 3407 steps.
+Did not find any uncertainty samples for sample 6.
+Found uncertainty sample 7 after 466 steps.
+Did not find any uncertainty samples for sample 8.
+Did not find any uncertainty samples for sample 9.
+Did not find any uncertainty samples for sample 10.
+Found uncertainty sample 11 after 286 steps.
+Did not find any uncertainty samples for sample 12.
+Did not find any uncertainty samples for sample 13.
+Did not find any uncertainty samples for sample 14.
+Did not find any uncertainty samples for sample 15.
+Found uncertainty sample 16 after 1802 steps.
+Did not find any uncertainty samples for sample 17.
+Found uncertainty sample 18 after 2616 steps.
+Did not find any uncertainty samples for sample 19.
+Did not find any uncertainty samples for sample 20.
+Found uncertainty sample 21 after 1216 steps.
+Found uncertainty sample 22 after 2710 steps.
+Found uncertainty sample 23 after 2010 steps.
+Found uncertainty sample 24 after 548 steps.
+Did not find any uncertainty samples for sample 25.
+Found uncertainty sample 26 after 3206 steps.
+Did not find any uncertainty samples for sample 27.
+Found uncertainty sample 28 after 3711 steps.
+Did not find any uncertainty samples for sample 29.
+Did not find any uncertainty samples for sample 30.
+Found uncertainty sample 31 after 60 steps.
+Found uncertainty sample 32 after 1535 steps.
+Found uncertainty sample 33 after 1285 steps.
+Found uncertainty sample 34 after 14 steps.
+Found uncertainty sample 35 after 1071 steps.
+Did not find any uncertainty samples for sample 36.
+Did not find any uncertainty samples for sample 37.
+Found uncertainty sample 38 after 2409 steps.
+Found uncertainty sample 39 after 1327 steps.
+Found uncertainty sample 40 after 1298 steps.
+Did not find any uncertainty samples for sample 41.
+Found uncertainty sample 42 after 1428 steps.
+Found uncertainty sample 43 after 3708 steps.
+Found uncertainty sample 44 after 3799 steps.
+Found uncertainty sample 45 after 1050 steps.
+Did not find any uncertainty samples for sample 46.
+Found uncertainty sample 47 after 3432 steps.
+Found uncertainty sample 48 after 2602 steps.
+Found uncertainty sample 49 after 2059 steps.
+Found uncertainty sample 50 after 135 steps.
+Did not find any uncertainty samples for sample 51.
+Did not find any uncertainty samples for sample 52.
+Did not find any uncertainty samples for sample 53.
+Did not find any uncertainty samples for sample 54.
+Found uncertainty sample 55 after 60 steps.
+Found uncertainty sample 56 after 546 steps.
+Found uncertainty sample 57 after 1321 steps.
+slurmstepd: error: *** JOB 5124948 ON aimat01 CANCELLED AT 2024-12-08T16:20:53 ***

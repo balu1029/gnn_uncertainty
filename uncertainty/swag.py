@@ -487,7 +487,7 @@ class SWAG(BaseUncertainty):
         )
 
     def prepare_al_iteration(self):
-        self.num_samples = 0
+        self.num_samples = 15
 
 
 if __name__ == "__main__":

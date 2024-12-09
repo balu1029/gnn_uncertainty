@@ -18,11 +18,11 @@ hidden_nf = 32
 n_layers = 4
 
 ensemble_size = 3
-uncertainty_method = "ENS"
-swag_sample_size = 3
+uncertainty_method = "MVE"
+swag_sample_size = 100
 
-name = "ensemble3_20241115_105146"
-cal = False
+name = "mve_20241205_162153"
+cal = True
 
 model_dir = f"gnn/models/{name}"
 out_path = f"logs/{name}_reeval_thesis_cal_{cal}"
@@ -31,7 +31,7 @@ if not os.path.exists(out_path):
     os.makedirs(out_path)
 
 
-batch_size = 32
+batch_size = 512
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
 
@@ -73,6 +73,7 @@ testloader = torch.utils.data.DataLoader(
 timestamp = time.strftime("%Y%m%d_%H%M%S")
 
 for i, model_name in enumerate(os.listdir(model_dir)):
+
     model_path = f"{model_dir}/{model_name}"
 
     if uncertainty_method == "MVE":
@@ -92,7 +93,7 @@ for i, model_name in enumerate(os.listdir(model_dir)):
                 testloader_in,
                 device=device,
                 dtype=torch.float32,
-                path=f"{out_path}/calibration{i}.pdf",
+                path=f"{out_path}/calibration{i}.svg",
             )
         mve.evaluate_all(
             testloader_in,
@@ -125,12 +126,13 @@ for i, model_name in enumerate(os.listdir(model_dir)):
             sample_size=swag_sample_size,
         )
         swag.load_state_dict(torch.load(model_path, map_location=torch.device(device)))
+
         if cal:
             swag.calibrate_uncertainty(
                 validationloader,
                 device=device,
                 dtype=torch.float32,
-                path=f"{out_path}/calibration{i}.pdf",
+                path=f"{out_path}/calibration{i}.svg",
             )
         swag.evaluate_all(
             testloader_in,
@@ -167,7 +169,7 @@ for i, model_name in enumerate(os.listdir(model_dir)):
                 validationloader,
                 device=device,
                 dtype=torch.float32,
-                path=f"{out_path}/calibration{i}.pdf",
+                path=f"{out_path}/calibration{i}.svg",
             )
         ens.evaluate_all(
             testloader_in,
@@ -205,7 +207,7 @@ for i, model_name in enumerate(os.listdir(model_dir)):
                 validationloader,
                 device=device,
                 dtype=torch.float32,
-                path=f"{out_path}/calibration{i}.pdf",
+                path=f"{out_path}/calibration{i}.svg",
             )
         evi.evaluate_all(
             testloader_in,

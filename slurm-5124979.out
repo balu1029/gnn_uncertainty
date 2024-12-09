@@ -1,0 +1,30 @@
+3.8146973e-06 0.00035905838
+2.743997 3.0650704
+Traceback (most recent call last):
+  File "/home/ws/fq0795/git/gnn_uncertainty/reevaluate_experiments.py", line 98, in <module>
+    mve.evaluate_all(
+  File "/home/ws/fq0795/git/gnn_uncertainty/uncertainty/base_uncertainty.py", line 282, in evaluate_all
+    self._mulit_scatter_plot(
+  File "/home/ws/fq0795/git/gnn_uncertainty/uncertainty/base_uncertainty.py", line 785, in _mulit_scatter_plot
+    plt.savefig(save_path)
+  File "/home/ws/fq0795/miniconda3/envs/torch/lib/python3.12/site-packages/matplotlib/pyplot.py", line 1134, in savefig
+    res = fig.savefig(*args, **kwargs)  # type: ignore[func-returns-value]
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ws/fq0795/miniconda3/envs/torch/lib/python3.12/site-packages/matplotlib/figure.py", line 3390, in savefig
+    self.canvas.print_figure(fname, **kwargs)
+  File "/home/ws/fq0795/miniconda3/envs/torch/lib/python3.12/site-packages/matplotlib/backend_bases.py", line 2193, in print_figure
+    result = print_method(
+             ^^^^^^^^^^^^^
+  File "/home/ws/fq0795/miniconda3/envs/torch/lib/python3.12/site-packages/matplotlib/backend_bases.py", line 2043, in <lambda>
+    print_method = functools.wraps(meth)(lambda *args, **kwargs: meth(
+                                                                 ^^^^^
+  File "/home/ws/fq0795/miniconda3/envs/torch/lib/python3.12/site-packages/matplotlib/backends/backend_svg.py", line 1328, in print_svg
+    with cbook.open_file_cm(filename, "w", encoding="utf-8") as fh:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ws/fq0795/miniconda3/envs/torch/lib/python3.12/site-packages/matplotlib/cbook.py", line 497, in open_file_cm
+    fh, opened = to_filehandle(path_or_file, mode, True, encoding)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ws/fq0795/miniconda3/envs/torch/lib/python3.12/site-packages/matplotlib/cbook.py", line 483, in to_filehandle
+    fh = open(fname, flag, encoding=encoding)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'logs/mve_20241205_093736_reeval_thesis_cal_False_100samples/plot_0_energy_uncertainty_energy_loss.svg'

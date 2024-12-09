@@ -1,0 +1,234 @@
+wandb: Currently logged in as: l-baer-99 (l-baer-99-Karlsruhe Institute of Technology). Use `wandb login --relogin` to force relogin
+wandb: wandb version 0.19.0 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.17.4
+wandb: Run data is saved locally in /home/ws/fq0795/git/gnn_uncertainty/wandb/run-20241207_095558-4pwyihnz
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run al_77
+wandb: ⭐️ View project at https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/ActiveLearning
+wandb: 🚀 View run at https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/ActiveLearning/runs/4pwyihnz
+/home/ws/fq0795/miniconda3/envs/torch/lib/python3.12/site-packages/torch/autograd/graph.py:744: UserWarning: Attempting to run cuBLAS, but there was no current CUDA context! Attempting to set the primary context... (Triggered internally at ../aten/src/ATen/cuda/CublasHandlePool.cpp:135.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+['H1', 'CH3', 'H2', 'H3', 'C', 'O', 'N', 'H', 'CA', 'HA', 'CB', 'HB1', 'HB2', 'HB3', 'C', 'O', 'N', 'H', 'C', 'H1', 'H2', 'H3']
+76
+Uncertainty Slope: 0.2548976242542267, Uncertainty Bias: 0.027783796191215515
+0.00077819824 0.011551797
+2.446204 6.0882244
+(48745, 22, 3)
+
+Training and Validation Results of Epoch Initital validation:
+================================
+Training Loss Energy: 0.0, Training Loss Force: 0.0, time: 0
+Validation Loss Energy: 0.0, Validation Loss Force: 0.0, time: 0
+Test Loss Energy: 9.371961889308091, Test Loss Force: 10.673030798645675, time: 6.382248163223267
+
+wandb: - 0.039 MB of 0.039 MB uploadedwandb: \ 0.039 MB of 0.040 MB uploadedwandb: | 0.039 MB of 0.040 MB uploadedwandb: / 0.051 MB of 0.051 MB uploadedwandb:                                                                                
+wandb: 
+wandb: Run history:
+wandb:       dataset_size ▁
+wandb:    max_uncertainty ▁
+wandb:  test_error_energy ▁
+wandb:   test_error_force ▁
+wandb:          test_loss ▁
+wandb: train_error_energy ▁
+wandb:  train_error_force ▁
+wandb:         train_loss ▁
+wandb: valid_error_energy ▁
+wandb:  valid_error_force ▁
+wandb:         valid_loss ▁
+wandb: 
+wandb: Run summary:
+wandb:       dataset_size 800
+wandb:    max_uncertainty 4
+wandb:  test_error_energy 9.37196
+wandb:   test_error_force 10.67303
+wandb:          test_loss 4.19841
+wandb: train_error_energy 0.0
+wandb:  train_error_force 0.0
+wandb:         train_loss 0.0
+wandb: valid_error_energy 0.0
+wandb:  valid_error_force 0.0
+wandb:         valid_loss 0.0
+wandb: 
+wandb: 🚀 View run al_77 at: https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/ActiveLearning/runs/4pwyihnz
+wandb: ⭐️ View project at: https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/ActiveLearning
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20241207_095558-4pwyihnz/logs
+wandb: WARNING The new W&B backend becomes opt-out in version 0.18.0; try it out with `wandb.require("core")`! See https://wandb.me/wandb-core for more information.
+Found uncertainty sample 0 after 4 steps.
+Found uncertainty sample 1 after 1 steps.
+Found uncertainty sample 2 after 3 steps.
+Found uncertainty sample 3 after 1 steps.
+Found uncertainty sample 4 after 3 steps.
+Found uncertainty sample 5 after 3 steps.
+Found uncertainty sample 6 after 1 steps.
+Found 2 uncertainty samples at step 1. Dropping index -2
+Found uncertainty sample 7 after 1 steps.
+Found uncertainty sample 8 after 1 steps.
+Found uncertainty sample 9 after 4 steps.
+Found uncertainty sample 10 after 2 steps.
+Found uncertainty sample 11 after 10 steps.
+Found uncertainty sample 12 after 2 steps.
+Found uncertainty sample 13 after 1 steps.
+Found uncertainty sample 14 after 3 steps.
+Found uncertainty sample 15 after 1 steps.
+Found uncertainty sample 16 after 11 steps.
+Found uncertainty sample 17 after 4 steps.
+Found uncertainty sample 18 after 3 steps.
+Found uncertainty sample 19 after 13 steps.
+Found uncertainty sample 20 after 3 steps.
+Found uncertainty sample 21 after 6 steps.
+Found uncertainty sample 22 after 1 steps.
+Found uncertainty sample 23 after 2 steps.
+Found uncertainty sample 24 after 2 steps.
+Found uncertainty sample 25 after 4 steps.
+Found uncertainty sample 26 after 5 steps.
+Found uncertainty sample 27 after 7 steps.
+Found uncertainty sample 28 after 1 steps.
+Found uncertainty sample 29 after 2 steps.
+Found 2 uncertainty samples at step 1. Dropping index -2
+Found uncertainty sample 30 after 1 steps.
+Found uncertainty sample 31 after 2 steps.
+Found uncertainty sample 32 after 5 steps.
+Found uncertainty sample 33 after 2 steps.
+Found uncertainty sample 34 after 4 steps.
+Found uncertainty sample 35 after 3 steps.
+Found uncertainty sample 36 after 5 steps.
+Found uncertainty sample 37 after 6 steps.
+Found uncertainty sample 38 after 1 steps.
+Found uncertainty sample 39 after 1 steps.
+Found uncertainty sample 40 after 1 steps.
+Found uncertainty sample 41 after 1 steps.
+Found uncertainty sample 42 after 6 steps.
+Found uncertainty sample 43 after 15 steps.
+Found 2 uncertainty samples at step 1. Dropping index -2
+Found uncertainty sample 44 after 1 steps.
+Found uncertainty sample 45 after 4 steps.
+Found uncertainty sample 46 after 6 steps.
+Found uncertainty sample 47 after 2 steps.
+Found uncertainty sample 48 after 1 steps.
+Found uncertainty sample 49 after 1 steps.
+Found uncertainty sample 50 after 7 steps.
+Found uncertainty sample 51 after 2 steps.
+Found uncertainty sample 52 after 1 steps.
+Found uncertainty sample 53 after 3 steps.
+Found uncertainty sample 54 after 2 steps.
+Found uncertainty sample 55 after 12 steps.
+Found uncertainty sample 56 after 4 steps.
+Found uncertainty sample 57 after 4 steps.
+Found uncertainty sample 58 after 1 steps.
+Found uncertainty sample 59 after 1 steps.
+Found uncertainty sample 60 after 6 steps.
+Found uncertainty sample 61 after 3 steps.
+Found uncertainty sample 62 after 1 steps.
+Found uncertainty sample 63 after 2 steps.
+Found uncertainty sample 64 after 8 steps.
+Found uncertainty sample 65 after 10 steps.
+Found uncertainty sample 66 after 1 steps.
+Found uncertainty sample 67 after 5 steps.
+Found uncertainty sample 68 after 8 steps.
+Found uncertainty sample 69 after 3 steps.
+Found uncertainty sample 70 after 1 steps.
+Found uncertainty sample 71 after 2 steps.
+Found uncertainty sample 72 after 1 steps.
+Found uncertainty sample 73 after 34 steps.
+Found uncertainty sample 74 after 1 steps.
+Found uncertainty sample 75 after 1 steps.
+Found uncertainty sample 76 after 2 steps.
+Found uncertainty sample 77 after 2 steps.
+Found uncertainty sample 78 after 2 steps.
+Found uncertainty sample 79 after 9 steps.
+Found uncertainty sample 80 after 20 steps.
+Found uncertainty sample 81 after 2 steps.
+Found uncertainty sample 82 after 12 steps.
+Found uncertainty sample 83 after 3 steps.
+Found uncertainty sample 84 after 3 steps.
+Found uncertainty sample 85 after 1 steps.
+Found uncertainty sample 86 after 3 steps.
+Found uncertainty sample 87 after 17 steps.
+Found uncertainty sample 88 after 1 steps.
+Found 2 uncertainty samples at step 1. Dropping index -2
+Found uncertainty sample 89 after 1 steps.
+Found uncertainty sample 90 after 3 steps.
+Found uncertainty sample 91 after 4 steps.
+Found uncertainty sample 92 after 2 steps.
+Found uncertainty sample 93 after 1 steps.
+Found uncertainty sample 94 after 1 steps.
+Found uncertainty sample 95 after 1 steps.
+Found uncertainty sample 96 after 8 steps.
+Found uncertainty sample 97 after 5 steps.
+Found uncertainty sample 98 after 1 steps.
+Found uncertainty sample 99 after 3 steps.
+wandb: wandb version 0.19.0 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.17.4
+wandb: Run data is saved locally in /home/ws/fq0795/git/gnn_uncertainty/wandb/run-20241207_095903-2iwqe7gl
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run al_77_0
+wandb: ⭐️ View project at https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-SWAG
+wandb: 🚀 View run at https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-SWAG/runs/2iwqe7gl
+Training model 0. Added 100 samples to the dataset.
+
+Training and Validation Results of Epoch 0:
+================================
+Training Loss Energy: 3.8761076347479007, Training Loss Force: 3.224020321199885, time: 0.5809540748596191
+Validation Loss Energy: 1.7789766196278154, Validation Loss Force: 3.4502838004337084, time: 0.04448986053466797
+Test Loss Energy: 9.702725867722702, Test Loss Force: 10.660384011885139, time: 8.307124137878418
+
+
+Training and Validation Results of Epoch 1:
+================================
+Training Loss Energy: 1.8065068701931104, Training Loss Force: 2.9331484667886523, time: 0.4046745300292969
+Validation Loss Energy: 1.3633458432107686, Validation Loss Force: 3.2560795647755993, time: 0.035619258880615234
+Test Loss Energy: 9.390616630041418, Test Loss Force: 10.575717536256255, time: 7.7928009033203125
+
+
+Training and Validation Results of Epoch 2:
+================================
+Training Loss Energy: 1.5904025156690866, Training Loss Force: 2.8333197811726505, time: 0.40417051315307617
+Validation Loss Energy: 1.321161396183895, Validation Loss Force: 3.219817894361259, time: 0.0349736213684082
+Test Loss Energy: 9.648693546348932, Test Loss Force: 10.589823736236642, time: 7.7947845458984375
+
+
+Training and Validation Results of Epoch 3:
+================================
+Training Loss Energy: 1.6783445238521328, Training Loss Force: 2.7979999932931157, time: 0.4254457950592041
+Validation Loss Energy: 1.9678906817169721, Validation Loss Force: 3.2334806504862423, time: 0.03582310676574707
+Test Loss Energy: 9.39938283219129, Test Loss Force: 10.607423883252258, time: 7.925087928771973
+
+
+Training and Validation Results of Epoch 4:
+================================
+Training Loss Energy: 2.213006758313317, Training Loss Force: 2.7908691172768814, time: 0.41176939010620117
+Validation Loss Energy: 1.9544145223362765, Validation Loss Force: 3.189786729319124, time: 0.03640890121459961
+Test Loss Energy: 9.406231454288713, Test Loss Force: 10.653033043531273, time: 7.824228763580322
+
+
+Training and Validation Results of Epoch 5:
+================================
+Training Loss Energy: 1.6057295646104899, Training Loss Force: 2.772691028495957, time: 0.3984341621398926
+Validation Loss Energy: 1.1619804564850489, Validation Loss Force: 3.1376244778632265, time: 0.037511587142944336
+Test Loss Energy: 9.45889997261015, Test Loss Force: 10.666405064865904, time: 7.8137640953063965
+
+
+Training and Validation Results of Epoch 6:
+================================
+Training Loss Energy: 11.627068418085424, Training Loss Force: 5.665844092726412, time: 0.39902520179748535
+Validation Loss Energy: 5.579933373886505, Validation Loss Force: 5.033301551533504, time: 0.03716325759887695
+Test Loss Energy: 11.573784697743749, Test Loss Force: 12.361502789633981, time: 8.066060066223145
+
+
+Training and Validation Results of Epoch 7:
+================================
+Training Loss Energy: 11.465418304203615, Training Loss Force: 5.817079513386179, time: 0.4138636589050293
+Validation Loss Energy: 12.810150621166132, Validation Loss Force: 5.580787978068576, time: 0.03676152229309082
+Test Loss Energy: 16.665163431464258, Test Loss Force: 13.468355314438226, time: 7.881939172744751
+
+
+Training and Validation Results of Epoch 8:
+================================
+Training Loss Energy: 11.573158098523184, Training Loss Force: 5.111392702546231, time: 0.4266510009765625
+Validation Loss Energy: 2.43646516695755, Validation Loss Force: 5.696476178173651, time: 0.036319732666015625
+Test Loss Energy: 10.024040728209142, Test Loss Force: 11.860884301205036, time: 7.884748935699463
+
+slurmstepd: error: *** JOB 5124877 ON aimat01 CANCELLED AT 2024-12-07T10:00:27 ***

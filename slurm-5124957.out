@@ -1,0 +1,8 @@
+Uncertainty Slope: 0.629718542098999, Uncertainty Bias: 0.033183708786964417
+Traceback (most recent call last):
+  File "/home/ws/fq0795/git/gnn_uncertainty/reevaluate_experiments.py", line 167, in <module>
+    ens.calibrate_uncertainty(
+  File "/home/ws/fq0795/git/gnn_uncertainty/uncertainty/base_uncertainty.py", line 887, in calibrate_uncertainty
+    plt.set_xlim(min_val, max_val)
+    ^^^^^^^^^^^^
+AttributeError: module 'matplotlib.pyplot' has no attribute 'set_xlim'

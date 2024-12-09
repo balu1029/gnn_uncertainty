@@ -1,0 +1,9 @@
+1.6212463e-05 0.00010681152
+1.2103127 8.023808
+Traceback (most recent call last):
+  File "/home/ws/fq0795/git/gnn_uncertainty/reevaluate_experiments.py", line 98, in <module>
+    mve.evaluate_all(
+  File "/home/ws/fq0795/git/gnn_uncertainty/uncertainty/base_uncertainty.py", line 325, in evaluate_all
+    text="Correlation in: {:.3f}".format(force_correlation_in_forces),
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'force_correlation_in_forces' where it is not associated with a value

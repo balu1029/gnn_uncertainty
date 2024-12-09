@@ -883,16 +883,23 @@ class ActiveLearning:
 
 
 if __name__ == "__main__":
-    # model_path = "gnn/models/ensemble3_20241106_095153/model_0.pt"
-    # model_path = "gnn/models/mve_20241127_164156/model_3.pt"
+    # model_path = "gnn/models/ensemble3_20241115_105146/model_0.pt"
+    model_path = "gnn/models/mve_20241205_093736/model_1.pt"
     # model_path = "gnn/models/evi_20241129_140558/model_0.pt"
-    model_path = "gnn/models/swag5_20241202_091422/model_2.pt"
+    # model_path = "gnn/models/swag5_20241202_111154/model_0.pt"
 
     num_ensembles = 3
     in_nf = 12
     hidden_nf = 32
     n_layers = 4
-    # model = MVE(EGNN, in_node_nf=in_nf, in_edge_nf=0, hidden_nf=hidden_nf, n_layers=n_layers, multi_dec=True)
+    model = MVE(
+        EGNN,
+        in_node_nf=in_nf,
+        in_edge_nf=0,
+        hidden_nf=hidden_nf,
+        n_layers=n_layers,
+        multi_dec=True,
+    )
     # model = ModelEnsemble(
     #     EGNN,
     #     num_models=num_ensembles,
@@ -901,14 +908,14 @@ if __name__ == "__main__":
     #     hidden_nf=hidden_nf,
     #     n_layers=n_layers,
     # )
-    model = SWAG(
-        EGNN,
-        in_node_nf=in_nf,
-        in_edge_nf=0,
-        hidden_nf=hidden_nf,
-        n_layers=n_layers,
-        sample_size=3,
-    )
+    # model = SWAG(
+    #     EGNN,
+    #     in_node_nf=in_nf,
+    #     in_edge_nf=0,
+    #     hidden_nf=hidden_nf,
+    #     n_layers=n_layers,
+    #     sample_size=3,
+    # )
     # model = MVE(
     #     EGNN,
     #     in_node_nf=in_nf,
@@ -928,13 +935,13 @@ if __name__ == "__main__":
     model.to(device)
     model.load_state_dict(torch.load(model_path, map_location=device))
     al = ActiveLearning(
-        max_uncertainty=8,
+        max_uncertainty=4,
         num_ensembles=num_ensembles,
         in_nf=in_nf,
         hidden_nf=hidden_nf,
         n_layers=n_layers,
         model=model,
-        lr=1e-3,
+        lr=1e-4,
     )
     # al.run_simulation(1000, show_traj=True)
     # print(len(al.calc.get_uncertainty_samples()))
@@ -948,14 +955,14 @@ if __name__ == "__main__":
     print(max_idx)
 
     al.improve_model(
-        200,
+        30,
         100,
         run_idx=max_idx + 1,
         use_wandb=True,
         model_path=model_path,
         epochs_per_iter=20,
         calibrate=True,
-        force_uncertainty=False,
+        force_uncertainty=True,
     )
     # al.eval_on_cv(59, model, al.device, al.dtype, use_force_uncertainty=False)
     # al.create_gif_from_svgs(54, duration=1000, loop=0, img_type="energy_error")

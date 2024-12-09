@@ -313,6 +313,20 @@ class BaseUncertainty(nn.Module):
                     save_path=plot_name + "_energy_uncertainty_force_loss.svg",
                     show_plot=show_plot,
                 )
+                self._scatter_plot(
+                    uncertainties_in,
+                    np.mean(
+                        force_errors_in.reshape(energy_losses_in.shape[0], -1, 3),
+                        axis=(1, 2),
+                    ),
+                    None,  # self.__class__.__name__,
+                    "Energy Uncertainties",
+                    "Force Errors [kJ/(mol*A)]",
+                    text="Correlation in: {:.3f}".format(energy_correlation_in_force),
+                    save_path=plot_name + "_energy_uncertainty_force_loss_in_dist.svg",
+                    show_plot=show_plot,
+                    set_limits=False,
+                )
 
         if use_force_uncertainty:
             (
@@ -665,6 +679,12 @@ class BaseUncertainty(nn.Module):
             y_min = x_min
             y_max = x_max
 
+            # remove later
+            x_min, x_max = np.percentile(x, [0, 99])
+            y_min, y_max = np.percentile(y, [0, 99])
+            xmin = y_min = min(x_min, y_min)
+            x_max = y_max = max(x_max, y_max)
+
         plt.xlim(x_min, x_max)
         plt.ylim(y_min, y_max)
         # plt.title(title)
@@ -724,8 +744,9 @@ class BaseUncertainty(nn.Module):
             np.concatenate((x_in, y_in, x_out, y_out))[
                 np.isfinite(np.concatenate((x_in, y_in, x_out, y_out)))
             ],
-            [0, 100],
+            [0, 99.5],
         )
+
         # max_val = min(max_val, 15)
         # max_val = max(max(x_in), max(y_in), max(x_out), max(y_out))
         # min_val = min(min(x_in), min(y_in), min(x_out), min(y_out))
@@ -849,14 +870,23 @@ class BaseUncertainty(nn.Module):
         if path is not None:
             plt.figure(figsize=(10, 8))
             # sns.kdeplot(x=uncertainties, y=force_losses, cmap=sns.light_palette("blue", as_cmap=True), fill=True)
-            plt.scatter(uncertainties / scaling, force_losses / scaling, label="Data")
+            plt.scatter(uncertainties, force_losses, label="Validation Samples")
             plt.plot(
-                uncertainties / scaling,
-                self.uncertainty_slope * uncertainties / scaling
-                + self.uncertainty_bias,
+                uncertainties,
+                self.uncertainty_slope * uncertainties
+                + self.uncertainty_bias * scaling,
                 color="red",
                 label="Regression Line",
             )
+            min_uncertainty = np.min(uncertainties)
+            max_uncertainty = np.max(uncertainties)
+            min_force_loss = np.min(force_losses)
+            max_force_loss = np.max(force_losses)
+            min_val = min(min_uncertainty, min_force_loss)
+            max_val = max(max_uncertainty, max_force_loss)
+            plt.xlim(min_val, max_val)
+            plt.ylim(min_val, max_val)
+
             plt.xlabel("Uncertainties")
             plt.ylabel("Force Errors [kJ/(mol*A)]")
             # plt.title("Uncertainty Calibration")
