@@ -6146,3 +6146,2568 @@ Did not find any uncertainty samples for sample 24.
 Found uncertainty sample 25 after 177 steps.
 Found uncertainty sample 26 after 1091 steps.
 Did not find any uncertainty samples for sample 27.
+Did not find any uncertainty samples for sample 28.
+Found uncertainty sample 29 after 1911 steps.
+Found uncertainty sample 30 after 2344 steps.
+Did not find any uncertainty samples for sample 31.
+Found uncertainty sample 32 after 2296 steps.
+Did not find any uncertainty samples for sample 33.
+Did not find any uncertainty samples for sample 34.
+Found uncertainty sample 35 after 1581 steps.
+Found uncertainty sample 36 after 2434 steps.
+Found uncertainty sample 37 after 754 steps.
+Found uncertainty sample 38 after 1214 steps.
+Found uncertainty sample 39 after 2965 steps.
+Did not find any uncertainty samples for sample 40.
+Did not find any uncertainty samples for sample 41.
+Found uncertainty sample 42 after 1155 steps.
+Found uncertainty sample 43 after 3608 steps.
+Did not find any uncertainty samples for sample 44.
+Did not find any uncertainty samples for sample 45.
+Did not find any uncertainty samples for sample 46.
+Did not find any uncertainty samples for sample 47.
+Found uncertainty sample 48 after 1312 steps.
+Found uncertainty sample 49 after 1062 steps.
+Did not find any uncertainty samples for sample 50.
+Did not find any uncertainty samples for sample 51.
+Did not find any uncertainty samples for sample 52.
+Found uncertainty sample 53 after 1608 steps.
+Found uncertainty sample 54 after 1553 steps.
+Did not find any uncertainty samples for sample 55.
+Found uncertainty sample 56 after 1534 steps.
+Did not find any uncertainty samples for sample 57.
+Did not find any uncertainty samples for sample 58.
+Did not find any uncertainty samples for sample 59.
+Did not find any uncertainty samples for sample 60.
+Found uncertainty sample 61 after 458 steps.
+Did not find any uncertainty samples for sample 62.
+Did not find any uncertainty samples for sample 63.
+Found uncertainty sample 64 after 1468 steps.
+Did not find any uncertainty samples for sample 65.
+Found uncertainty sample 66 after 2871 steps.
+Found uncertainty sample 67 after 3021 steps.
+Did not find any uncertainty samples for sample 68.
+Found uncertainty sample 69 after 725 steps.
+Found uncertainty sample 70 after 2005 steps.
+Did not find any uncertainty samples for sample 71.
+Did not find any uncertainty samples for sample 72.
+Found uncertainty sample 73 after 139 steps.
+Did not find any uncertainty samples for sample 74.
+Found uncertainty sample 75 after 3340 steps.
+Did not find any uncertainty samples for sample 76.
+Did not find any uncertainty samples for sample 77.
+Did not find any uncertainty samples for sample 78.
+Did not find any uncertainty samples for sample 79.
+Found uncertainty sample 80 after 380 steps.
+Found uncertainty sample 81 after 474 steps.
+Did not find any uncertainty samples for sample 82.
+Found uncertainty sample 83 after 3973 steps.
+Did not find any uncertainty samples for sample 84.
+Did not find any uncertainty samples for sample 85.
+Did not find any uncertainty samples for sample 86.
+Did not find any uncertainty samples for sample 87.
+Did not find any uncertainty samples for sample 88.
+Found uncertainty sample 89 after 67 steps.
+Did not find any uncertainty samples for sample 90.
+Found uncertainty sample 91 after 1476 steps.
+Found uncertainty sample 92 after 1533 steps.
+Did not find any uncertainty samples for sample 93.
+Found uncertainty sample 94 after 3502 steps.
+Found uncertainty sample 95 after 1818 steps.
+Found uncertainty sample 96 after 628 steps.
+Did not find any uncertainty samples for sample 97.
+Did not find any uncertainty samples for sample 98.
+Found uncertainty sample 99 after 2135 steps.
+wandb: wandb version 0.19.0 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.17.4
+wandb: Run data is saved locally in /home/ws/fq0795/git/gnn_uncertainty/wandb/run-20241209_103054-tanqq7at
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run al_82_21
+wandb: ⭐️ View project at https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-MVE
+wandb: 🚀 View run at https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-MVE/runs/tanqq7at
+Training model 21. Added 47 samples to the dataset.
+
+Training and Validation Results of Epoch 0:
+================================
+Training Loss Energy: 4.377941838875368, Training Loss Force: 2.3976641818043545, time: 0.8766858577728271
+Validation Loss Energy: 3.525048083547006, Validation Loss Force: 3.3011622734058688, time: 0.07312345504760742
+Test Loss Energy: 15.009232617234899, Test Loss Force: 9.959202009711104, time: 10.260151386260986
+
+
+Training and Validation Results of Epoch 1:
+================================
+Training Loss Energy: 1.6980117412803717, Training Loss Force: 2.264786305952377, time: 0.8695468902587891
+Validation Loss Energy: 3.11523932595396, Validation Loss Force: 3.4680470088809514, time: 0.06883645057678223
+Test Loss Energy: 17.493797536174494, Test Loss Force: 10.5000164945383, time: 10.296761989593506
+
+
+Training and Validation Results of Epoch 2:
+================================
+Training Loss Energy: 1.6556575667976667, Training Loss Force: 2.2830383445971107, time: 0.8673293590545654
+Validation Loss Energy: 2.891637084970162, Validation Loss Force: 2.6790649827990425, time: 0.07103896141052246
+Test Loss Energy: 15.293731650253784, Test Loss Force: 10.066956976801205, time: 10.39907431602478
+
+
+Training and Validation Results of Epoch 3:
+================================
+Training Loss Energy: 1.8716267378178668, Training Loss Force: 2.295972027321366, time: 0.9072208404541016
+Validation Loss Energy: 1.226679927200551, Validation Loss Force: 2.5090662193181594, time: 0.07568097114562988
+Test Loss Energy: 16.187250867919293, Test Loss Force: 10.012790060672273, time: 10.317730903625488
+
+
+Training and Validation Results of Epoch 4:
+================================
+Training Loss Energy: 2.014789883226674, Training Loss Force: 2.261154000804864, time: 0.9105570316314697
+Validation Loss Energy: 4.140386252229194, Validation Loss Force: 2.687857296695147, time: 0.06785225868225098
+Test Loss Energy: 19.628077532003964, Test Loss Force: 10.802093883307485, time: 10.789660453796387
+
+
+Training and Validation Results of Epoch 5:
+================================
+Training Loss Energy: 2.1944342770858603, Training Loss Force: 2.2613417487066227, time: 1.0130159854888916
+Validation Loss Energy: 1.7201541113480716, Validation Loss Force: 2.6593734595480645, time: 0.09803605079650879
+Test Loss Energy: 17.065765934384725, Test Loss Force: 10.564145231881646, time: 10.293071746826172
+
+
+Training and Validation Results of Epoch 6:
+================================
+Training Loss Energy: 1.5297995122258585, Training Loss Force: 2.2562441923515073, time: 0.9238135814666748
+Validation Loss Energy: 1.1668267947788806, Validation Loss Force: 2.6074131690075237, time: 0.07402324676513672
+Test Loss Energy: 16.30088809632963, Test Loss Force: 10.570007982255149, time: 10.355716705322266
+
+
+Training and Validation Results of Epoch 7:
+================================
+Training Loss Energy: 2.1477193910120262, Training Loss Force: 2.253683476166814, time: 0.8512914180755615
+Validation Loss Energy: 2.40809110569941, Validation Loss Force: 3.385614557054766, time: 0.0672152042388916
+Test Loss Energy: 17.064300477621146, Test Loss Force: 10.321953681667923, time: 10.509857892990112
+
+
+Training and Validation Results of Epoch 8:
+================================
+Training Loss Energy: 1.8580432550598127, Training Loss Force: 2.2535500973484037, time: 0.9108648300170898
+Validation Loss Energy: 2.036082550984492, Validation Loss Force: 2.633919926807913, time: 0.0747520923614502
+Test Loss Energy: 15.132488984873103, Test Loss Force: 10.246054863116102, time: 10.283347368240356
+
+
+Training and Validation Results of Epoch 9:
+================================
+Training Loss Energy: 2.2493585954023083, Training Loss Force: 2.2574249690206205, time: 0.8202192783355713
+Validation Loss Energy: 1.92393083792233, Validation Loss Force: 2.5465276310907585, time: 0.07328581809997559
+Test Loss Energy: 15.358716672872964, Test Loss Force: 10.223890031251566, time: 10.348706483840942
+
+
+Training and Validation Results of Epoch 10:
+================================
+Training Loss Energy: 2.2865374463306827, Training Loss Force: 2.2731229799576482, time: 0.9346127510070801
+Validation Loss Energy: 1.1394043936167926, Validation Loss Force: 2.5916450761077927, time: 0.06885766983032227
+Test Loss Energy: 15.86816289941094, Test Loss Force: 10.290912264379097, time: 10.461408376693726
+
+
+Training and Validation Results of Epoch 11:
+================================
+Training Loss Energy: 1.4535424446549992, Training Loss Force: 2.2353562047598894, time: 0.9214987754821777
+Validation Loss Energy: 2.1475439340269924, Validation Loss Force: 2.558154411879951, time: 0.06793332099914551
+Test Loss Energy: 15.370305149322924, Test Loss Force: 10.166279815408746, time: 10.277454853057861
+
+
+Training and Validation Results of Epoch 12:
+================================
+Training Loss Energy: 1.492482296580792, Training Loss Force: 2.2677815168616493, time: 0.8430147171020508
+Validation Loss Energy: 3.8202871081549734, Validation Loss Force: 3.364244999120076, time: 0.07217597961425781
+Test Loss Energy: 15.08628590186251, Test Loss Force: 9.819039695847795, time: 9.61705207824707
+
+
+Training and Validation Results of Epoch 13:
+================================
+Training Loss Energy: 1.4264337837943604, Training Loss Force: 2.277675038918287, time: 0.8565473556518555
+Validation Loss Energy: 1.5647696805872942, Validation Loss Force: 2.432099849686209, time: 0.06373047828674316
+Test Loss Energy: 15.473485704070104, Test Loss Force: 10.182084624235607, time: 10.122886896133423
+
+
+Training and Validation Results of Epoch 14:
+================================
+Training Loss Energy: 2.4114000332777925, Training Loss Force: 2.2630724173348664, time: 0.8496289253234863
+Validation Loss Energy: 1.2923407719535966, Validation Loss Force: 2.63819717843204, time: 0.07086849212646484
+Test Loss Energy: 16.140711076517455, Test Loss Force: 10.294099450274505, time: 10.51201319694519
+
+
+Training and Validation Results of Epoch 15:
+================================
+Training Loss Energy: 1.5429291921135335, Training Loss Force: 2.2432251685260964, time: 0.8580920696258545
+Validation Loss Energy: 3.257733328522405, Validation Loss Force: 3.3557579646230384, time: 0.07143664360046387
+Test Loss Energy: 15.07130316420627, Test Loss Force: 10.283833782437881, time: 9.730561256408691
+
+
+Training and Validation Results of Epoch 16:
+================================
+Training Loss Energy: 1.848034460757437, Training Loss Force: 2.249929623074757, time: 0.8669264316558838
+Validation Loss Energy: 1.5673830370184758, Validation Loss Force: 2.54798778401518, time: 0.06687617301940918
+Test Loss Energy: 16.976252210258156, Test Loss Force: 10.388108148651826, time: 9.165269374847412
+
+
+Training and Validation Results of Epoch 17:
+================================
+Training Loss Energy: 1.3588315424252568, Training Loss Force: 2.2434894473931806, time: 0.8900611400604248
+Validation Loss Energy: 1.2478353887514313, Validation Loss Force: 2.6177706243303547, time: 0.06819748878479004
+Test Loss Energy: 16.280005726828158, Test Loss Force: 10.521764242610567, time: 9.798979043960571
+
+
+Training and Validation Results of Epoch 18:
+================================
+Training Loss Energy: 1.7501200385317541, Training Loss Force: 2.264748204320596, time: 0.8158965110778809
+Validation Loss Energy: 1.2722929224018478, Validation Loss Force: 2.5771816017340536, time: 0.0641641616821289
+Test Loss Energy: 16.074156056885208, Test Loss Force: 10.324373962382152, time: 9.415831089019775
+
+
+Training and Validation Results of Epoch 19:
+================================
+Training Loss Energy: 1.4654941942574544, Training Loss Force: 2.2467521175571488, time: 0.8227880001068115
+Validation Loss Energy: 1.3467711869972012, Validation Loss Force: 2.5935268530600286, time: 0.06729459762573242
+Test Loss Energy: 15.685180907748094, Test Loss Force: 10.235941449679789, time: 9.178215026855469
+
+wandb: - 0.039 MB of 0.039 MB uploadedwandb: \ 0.039 MB of 0.039 MB uploadedwandb: | 0.039 MB of 0.039 MB uploadedwandb: / 0.045 MB of 0.061 MB uploaded (0.003 MB deduped)wandb: - 0.045 MB of 0.061 MB uploaded (0.003 MB deduped)wandb: \ 0.064 MB of 0.064 MB uploaded (0.003 MB deduped)wandb:                                                                                
+wandb: W&B sync reduced upload amount by 4.7%             
+wandb: 
+wandb: Run history:
+wandb:       dataset_size ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:                 lr ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:    max_uncertainty ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:  test_error_energy ▁▅▁▃█▄▃▄▁▂▂▂▁▂▃▁▄▃▃▂
+wandb:   test_error_force ▂▆▃▂█▆▆▅▄▄▄▃▁▄▄▄▅▆▅▄
+wandb:          test_loss ▁▆▂▂█▇▇▅▅▅▅▄▁▅▄▆▆█▆▅
+wandb: train_error_energy █▂▂▂▃▃▁▃▂▃▃▁▁▁▃▁▂▁▂▁
+wandb:  train_error_force █▂▃▄▂▂▂▂▂▂▃▁▂▃▂▁▂▁▂▁
+wandb:         train_loss █▂▃▃▂▂▂▂▂▂▃▁▂▂▂▁▂▁▂▁
+wandb: valid_error_energy ▇▆▅▁█▂▁▄▃▃▁▃▇▂▁▆▂▁▁▁
+wandb:  valid_error_force ▇█▃▂▃▃▂▇▂▂▂▂▇▁▂▇▂▂▂▂
+wandb:         valid_loss ▇█▁▁▁▁▁█▁▁▁▁▇▁▁█▁▁▁▁
+wandb: 
+wandb: Run summary:
+wandb:       dataset_size 1678
+wandb:                 lr 0.0001
+wandb:    max_uncertainty 4
+wandb:  test_error_energy 15.68518
+wandb:   test_error_force 10.23594
+wandb:          test_loss 89.62314
+wandb: train_error_energy 1.46549
+wandb:  train_error_force 2.24675
+wandb:         train_loss -4.95874
+wandb: valid_error_energy 1.34677
+wandb:  valid_error_force 2.59353
+wandb:         valid_loss 5.01766
+wandb: 
+wandb: 🚀 View run al_82_21 at: https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-MVE/runs/tanqq7at
+wandb: ⭐️ View project at: https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-MVE
+wandb: Synced 6 W&B file(s), 0 media file(s), 2 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20241209_103054-tanqq7at/logs
+wandb: WARNING The new W&B backend becomes opt-out in version 0.18.0; try it out with `wandb.require("core")`! See https://wandb.me/wandb-core for more information.
+Uncertainty Slope: 25.299833297729492, Uncertainty Bias: -5.380578994750977
+7.6293945e-05 0.001791954
+-1.0066854 102.111725
+(48745, 22, 3)
+Did not find any uncertainty samples for sample 0.
+Found uncertainty sample 1 after 748 steps.
+Found uncertainty sample 2 after 239 steps.
+Found uncertainty sample 3 after 672 steps.
+Found uncertainty sample 4 after 1018 steps.
+Did not find any uncertainty samples for sample 5.
+Did not find any uncertainty samples for sample 6.
+Did not find any uncertainty samples for sample 7.
+Found uncertainty sample 8 after 443 steps.
+Found uncertainty sample 9 after 3036 steps.
+Did not find any uncertainty samples for sample 10.
+Found uncertainty sample 11 after 1301 steps.
+Did not find any uncertainty samples for sample 12.
+Found uncertainty sample 13 after 3331 steps.
+Found uncertainty sample 14 after 507 steps.
+Did not find any uncertainty samples for sample 15.
+Found uncertainty sample 16 after 84 steps.
+Did not find any uncertainty samples for sample 17.
+Found uncertainty sample 18 after 217 steps.
+Did not find any uncertainty samples for sample 19.
+Did not find any uncertainty samples for sample 20.
+Found uncertainty sample 21 after 3439 steps.
+Found uncertainty sample 22 after 1158 steps.
+Did not find any uncertainty samples for sample 23.
+Found uncertainty sample 24 after 2712 steps.
+Found uncertainty sample 25 after 1474 steps.
+Did not find any uncertainty samples for sample 26.
+Found uncertainty sample 27 after 2471 steps.
+Found uncertainty sample 28 after 572 steps.
+Found uncertainty sample 29 after 3794 steps.
+Found uncertainty sample 30 after 1231 steps.
+Did not find any uncertainty samples for sample 31.
+Found uncertainty sample 32 after 118 steps.
+Did not find any uncertainty samples for sample 33.
+Did not find any uncertainty samples for sample 34.
+Did not find any uncertainty samples for sample 35.
+Found uncertainty sample 36 after 2138 steps.
+Found uncertainty sample 37 after 455 steps.
+Did not find any uncertainty samples for sample 38.
+Found uncertainty sample 39 after 460 steps.
+Found uncertainty sample 40 after 2110 steps.
+Did not find any uncertainty samples for sample 41.
+Found uncertainty sample 42 after 2542 steps.
+Found uncertainty sample 43 after 2506 steps.
+Found uncertainty sample 44 after 2674 steps.
+Found uncertainty sample 45 after 3675 steps.
+Did not find any uncertainty samples for sample 46.
+Found uncertainty sample 47 after 1310 steps.
+Found uncertainty sample 48 after 2698 steps.
+Found uncertainty sample 49 after 2232 steps.
+Found uncertainty sample 50 after 2392 steps.
+Found uncertainty sample 51 after 496 steps.
+Found uncertainty sample 52 after 1135 steps.
+Did not find any uncertainty samples for sample 53.
+Found uncertainty sample 54 after 1561 steps.
+Did not find any uncertainty samples for sample 55.
+Found uncertainty sample 56 after 2860 steps.
+Did not find any uncertainty samples for sample 57.
+Did not find any uncertainty samples for sample 58.
+Did not find any uncertainty samples for sample 59.
+Found uncertainty sample 60 after 2529 steps.
+Found uncertainty sample 61 after 2178 steps.
+Did not find any uncertainty samples for sample 62.
+Found uncertainty sample 63 after 2037 steps.
+Found uncertainty sample 64 after 1607 steps.
+Found uncertainty sample 65 after 971 steps.
+Found uncertainty sample 66 after 444 steps.
+Found uncertainty sample 67 after 118 steps.
+Found uncertainty sample 68 after 2126 steps.
+Found uncertainty sample 69 after 1987 steps.
+Found uncertainty sample 70 after 1670 steps.
+Did not find any uncertainty samples for sample 71.
+Found uncertainty sample 72 after 741 steps.
+Found uncertainty sample 73 after 162 steps.
+Found uncertainty sample 74 after 2123 steps.
+Found uncertainty sample 75 after 145 steps.
+Found uncertainty sample 76 after 1527 steps.
+Found uncertainty sample 77 after 2350 steps.
+Found uncertainty sample 78 after 896 steps.
+Found uncertainty sample 79 after 1571 steps.
+Did not find any uncertainty samples for sample 80.
+Did not find any uncertainty samples for sample 81.
+Found uncertainty sample 82 after 116 steps.
+Did not find any uncertainty samples for sample 83.
+Found uncertainty sample 84 after 1952 steps.
+Found uncertainty sample 85 after 1834 steps.
+Found uncertainty sample 86 after 418 steps.
+Found uncertainty sample 87 after 502 steps.
+Found uncertainty sample 88 after 2557 steps.
+Found uncertainty sample 89 after 2689 steps.
+Did not find any uncertainty samples for sample 90.
+Found uncertainty sample 91 after 990 steps.
+Found uncertainty sample 92 after 3062 steps.
+Did not find any uncertainty samples for sample 93.
+Did not find any uncertainty samples for sample 94.
+Found uncertainty sample 95 after 2439 steps.
+Found uncertainty sample 96 after 1789 steps.
+Did not find any uncertainty samples for sample 97.
+Found uncertainty sample 98 after 1220 steps.
+Did not find any uncertainty samples for sample 99.
+wandb: wandb version 0.19.0 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.17.4
+wandb: Run data is saved locally in /home/ws/fq0795/git/gnn_uncertainty/wandb/run-20241209_110032-qqvf8wpt
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run al_82_22
+wandb: ⭐️ View project at https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-MVE
+wandb: 🚀 View run at https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-MVE/runs/qqvf8wpt
+Training model 22. Added 66 samples to the dataset.
+
+Training and Validation Results of Epoch 0:
+================================
+Training Loss Energy: 2.149643804274207, Training Loss Force: 2.494895073096254, time: 0.8813176155090332
+Validation Loss Energy: 2.4563131709508292, Validation Loss Force: 3.3020273430377984, time: 0.07626891136169434
+Test Loss Energy: 14.85900031391615, Test Loss Force: 10.293467634150678, time: 10.406983137130737
+
+
+Training and Validation Results of Epoch 1:
+================================
+Training Loss Energy: 1.6837516229415819, Training Loss Force: 2.2479547675931912, time: 1.0422468185424805
+Validation Loss Energy: 3.6743662274307, Validation Loss Force: 3.252736187549494, time: 0.07762765884399414
+Test Loss Energy: 19.071023187139428, Test Loss Force: 10.339914319538531, time: 10.310839414596558
+
+
+Training and Validation Results of Epoch 2:
+================================
+Training Loss Energy: 2.2545253008968182, Training Loss Force: 2.242136928876339, time: 0.9250659942626953
+Validation Loss Energy: 1.9211542928408267, Validation Loss Force: 3.249815325027786, time: 0.06969809532165527
+Test Loss Energy: 16.492825034303216, Test Loss Force: 10.50898438130726, time: 10.631417989730835
+
+
+Training and Validation Results of Epoch 3:
+================================
+Training Loss Energy: 1.7191309284041494, Training Loss Force: 2.2380036308307893, time: 0.9346919059753418
+Validation Loss Energy: 1.4997505683128125, Validation Loss Force: 2.4972251194760116, time: 0.07083535194396973
+Test Loss Energy: 15.697940712506968, Test Loss Force: 10.521407528970405, time: 10.456214666366577
+
+
+Training and Validation Results of Epoch 4:
+================================
+Training Loss Energy: 1.4332594976006459, Training Loss Force: 2.25266173423219, time: 0.9499363899230957
+Validation Loss Energy: 1.6832710270147335, Validation Loss Force: 2.533662698515635, time: 0.07491898536682129
+Test Loss Energy: 17.764565712449762, Test Loss Force: 10.480000366304841, time: 10.447871208190918
+
+
+Training and Validation Results of Epoch 5:
+================================
+Training Loss Energy: 2.400939369488142, Training Loss Force: 2.2445817186912578, time: 1.0764367580413818
+Validation Loss Energy: 2.1463460853564733, Validation Loss Force: 2.4471177702333087, time: 0.07009172439575195
+Test Loss Energy: 18.09899297836798, Test Loss Force: 10.900477557084631, time: 10.458451271057129
+
+
+Training and Validation Results of Epoch 6:
+================================
+Training Loss Energy: 2.22663477783465, Training Loss Force: 2.247365504062468, time: 0.9006762504577637
+Validation Loss Energy: 3.4074435927720774, Validation Loss Force: 2.6141196296791493, time: 0.06861019134521484
+Test Loss Energy: 18.427470790511016, Test Loss Force: 10.776834878296965, time: 10.508604764938354
+
+
+Training and Validation Results of Epoch 7:
+================================
+Training Loss Energy: 2.033556541586463, Training Loss Force: 2.2312060195321455, time: 0.9056930541992188
+Validation Loss Energy: 1.1373362704230585, Validation Loss Force: 2.507781529680729, time: 0.07494378089904785
+Test Loss Energy: 16.295360916519687, Test Loss Force: 10.128260390093224, time: 10.66026258468628
+
+
+Training and Validation Results of Epoch 8:
+================================
+Training Loss Energy: 1.624102258091747, Training Loss Force: 2.2187772553285954, time: 0.9431865215301514
+Validation Loss Energy: 1.8655189872149638, Validation Loss Force: 2.5164114064348793, time: 0.07016873359680176
+Test Loss Energy: 17.942095942692138, Test Loss Force: 10.376423810220025, time: 10.46256160736084
+
+
+Training and Validation Results of Epoch 9:
+================================
+Training Loss Energy: 1.5787598079270175, Training Loss Force: 2.2401451857542543, time: 0.9462323188781738
+Validation Loss Energy: 4.044403826200438, Validation Loss Force: 3.200076047883301, time: 0.07020306587219238
+Test Loss Energy: 14.893889911042969, Test Loss Force: 10.357707085857637, time: 10.449572086334229
+
+
+Training and Validation Results of Epoch 10:
+================================
+Training Loss Energy: 1.4383122795445944, Training Loss Force: 2.2396080713375075, time: 0.9032979011535645
+Validation Loss Energy: 1.223270083234386, Validation Loss Force: 2.623309185331589, time: 0.07407307624816895
+Test Loss Energy: 17.01974506701554, Test Loss Force: 10.692810519862968, time: 10.617913246154785
+
+
+Training and Validation Results of Epoch 11:
+================================
+Training Loss Energy: 1.6199923706704948, Training Loss Force: 2.25528035172801, time: 0.9132311344146729
+Validation Loss Energy: 3.270622643369008, Validation Loss Force: 2.5957998597016596, time: 0.07039070129394531
+Test Loss Energy: 19.24091551127114, Test Loss Force: 10.658268487122609, time: 10.426806926727295
+
+
+Training and Validation Results of Epoch 12:
+================================
+Training Loss Energy: 1.5989136075069295, Training Loss Force: 2.2692532333423814, time: 0.9134695529937744
+Validation Loss Energy: 1.1979686335209032, Validation Loss Force: 2.658581759399718, time: 0.07135009765625
+Test Loss Energy: 16.28066315340119, Test Loss Force: 10.568044091683575, time: 10.679204940795898
+
+
+Training and Validation Results of Epoch 13:
+================================
+Training Loss Energy: 1.5523618088224265, Training Loss Force: 2.2628973692895484, time: 0.8697528839111328
+Validation Loss Energy: 1.8231134297261837, Validation Loss Force: 2.4967507228606127, time: 0.0731501579284668
+Test Loss Energy: 16.218246627540935, Test Loss Force: 10.735098491721399, time: 10.963298559188843
+
+
+Training and Validation Results of Epoch 14:
+================================
+Training Loss Energy: 1.4496017428931505, Training Loss Force: 2.2514194063876394, time: 0.851708173751831
+Validation Loss Energy: 2.8312924104088557, Validation Loss Force: 2.4995504533669353, time: 0.07062292098999023
+Test Loss Energy: 18.68845211455668, Test Loss Force: 10.577102561660064, time: 10.3537437915802
+
+
+Training and Validation Results of Epoch 15:
+================================
+Training Loss Energy: 2.1826946777083243, Training Loss Force: 2.243885986920542, time: 0.871586799621582
+Validation Loss Energy: 1.841099529988501, Validation Loss Force: 2.5636224980964997, time: 0.06963109970092773
+Test Loss Energy: 15.953752586966592, Test Loss Force: 10.153882893740922, time: 10.558136940002441
+
+
+Training and Validation Results of Epoch 16:
+================================
+Training Loss Energy: 2.165504380779434, Training Loss Force: 2.2341494222442164, time: 0.8930065631866455
+Validation Loss Energy: 3.3994731506935922, Validation Loss Force: 2.478858254974158, time: 0.06990289688110352
+Test Loss Energy: 15.529919895733222, Test Loss Force: 10.471523666687276, time: 10.388497352600098
+
+
+Training and Validation Results of Epoch 17:
+================================
+Training Loss Energy: 2.0469316233447623, Training Loss Force: 2.224616719268046, time: 0.9297902584075928
+Validation Loss Energy: 2.822436969809881, Validation Loss Force: 2.554219068729396, time: 0.07527494430541992
+Test Loss Energy: 18.85129949468429, Test Loss Force: 10.685918259276171, time: 10.468072175979614
+
+
+Training and Validation Results of Epoch 18:
+================================
+Training Loss Energy: 2.031807680908094, Training Loss Force: 2.2283437129230212, time: 0.9264850616455078
+Validation Loss Energy: 3.3071612028663093, Validation Loss Force: 2.5520153121921494, time: 0.07410192489624023
+Test Loss Energy: 19.29069012810753, Test Loss Force: 10.707377465441139, time: 10.65604281425476
+
+
+Training and Validation Results of Epoch 19:
+================================
+Training Loss Energy: 2.2478603659966425, Training Loss Force: 2.229579615750579, time: 0.8678061962127686
+Validation Loss Energy: 1.2205264096855504, Validation Loss Force: 2.5965001541656028, time: 0.07196354866027832
+Test Loss Energy: 16.631849394581742, Test Loss Force: 10.728148514359333, time: 10.459803104400635
+
+wandb: - 0.039 MB of 0.055 MB uploadedwandb: \ 0.039 MB of 0.055 MB uploadedwandb: | 0.058 MB of 0.058 MB uploadedwandb:                                                                                
+wandb: 
+wandb: Run history:
+wandb:       dataset_size ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:                 lr ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:    max_uncertainty ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:  test_error_energy ▁█▄▂▆▆▇▃▆▁▄█▃▃▇▃▂▇█▄
+wandb:   test_error_force ▂▃▄▅▄█▇▁▃▃▆▆▅▇▅▁▄▆▆▆
+wandb:          test_loss ▁▃▅▅▅█▆▂▅▄▆▆▅▆▆▃▆▆▇▇
+wandb: train_error_energy ▆▃▇▃▁█▇▅▂▂▁▂▂▂▁▆▆▅▅▇
+wandb:  train_error_force █▂▂▁▂▂▂▁▁▂▂▂▂▂▂▂▁▁▁▁
+wandb:         train_loss █▂▂▁▂▂▂▂▁▁▁▂▂▂▂▂▂▁▁▁
+wandb: valid_error_energy ▄▇▃▂▂▃▆▁▃█▁▆▁▃▅▃▆▅▆▁
+wandb:  valid_error_force ███▁▂▁▂▁▂▇▂▂▃▁▁▂▁▂▂▂
+wandb:         valid_loss ▇██▁▁▁▁▁▁█▁▁▁▁▁▁▁▁▁▁
+wandb: 
+wandb: Run summary:
+wandb:       dataset_size 1737
+wandb:                 lr 0.0001
+wandb:    max_uncertainty 4
+wandb:  test_error_energy 16.63185
+wandb:   test_error_force 10.72815
+wandb:          test_loss 106.12318
+wandb: train_error_energy 2.24786
+wandb:  train_error_force 2.22958
+wandb:         train_loss -4.96332
+wandb: valid_error_energy 1.22053
+wandb:  valid_error_force 2.5965
+wandb:         valid_loss 4.449
+wandb: 
+wandb: 🚀 View run al_82_22 at: https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-MVE/runs/qqvf8wpt
+wandb: ⭐️ View project at: https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-MVE
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20241209_110032-qqvf8wpt/logs
+wandb: WARNING The new W&B backend becomes opt-out in version 0.18.0; try it out with `wandb.require("core")`! See https://wandb.me/wandb-core for more information.
+Uncertainty Slope: 27.79266357421875, Uncertainty Bias: -5.898616313934326
+0.00014209747 0.0015211105
+-1.6694343 98.09808
+(48745, 22, 3)
+Found uncertainty sample 0 after 177 steps.
+Found uncertainty sample 1 after 471 steps.
+Found uncertainty sample 2 after 9 steps.
+Did not find any uncertainty samples for sample 3.
+Found uncertainty sample 4 after 891 steps.
+Did not find any uncertainty samples for sample 5.
+Did not find any uncertainty samples for sample 6.
+Did not find any uncertainty samples for sample 7.
+Found uncertainty sample 8 after 344 steps.
+Found uncertainty sample 9 after 2407 steps.
+Did not find any uncertainty samples for sample 10.
+Found uncertainty sample 11 after 1890 steps.
+Found uncertainty sample 12 after 467 steps.
+Found uncertainty sample 13 after 1794 steps.
+Did not find any uncertainty samples for sample 14.
+Found uncertainty sample 15 after 1967 steps.
+Found uncertainty sample 16 after 3696 steps.
+Did not find any uncertainty samples for sample 17.
+Found uncertainty sample 18 after 1606 steps.
+Found uncertainty sample 19 after 1722 steps.
+Found uncertainty sample 20 after 2246 steps.
+Found uncertainty sample 21 after 56 steps.
+Found uncertainty sample 22 after 175 steps.
+Found uncertainty sample 23 after 520 steps.
+Did not find any uncertainty samples for sample 24.
+Found uncertainty sample 25 after 1458 steps.
+Found uncertainty sample 26 after 2697 steps.
+Found uncertainty sample 27 after 641 steps.
+Found uncertainty sample 28 after 308 steps.
+Found uncertainty sample 29 after 1690 steps.
+Found uncertainty sample 30 after 2842 steps.
+Found uncertainty sample 31 after 2541 steps.
+Did not find any uncertainty samples for sample 32.
+Found uncertainty sample 33 after 80 steps.
+Found uncertainty sample 34 after 3278 steps.
+Found uncertainty sample 35 after 187 steps.
+Did not find any uncertainty samples for sample 36.
+Found uncertainty sample 37 after 926 steps.
+Found uncertainty sample 38 after 647 steps.
+Found uncertainty sample 39 after 4 steps.
+Did not find any uncertainty samples for sample 40.
+Found uncertainty sample 41 after 2900 steps.
+Found uncertainty sample 42 after 1004 steps.
+Did not find any uncertainty samples for sample 43.
+Found uncertainty sample 44 after 723 steps.
+Did not find any uncertainty samples for sample 45.
+Found uncertainty sample 46 after 947 steps.
+Did not find any uncertainty samples for sample 47.
+Found uncertainty sample 48 after 864 steps.
+Did not find any uncertainty samples for sample 49.
+Did not find any uncertainty samples for sample 50.
+Found uncertainty sample 51 after 1005 steps.
+Found uncertainty sample 52 after 3734 steps.
+Found uncertainty sample 53 after 947 steps.
+Found uncertainty sample 54 after 338 steps.
+Did not find any uncertainty samples for sample 55.
+Found uncertainty sample 56 after 770 steps.
+Found uncertainty sample 57 after 147 steps.
+Found uncertainty sample 58 after 3127 steps.
+Found uncertainty sample 59 after 3468 steps.
+Found uncertainty sample 60 after 2419 steps.
+Did not find any uncertainty samples for sample 61.
+Did not find any uncertainty samples for sample 62.
+Did not find any uncertainty samples for sample 63.
+Did not find any uncertainty samples for sample 64.
+Did not find any uncertainty samples for sample 65.
+Did not find any uncertainty samples for sample 66.
+Found uncertainty sample 67 after 317 steps.
+Found uncertainty sample 68 after 1120 steps.
+Did not find any uncertainty samples for sample 69.
+Did not find any uncertainty samples for sample 70.
+Found uncertainty sample 71 after 2243 steps.
+Found uncertainty sample 72 after 1637 steps.
+Did not find any uncertainty samples for sample 73.
+Did not find any uncertainty samples for sample 74.
+Found uncertainty sample 75 after 747 steps.
+Found uncertainty sample 76 after 564 steps.
+Found uncertainty sample 77 after 715 steps.
+Found uncertainty sample 78 after 484 steps.
+Did not find any uncertainty samples for sample 79.
+Found uncertainty sample 80 after 810 steps.
+Found uncertainty sample 81 after 408 steps.
+Did not find any uncertainty samples for sample 82.
+Did not find any uncertainty samples for sample 83.
+Found uncertainty sample 84 after 3078 steps.
+Did not find any uncertainty samples for sample 85.
+Did not find any uncertainty samples for sample 86.
+Did not find any uncertainty samples for sample 87.
+Found uncertainty sample 88 after 538 steps.
+Found uncertainty sample 89 after 196 steps.
+Found uncertainty sample 90 after 1095 steps.
+Did not find any uncertainty samples for sample 91.
+Found uncertainty sample 92 after 73 steps.
+Found uncertainty sample 93 after 1047 steps.
+Found uncertainty sample 94 after 2316 steps.
+Found uncertainty sample 95 after 2468 steps.
+Found uncertainty sample 96 after 35 steps.
+Did not find any uncertainty samples for sample 97.
+Found uncertainty sample 98 after 1096 steps.
+Found uncertainty sample 99 after 3077 steps.
+wandb: wandb version 0.19.0 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.17.4
+wandb: Run data is saved locally in /home/ws/fq0795/git/gnn_uncertainty/wandb/run-20241209_112850-kvublwe1
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run al_82_23
+wandb: ⭐️ View project at https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-MVE
+wandb: 🚀 View run at https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-MVE/runs/kvublwe1
+Training model 23. Added 65 samples to the dataset.
+
+Training and Validation Results of Epoch 0:
+================================
+Training Loss Energy: 3.813876535713523, Training Loss Force: 2.4350466043324643, time: 0.9017553329467773
+Validation Loss Energy: 1.8832217409890877, Validation Loss Force: 2.5102834402043737, time: 0.07447457313537598
+Test Loss Energy: 15.589328350292728, Test Loss Force: 10.721185797057858, time: 10.309370279312134
+
+
+Training and Validation Results of Epoch 1:
+================================
+Training Loss Energy: 1.6858140302503017, Training Loss Force: 2.247239844654197, time: 0.971372127532959
+Validation Loss Energy: 1.817954185615037, Validation Loss Force: 2.4865319904156946, time: 0.0711967945098877
+Test Loss Energy: 18.157636411690504, Test Loss Force: 10.365011081513973, time: 10.327035188674927
+
+
+Training and Validation Results of Epoch 2:
+================================
+Training Loss Energy: 1.4230472480951086, Training Loss Force: 2.222689061462589, time: 0.9285743236541748
+Validation Loss Energy: 1.1460679626441843, Validation Loss Force: 2.5692967759421776, time: 0.07688331604003906
+Test Loss Energy: 16.135509445993705, Test Loss Force: 10.365501135500914, time: 10.552481889724731
+
+
+Training and Validation Results of Epoch 3:
+================================
+Training Loss Energy: 1.6583838561771065, Training Loss Force: 2.239328587644051, time: 0.9211626052856445
+Validation Loss Energy: 1.6055996868667757, Validation Loss Force: 2.5661108258022427, time: 0.07194137573242188
+Test Loss Energy: 15.640657808650595, Test Loss Force: 10.475439869034833, time: 10.375330924987793
+
+
+Training and Validation Results of Epoch 4:
+================================
+Training Loss Energy: 2.1211940026920506, Training Loss Force: 2.22341720324244, time: 0.9996387958526611
+Validation Loss Energy: 2.1621677301857996, Validation Loss Force: 2.597982017331752, time: 0.0710439682006836
+Test Loss Energy: 15.531245152541363, Test Loss Force: 10.326897277123178, time: 10.328049421310425
+
+
+Training and Validation Results of Epoch 5:
+================================
+Training Loss Energy: 1.924605886783544, Training Loss Force: 2.208429829386333, time: 1.0793206691741943
+Validation Loss Energy: 1.336614467909424, Validation Loss Force: 2.548842499531824, time: 0.07259273529052734
+Test Loss Energy: 17.063239360047202, Test Loss Force: 10.540656350985069, time: 10.397961854934692
+
+
+Training and Validation Results of Epoch 6:
+================================
+Training Loss Energy: 2.3862646492330386, Training Loss Force: 2.2483083440365506, time: 0.9512627124786377
+Validation Loss Energy: 5.2628954852305, Validation Loss Force: 2.6107507568358352, time: 0.07003211975097656
+Test Loss Energy: 21.32654640701942, Test Loss Force: 11.183534374869222, time: 10.38532018661499
+
+
+Training and Validation Results of Epoch 7:
+================================
+Training Loss Energy: 2.2572058495717244, Training Loss Force: 2.2398343571701687, time: 0.9516677856445312
+Validation Loss Energy: 1.8703670511946764, Validation Loss Force: 2.4764720210718227, time: 0.07353353500366211
+Test Loss Energy: 15.791121053682073, Test Loss Force: 10.305505305382205, time: 10.53697943687439
+
+
+Training and Validation Results of Epoch 8:
+================================
+Training Loss Energy: 1.3998081189932088, Training Loss Force: 2.2265201720139927, time: 0.9521992206573486
+Validation Loss Energy: 1.4771359558486676, Validation Loss Force: 2.4842335994914277, time: 0.07082724571228027
+Test Loss Energy: 16.118273357202646, Test Loss Force: 10.612772274893508, time: 10.901797533035278
+
+
+Training and Validation Results of Epoch 9:
+================================
+Training Loss Energy: 1.6107711260201383, Training Loss Force: 2.212452732295429, time: 0.9110181331634521
+Validation Loss Energy: 2.887344023836674, Validation Loss Force: 2.508785544859718, time: 0.07326173782348633
+Test Loss Energy: 18.799571031869835, Test Loss Force: 10.63935916677287, time: 10.317899465560913
+
+
+Training and Validation Results of Epoch 10:
+================================
+Training Loss Energy: 1.6299793595625467, Training Loss Force: 2.188366286542892, time: 0.8857057094573975
+Validation Loss Energy: 2.0287628594849814, Validation Loss Force: 3.080678847814508, time: 0.07228565216064453
+Test Loss Energy: 17.672922688384602, Test Loss Force: 10.58704781442473, time: 10.546237230300903
+
+
+Training and Validation Results of Epoch 11:
+================================
+Training Loss Energy: 1.5610023334943894, Training Loss Force: 2.2302367603078164, time: 0.9147732257843018
+Validation Loss Energy: 1.6604384771240117, Validation Loss Force: 2.547856075215364, time: 0.07081222534179688
+Test Loss Energy: 16.17101083534251, Test Loss Force: 10.696406871389181, time: 10.388456583023071
+
+
+Training and Validation Results of Epoch 12:
+================================
+Training Loss Energy: 1.6523454390781693, Training Loss Force: 2.2100758837022707, time: 0.9376931190490723
+Validation Loss Energy: 3.895054953974606, Validation Loss Force: 2.571578244011354, time: 0.07899188995361328
+Test Loss Energy: 20.82949310109948, Test Loss Force: 11.406384062339498, time: 10.466333150863647
+
+
+Training and Validation Results of Epoch 13:
+================================
+Training Loss Energy: 1.7428105992843177, Training Loss Force: 2.211469284713867, time: 1.0434298515319824
+Validation Loss Energy: 2.277582492579674, Validation Loss Force: 3.091592419329294, time: 0.0704190731048584
+Test Loss Energy: 15.58335613996399, Test Loss Force: 10.684036781936346, time: 10.390443086624146
+
+
+Training and Validation Results of Epoch 14:
+================================
+Training Loss Energy: 1.5538986642714763, Training Loss Force: 2.177117959312537, time: 0.9240524768829346
+Validation Loss Energy: 3.4361616778606763, Validation Loss Force: 3.0927298133266934, time: 0.07336544990539551
+Test Loss Energy: 19.18415070605602, Test Loss Force: 10.998481555486022, time: 10.347915172576904
+
+
+Training and Validation Results of Epoch 15:
+================================
+Training Loss Energy: 2.24514649001871, Training Loss Force: 2.20516790414316, time: 0.8994839191436768
+Validation Loss Energy: 1.8245841594350367, Validation Loss Force: 3.0116919383614524, time: 0.07431221008300781
+Test Loss Energy: 17.474273513748376, Test Loss Force: 10.335955294766533, time: 10.593458414077759
+
+
+Training and Validation Results of Epoch 16:
+================================
+Training Loss Energy: 1.8548297157999374, Training Loss Force: 2.231086627887441, time: 0.9902472496032715
+Validation Loss Energy: 1.3239769918668656, Validation Loss Force: 2.504007844330118, time: 0.07092499732971191
+Test Loss Energy: 17.711615726338188, Test Loss Force: 10.820594462380182, time: 10.358583688735962
+
+
+Training and Validation Results of Epoch 17:
+================================
+Training Loss Energy: 1.6113030113165683, Training Loss Force: 2.2246049439056765, time: 0.9599642753601074
+Validation Loss Energy: 4.95196340722498, Validation Loss Force: 2.555056193383512, time: 0.07174324989318848
+Test Loss Energy: 21.03894885006265, Test Loss Force: 11.291352822484631, time: 10.412232875823975
+
+
+Training and Validation Results of Epoch 18:
+================================
+Training Loss Energy: 2.4783183633546657, Training Loss Force: 2.191689131329857, time: 0.9194414615631104
+Validation Loss Energy: 1.678100037106139, Validation Loss Force: 2.5225654249554585, time: 0.07238459587097168
+Test Loss Energy: 17.916682109179348, Test Loss Force: 11.049041315389026, time: 10.454025268554688
+
+
+Training and Validation Results of Epoch 19:
+================================
+Training Loss Energy: 2.036339573682513, Training Loss Force: 2.189172774657061, time: 0.9748802185058594
+Validation Loss Energy: 2.282594775054509, Validation Loss Force: 2.5147399404909727, time: 0.07123422622680664
+Test Loss Energy: 18.307794914759967, Test Loss Force: 10.903089100102951, time: 10.374216079711914
+
+wandb: - 0.039 MB of 0.039 MB uploadedwandb: \ 0.039 MB of 0.039 MB uploadedwandb: | 0.039 MB of 0.039 MB uploadedwandb: / 0.058 MB of 0.058 MB uploadedwandb:                                                                                
+wandb: 
+wandb: Run history:
+wandb:       dataset_size ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:                 lr ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:    max_uncertainty ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:  test_error_energy ▁▄▂▁▁▃█▁▂▅▄▂▇▁▅▃▄█▄▄
+wandb:   test_error_force ▄▁▁▂▁▂▇▁▃▃▃▃█▃▅▁▄▇▆▅
+wandb:          test_loss ▂▁▁▂▁▂▆▁▃▄▃▃█▄▆▂▄▇▆▆
+wandb: train_error_energy █▂▁▂▃▃▄▃▁▂▂▁▂▂▁▃▂▂▄▃
+wandb:  train_error_force █▃▂▃▂▂▃▃▂▂▁▂▂▂▁▂▂▂▁▁
+wandb:         train_loss █▃▂▂▂▂▃▃▂▂▁▂▂▂▁▂▂▂▂▁
+wandb: valid_error_energy ▂▂▁▂▃▁█▂▂▄▃▂▆▃▅▂▁▇▂▃
+wandb:  valid_error_force ▁▁▂▂▂▂▃▁▁▁█▂▂██▇▁▂▂▁
+wandb:         valid_loss ▁▁▁▁▁▁▁▁▁▁█▁▁███▁▁▁▁
+wandb: 
+wandb: Run summary:
+wandb:       dataset_size 1795
+wandb:                 lr 0.0001
+wandb:    max_uncertainty 4
+wandb:  test_error_energy 18.30779
+wandb:   test_error_force 10.90309
+wandb:          test_loss 118.36321
+wandb: train_error_energy 2.03634
+wandb:  train_error_force 2.18917
+wandb:         train_loss -5.06415
+wandb: valid_error_energy 2.28259
+wandb:  valid_error_force 2.51474
+wandb:         valid_loss 4.11559
+wandb: 
+wandb: 🚀 View run al_82_23 at: https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-MVE/runs/kvublwe1
+wandb: ⭐️ View project at: https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-MVE
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20241209_112850-kvublwe1/logs
+wandb: WARNING The new W&B backend becomes opt-out in version 0.18.0; try it out with `wandb.require("core")`! See https://wandb.me/wandb-core for more information.
+Uncertainty Slope: 29.395421981811523, Uncertainty Bias: -6.0890350341796875
+0.0 0.012929916
+-1.96469 89.95617
+(48745, 22, 3)
+Found uncertainty sample 0 after 2955 steps.
+Found uncertainty sample 1 after 2074 steps.
+Found uncertainty sample 2 after 829 steps.
+Found uncertainty sample 3 after 3091 steps.
+Found uncertainty sample 4 after 1298 steps.
+Did not find any uncertainty samples for sample 5.
+Did not find any uncertainty samples for sample 6.
+Found uncertainty sample 7 after 262 steps.
+Did not find any uncertainty samples for sample 8.
+Did not find any uncertainty samples for sample 9.
+Found uncertainty sample 10 after 548 steps.
+Did not find any uncertainty samples for sample 11.
+Found uncertainty sample 12 after 1426 steps.
+Found uncertainty sample 13 after 429 steps.
+Found uncertainty sample 14 after 1155 steps.
+Did not find any uncertainty samples for sample 15.
+Found uncertainty sample 16 after 3132 steps.
+Did not find any uncertainty samples for sample 17.
+Did not find any uncertainty samples for sample 18.
+Found uncertainty sample 19 after 2155 steps.
+Found uncertainty sample 20 after 3116 steps.
+Did not find any uncertainty samples for sample 21.
+Found uncertainty sample 22 after 3949 steps.
+Found uncertainty sample 23 after 557 steps.
+Did not find any uncertainty samples for sample 24.
+Found uncertainty sample 25 after 1576 steps.
+Found uncertainty sample 26 after 956 steps.
+Found uncertainty sample 27 after 1452 steps.
+Found uncertainty sample 28 after 3152 steps.
+Found uncertainty sample 29 after 2783 steps.
+Did not find any uncertainty samples for sample 30.
+Found uncertainty sample 31 after 621 steps.
+Found uncertainty sample 32 after 219 steps.
+Found uncertainty sample 33 after 2182 steps.
+Found uncertainty sample 34 after 26 steps.
+Found uncertainty sample 35 after 151 steps.
+Found uncertainty sample 36 after 1342 steps.
+Found uncertainty sample 37 after 837 steps.
+Found uncertainty sample 38 after 2548 steps.
+Found uncertainty sample 39 after 3251 steps.
+Found uncertainty sample 40 after 495 steps.
+Did not find any uncertainty samples for sample 41.
+Found uncertainty sample 42 after 232 steps.
+Did not find any uncertainty samples for sample 43.
+Did not find any uncertainty samples for sample 44.
+Found uncertainty sample 45 after 2259 steps.
+Found uncertainty sample 46 after 1458 steps.
+Found uncertainty sample 47 after 2332 steps.
+Found uncertainty sample 48 after 1590 steps.
+Found uncertainty sample 49 after 3712 steps.
+Found uncertainty sample 50 after 190 steps.
+Did not find any uncertainty samples for sample 51.
+Found uncertainty sample 52 after 2324 steps.
+Found uncertainty sample 53 after 2087 steps.
+Found uncertainty sample 54 after 152 steps.
+Did not find any uncertainty samples for sample 55.
+Found uncertainty sample 56 after 1750 steps.
+Did not find any uncertainty samples for sample 57.
+Found uncertainty sample 58 after 791 steps.
+Did not find any uncertainty samples for sample 59.
+Did not find any uncertainty samples for sample 60.
+Did not find any uncertainty samples for sample 61.
+Found uncertainty sample 62 after 2557 steps.
+Found uncertainty sample 63 after 956 steps.
+Found uncertainty sample 64 after 3363 steps.
+Found uncertainty sample 65 after 2511 steps.
+Found uncertainty sample 66 after 2336 steps.
+Found uncertainty sample 67 after 3674 steps.
+Did not find any uncertainty samples for sample 68.
+Did not find any uncertainty samples for sample 69.
+Found uncertainty sample 70 after 908 steps.
+Found uncertainty sample 71 after 3007 steps.
+Did not find any uncertainty samples for sample 72.
+Found uncertainty sample 73 after 2048 steps.
+Did not find any uncertainty samples for sample 74.
+Found uncertainty sample 75 after 471 steps.
+Found uncertainty sample 76 after 3108 steps.
+Did not find any uncertainty samples for sample 77.
+Found uncertainty sample 78 after 1402 steps.
+Found uncertainty sample 79 after 2938 steps.
+Did not find any uncertainty samples for sample 80.
+Found uncertainty sample 81 after 189 steps.
+Did not find any uncertainty samples for sample 82.
+Found uncertainty sample 83 after 792 steps.
+Found uncertainty sample 84 after 1973 steps.
+Found uncertainty sample 85 after 470 steps.
+Found uncertainty sample 86 after 1515 steps.
+Found uncertainty sample 87 after 681 steps.
+Found uncertainty sample 88 after 561 steps.
+Found uncertainty sample 89 after 870 steps.
+Found uncertainty sample 90 after 3010 steps.
+Found uncertainty sample 91 after 2470 steps.
+Found uncertainty sample 92 after 1492 steps.
+Did not find any uncertainty samples for sample 93.
+Did not find any uncertainty samples for sample 94.
+Did not find any uncertainty samples for sample 95.
+Found uncertainty sample 96 after 3142 steps.
+Did not find any uncertainty samples for sample 97.
+Did not find any uncertainty samples for sample 98.
+Found uncertainty sample 99 after 3098 steps.
+wandb: wandb version 0.19.0 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.17.4
+wandb: Run data is saved locally in /home/ws/fq0795/git/gnn_uncertainty/wandb/run-20241209_115859-b4kzn2m0
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run al_82_24
+wandb: ⭐️ View project at https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-MVE
+wandb: 🚀 View run at https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-MVE/runs/b4kzn2m0
+Training model 24. Added 68 samples to the dataset.
+
+Training and Validation Results of Epoch 0:
+================================
+Training Loss Energy: 4.120472834375395, Training Loss Force: 2.3673693031879184, time: 0.9783720970153809
+Validation Loss Energy: 1.8644004087603951, Validation Loss Force: 2.966356166246836, time: 0.08090639114379883
+Test Loss Energy: 17.066678201714943, Test Loss Force: 10.616552791290509, time: 10.384642601013184
+
+
+Training and Validation Results of Epoch 1:
+================================
+Training Loss Energy: 1.3585059680808533, Training Loss Force: 2.226267236163654, time: 0.9615390300750732
+Validation Loss Energy: 1.1562286341093015, Validation Loss Force: 2.5594640404617253, time: 0.07779240608215332
+Test Loss Energy: 17.403083604366845, Test Loss Force: 10.413659719935573, time: 10.425413131713867
+
+
+Training and Validation Results of Epoch 2:
+================================
+Training Loss Energy: 1.7212818393930198, Training Loss Force: 2.199834988066439, time: 0.9455273151397705
+Validation Loss Energy: 1.1731891202854754, Validation Loss Force: 2.549749319628615, time: 0.07106947898864746
+Test Loss Energy: 17.284801040576095, Test Loss Force: 10.771774273120041, time: 10.556133270263672
+
+
+Training and Validation Results of Epoch 3:
+================================
+Training Loss Energy: 1.9433319267038962, Training Loss Force: 2.219567766535386, time: 0.9912505149841309
+Validation Loss Energy: 1.3716095962217272, Validation Loss Force: 2.5237749637561384, time: 0.07790350914001465
+Test Loss Energy: 16.159075950986683, Test Loss Force: 10.682103458825537, time: 10.361917734146118
+
+
+Training and Validation Results of Epoch 4:
+================================
+Training Loss Energy: 2.0871257373769554, Training Loss Force: 2.226744615777784, time: 0.93259596824646
+Validation Loss Energy: 3.261949123462256, Validation Loss Force: 2.5058752591224414, time: 0.07646512985229492
+Test Loss Energy: 19.68090952911595, Test Loss Force: 11.156561521582509, time: 11.115154266357422
+
+
+Training and Validation Results of Epoch 5:
+================================
+Training Loss Energy: 1.5739794655396855, Training Loss Force: 2.1950289816814443, time: 0.9557456970214844
+Validation Loss Energy: 3.4566638281374042, Validation Loss Force: 2.5059648834536774, time: 0.07539987564086914
+Test Loss Energy: 20.21873164839494, Test Loss Force: 11.53006715732586, time: 10.493482112884521
+
+
+Training and Validation Results of Epoch 6:
+================================
+Training Loss Energy: 1.5384496961308594, Training Loss Force: 2.205246971256022, time: 0.9661827087402344
+Validation Loss Energy: 1.2865333936259407, Validation Loss Force: 2.5626958604457215, time: 0.07814192771911621
+Test Loss Energy: 17.19912838952776, Test Loss Force: 10.505707838633338, time: 10.466872453689575
+
+
+Training and Validation Results of Epoch 7:
+================================
+Training Loss Energy: 1.456646578334845, Training Loss Force: 2.210960982107317, time: 0.8990156650543213
+Validation Loss Energy: 1.2733182581515587, Validation Loss Force: 2.4996926276166103, time: 0.07633304595947266
+Test Loss Energy: 17.409907931045414, Test Loss Force: 10.759206859166476, time: 10.657135248184204
+
+
+Training and Validation Results of Epoch 8:
+================================
+Training Loss Energy: 1.7178469221131987, Training Loss Force: 2.207339802086927, time: 0.9356968402862549
+Validation Loss Energy: 1.2985465610506042, Validation Loss Force: 2.4748418602544855, time: 0.08062171936035156
+Test Loss Energy: 17.48277062431572, Test Loss Force: 10.819299940909023, time: 10.46162223815918
+
+
+Training and Validation Results of Epoch 9:
+================================
+Training Loss Energy: 1.6017387996716712, Training Loss Force: 2.212811385744716, time: 1.0075945854187012
+Validation Loss Energy: 3.5779266616453533, Validation Loss Force: 2.45539571840232, time: 0.0793459415435791
+Test Loss Energy: 19.98281538103628, Test Loss Force: 11.074346411746955, time: 10.463016510009766
+
+
+Training and Validation Results of Epoch 10:
+================================
+Training Loss Energy: 1.6400057631491427, Training Loss Force: 2.2029416487948077, time: 0.9753320217132568
+Validation Loss Energy: 1.2088474129816378, Validation Loss Force: 2.4570753117700534, time: 0.07418513298034668
+Test Loss Energy: 16.718111920679583, Test Loss Force: 10.729544223218918, time: 10.641770362854004
+
+
+Training and Validation Results of Epoch 11:
+================================
+Training Loss Energy: 1.5362701539034511, Training Loss Force: 2.191285253009207, time: 0.9500875473022461
+Validation Loss Energy: 1.1690083957361082, Validation Loss Force: 2.497692390678741, time: 0.07229447364807129
+Test Loss Energy: 17.399718712171694, Test Loss Force: 10.71838656376824, time: 10.477583408355713
+
+
+Training and Validation Results of Epoch 12:
+================================
+Training Loss Energy: 1.6084955970072083, Training Loss Force: 2.2069504151766703, time: 0.9641656875610352
+Validation Loss Energy: 1.4871070245360274, Validation Loss Force: 2.416107974294821, time: 0.07105326652526855
+Test Loss Energy: 16.391357399849813, Test Loss Force: 11.044337633697536, time: 10.641093730926514
+
+
+Training and Validation Results of Epoch 13:
+================================
+Training Loss Energy: 1.8654646108336594, Training Loss Force: 2.1815894475361306, time: 0.8819923400878906
+Validation Loss Energy: 2.8629958207369084, Validation Loss Force: 2.4217073239728943, time: 0.07045841217041016
+Test Loss Energy: 15.397959701285373, Test Loss Force: 10.593848018223888, time: 10.436324119567871
+
+
+Training and Validation Results of Epoch 14:
+================================
+Training Loss Energy: 1.4250630964570519, Training Loss Force: 2.1820580086842574, time: 0.9503276348114014
+Validation Loss Energy: 1.900683956418323, Validation Loss Force: 2.4843864618601073, time: 0.07083344459533691
+Test Loss Energy: 18.503682889395662, Test Loss Force: 11.249852800956182, time: 10.47908878326416
+
+
+Training and Validation Results of Epoch 15:
+================================
+Training Loss Energy: 1.7446656278696635, Training Loss Force: 2.2128343129885, time: 0.9865574836730957
+Validation Loss Energy: 1.895052765052382, Validation Loss Force: 2.9788541400694712, time: 0.0757598876953125
+Test Loss Energy: 16.559855931708718, Test Loss Force: 10.737743824491162, time: 10.675821781158447
+
+
+Training and Validation Results of Epoch 16:
+================================
+Training Loss Energy: 1.800504073981488, Training Loss Force: 2.1761922507295743, time: 0.928807258605957
+Validation Loss Energy: 1.3965749268594316, Validation Loss Force: 2.4945795873532437, time: 0.07381296157836914
+Test Loss Energy: 16.28173404510141, Test Loss Force: 10.714600666005913, time: 10.508336067199707
+
+
+Training and Validation Results of Epoch 17:
+================================
+Training Loss Energy: 1.3725214474894794, Training Loss Force: 2.1791403806238505, time: 0.9807417392730713
+Validation Loss Energy: 1.1799789148849649, Validation Loss Force: 2.4514265295415845, time: 0.07287001609802246
+Test Loss Energy: 17.433661240296335, Test Loss Force: 11.084139937056099, time: 10.513184785842896
+
+
+Training and Validation Results of Epoch 18:
+================================
+Training Loss Energy: 2.264440127685655, Training Loss Force: 2.2116727536300833, time: 0.9011287689208984
+Validation Loss Energy: 1.1460594455493527, Validation Loss Force: 2.520919899967052, time: 0.0718994140625
+Test Loss Energy: 16.828214813835366, Test Loss Force: 10.90080501363115, time: 11.189604759216309
+
+
+Training and Validation Results of Epoch 19:
+================================
+Training Loss Energy: 1.5130495598358138, Training Loss Force: 2.198028502078951, time: 0.9841439723968506
+Validation Loss Energy: 2.488680302335606, Validation Loss Force: 2.5078852935027314, time: 0.07205605506896973
+Test Loss Energy: 15.918631651752648, Test Loss Force: 10.81146124551908, time: 10.50923776626587
+
+wandb: - 0.039 MB of 0.039 MB uploadedwandb: \ 0.039 MB of 0.039 MB uploadedwandb: | 0.039 MB of 0.039 MB uploadedwandb: / 0.058 MB of 0.058 MB uploadedwandb:                                                                                
+wandb: 
+wandb: Run history:
+wandb:       dataset_size ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:                 lr ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:    max_uncertainty ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:  test_error_energy ▃▄▄▂▇█▄▄▄█▃▄▂▁▆▃▂▄▃▂
+wandb:   test_error_force ▂▁▃▃▆█▂▃▄▅▃▃▅▂▆▃▃▅▄▃
+wandb:          test_loss ▂▁▃▃▅█▂▃▄▅▄▄▅▃▇▄▄▇▅▅
+wandb: train_error_energy █▁▂▂▃▂▁▁▂▂▂▁▂▂▁▂▂▁▃▁
+wandb:  train_error_force █▃▂▃▃▂▂▂▂▂▂▂▂▁▁▂▁▁▂▂
+wandb:         train_loss █▂▂▃▃▂▂▂▂▂▂▁▂▁▁▂▁▁▂▁
+wandb: valid_error_energy ▃▁▁▂▇█▁▁▁█▁▁▂▆▃▃▂▁▁▅
+wandb:  valid_error_force █▃▃▂▂▂▃▂▂▁▂▂▁▁▂█▂▁▂▂
+wandb:         valid_loss ▇▁▁▁▁▁▁▁▁▁▁▁▁▁▁█▁▁▁▁
+wandb: 
+wandb: Run summary:
+wandb:       dataset_size 1856
+wandb:                 lr 0.0001
+wandb:    max_uncertainty 4
+wandb:  test_error_energy 15.91863
+wandb:   test_error_force 10.81146
+wandb:          test_loss 119.20704
+wandb: train_error_energy 1.51305
+wandb:  train_error_force 2.19803
+wandb:         train_loss -5.09438
+wandb: valid_error_energy 2.48868
+wandb:  valid_error_force 2.50789
+wandb:         valid_loss 4.17414
+wandb: 
+wandb: 🚀 View run al_82_24 at: https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-MVE/runs/b4kzn2m0
+wandb: ⭐️ View project at: https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-MVE
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20241209_115859-b4kzn2m0/logs
+wandb: WARNING The new W&B backend becomes opt-out in version 0.18.0; try it out with `wandb.require("core")`! See https://wandb.me/wandb-core for more information.
+Uncertainty Slope: 29.339948654174805, Uncertainty Bias: -6.101019859313965
+0.00019836426 0.030921936
+-1.8591199 93.3211
+(48745, 22, 3)
+Did not find any uncertainty samples for sample 0.
+Found uncertainty sample 1 after 591 steps.
+Found uncertainty sample 2 after 1018 steps.
+Found uncertainty sample 3 after 3623 steps.
+Found uncertainty sample 4 after 3361 steps.
+Found uncertainty sample 5 after 937 steps.
+Found uncertainty sample 6 after 35 steps.
+Found uncertainty sample 7 after 1690 steps.
+Found uncertainty sample 8 after 1951 steps.
+Found uncertainty sample 9 after 493 steps.
+Did not find any uncertainty samples for sample 10.
+Found uncertainty sample 11 after 2449 steps.
+Did not find any uncertainty samples for sample 12.
+Did not find any uncertainty samples for sample 13.
+Found uncertainty sample 14 after 85 steps.
+Did not find any uncertainty samples for sample 15.
+Found uncertainty sample 16 after 2404 steps.
+Did not find any uncertainty samples for sample 17.
+Found uncertainty sample 18 after 3787 steps.
+Did not find any uncertainty samples for sample 19.
+Found uncertainty sample 20 after 22 steps.
+Found uncertainty sample 21 after 2482 steps.
+Did not find any uncertainty samples for sample 22.
+Found uncertainty sample 23 after 2 steps.
+Did not find any uncertainty samples for sample 24.
+Found uncertainty sample 25 after 969 steps.
+Found uncertainty sample 26 after 2466 steps.
+Found uncertainty sample 27 after 1400 steps.
+Found uncertainty sample 28 after 626 steps.
+Found uncertainty sample 29 after 1948 steps.
+Found uncertainty sample 30 after 652 steps.
+Found uncertainty sample 31 after 995 steps.
+Found uncertainty sample 32 after 2154 steps.
+Found uncertainty sample 33 after 3590 steps.
+Did not find any uncertainty samples for sample 34.
+Did not find any uncertainty samples for sample 35.
+Did not find any uncertainty samples for sample 36.
+Found uncertainty sample 37 after 994 steps.
+Found uncertainty sample 38 after 654 steps.
+Did not find any uncertainty samples for sample 39.
+Did not find any uncertainty samples for sample 40.
+Found uncertainty sample 41 after 3085 steps.
+Did not find any uncertainty samples for sample 42.
+Did not find any uncertainty samples for sample 43.
+Did not find any uncertainty samples for sample 44.
+Found uncertainty sample 45 after 2524 steps.
+Found uncertainty sample 46 after 3888 steps.
+Found uncertainty sample 47 after 223 steps.
+Did not find any uncertainty samples for sample 48.
+Found uncertainty sample 49 after 3573 steps.
+Did not find any uncertainty samples for sample 50.
+Did not find any uncertainty samples for sample 51.
+Did not find any uncertainty samples for sample 52.
+Found uncertainty sample 53 after 3247 steps.
+Found uncertainty sample 54 after 1413 steps.
+Found uncertainty sample 55 after 2529 steps.
+Found uncertainty sample 56 after 729 steps.
+Did not find any uncertainty samples for sample 57.
+Did not find any uncertainty samples for sample 58.
+Found uncertainty sample 59 after 1172 steps.
+Did not find any uncertainty samples for sample 60.
+Found uncertainty sample 61 after 2469 steps.
+Did not find any uncertainty samples for sample 62.
+Found uncertainty sample 63 after 1572 steps.
+Did not find any uncertainty samples for sample 64.
+Found uncertainty sample 65 after 3588 steps.
+Found uncertainty sample 66 after 3893 steps.
+Did not find any uncertainty samples for sample 67.
+Did not find any uncertainty samples for sample 68.
+Found uncertainty sample 69 after 3276 steps.
+Did not find any uncertainty samples for sample 70.
+Found uncertainty sample 71 after 245 steps.
+Did not find any uncertainty samples for sample 72.
+Found uncertainty sample 73 after 3816 steps.
+Found uncertainty sample 74 after 1238 steps.
+Did not find any uncertainty samples for sample 75.
+Found uncertainty sample 76 after 78 steps.
+Did not find any uncertainty samples for sample 77.
+Did not find any uncertainty samples for sample 78.
+Found uncertainty sample 79 after 59 steps.
+Did not find any uncertainty samples for sample 80.
+Found uncertainty sample 81 after 3186 steps.
+Found uncertainty sample 82 after 257 steps.
+Did not find any uncertainty samples for sample 83.
+Found uncertainty sample 84 after 2268 steps.
+Found uncertainty sample 85 after 496 steps.
+Found uncertainty sample 86 after 1995 steps.
+Found uncertainty sample 87 after 930 steps.
+Found uncertainty sample 88 after 1593 steps.
+Did not find any uncertainty samples for sample 89.
+Found uncertainty sample 90 after 1182 steps.
+Did not find any uncertainty samples for sample 91.
+Found uncertainty sample 92 after 2231 steps.
+Found uncertainty sample 93 after 3347 steps.
+Found uncertainty sample 94 after 5 steps.
+Did not find any uncertainty samples for sample 95.
+Did not find any uncertainty samples for sample 96.
+Found uncertainty sample 97 after 3870 steps.
+Found uncertainty sample 98 after 292 steps.
+Found uncertainty sample 99 after 2678 steps.
+wandb: wandb version 0.19.0 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.17.4
+wandb: Run data is saved locally in /home/ws/fq0795/git/gnn_uncertainty/wandb/run-20241209_123053-03pd6qfq
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run al_82_25
+wandb: ⭐️ View project at https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-MVE
+wandb: 🚀 View run at https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-MVE/runs/03pd6qfq
+Training model 25. Added 61 samples to the dataset.
+
+Training and Validation Results of Epoch 0:
+================================
+Training Loss Energy: 3.780450158949137, Training Loss Force: 2.3170738490653617, time: 0.9913768768310547
+Validation Loss Energy: 1.1016452453624448, Validation Loss Force: 2.4632813235362065, time: 0.07416391372680664
+Test Loss Energy: 16.67230207837554, Test Loss Force: 10.614182062038994, time: 10.501413583755493
+
+
+Training and Validation Results of Epoch 1:
+================================
+Training Loss Energy: 1.5616304111782273, Training Loss Force: 2.180519115470859, time: 1.0151078701019287
+Validation Loss Energy: 1.8414743378283838, Validation Loss Force: 2.429120981851987, time: 0.07236218452453613
+Test Loss Energy: 18.312042238951392, Test Loss Force: 10.800790072685778, time: 11.023598909378052
+
+
+Training and Validation Results of Epoch 2:
+================================
+Training Loss Energy: 1.3424744397615602, Training Loss Force: 2.204645888949609, time: 0.9347641468048096
+Validation Loss Energy: 1.719212888868235, Validation Loss Force: 2.8879817482706116, time: 0.07371020317077637
+Test Loss Energy: 17.221910469591272, Test Loss Force: 11.351784207442462, time: 10.723249912261963
+
+
+Training and Validation Results of Epoch 3:
+================================
+Training Loss Energy: 1.612929877216517, Training Loss Force: 2.185273027513368, time: 0.9926605224609375
+Validation Loss Energy: 1.9499152139063733, Validation Loss Force: 2.8777400809036626, time: 0.07410573959350586
+Test Loss Energy: 16.106239640388623, Test Loss Force: 10.667708889477298, time: 10.479746341705322
+
+
+Training and Validation Results of Epoch 4:
+================================
+Training Loss Energy: 1.776943927734139, Training Loss Force: 2.1968392497171734, time: 0.9921779632568359
+Validation Loss Energy: 2.5612368208670295, Validation Loss Force: 2.4909175705793154, time: 0.07997798919677734
+Test Loss Energy: 19.305308108054987, Test Loss Force: 11.181699371261509, time: 10.506310224533081
+
+
+Training and Validation Results of Epoch 5:
+================================
+Training Loss Energy: 1.5146324268782931, Training Loss Force: 2.183253550105715, time: 1.0503089427947998
+Validation Loss Energy: 1.8172589012068774, Validation Loss Force: 2.834254355387987, time: 0.07744526863098145
+Test Loss Energy: 17.98322749924539, Test Loss Force: 11.216888827950433, time: 10.478216409683228
+
+
+Training and Validation Results of Epoch 6:
+================================
+Training Loss Energy: 1.4910751826241748, Training Loss Force: 2.1898036877590186, time: 0.9626438617706299
+Validation Loss Energy: 2.102398321362998, Validation Loss Force: 2.4588979700640454, time: 0.07366275787353516
+Test Loss Energy: 16.059935374652827, Test Loss Force: 10.756687470863584, time: 10.517895936965942
+
+
+Training and Validation Results of Epoch 7:
+================================
+Training Loss Energy: 2.0513073803409285, Training Loss Force: 2.164045799696756, time: 1.060704231262207
+Validation Loss Energy: 4.306420168897687, Validation Loss Force: 2.877757783100764, time: 0.07590985298156738
+Test Loss Energy: 15.477303027327185, Test Loss Force: 11.062034309536621, time: 10.700604438781738
+
+
+Training and Validation Results of Epoch 8:
+================================
+Training Loss Energy: 1.9279941592367185, Training Loss Force: 2.194638729304847, time: 0.9673905372619629
+Validation Loss Energy: 2.689631802786332, Validation Loss Force: 2.823324529025549, time: 0.07309341430664062
+Test Loss Energy: 16.271374846897043, Test Loss Force: 10.871610775638837, time: 10.497012376785278
+
+
+Training and Validation Results of Epoch 9:
+================================
+Training Loss Energy: 1.3164575067650184, Training Loss Force: 2.1804621233029584, time: 0.9810822010040283
+Validation Loss Energy: 1.1100651172783418, Validation Loss Force: 2.5279000210190237, time: 0.07856082916259766
+Test Loss Energy: 17.759618143924094, Test Loss Force: 11.089330469096765, time: 10.5162832736969
+
+
+Training and Validation Results of Epoch 10:
+================================
+Training Loss Energy: 2.009187707768606, Training Loss Force: 2.193754510126367, time: 0.9262006282806396
+Validation Loss Energy: 2.0084545426997833, Validation Loss Force: 2.456388934127731, time: 0.07404971122741699
+Test Loss Energy: 17.95138760205734, Test Loss Force: 11.568517441609718, time: 10.621708154678345
+
+
+Training and Validation Results of Epoch 11:
+================================
+Training Loss Energy: 1.902859081414556, Training Loss Force: 2.1869597611383815, time: 1.014963150024414
+Validation Loss Energy: 2.2484151724891666, Validation Loss Force: 2.4382351639985305, time: 0.08107995986938477
+Test Loss Energy: 18.784850815307614, Test Loss Force: 10.895346019543759, time: 10.500927209854126
+
+
+Training and Validation Results of Epoch 12:
+================================
+Training Loss Energy: 1.6937366531530802, Training Loss Force: 2.1854851569863887, time: 0.9834268093109131
+Validation Loss Energy: 1.1564038747271468, Validation Loss Force: 2.4765716655146255, time: 0.07246017456054688
+Test Loss Energy: 17.239337694779255, Test Loss Force: 10.797029762056514, time: 10.672577142715454
+
+
+Training and Validation Results of Epoch 13:
+================================
+Training Loss Energy: 2.0317443251259055, Training Loss Force: 2.196873199339622, time: 1.0461726188659668
+Validation Loss Energy: 2.918427857266183, Validation Loss Force: 2.4179602475852215, time: 0.08260750770568848
+Test Loss Energy: 19.84656089902593, Test Loss Force: 11.295849442854939, time: 10.382274150848389
+
+
+Training and Validation Results of Epoch 14:
+================================
+Training Loss Energy: 1.665946039796769, Training Loss Force: 2.177509504449889, time: 1.0140511989593506
+Validation Loss Energy: 1.7630384075005963, Validation Loss Force: 2.409857651368628, time: 0.08192896842956543
+Test Loss Energy: 16.17038565965563, Test Loss Force: 10.540449490182693, time: 11.044859409332275
+
+
+Training and Validation Results of Epoch 15:
+================================
+Training Loss Energy: 2.265919904736241, Training Loss Force: 2.170135463123009, time: 1.011204481124878
+Validation Loss Energy: 2.104953338477946, Validation Loss Force: 2.3585877465150364, time: 0.07176804542541504
+Test Loss Energy: 15.76284735558678, Test Loss Force: 10.838182242514646, time: 10.650861024856567
+
+
+Training and Validation Results of Epoch 16:
+================================
+Training Loss Energy: 1.772831624774375, Training Loss Force: 2.1898961882333894, time: 0.944145679473877
+Validation Loss Energy: 1.2383210701496559, Validation Loss Force: 2.486551696635109, time: 0.07949423789978027
+Test Loss Energy: 16.7602684314722, Test Loss Force: 11.386419653969861, time: 10.468741416931152
+
+
+Training and Validation Results of Epoch 17:
+================================
+Training Loss Energy: 1.3871411495433148, Training Loss Force: 2.1966461918565017, time: 1.008512258529663
+Validation Loss Energy: 1.1210444040248195, Validation Loss Force: 2.5126179035302805, time: 0.07525873184204102
+Test Loss Energy: 17.081691222375024, Test Loss Force: 10.845597582070402, time: 10.48158860206604
+
+
+Training and Validation Results of Epoch 18:
+================================
+Training Loss Energy: 1.2041530278241397, Training Loss Force: 2.1840669215286885, time: 1.2120652198791504
+Validation Loss Energy: 2.167896506304943, Validation Loss Force: 2.8296379786546124, time: 0.07372188568115234
+Test Loss Energy: 18.37124333840634, Test Loss Force: 11.099668183808873, time: 10.536423444747925
+
+
+Training and Validation Results of Epoch 19:
+================================
+Training Loss Energy: 1.5697905488132804, Training Loss Force: 2.179424527761188, time: 0.9989707469940186
+Validation Loss Energy: 1.102111236217585, Validation Loss Force: 2.4538330263361985, time: 0.07294392585754395
+Test Loss Energy: 17.46075678777987, Test Loss Force: 10.80681500080917, time: 10.415805339813232
+
+wandb: - 0.039 MB of 0.039 MB uploadedwandb: \ 0.039 MB of 0.048 MB uploadedwandb: | 0.039 MB of 0.048 MB uploadedwandb: / 0.058 MB of 0.058 MB uploadedwandb:                                                                                
+wandb: 
+wandb: Run history:
+wandb:       dataset_size ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:                 lr ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:    max_uncertainty ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:  test_error_energy ▃▆▄▂▇▅▂▁▂▅▅▆▄█▂▁▃▄▆▄
+wandb:   test_error_force ▂▃▇▂▅▆▂▅▃▅█▃▃▆▁▃▇▃▅▃
+wandb:          test_loss ▁▃▆▂▅▅▃▅▄▅█▄▂▆▂▄▇▄▆▃
+wandb: train_error_energy █▂▁▂▃▂▂▃▃▁▃▃▂▃▂▄▃▁▁▂
+wandb:  train_error_force █▂▃▂▃▂▂▁▂▂▂▂▂▃▂▁▂▂▂▂
+wandb:         train_loss █▁▂▂▂▁▂▁▂▁▂▂▁▂▁▂▂▂▁▁
+wandb: valid_error_energy ▁▃▂▃▄▃▃█▄▁▃▄▁▅▂▃▁▁▃▁
+wandb:  valid_error_force ▂▂██▃▇▂█▇▃▂▂▃▂▂▁▃▃▇▂
+wandb:         valid_loss ▁▁██▁█▁█▇▁▁▁▁▁▁▁▁▁▇▁
+wandb: 
+wandb: Run summary:
+wandb:       dataset_size 1910
+wandb:                 lr 0.0001
+wandb:    max_uncertainty 4
+wandb:  test_error_energy 17.46076
+wandb:   test_error_force 10.80682
+wandb:          test_loss 120.55248
+wandb: train_error_energy 1.56979
+wandb:  train_error_force 2.17942
+wandb:         train_loss -5.12695
+wandb: valid_error_energy 1.10211
+wandb:  valid_error_force 2.45383
+wandb:         valid_loss 2.55976
+wandb: 
+wandb: 🚀 View run al_82_25 at: https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-MVE/runs/03pd6qfq
+wandb: ⭐️ View project at: https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-MVE
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20241209_123053-03pd6qfq/logs
+wandb: WARNING The new W&B backend becomes opt-out in version 0.18.0; try it out with `wandb.require("core")`! See https://wandb.me/wandb-core for more information.
+Uncertainty Slope: 31.624406814575195, Uncertainty Bias: -6.570277690887451
+9.918213e-05 0.0015068054
+-2.299898 76.01978
+(48745, 22, 3)
+Did not find any uncertainty samples for sample 0.
+Found uncertainty sample 1 after 934 steps.
+Found uncertainty sample 2 after 3075 steps.
+Did not find any uncertainty samples for sample 3.
+Found uncertainty sample 4 after 1453 steps.
+Did not find any uncertainty samples for sample 5.
+Found uncertainty sample 6 after 3130 steps.
+Found uncertainty sample 7 after 560 steps.
+Found uncertainty sample 8 after 1930 steps.
+Did not find any uncertainty samples for sample 9.
+Did not find any uncertainty samples for sample 10.
+Found uncertainty sample 11 after 749 steps.
+Found uncertainty sample 12 after 645 steps.
+Did not find any uncertainty samples for sample 13.
+Found uncertainty sample 14 after 337 steps.
+Found uncertainty sample 15 after 3220 steps.
+Found uncertainty sample 16 after 40 steps.
+Did not find any uncertainty samples for sample 17.
+Found uncertainty sample 18 after 1 steps.
+Found uncertainty sample 19 after 1772 steps.
+Found uncertainty sample 20 after 1082 steps.
+Found uncertainty sample 21 after 1733 steps.
+Found uncertainty sample 22 after 2311 steps.
+Found uncertainty sample 23 after 1530 steps.
+Found uncertainty sample 24 after 1749 steps.
+Did not find any uncertainty samples for sample 25.
+Did not find any uncertainty samples for sample 26.
+Found uncertainty sample 27 after 185 steps.
+Found uncertainty sample 28 after 2971 steps.
+Did not find any uncertainty samples for sample 29.
+Did not find any uncertainty samples for sample 30.
+Found uncertainty sample 31 after 2829 steps.
+Did not find any uncertainty samples for sample 32.
+Found uncertainty sample 33 after 722 steps.
+Found uncertainty sample 34 after 1471 steps.
+Found uncertainty sample 35 after 1568 steps.
+Found uncertainty sample 36 after 1146 steps.
+Found uncertainty sample 37 after 598 steps.
+Did not find any uncertainty samples for sample 38.
+Did not find any uncertainty samples for sample 39.
+Found uncertainty sample 40 after 1918 steps.
+Did not find any uncertainty samples for sample 41.
+Did not find any uncertainty samples for sample 42.
+Found uncertainty sample 43 after 1360 steps.
+Found uncertainty sample 44 after 1302 steps.
+Found uncertainty sample 45 after 1617 steps.
+Did not find any uncertainty samples for sample 46.
+Found uncertainty sample 47 after 1800 steps.
+Did not find any uncertainty samples for sample 48.
+Found uncertainty sample 49 after 1390 steps.
+Found uncertainty sample 50 after 3202 steps.
+Found uncertainty sample 51 after 117 steps.
+Found uncertainty sample 52 after 2459 steps.
+Did not find any uncertainty samples for sample 53.
+Found uncertainty sample 54 after 271 steps.
+Found uncertainty sample 55 after 2336 steps.
+Found uncertainty sample 56 after 3562 steps.
+Did not find any uncertainty samples for sample 57.
+Found uncertainty sample 58 after 490 steps.
+Found uncertainty sample 59 after 829 steps.
+Did not find any uncertainty samples for sample 60.
+Found uncertainty sample 61 after 39 steps.
+Found uncertainty sample 62 after 1817 steps.
+Did not find any uncertainty samples for sample 63.
+Did not find any uncertainty samples for sample 64.
+Found uncertainty sample 65 after 24 steps.
+Found uncertainty sample 66 after 3303 steps.
+Found uncertainty sample 67 after 1806 steps.
+Found uncertainty sample 68 after 55 steps.
+Did not find any uncertainty samples for sample 69.
+Did not find any uncertainty samples for sample 70.
+Found uncertainty sample 71 after 714 steps.
+Found uncertainty sample 72 after 2402 steps.
+Found uncertainty sample 73 after 2600 steps.
+Did not find any uncertainty samples for sample 74.
+Found uncertainty sample 75 after 626 steps.
+Found uncertainty sample 76 after 456 steps.
+Did not find any uncertainty samples for sample 77.
+Did not find any uncertainty samples for sample 78.
+Found uncertainty sample 79 after 1576 steps.
+Found uncertainty sample 80 after 2107 steps.
+Found uncertainty sample 81 after 3353 steps.
+Found uncertainty sample 82 after 119 steps.
+Found uncertainty sample 83 after 806 steps.
+Found uncertainty sample 84 after 931 steps.
+Found uncertainty sample 85 after 3797 steps.
+Found uncertainty sample 86 after 1452 steps.
+Found uncertainty sample 87 after 3099 steps.
+Found uncertainty sample 88 after 33 steps.
+Found uncertainty sample 89 after 1584 steps.
+Found uncertainty sample 90 after 2079 steps.
+Found uncertainty sample 91 after 2017 steps.
+Found uncertainty sample 92 after 2542 steps.
+Did not find any uncertainty samples for sample 93.
+Found uncertainty sample 94 after 129 steps.
+Found uncertainty sample 95 after 2329 steps.
+Found uncertainty sample 96 after 1072 steps.
+Found uncertainty sample 97 after 275 steps.
+Found uncertainty sample 98 after 2204 steps.
+Found uncertainty sample 99 after 2161 steps.
+wandb: wandb version 0.19.0 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.17.4
+wandb: Run data is saved locally in /home/ws/fq0795/git/gnn_uncertainty/wandb/run-20241209_125923-dfi82bmp
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run al_82_26
+wandb: ⭐️ View project at https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-MVE
+wandb: 🚀 View run at https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-MVE/runs/dfi82bmp
+Training model 26. Added 71 samples to the dataset.
+
+Training and Validation Results of Epoch 0:
+================================
+Training Loss Energy: 1.7850787661138474, Training Loss Force: 2.3243380211259153, time: 0.9876022338867188
+Validation Loss Energy: 2.2737148408494816, Validation Loss Force: 2.502364100694879, time: 0.07630467414855957
+Test Loss Energy: 19.026277479517972, Test Loss Force: 11.627911276948863, time: 10.32698655128479
+
+
+Training and Validation Results of Epoch 1:
+================================
+Training Loss Energy: 1.6549956997699045, Training Loss Force: 2.193429160216375, time: 1.0702753067016602
+Validation Loss Energy: 1.8140952179815355, Validation Loss Force: 2.777378977454809, time: 0.07692408561706543
+Test Loss Energy: 17.88308006666078, Test Loss Force: 11.007842776226092, time: 10.3364999294281
+
+
+Training and Validation Results of Epoch 2:
+================================
+Training Loss Energy: 1.5859840596758998, Training Loss Force: 2.1943157964325186, time: 1.086390733718872
+Validation Loss Energy: 1.394721428888729, Validation Loss Force: 2.434923739794865, time: 0.07691192626953125
+Test Loss Energy: 17.976737124990205, Test Loss Force: 11.311998565798211, time: 10.568669080734253
+
+
+Training and Validation Results of Epoch 3:
+================================
+Training Loss Energy: 1.9145174432130867, Training Loss Force: 2.184980216509042, time: 1.039316177368164
+Validation Loss Energy: 3.3427751287351457, Validation Loss Force: 2.7089290346471584, time: 0.07395815849304199
+Test Loss Energy: 19.926510855096126, Test Loss Force: 11.289042248876727, time: 10.356264114379883
+
+
+Training and Validation Results of Epoch 4:
+================================
+Training Loss Energy: 1.8123328787838842, Training Loss Force: 2.1831567896473527, time: 0.9852135181427002
+Validation Loss Energy: 1.8040257295316755, Validation Loss Force: 2.354298470757029, time: 0.07433104515075684
+Test Loss Energy: 18.443899044967107, Test Loss Force: 11.033080213806253, time: 10.267974138259888
+
+
+Training and Validation Results of Epoch 5:
+================================
+Training Loss Energy: 1.8470486210660697, Training Loss Force: 2.1611470812624667, time: 1.1641340255737305
+Validation Loss Energy: 4.302707160889341, Validation Loss Force: 2.3825048621482856, time: 0.07705211639404297
+Test Loss Energy: 15.915272196881562, Test Loss Force: 10.845231374097652, time: 10.20996880531311
+
+
+Training and Validation Results of Epoch 6:
+================================
+Training Loss Energy: 1.9152954429239424, Training Loss Force: 2.1826492548350265, time: 0.9721570014953613
+Validation Loss Energy: 3.3916773925600876, Validation Loss Force: 2.680797126085215, time: 0.07456135749816895
+Test Loss Energy: 15.620530779524392, Test Loss Force: 10.6291013984448, time: 10.287552118301392
+
+
+Training and Validation Results of Epoch 7:
+================================
+Training Loss Energy: 1.9678618469604336, Training Loss Force: 2.184092718347817, time: 0.9662487506866455
+Validation Loss Energy: 3.118819957155052, Validation Loss Force: 2.4524747445460395, time: 0.07213115692138672
+Test Loss Energy: 19.635042725479604, Test Loss Force: 11.512278709156057, time: 10.420273303985596
+
+
+Training and Validation Results of Epoch 8:
+================================
+Training Loss Energy: 1.4154425545175686, Training Loss Force: 2.174373425614339, time: 1.0666790008544922
+Validation Loss Energy: 1.1681081443791221, Validation Loss Force: 2.45312460444843, time: 0.07555103302001953
+Test Loss Energy: 17.375758430200925, Test Loss Force: 10.850247706586163, time: 10.377320766448975
+
+
+Training and Validation Results of Epoch 9:
+================================
+Training Loss Energy: 2.7697282083603834, Training Loss Force: 2.199826671039464, time: 0.9914028644561768
+Validation Loss Energy: 2.3063884206463414, Validation Loss Force: 2.430060311644083, time: 0.07647824287414551
+Test Loss Energy: 18.889028573423207, Test Loss Force: 10.98352431169828, time: 10.25831413269043
+
+
+Training and Validation Results of Epoch 10:
+================================
+Training Loss Energy: 1.5565243776903668, Training Loss Force: 2.171688323029477, time: 1.0259082317352295
+Validation Loss Energy: 1.1208329518371178, Validation Loss Force: 2.4476447167671465, time: 0.07303571701049805
+Test Loss Energy: 17.088508059909127, Test Loss Force: 11.361798984276168, time: 11.147513389587402
+
+
+Training and Validation Results of Epoch 11:
+================================
+Training Loss Energy: 3.54895778375898, Training Loss Force: 2.214035760279732, time: 1.0136308670043945
+Validation Loss Energy: 1.9622445158509678, Validation Loss Force: 2.365175079193591, time: 0.07393026351928711
+Test Loss Energy: 16.652585007628943, Test Loss Force: 11.186724176835638, time: 10.365058183670044
+
+
+Training and Validation Results of Epoch 12:
+================================
+Training Loss Energy: 1.2689149156342532, Training Loss Force: 2.1945481193633536, time: 1.0171682834625244
+Validation Loss Energy: 1.9666634963864777, Validation Loss Force: 2.3884565857497897, time: 0.07446026802062988
+Test Loss Energy: 18.742751918699252, Test Loss Force: 11.541345627029182, time: 10.499635219573975
+
+
+Training and Validation Results of Epoch 13:
+================================
+Training Loss Energy: 1.3975523375647791, Training Loss Force: 2.1692844084786684, time: 1.0748639106750488
+Validation Loss Energy: 1.7542310077698549, Validation Loss Force: 2.4140824644088887, time: 0.07278966903686523
+Test Loss Energy: 18.27821897755086, Test Loss Force: 11.280176202348141, time: 10.302171468734741
+
+
+Training and Validation Results of Epoch 14:
+================================
+Training Loss Energy: 1.4493696457821326, Training Loss Force: 2.174205935319348, time: 0.9787876605987549
+Validation Loss Energy: 1.3554925807703277, Validation Loss Force: 2.4391939773408953, time: 0.07364177703857422
+Test Loss Energy: 17.732952252296013, Test Loss Force: 11.173301344966685, time: 10.250078201293945
+
+
+Training and Validation Results of Epoch 15:
+================================
+Training Loss Energy: 1.429657469967869, Training Loss Force: 2.173461552364511, time: 1.0449421405792236
+Validation Loss Energy: 1.9384923980548505, Validation Loss Force: 2.341114119292072, time: 0.08016276359558105
+Test Loss Energy: 16.360068784834798, Test Loss Force: 10.844938896425763, time: 10.461188316345215
+
+
+Training and Validation Results of Epoch 16:
+================================
+Training Loss Energy: 2.218227200781747, Training Loss Force: 2.1565559361756192, time: 0.9587879180908203
+Validation Loss Energy: 1.7185386466943657, Validation Loss Force: 2.3402983708759653, time: 0.07631874084472656
+Test Loss Energy: 16.727298615441534, Test Loss Force: 11.405263330056412, time: 10.382405519485474
+
+
+Training and Validation Results of Epoch 17:
+================================
+Training Loss Energy: 2.091123572412782, Training Loss Force: 2.165541329361308, time: 0.9667351245880127
+Validation Loss Energy: 2.3652657055359834, Validation Loss Force: 2.4152276518263958, time: 0.07549929618835449
+Test Loss Energy: 15.927291644217334, Test Loss Force: 11.012354878513978, time: 10.279101133346558
+
+
+Training and Validation Results of Epoch 18:
+================================
+Training Loss Energy: 1.725543038683243, Training Loss Force: 2.180066274785075, time: 1.0468451976776123
+Validation Loss Energy: 1.5297256763974603, Validation Loss Force: 2.747621918131311, time: 0.07689714431762695
+Test Loss Energy: 17.294585519222558, Test Loss Force: 10.767625095892262, time: 10.486544132232666
+
+
+Training and Validation Results of Epoch 19:
+================================
+Training Loss Energy: 1.8802200765031916, Training Loss Force: 2.1719185665178045, time: 1.0188262462615967
+Validation Loss Energy: 1.573510836247122, Validation Loss Force: 2.444463776682995, time: 0.07417154312133789
+Test Loss Energy: 16.651254420750984, Test Loss Force: 11.115116456198244, time: 10.34138560295105
+
+wandb: - 0.039 MB of 0.039 MB uploadedwandb: \ 0.039 MB of 0.048 MB uploadedwandb: | 0.039 MB of 0.048 MB uploadedwandb: / 0.058 MB of 0.058 MB uploadedwandb:                                                                                
+wandb: 
+wandb: Run history:
+wandb:       dataset_size ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:                 lr ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:    max_uncertainty ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:  test_error_energy ▇▅▅█▆▁▁█▄▆▃▃▆▅▄▂▃▁▄▃
+wandb:   test_error_force █▄▆▆▄▃▁▇▃▃▆▅▇▆▅▃▆▄▂▄
+wandb:          test_loss ▇▃▆▆▄▃▁█▃▄▇▅█▆▅▃█▅▂▆
+wandb: train_error_energy ▃▂▂▃▃▃▃▃▁▆▂█▁▁▂▁▄▄▂▃
+wandb:  train_error_force █▃▃▂▂▁▂▂▂▃▂▃▃▂▂▂▁▁▂▂
+wandb:         train_loss █▂▂▂▂▁▂▂▁▄▁▅▂▁▁▁▁▁▂▁
+wandb: valid_error_energy ▄▃▂▆▃█▆▅▁▄▁▃▃▂▂▃▂▄▂▂
+wandb:  valid_error_force ▄█▃▇▁▂▆▃▃▂▃▁▂▂▃▁▁▂█▃
+wandb:         valid_loss ▂█▂█▂▁▆▂▁▂▂▁▂▂▂▁▁▁▆▂
+wandb: 
+wandb: Run summary:
+wandb:       dataset_size 1973
+wandb:                 lr 0.0001
+wandb:    max_uncertainty 4
+wandb:  test_error_energy 16.65125
+wandb:   test_error_force 11.11512
+wandb:          test_loss 132.74539
+wandb: train_error_energy 1.88022
+wandb:  train_error_force 2.17192
+wandb:         train_loss -5.1339
+wandb: valid_error_energy 1.57351
+wandb:  valid_error_force 2.44446
+wandb:         valid_loss 1.76338
+wandb: 
+wandb: 🚀 View run al_82_26 at: https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-MVE/runs/dfi82bmp
+wandb: ⭐️ View project at: https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-MVE
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20241209_125923-dfi82bmp/logs
+wandb: WARNING The new W&B backend becomes opt-out in version 0.18.0; try it out with `wandb.require("core")`! See https://wandb.me/wandb-core for more information.
+Uncertainty Slope: 32.877803802490234, Uncertainty Bias: -6.743646621704102
+7.8201294e-05 0.02245903
+-2.4043067 64.65684
+(48745, 22, 3)
+Did not find any uncertainty samples for sample 0.
+Did not find any uncertainty samples for sample 1.
+Found uncertainty sample 2 after 3648 steps.
+Found uncertainty sample 3 after 203 steps.
+Did not find any uncertainty samples for sample 4.
+Did not find any uncertainty samples for sample 5.
+Did not find any uncertainty samples for sample 6.
+Found uncertainty sample 7 after 2330 steps.
+Found uncertainty sample 8 after 1311 steps.
+Found uncertainty sample 9 after 2906 steps.
+Did not find any uncertainty samples for sample 10.
+Found uncertainty sample 11 after 2285 steps.
+Did not find any uncertainty samples for sample 12.
+Found uncertainty sample 13 after 0 steps.
+Found uncertainty sample 14 after 1493 steps.
+Found uncertainty sample 15 after 2355 steps.
+Found uncertainty sample 16 after 595 steps.
+Did not find any uncertainty samples for sample 17.
+Did not find any uncertainty samples for sample 18.
+Found uncertainty sample 19 after 2181 steps.
+Found uncertainty sample 20 after 1745 steps.
+Found uncertainty sample 21 after 1324 steps.
+Found uncertainty sample 22 after 509 steps.
+Found uncertainty sample 23 after 1194 steps.
+Found uncertainty sample 24 after 1748 steps.
+Found uncertainty sample 25 after 3051 steps.
+Did not find any uncertainty samples for sample 26.
+Did not find any uncertainty samples for sample 27.
+Found uncertainty sample 28 after 1735 steps.
+Found uncertainty sample 29 after 2459 steps.
+Found uncertainty sample 30 after 1706 steps.
+Found uncertainty sample 31 after 2114 steps.
+Found uncertainty sample 32 after 2957 steps.
+Found uncertainty sample 33 after 248 steps.
+Found uncertainty sample 34 after 1714 steps.
+Found uncertainty sample 35 after 1764 steps.
+Found uncertainty sample 36 after 638 steps.
+Found uncertainty sample 37 after 523 steps.
+Found uncertainty sample 38 after 3667 steps.
+Found uncertainty sample 39 after 732 steps.
+Found uncertainty sample 40 after 1183 steps.
+Found uncertainty sample 41 after 1629 steps.
+Did not find any uncertainty samples for sample 42.
+Found uncertainty sample 43 after 354 steps.
+Found uncertainty sample 44 after 3957 steps.
+Found uncertainty sample 45 after 139 steps.
+Found uncertainty sample 46 after 973 steps.
+Found uncertainty sample 47 after 1840 steps.
+Did not find any uncertainty samples for sample 48.
+Did not find any uncertainty samples for sample 49.
+Found uncertainty sample 50 after 2194 steps.
+Found uncertainty sample 51 after 1662 steps.
+Found uncertainty sample 52 after 253 steps.
+Found uncertainty sample 53 after 673 steps.
+Found uncertainty sample 54 after 455 steps.
+Did not find any uncertainty samples for sample 55.
+Did not find any uncertainty samples for sample 56.
+Found uncertainty sample 57 after 1920 steps.
+Found uncertainty sample 58 after 1663 steps.
+Did not find any uncertainty samples for sample 59.
+Found uncertainty sample 60 after 2412 steps.
+Found uncertainty sample 61 after 115 steps.
+Found uncertainty sample 62 after 144 steps.
+Found uncertainty sample 63 after 622 steps.
+Found uncertainty sample 64 after 1421 steps.
+Found uncertainty sample 65 after 310 steps.
+Found uncertainty sample 66 after 477 steps.
+Did not find any uncertainty samples for sample 67.
+Did not find any uncertainty samples for sample 68.
+Did not find any uncertainty samples for sample 69.
+Found uncertainty sample 70 after 3575 steps.
+Found uncertainty sample 71 after 1681 steps.
+Did not find any uncertainty samples for sample 72.
+Found uncertainty sample 73 after 1801 steps.
+Found uncertainty sample 74 after 1877 steps.
+Did not find any uncertainty samples for sample 75.
+Found uncertainty sample 76 after 3047 steps.
+Did not find any uncertainty samples for sample 77.
+Did not find any uncertainty samples for sample 78.
+Found uncertainty sample 79 after 17 steps.
+Found uncertainty sample 80 after 1660 steps.
+Found uncertainty sample 81 after 1713 steps.
+Did not find any uncertainty samples for sample 82.
+Did not find any uncertainty samples for sample 83.
+Found uncertainty sample 84 after 1554 steps.
+Found uncertainty sample 85 after 2305 steps.
+Found uncertainty sample 86 after 848 steps.
+Did not find any uncertainty samples for sample 87.
+Found uncertainty sample 88 after 3298 steps.
+Found uncertainty sample 89 after 2083 steps.
+Found uncertainty sample 90 after 1542 steps.
+Did not find any uncertainty samples for sample 91.
+Found uncertainty sample 92 after 33 steps.
+Did not find any uncertainty samples for sample 93.
+Found uncertainty sample 94 after 3211 steps.
+Found uncertainty sample 95 after 105 steps.
+Did not find any uncertainty samples for sample 96.
+Found uncertainty sample 97 after 2838 steps.
+Did not find any uncertainty samples for sample 98.
+Found uncertainty sample 99 after 2485 steps.
+wandb: wandb version 0.19.0 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.17.4
+wandb: Run data is saved locally in /home/ws/fq0795/git/gnn_uncertainty/wandb/run-20241209_132821-646phe3d
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run al_82_27
+wandb: ⭐️ View project at https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-MVE
+wandb: 🚀 View run at https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-MVE/runs/646phe3d
+Training model 27. Added 69 samples to the dataset.
+
+Training and Validation Results of Epoch 0:
+================================
+Training Loss Energy: 3.77997009331645, Training Loss Force: 2.3610758411140167, time: 1.0614902973175049
+Validation Loss Energy: 1.2933897663000624, Validation Loss Force: 2.362161586307177, time: 0.07533097267150879
+Test Loss Energy: 17.422702966493247, Test Loss Force: 11.295957247364164, time: 10.48528242111206
+
+
+Training and Validation Results of Epoch 1:
+================================
+Training Loss Energy: 1.6584545524406842, Training Loss Force: 2.205913157509735, time: 1.0682590007781982
+Validation Loss Energy: 1.377463735070028, Validation Loss Force: 2.2987478629075486, time: 0.07598423957824707
+Test Loss Energy: 17.486648648814107, Test Loss Force: 10.964768696012813, time: 10.536534786224365
+
+
+Training and Validation Results of Epoch 2:
+================================
+Training Loss Energy: 1.9187249568023301, Training Loss Force: 2.168970077758391, time: 1.046349287033081
+Validation Loss Energy: 2.9114930493854074, Validation Loss Force: 2.397166066723609, time: 0.07732558250427246
+Test Loss Energy: 19.844888954518233, Test Loss Force: 11.671362225274523, time: 10.639056921005249
+
+
+Training and Validation Results of Epoch 3:
+================================
+Training Loss Energy: 2.0640882122293047, Training Loss Force: 2.1708487721346374, time: 0.9996366500854492
+Validation Loss Energy: 2.4855247465340904, Validation Loss Force: 2.5481655853282037, time: 0.0800163745880127
+Test Loss Energy: 18.738559984332227, Test Loss Force: 10.882979240982932, time: 10.512516975402832
+
+
+Training and Validation Results of Epoch 4:
+================================
+Training Loss Energy: 1.8708313276713533, Training Loss Force: 2.173681141066866, time: 1.013582468032837
+Validation Loss Energy: 2.8157689195659272, Validation Loss Force: 2.647195238618982, time: 0.07587766647338867
+Test Loss Energy: 16.185993628957487, Test Loss Force: 10.827396764632024, time: 10.726705074310303
+
+
+Training and Validation Results of Epoch 5:
+================================
+Training Loss Energy: 1.7208794908829856, Training Loss Force: 2.186823538533446, time: 1.0496878623962402
+Validation Loss Energy: 2.922533430978799, Validation Loss Force: 2.333583114773075, time: 0.07590889930725098
+Test Loss Energy: 15.941995744662943, Test Loss Force: 11.288366178717407, time: 10.536531925201416
+
+
+Training and Validation Results of Epoch 6:
+================================
+Training Loss Energy: 1.3228138082594008, Training Loss Force: 2.181799073620885, time: 0.9959967136383057
+Validation Loss Energy: 1.5533601135499544, Validation Loss Force: 2.6371781330857016, time: 0.08273005485534668
+Test Loss Energy: 17.761524653472826, Test Loss Force: 10.748669115281286, time: 10.5229172706604
+
+
+Training and Validation Results of Epoch 7:
+================================
+Training Loss Energy: 1.9484216327764194, Training Loss Force: 2.1634727870916715, time: 0.992659330368042
+Validation Loss Energy: 1.7636037087948204, Validation Loss Force: 2.611941368759111, time: 0.07508563995361328
+Test Loss Energy: 18.07573145316166, Test Loss Force: 11.473170373426596, time: 10.651110172271729
+
+
+Training and Validation Results of Epoch 8:
+================================
+Training Loss Energy: 1.8758897139668125, Training Loss Force: 2.178279749498237, time: 1.0211279392242432
+Validation Loss Energy: 1.1411853571132093, Validation Loss Force: 2.378825811184694, time: 0.08337569236755371
+Test Loss Energy: 16.970994816851746, Test Loss Force: 11.477247307923301, time: 11.067132234573364
+
+
+Training and Validation Results of Epoch 9:
+================================
+Training Loss Energy: 1.9719164094051438, Training Loss Force: 2.1707246062521395, time: 1.0720500946044922
+Validation Loss Energy: 2.487109816849377, Validation Loss Force: 2.2821536674764262, time: 0.07834792137145996
+Test Loss Energy: 16.096638976870832, Test Loss Force: 11.313706361204213, time: 10.586509466171265
+
+
+Training and Validation Results of Epoch 10:
+================================
+Training Loss Energy: 1.5535022877996294, Training Loss Force: 2.163220085444687, time: 1.0902745723724365
+Validation Loss Energy: 2.813614038906211, Validation Loss Force: 2.4466471589933905, time: 0.11260318756103516
+Test Loss Energy: 16.25971127382036, Test Loss Force: 11.409752685117201, time: 10.669404745101929
+
+
+Training and Validation Results of Epoch 11:
+================================
+Training Loss Energy: 1.656168055180095, Training Loss Force: 2.173141648518337, time: 1.0879549980163574
+Validation Loss Energy: 1.3809353140569018, Validation Loss Force: 2.3633140104719264, time: 0.0770418643951416
+Test Loss Energy: 17.806599006763992, Test Loss Force: 11.586553703051838, time: 10.598193883895874
+
+
+Training and Validation Results of Epoch 12:
+================================
+Training Loss Energy: 1.9317731078132931, Training Loss Force: 2.1672051360028646, time: 1.0252761840820312
+Validation Loss Energy: 3.049819798887814, Validation Loss Force: 2.366972019201228, time: 0.07598185539245605
+Test Loss Energy: 16.25797117156948, Test Loss Force: 10.810607077348848, time: 10.657881021499634
+
+
+Training and Validation Results of Epoch 13:
+================================
+Training Loss Energy: 1.8230014062705497, Training Loss Force: 2.1601634051815797, time: 1.0132601261138916
+Validation Loss Energy: 2.5235657660935393, Validation Loss Force: 2.325535517835526, time: 0.07522082328796387
+Test Loss Energy: 16.228997005304993, Test Loss Force: 10.911712462910227, time: 10.568939685821533
+
+
+Training and Validation Results of Epoch 14:
+================================
+Training Loss Energy: 1.8159618543016494, Training Loss Force: 2.1754081525250655, time: 1.0072064399719238
+Validation Loss Energy: 2.583474454467119, Validation Loss Force: 2.4226497711330337, time: 0.07966399192810059
+Test Loss Energy: 18.98931230284127, Test Loss Force: 11.138368459092606, time: 10.465791463851929
+
+
+Training and Validation Results of Epoch 15:
+================================
+Training Loss Energy: 2.2188297110554545, Training Loss Force: 2.1442551594505144, time: 0.9832277297973633
+Validation Loss Energy: 5.4845851095853515, Validation Loss Force: 2.342075938667907, time: 0.07641315460205078
+Test Loss Energy: 15.628175060267987, Test Loss Force: 11.04931036966573, time: 10.718020915985107
+
+
+Training and Validation Results of Epoch 16:
+================================
+Training Loss Energy: 2.0277465975029667, Training Loss Force: 2.1670473923090015, time: 1.0053379535675049
+Validation Loss Energy: 1.8968826044263305, Validation Loss Force: 2.7022172299160303, time: 0.07664322853088379
+Test Loss Energy: 18.129910815446625, Test Loss Force: 11.782178965401169, time: 10.599297761917114
+
+
+Training and Validation Results of Epoch 17:
+================================
+Training Loss Energy: 1.9913116182995825, Training Loss Force: 2.1481074574472543, time: 1.110675573348999
+Validation Loss Energy: 1.0821536511708667, Validation Loss Force: 2.3346607221047924, time: 0.07652544975280762
+Test Loss Energy: 17.300994869887994, Test Loss Force: 11.254348087643224, time: 10.73076057434082
+
+
+Training and Validation Results of Epoch 18:
+================================
+Training Loss Energy: 1.6202331517374038, Training Loss Force: 2.146135287259388, time: 0.9924366474151611
+Validation Loss Energy: 2.491159166602647, Validation Loss Force: 2.3421577695790354, time: 0.07920122146606445
+Test Loss Energy: 16.550431622154505, Test Loss Force: 11.088303602933852, time: 10.534974575042725
+
+
+Training and Validation Results of Epoch 19:
+================================
+Training Loss Energy: 1.4717124330345506, Training Loss Force: 2.1621293510709756, time: 1.0746138095855713
+Validation Loss Energy: 1.1610590515591996, Validation Loss Force: 2.424276035240317, time: 0.07937431335449219
+Test Loss Energy: 17.805518620731178, Test Loss Force: 11.174223586941995, time: 11.147371292114258
+
+wandb: - 0.039 MB of 0.039 MB uploadedwandb: \ 0.039 MB of 0.055 MB uploadedwandb: | 0.039 MB of 0.055 MB uploadedwandb: / 0.058 MB of 0.058 MB uploadedwandb:                                                                                
+wandb: 
+wandb: Run history:
+wandb:       dataset_size ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:                 lr ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:    max_uncertainty ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:  test_error_energy ▄▄█▆▂▂▅▅▃▂▂▅▂▂▇▁▅▄▃▅
+wandb:   test_error_force ▅▂▇▂▂▅▁▆▆▅▅▇▁▂▄▃█▄▃▄
+wandb:          test_loss ▃▂▇▂▂▅▁▆▇▅▆▇▂▂▄▅█▆▅▄
+wandb: train_error_energy █▂▃▃▃▂▁▃▃▃▂▂▃▂▂▄▃▃▂▁
+wandb:  train_error_force █▃▂▂▂▂▂▂▂▂▂▂▂▂▂▁▂▁▁▂
+wandb:         train_loss █▃▂▂▂▂▂▂▂▂▁▂▂▁▂▁▂▁▁▁
+wandb: valid_error_energy ▁▁▄▃▄▄▂▂▁▃▄▁▄▃▃█▂▁▃▁
+wandb:  valid_error_force ▂▁▃▅▇▂▇▆▃▁▄▂▂▂▃▂█▂▂▃
+wandb:         valid_loss ▂▂▃█▆▂██▂▂▂▂▁▂▂▁█▂▁▂
+wandb: 
+wandb: Run summary:
+wandb:       dataset_size 2035
+wandb:                 lr 0.0001
+wandb:    max_uncertainty 4
+wandb:  test_error_energy 17.80552
+wandb:   test_error_force 11.17422
+wandb:          test_loss 134.9397
+wandb: train_error_energy 1.47171
+wandb:  train_error_force 2.16213
+wandb:         train_loss -5.18168
+wandb: valid_error_energy 1.16106
+wandb:  valid_error_force 2.42428
+wandb:         valid_loss -0.34376
+wandb: 
+wandb: 🚀 View run al_82_27 at: https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-MVE/runs/646phe3d
+wandb: ⭐️ View project at: https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-MVE
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20241209_132821-646phe3d/logs
+wandb: WARNING The new W&B backend becomes opt-out in version 0.18.0; try it out with `wandb.require("core")`! See https://wandb.me/wandb-core for more information.
+Uncertainty Slope: 31.41745948791504, Uncertainty Bias: -6.418459415435791
+0.00019073486 0.0012459755
+-2.4321384 46.18766
+(48745, 22, 3)
+Found uncertainty sample 0 after 2812 steps.
+Found uncertainty sample 1 after 1368 steps.
+Did not find any uncertainty samples for sample 2.
+Did not find any uncertainty samples for sample 3.
+Found uncertainty sample 4 after 1446 steps.
+Did not find any uncertainty samples for sample 5.
+Did not find any uncertainty samples for sample 6.
+Did not find any uncertainty samples for sample 7.
+Found uncertainty sample 8 after 1631 steps.
+Did not find any uncertainty samples for sample 9.
+Found uncertainty sample 10 after 592 steps.
+Found uncertainty sample 11 after 3025 steps.
+Found uncertainty sample 12 after 77 steps.
+Found uncertainty sample 13 after 3290 steps.
+Did not find any uncertainty samples for sample 14.
+Found uncertainty sample 15 after 14 steps.
+Did not find any uncertainty samples for sample 16.
+Found uncertainty sample 17 after 1217 steps.
+Found uncertainty sample 18 after 265 steps.
+Found uncertainty sample 19 after 2195 steps.
+Did not find any uncertainty samples for sample 20.
+Did not find any uncertainty samples for sample 21.
+Found uncertainty sample 22 after 549 steps.
+Found uncertainty sample 23 after 251 steps.
+Found uncertainty sample 24 after 2758 steps.
+Did not find any uncertainty samples for sample 25.
+Did not find any uncertainty samples for sample 26.
+Found uncertainty sample 27 after 3446 steps.
+Found uncertainty sample 28 after 676 steps.
+Did not find any uncertainty samples for sample 29.
+Did not find any uncertainty samples for sample 30.
+Found uncertainty sample 31 after 575 steps.
+Did not find any uncertainty samples for sample 32.
+Did not find any uncertainty samples for sample 33.
+Did not find any uncertainty samples for sample 34.
+Found uncertainty sample 35 after 2666 steps.
+Found uncertainty sample 36 after 1000 steps.
+Did not find any uncertainty samples for sample 37.
+Did not find any uncertainty samples for sample 38.
+Did not find any uncertainty samples for sample 39.
+Did not find any uncertainty samples for sample 40.
+Did not find any uncertainty samples for sample 41.
+Found uncertainty sample 42 after 2167 steps.
+Did not find any uncertainty samples for sample 43.
+Did not find any uncertainty samples for sample 44.
+Found uncertainty sample 45 after 3898 steps.
+Found uncertainty sample 46 after 2542 steps.
+Did not find any uncertainty samples for sample 47.
+Did not find any uncertainty samples for sample 48.
+Found uncertainty sample 49 after 311 steps.
+Found uncertainty sample 50 after 2465 steps.
+Found uncertainty sample 51 after 553 steps.
+Found uncertainty sample 52 after 603 steps.
+Found uncertainty sample 53 after 932 steps.
+Found uncertainty sample 54 after 2103 steps.
+Found uncertainty sample 55 after 1829 steps.
+Found uncertainty sample 56 after 3760 steps.
+Did not find any uncertainty samples for sample 57.
+Found uncertainty sample 58 after 29 steps.
+Did not find any uncertainty samples for sample 59.
+Found uncertainty sample 60 after 2500 steps.
+Did not find any uncertainty samples for sample 61.
+Did not find any uncertainty samples for sample 62.
+Found uncertainty sample 63 after 249 steps.
+Did not find any uncertainty samples for sample 64.
+Found uncertainty sample 65 after 949 steps.
+Did not find any uncertainty samples for sample 66.
+Found uncertainty sample 67 after 51 steps.
+Found uncertainty sample 68 after 1954 steps.
+Did not find any uncertainty samples for sample 69.
+Found uncertainty sample 70 after 199 steps.
+Did not find any uncertainty samples for sample 71.
+Found uncertainty sample 72 after 3234 steps.
+Did not find any uncertainty samples for sample 73.
+Did not find any uncertainty samples for sample 74.
+Did not find any uncertainty samples for sample 75.
+Did not find any uncertainty samples for sample 76.
+Found uncertainty sample 77 after 2373 steps.
+Found uncertainty sample 78 after 1266 steps.
+Found uncertainty sample 79 after 3052 steps.
+Found uncertainty sample 80 after 669 steps.
+Found uncertainty sample 81 after 2750 steps.
+Did not find any uncertainty samples for sample 82.
+Found uncertainty sample 83 after 15 steps.
+Did not find any uncertainty samples for sample 84.
+Found uncertainty sample 85 after 2630 steps.
+Did not find any uncertainty samples for sample 86.
+Found uncertainty sample 87 after 1870 steps.
+Found uncertainty sample 88 after 45 steps.
+Did not find any uncertainty samples for sample 89.
+Found uncertainty sample 90 after 2958 steps.
+Found uncertainty sample 91 after 2246 steps.
+Found uncertainty sample 92 after 1078 steps.
+Found uncertainty sample 93 after 1471 steps.
+Found uncertainty sample 94 after 246 steps.
+Found uncertainty sample 95 after 2214 steps.
+Did not find any uncertainty samples for sample 96.
+Found uncertainty sample 97 after 1053 steps.
+Found uncertainty sample 98 after 2999 steps.
+Did not find any uncertainty samples for sample 99.
+wandb: wandb version 0.19.0 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.17.4
+wandb: Run data is saved locally in /home/ws/fq0795/git/gnn_uncertainty/wandb/run-20241209_140024-r7oz449n
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run al_82_28
+wandb: ⭐️ View project at https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-MVE
+wandb: 🚀 View run at https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-MVE/runs/r7oz449n
+Training model 28. Added 56 samples to the dataset.
+
+Training and Validation Results of Epoch 0:
+================================
+Training Loss Energy: 1.721700313245738, Training Loss Force: 2.305298900515317, time: 1.0549702644348145
+Validation Loss Energy: 1.5932832440653584, Validation Loss Force: 2.6256537801036357, time: 0.08634448051452637
+Test Loss Energy: 18.253691954805618, Test Loss Force: 11.420717907130289, time: 10.381584167480469
+
+
+Training and Validation Results of Epoch 1:
+================================
+Training Loss Energy: 2.018286780548432, Training Loss Force: 2.1519919745729332, time: 1.0765728950500488
+Validation Loss Energy: 3.632355239668504, Validation Loss Force: 2.5235391571306014, time: 0.0801706314086914
+Test Loss Energy: 20.09353101304937, Test Loss Force: 11.068948095584732, time: 10.358900308609009
+
+
+Training and Validation Results of Epoch 2:
+================================
+Training Loss Energy: 1.987273103925322, Training Loss Force: 2.1741478059389805, time: 1.2181763648986816
+Validation Loss Energy: 1.562697966853582, Validation Loss Force: 2.4982310273427406, time: 0.08297133445739746
+Test Loss Energy: 16.840644737169068, Test Loss Force: 11.073420933491281, time: 10.583243370056152
+
+
+Training and Validation Results of Epoch 3:
+================================
+Training Loss Energy: 1.5882350140185562, Training Loss Force: 2.1770828906089412, time: 1.092545986175537
+Validation Loss Energy: 1.2107875292501067, Validation Loss Force: 2.3500539514973537, time: 0.07808947563171387
+Test Loss Energy: 17.66872639856245, Test Loss Force: 10.78379329610205, time: 10.406168460845947
+
+
+Training and Validation Results of Epoch 4:
+================================
+Training Loss Energy: 1.4497706701659536, Training Loss Force: 2.1647029398680853, time: 1.074385166168213
+Validation Loss Energy: 1.2222401827671834, Validation Loss Force: 2.3579008121998486, time: 0.0764005184173584
+Test Loss Energy: 18.17488508653444, Test Loss Force: 11.716778099408419, time: 11.211979389190674
+
+
+Training and Validation Results of Epoch 5:
+================================
+Training Loss Energy: 1.6311245395222351, Training Loss Force: 2.1345956034222806, time: 1.0292863845825195
+Validation Loss Energy: 1.2487514496177783, Validation Loss Force: 2.3132082199132444, time: 0.0757741928100586
+Test Loss Energy: 18.329767994681454, Test Loss Force: 11.413777438090493, time: 10.481037378311157
+
+
+Training and Validation Results of Epoch 6:
+================================
+Training Loss Energy: 1.771745911442302, Training Loss Force: 2.1532816051037607, time: 1.0617272853851318
+Validation Loss Energy: 2.263612731369743, Validation Loss Force: 2.577791047186458, time: 0.07705187797546387
+Test Loss Energy: 18.949023596803443, Test Loss Force: 11.71848082588538, time: 10.457412242889404
+
+
+Training and Validation Results of Epoch 7:
+================================
+Training Loss Energy: 1.5179590796272748, Training Loss Force: 2.1539694300955317, time: 1.0886592864990234
+Validation Loss Energy: 2.357069031605236, Validation Loss Force: 2.555009878201159, time: 0.0776369571685791
+Test Loss Energy: 18.93340631503489, Test Loss Force: 10.995746707387978, time: 10.658596277236938
+
+
+Training and Validation Results of Epoch 8:
+================================
+Training Loss Energy: 1.6232782152499554, Training Loss Force: 2.168857922514673, time: 1.042144775390625
+Validation Loss Energy: 1.7253192561915855, Validation Loss Force: 2.3433314586472207, time: 0.08818292617797852
+Test Loss Energy: 18.524690130821526, Test Loss Force: 11.855468036277518, time: 10.461370944976807
+
+
+Training and Validation Results of Epoch 9:
+================================
+Training Loss Energy: 1.9152329677949602, Training Loss Force: 2.1731174786892486, time: 1.1205425262451172
+Validation Loss Energy: 2.5478508424904343, Validation Loss Force: 2.3559632566265583, time: 0.08862805366516113
+Test Loss Energy: 16.406804091404826, Test Loss Force: 10.893789023610868, time: 10.500753164291382
+
+
+Training and Validation Results of Epoch 10:
+================================
+Training Loss Energy: 1.3908402272349403, Training Loss Force: 2.158338784088586, time: 1.048891305923462
+Validation Loss Energy: 1.0946680468430137, Validation Loss Force: 2.3107907009959066, time: 0.08436965942382812
+Test Loss Energy: 17.819446867260723, Test Loss Force: 11.362589014405916, time: 10.698172807693481
+
+
+Training and Validation Results of Epoch 11:
+================================
+Training Loss Energy: 1.9755697418188052, Training Loss Force: 2.1539808874352215, time: 1.1851294040679932
+Validation Loss Energy: 1.1463708483499326, Validation Loss Force: 2.338359813291518, time: 0.08182287216186523
+Test Loss Energy: 17.887878257997933, Test Loss Force: 11.507419779271764, time: 10.481034517288208
+
+
+Training and Validation Results of Epoch 12:
+================================
+Training Loss Energy: 1.525354794084358, Training Loss Force: 2.14177119255974, time: 1.1022145748138428
+Validation Loss Energy: 1.3969888688017116, Validation Loss Force: 2.343318543836757, time: 0.08418059349060059
+Test Loss Energy: 18.390452266503864, Test Loss Force: 11.613567583420139, time: 10.700892448425293
+
+
+Training and Validation Results of Epoch 13:
+================================
+Training Loss Energy: 1.6052351015649555, Training Loss Force: 2.1274304190067315, time: 1.086022138595581
+Validation Loss Energy: 2.49510497520306, Validation Loss Force: 2.5398527894378544, time: 0.07919597625732422
+Test Loss Energy: 19.74254330414565, Test Loss Force: 11.359045264093652, time: 10.536539793014526
+
+
+Training and Validation Results of Epoch 14:
+================================
+Training Loss Energy: 1.824533630407786, Training Loss Force: 2.1316513673878004, time: 1.0907957553863525
+Validation Loss Energy: 1.772644131786775, Validation Loss Force: 2.38622343688528, time: 0.08768510818481445
+Test Loss Energy: 16.943400723642736, Test Loss Force: 11.596171671809428, time: 10.557470798492432
+
+
+Training and Validation Results of Epoch 15:
+================================
+Training Loss Energy: 2.0267694746840115, Training Loss Force: 2.136170358420694, time: 1.1254444122314453
+Validation Loss Energy: 2.3415243871934437, Validation Loss Force: 2.4061926285612296, time: 0.07921743392944336
+Test Loss Energy: 16.836029540232424, Test Loss Force: 11.463723391256938, time: 10.699576139450073
+
+
+Training and Validation Results of Epoch 16:
+================================
+Training Loss Energy: 2.039887058299496, Training Loss Force: 2.132180410722763, time: 1.071904182434082
+Validation Loss Energy: 2.1584227691550133, Validation Loss Force: 2.3531805603098985, time: 0.0764317512512207
+Test Loss Energy: 19.090388156178545, Test Loss Force: 11.558504861156493, time: 10.61125898361206
+
+
+Training and Validation Results of Epoch 17:
+================================
+Training Loss Energy: 2.384417648309423, Training Loss Force: 2.141988291603245, time: 1.1281356811523438
+Validation Loss Energy: 1.8007350135585818, Validation Loss Force: 2.447832426857164, time: 0.08428740501403809
+Test Loss Energy: 16.731962953476806, Test Loss Force: 11.10473698227772, time: 10.724141597747803
+
+
+Training and Validation Results of Epoch 18:
+================================
+Training Loss Energy: 1.5522364862411908, Training Loss Force: 2.1454777600317287, time: 1.0882177352905273
+Validation Loss Energy: 2.473040355529357, Validation Loss Force: 2.395569083609015, time: 0.08762907981872559
+Test Loss Energy: 19.855322060226133, Test Loss Force: 11.518018541497778, time: 10.58143162727356
+
+
+Training and Validation Results of Epoch 19:
+================================
+Training Loss Energy: 1.9583839971244383, Training Loss Force: 2.1312906248156356, time: 1.1376559734344482
+Validation Loss Energy: 1.7506723094796373, Validation Loss Force: 2.3615903286132993, time: 0.08157992362976074
+Test Loss Energy: 18.802732392807542, Test Loss Force: 11.393144047668383, time: 10.534406423568726
+
+wandb: - 0.039 MB of 0.039 MB uploadedwandb: \ 0.039 MB of 0.058 MB uploadedwandb: | 0.039 MB of 0.058 MB uploadedwandb: / 0.058 MB of 0.058 MB uploadedwandb:                                                                                
+wandb: 
+wandb: Run history:
+wandb:       dataset_size ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:                 lr ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:    max_uncertainty ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:  test_error_energy ▅█▂▃▄▅▆▆▅▁▄▄▅▇▂▂▆▂█▆
+wandb:   test_error_force ▅▃▃▁▇▅▇▂█▂▅▆▆▅▆▅▆▃▆▅
+wandb:          test_loss ▅▃▃▁▇▇█▃█▂▆▆█▆█▇▇▄▆▇
+wandb: train_error_energy ▃▅▅▂▁▃▄▂▃▅▁▅▂▃▄▅▆█▂▅
+wandb:  train_error_force █▂▃▃▂▁▂▂▃▃▂▂▂▁▁▁▁▂▂▁
+wandb:         train_loss █▂▃▃▂▁▂▂▂▃▂▂▁▁▁▂▂▂▂▁
+wandb: valid_error_energy ▂█▂▁▁▁▄▄▃▅▁▁▂▅▃▄▄▃▅▃
+wandb:  valid_error_force █▆▅▂▂▁▇▆▂▂▁▂▂▆▃▃▂▄▃▂
+wandb:         valid_loss ▆█▆▂▂▂▇▅▂▁▁▂▂▆▁▄▂▃▂▂
+wandb: 
+wandb: Run summary:
+wandb:       dataset_size 2085
+wandb:                 lr 0.0001
+wandb:    max_uncertainty 4
+wandb:  test_error_energy 18.80273
+wandb:   test_error_force 11.39314
+wandb:          test_loss 148.01286
+wandb: train_error_energy 1.95838
+wandb:  train_error_force 2.13129
+wandb:         train_loss -5.23387
+wandb: valid_error_energy 1.75067
+wandb:  valid_error_force 2.36159
+wandb:         valid_loss -1.00926
+wandb: 
+wandb: 🚀 View run al_82_28 at: https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-MVE/runs/r7oz449n
+wandb: ⭐️ View project at: https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-MVE
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20241209_140024-r7oz449n/logs
+wandb: WARNING The new W&B backend becomes opt-out in version 0.18.0; try it out with `wandb.require("core")`! See https://wandb.me/wandb-core for more information.
+Uncertainty Slope: 31.236557006835938, Uncertainty Bias: -6.289087295532227
+7.6293945e-06 0.010915756
+-2.1711702 37.647743
+(48745, 22, 3)
+Did not find any uncertainty samples for sample 0.
+Did not find any uncertainty samples for sample 1.
+Found uncertainty sample 2 after 956 steps.
+Found uncertainty sample 3 after 2916 steps.
+Found uncertainty sample 4 after 1168 steps.
+Found uncertainty sample 5 after 15 steps.
+Did not find any uncertainty samples for sample 6.
+Found uncertainty sample 7 after 167 steps.
+Did not find any uncertainty samples for sample 8.
+Found uncertainty sample 9 after 1122 steps.
+Found uncertainty sample 10 after 589 steps.
+Found uncertainty sample 11 after 13 steps.
+Found uncertainty sample 12 after 3776 steps.
+Did not find any uncertainty samples for sample 13.
+Found uncertainty sample 14 after 2344 steps.
+Found uncertainty sample 15 after 2774 steps.
+Did not find any uncertainty samples for sample 16.
+Did not find any uncertainty samples for sample 17.
+Found uncertainty sample 18 after 467 steps.
+Found uncertainty sample 19 after 662 steps.
+Did not find any uncertainty samples for sample 20.
+Did not find any uncertainty samples for sample 21.
+Found uncertainty sample 22 after 2105 steps.
+Found uncertainty sample 23 after 2947 steps.
+Did not find any uncertainty samples for sample 24.
+Found uncertainty sample 25 after 1076 steps.
+Found uncertainty sample 26 after 282 steps.
+Found uncertainty sample 27 after 1620 steps.
+Found uncertainty sample 28 after 2450 steps.
+Found uncertainty sample 29 after 744 steps.
+Did not find any uncertainty samples for sample 30.
+Found uncertainty sample 31 after 2661 steps.
+Found uncertainty sample 32 after 2405 steps.
+Found uncertainty sample 33 after 63 steps.
+Found uncertainty sample 34 after 126 steps.
+Found uncertainty sample 35 after 2441 steps.
+Found uncertainty sample 36 after 3035 steps.
+Did not find any uncertainty samples for sample 37.
+Found uncertainty sample 38 after 584 steps.
+Found uncertainty sample 39 after 2270 steps.
+Did not find any uncertainty samples for sample 40.
+Did not find any uncertainty samples for sample 41.
+Did not find any uncertainty samples for sample 42.
+Did not find any uncertainty samples for sample 43.
+Did not find any uncertainty samples for sample 44.
+Did not find any uncertainty samples for sample 45.
+Found uncertainty sample 46 after 820 steps.
+Did not find any uncertainty samples for sample 47.
+Found uncertainty sample 48 after 222 steps.
+Found uncertainty sample 49 after 1774 steps.
+Did not find any uncertainty samples for sample 50.
+Found uncertainty sample 51 after 1436 steps.
+Found uncertainty sample 52 after 2541 steps.
+Found uncertainty sample 53 after 1520 steps.
+Did not find any uncertainty samples for sample 54.
+Did not find any uncertainty samples for sample 55.
+Did not find any uncertainty samples for sample 56.
+Found uncertainty sample 57 after 3018 steps.
+Did not find any uncertainty samples for sample 58.
+Did not find any uncertainty samples for sample 59.
+Found uncertainty sample 60 after 1238 steps.
+Found uncertainty sample 61 after 3152 steps.
+Did not find any uncertainty samples for sample 62.
+Found uncertainty sample 63 after 540 steps.
+Did not find any uncertainty samples for sample 64.
+Found uncertainty sample 65 after 2850 steps.
+Did not find any uncertainty samples for sample 66.
+Found uncertainty sample 67 after 804 steps.
+Found uncertainty sample 68 after 2921 steps.
+Did not find any uncertainty samples for sample 69.
+Found uncertainty sample 70 after 2578 steps.
+Found uncertainty sample 71 after 2107 steps.
+Found uncertainty sample 72 after 710 steps.
+Found uncertainty sample 73 after 3604 steps.
+Found uncertainty sample 74 after 1163 steps.
+Did not find any uncertainty samples for sample 75.
+Did not find any uncertainty samples for sample 76.
+Did not find any uncertainty samples for sample 77.
+Found uncertainty sample 78 after 2126 steps.
+Found uncertainty sample 79 after 268 steps.
+Found uncertainty sample 80 after 708 steps.
+Found uncertainty sample 81 after 943 steps.
+Found uncertainty sample 82 after 1541 steps.
+Found uncertainty sample 83 after 944 steps.
+Found uncertainty sample 84 after 776 steps.
+Did not find any uncertainty samples for sample 85.
+Did not find any uncertainty samples for sample 86.
+Did not find any uncertainty samples for sample 87.
+Did not find any uncertainty samples for sample 88.
+Found uncertainty sample 89 after 1944 steps.
+Did not find any uncertainty samples for sample 90.
+Found uncertainty sample 91 after 328 steps.
+Did not find any uncertainty samples for sample 92.
+Found uncertainty sample 93 after 626 steps.
+Found uncertainty sample 94 after 2690 steps.
+Did not find any uncertainty samples for sample 95.
+Did not find any uncertainty samples for sample 96.
+Did not find any uncertainty samples for sample 97.
+Did not find any uncertainty samples for sample 98.
+Did not find any uncertainty samples for sample 99.
+wandb: wandb version 0.19.0 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.17.4
+wandb: Run data is saved locally in /home/ws/fq0795/git/gnn_uncertainty/wandb/run-20241209_143220-nqrou8wk
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run al_82_29
+wandb: ⭐️ View project at https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-MVE
+wandb: 🚀 View run at https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-MVE/runs/nqrou8wk
+Training model 29. Added 57 samples to the dataset.
+
+Training and Validation Results of Epoch 0:
+================================
+Training Loss Energy: 3.735248901390203, Training Loss Force: 2.273740944652566, time: 1.1098711490631104
+Validation Loss Energy: 3.977691482073035, Validation Loss Force: 2.4348832140103065, time: 0.08901572227478027
+Test Loss Energy: 15.91459418681932, Test Loss Force: 10.775409460010597, time: 10.338573932647705
+
+
+Training and Validation Results of Epoch 1:
+================================
+Training Loss Energy: 1.8798970505232842, Training Loss Force: 2.1575006513555555, time: 1.0905685424804688
+Validation Loss Energy: 1.7404101008839765, Validation Loss Force: 2.443635224790998, time: 0.08028674125671387
+Test Loss Energy: 17.27246127609616, Test Loss Force: 11.198013227403717, time: 10.486610174179077
+
+
+Training and Validation Results of Epoch 2:
+================================
+Training Loss Energy: 1.5227176735126566, Training Loss Force: 2.1446252500071523, time: 1.1265618801116943
+Validation Loss Energy: 1.3605446096877105, Validation Loss Force: 2.303940618725157, time: 0.07848691940307617
+Test Loss Energy: 18.485508712979918, Test Loss Force: 11.526817153083552, time: 10.594277620315552
+
+
+Training and Validation Results of Epoch 3:
+================================
+Training Loss Energy: 1.4009754208706995, Training Loss Force: 2.1384636108843105, time: 1.1261229515075684
+Validation Loss Energy: 1.212973973261258, Validation Loss Force: 2.3405537723863445, time: 0.08220934867858887
+Test Loss Energy: 18.411282608368452, Test Loss Force: 11.551488334864967, time: 10.490585327148438
+
+
+Training and Validation Results of Epoch 4:
+================================
+Training Loss Energy: 1.5482158198440756, Training Loss Force: 2.150765536155926, time: 1.0978951454162598
+Validation Loss Energy: 1.5503052042023981, Validation Loss Force: 2.5286117829439823, time: 0.08575773239135742
+Test Loss Energy: 17.939626567511553, Test Loss Force: 11.899747519008073, time: 10.669041395187378
+
+
+Training and Validation Results of Epoch 5:
+================================
+Training Loss Energy: 2.0418336455312405, Training Loss Force: 2.134353721710709, time: 1.0248913764953613
+Validation Loss Energy: 1.1141157752128439, Validation Loss Force: 2.310092299219704, time: 0.07531189918518066
+Test Loss Energy: 17.296595836893957, Test Loss Force: 11.33259503277954, time: 10.465426921844482
+
+
+Training and Validation Results of Epoch 6:
+================================
+Training Loss Energy: 1.6620275579764903, Training Loss Force: 2.1340688647280857, time: 1.1127262115478516
+Validation Loss Energy: 1.1060252587974173, Validation Loss Force: 2.3341954549243766, time: 0.07997989654541016
+Test Loss Energy: 18.173248083595546, Test Loss Force: 11.65269981353083, time: 11.100316524505615
+
+
+Training and Validation Results of Epoch 7:
+================================
+Training Loss Energy: 1.9604511784307064, Training Loss Force: 2.140201171345227, time: 1.097320795059204
+Validation Loss Energy: 1.9037880756471293, Validation Loss Force: 2.2686530144896784, time: 0.08499884605407715
+Test Loss Energy: 19.11305372082257, Test Loss Force: 11.641718223586805, time: 10.70546841621399
+
+
+Training and Validation Results of Epoch 8:
+================================
+Training Loss Energy: 1.457774815450395, Training Loss Force: 2.1487011023739173, time: 1.1040935516357422
+Validation Loss Energy: 4.727494649259803, Validation Loss Force: 2.406072498557002, time: 0.08332228660583496
+Test Loss Energy: 16.341298801743285, Test Loss Force: 11.089180387760795, time: 10.55079436302185
+
+
+Training and Validation Results of Epoch 9:
+================================
+Training Loss Energy: 3.219862955783383, Training Loss Force: 2.158315836451956, time: 1.1568272113800049
+Validation Loss Energy: 1.3139279333111444, Validation Loss Force: 2.284836051342845, time: 0.08291935920715332
+Test Loss Energy: 18.319934482190604, Test Loss Force: 11.47280697738044, time: 10.58401870727539
+
+
+Training and Validation Results of Epoch 10:
+================================
+Training Loss Energy: 1.4264274389621454, Training Loss Force: 2.1343276494801144, time: 1.2749285697937012
+Validation Loss Energy: 1.5297874114181687, Validation Loss Force: 2.2971365176330423, time: 0.07914590835571289
+Test Loss Energy: 18.321021200887298, Test Loss Force: 11.611406060574772, time: 10.547337532043457
+
+
+Training and Validation Results of Epoch 11:
+================================
+Training Loss Energy: 1.5223776244926237, Training Loss Force: 2.1428546680442366, time: 1.1127736568450928
+Validation Loss Energy: 1.4121150622210186, Validation Loss Force: 2.3593030711463294, time: 0.07782530784606934
+Test Loss Energy: 18.45213207225899, Test Loss Force: 11.53465243032723, time: 10.583948373794556
+
+
+Training and Validation Results of Epoch 12:
+================================
+Training Loss Energy: 2.0052833236193903, Training Loss Force: 2.133375210457479, time: 1.0790081024169922
+Validation Loss Energy: 1.9500951862435694, Validation Loss Force: 2.4181634331808803, time: 0.07881498336791992
+Test Loss Energy: 18.721482655144793, Test Loss Force: 11.579248051949495, time: 10.6857430934906
+
+
+Training and Validation Results of Epoch 13:
+================================
+Training Loss Energy: 1.499096185235682, Training Loss Force: 2.137795508729054, time: 1.1184134483337402
+Validation Loss Energy: 1.1052057528394732, Validation Loss Force: 2.273806357868458, time: 0.07711601257324219
+Test Loss Energy: 17.518936150622913, Test Loss Force: 11.228366091071363, time: 10.518414735794067
+
+
+Training and Validation Results of Epoch 14:
+================================
+Training Loss Energy: 1.312690497722242, Training Loss Force: 2.1317821988298915, time: 1.0586230754852295
+Validation Loss Energy: 2.642942703270053, Validation Loss Force: 2.402477616530571, time: 0.07891726493835449
+Test Loss Energy: 19.444981146690463, Test Loss Force: 11.350689197526053, time: 10.581305742263794
+
+
+Training and Validation Results of Epoch 15:
+================================
+Training Loss Energy: 1.7898361822427435, Training Loss Force: 2.1168688081531237, time: 1.1026060581207275
+Validation Loss Energy: 1.465776211032729, Validation Loss Force: 2.266344603453845, time: 0.0768733024597168
+Test Loss Energy: 18.56017565586804, Test Loss Force: 11.68155222757058, time: 10.701751708984375
+
+
+Training and Validation Results of Epoch 16:
+================================
+Training Loss Energy: 4.217574641278445, Training Loss Force: 2.1575823642852705, time: 1.1172361373901367
+Validation Loss Energy: 5.235435480816394, Validation Loss Force: 2.309208302710371, time: 0.08626627922058105
+Test Loss Energy: 15.950193620540757, Test Loss Force: 11.56764047025365, time: 10.525321245193481
+
+
+Training and Validation Results of Epoch 17:
+================================
+Training Loss Energy: 1.865186642713551, Training Loss Force: 2.149898427605772, time: 1.0956532955169678
+Validation Loss Energy: 2.1759782272891055, Validation Loss Force: 2.3244916448794166, time: 0.08069658279418945
+Test Loss Energy: 19.781233530172642, Test Loss Force: 12.590583529239968, time: 10.669160842895508
+
+
+Training and Validation Results of Epoch 18:
+================================
+Training Loss Energy: 2.0539032878334678, Training Loss Force: 2.134757287935473, time: 1.161515474319458
+Validation Loss Energy: 1.43484429362803, Validation Loss Force: 2.3319914757179836, time: 0.07752156257629395
+Test Loss Energy: 17.921934694797496, Test Loss Force: 11.58063339911605, time: 10.521535873413086
+
+
+Training and Validation Results of Epoch 19:
+================================
+Training Loss Energy: 1.3114026009844262, Training Loss Force: 2.1299074426025917, time: 1.110844373703003
+Validation Loss Energy: 2.627584544267976, Validation Loss Force: 2.315565952164901, time: 0.0874016284942627
+Test Loss Energy: 19.70286897842145, Test Loss Force: 11.758960808216985, time: 10.549840927124023
+
+wandb: - 0.039 MB of 0.039 MB uploadedwandb: \ 0.039 MB of 0.039 MB uploadedwandb: | 0.039 MB of 0.055 MB uploadedwandb: / 0.039 MB of 0.055 MB uploadedwandb: - 0.058 MB of 0.058 MB uploadedwandb:                                                                                
+wandb: 
+wandb: Run history:
+wandb:       dataset_size ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:                 lr ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:    max_uncertainty ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:  test_error_energy ▁▃▆▆▅▄▅▇▂▅▅▆▆▄▇▆▁█▅█
+wandb:   test_error_force ▁▃▄▄▅▃▄▄▂▄▄▄▄▃▃▄▄█▄▅
+wandb:          test_loss ▁▃▄▄▅▄▅▄▂▄▄▅▅▃▄▅▄█▅▅
+wandb: train_error_energy ▇▂▂▁▂▃▂▃▁▆▁▂▃▁▁▂█▂▃▁
+wandb:  train_error_force █▃▂▂▃▂▂▂▂▃▂▂▂▂▂▁▃▂▂▂
+wandb:         train_loss █▂▂▂▂▂▂▂▂▃▁▂▂▁▁▁▄▂▂▁
+wandb: valid_error_energy ▆▂▁▁▂▁▁▂▇▁▂▂▂▁▄▂█▃▂▄
+wandb:  valid_error_force ▅▆▂▃█▂▃▁▅▁▂▃▅▁▅▁▂▃▃▂
+wandb:         valid_loss ▄▄▂▂█▁▂▂▃▂▃▂▆▁▅▂▁▂▅▂
+wandb: 
+wandb: Run summary:
+wandb:       dataset_size 2136
+wandb:                 lr 0.0001
+wandb:    max_uncertainty 4
+wandb:  test_error_energy 19.70287
+wandb:   test_error_force 11.75896
+wandb:          test_loss 158.33076
+wandb: train_error_energy 1.3114
+wandb:  train_error_force 2.12991
+wandb:         train_loss -5.26971
+wandb: valid_error_energy 2.62758
+wandb:  valid_error_force 2.31557
+wandb:         valid_loss -1.9108
+wandb: 
+wandb: 🚀 View run al_82_29 at: https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-MVE/runs/nqrou8wk
+wandb: ⭐️ View project at: https://wandb.ai/l-baer-99-Karlsruhe%20Institute%20of%20Technology/GNN-Uncertainty-MVE
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20241209_143220-nqrou8wk/logs
+wandb: WARNING The new W&B backend becomes opt-out in version 0.18.0; try it out with `wandb.require("core")`! See https://wandb.me/wandb-core for more information.
+Uncertainty Slope: 29.686710357666016, Uncertainty Bias: -6.009747505187988
+4.7683716e-05 0.010591507
+-1.9621463 24.73361
+(48745, 22, 3)

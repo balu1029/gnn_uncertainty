@@ -18,14 +18,14 @@ hidden_nf = 32
 n_layers = 4
 
 ensemble_size = 3
-uncertainty_method = "MVE"
-swag_sample_size = 100
+uncertainty_method = "SWAG"
+swag_sample_size = 3
 
-name = "mve_20241205_162153"
-cal = True
+name = "swag5_20241202_111154"
+cal = False
 
 model_dir = f"gnn/models/{name}"
-out_path = f"logs/{name}_reeval_thesis_cal_{cal}"
+out_path = f"logs/{name}_reeval2_thesis_cal_{cal}"
 
 if not os.path.exists(out_path):
     os.makedirs(out_path)
