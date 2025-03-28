@@ -21,8 +21,9 @@ ensemble_size = 3
 uncertainty_method = "MVE"
 swag_sample_size = 100
 
-name = "mve_20241205_162153"
+name = "mve_20241205_093736"
 cal = True
+mve_force_uncertainty = True
 
 model_dir = f"gnn/models/{name}"
 out_path = f"logs/{name}_reeval_thesis_cal_{cal}"
@@ -72,7 +73,7 @@ testloader = torch.utils.data.DataLoader(
 
 timestamp = time.strftime("%Y%m%d_%H%M%S")
 
-for i, model_name in enumerate(os.listdir(model_dir)):
+for i, model_name in enumerate(sorted(os.listdir(model_dir))):
 
     model_path = f"{model_dir}/{model_name}"
 
@@ -103,15 +104,15 @@ for i, model_name in enumerate(os.listdir(model_dir)):
             csv_path=f"{out_path}/eval.csv",
             test_loader_out=testloader_out,
             best_model_available=False,
-            use_energy_uncertainty=True,
-            use_force_uncertainty=False,
+            use_energy_uncertainty=not mve_force_uncertainty,
+            use_force_uncertainty=mve_force_uncertainty,
         )
         mve.valid_on_cv(
             testloader,
             device=device,
             dtype=torch.float32,
             save_path=f"{out_path}/heatmap_{i}",
-            use_force_uncertainty=False,
+            use_force_uncertainty=mve_force_uncertainty,
         )
 
     if uncertainty_method == "SWAG":
