@@ -2,6 +2,7 @@ from uncertainty.swag import SWAG
 from uncertainty.ensemble import ModelEnsemble
 from uncertainty.mve import MVE
 from uncertainty.evidential import EvidentialRegression
+from uncertainty.svkdl import SVKDL
 from gnn.egnn import EGNN
 from datasets.md17_dataset import MD17Dataset
 
@@ -97,7 +98,7 @@ n_layers = 4
 
 
 batch_size = 32
-lr = 1e-3
+lr = 1e-2
 patience = 1000
 factor = 0.6
 device = "cuda" if torch.cuda.is_available() else "cpu"
@@ -218,7 +219,7 @@ if uncertainty_method == "SWAG":
 
         if save_model:
             model_path = f"{base_model_path}/model_{i}.pt"
-        swag = SWAG(
+        svkdl = SWAG(
             EGNN,
             in_node_nf=in_node_nf,
             in_edge_nf=in_edge_nf,
@@ -227,8 +228,8 @@ if uncertainty_method == "SWAG":
             device=device,
             sample_size=swag_sample_size,
         )
-        swag.set_wandb_name(f"{timestamp}_{i}")
-        swag.fit(
+        svkdl.set_wandb_name(f"{timestamp}_{i}")
+        svkdl.fit(
             epochs=epochs,
             swag_start_epoch=swag_start_epoch,
             swag_freq=1,
@@ -243,13 +244,13 @@ if uncertainty_method == "SWAG":
             energy_weight=energy_weight,
             factor=factor,
         )
-        swag.calibrate_uncertainty(
+        svkdl.calibrate_uncertainty(
             validloader,
             device,
             dtype=torch.float32,
             path=f"{log_path}/calibration{i}.pdf",
         )
-        swag.evaluate_all(
+        svkdl.evaluate_all(
             testloader_in,
             device=device,
             dtype=torch.float32,
@@ -259,7 +260,7 @@ if uncertainty_method == "SWAG":
             use_energy_uncertainty=True,
             use_force_uncertainty=True,
         )
-        swag.valid_on_cv(
+        svkdl.valid_on_cv(
             testloader_uniform,
             device=device,
             dtype=torch.float32,
@@ -379,4 +380,62 @@ if uncertainty_method == "EVI":
             dtype=torch.float32,
             save_path=f"{log_path}/heatmap_{i}",
             use_force_uncertainty=False,
+        )
+
+if uncertainty_method == "SVKDL":
+    name = f"svkdl{swag_sample_size}"
+    log_path = setup_log_folder(name, timestamp)
+    if save_model:
+        base_model_path = setup_model_folder(name, timestamp)
+    path = f"logs/{name}"
+    for i in range(num_samples):
+
+        if save_model:
+            model_path = f"{base_model_path}/model_{i}.pt"
+        svkdl = SVKDL(
+            EGNN,
+            hidden_size=4,
+            num_inducing_points=32,
+            in_node_nf=in_node_nf,
+            in_edge_nf=in_edge_nf,
+            hidden_nf=hidden_nf,
+            n_layers=n_layers,
+            device=device,
+        )
+        svkdl.set_wandb_name(f"{timestamp}_{i}")
+        svkdl.fit(
+            epochs=epochs,
+            train_loader=trainloader,
+            valid_loader=validloader,
+            device=device,
+            dtype=torch.float32,
+            use_wandb=use_wandb,
+            patience=patience,
+            model_path=model_path,
+            force_weight=force_weight,
+            energy_weight=energy_weight,
+            factor=factor,
+        )
+        svkdl.calibrate_uncertainty(
+            validloader,
+            device,
+            dtype=torch.float32,
+            path=f"{log_path}/calibration{i}.pdf",
+        )
+        svkdl.evaluate_all(
+            testloader_in,
+            device=device,
+            dtype=torch.float32,
+            plot_name=f"{log_path}/plot_{i}",
+            csv_path=f"{log_path}/eval.csv",
+            test_loader_out=testloader_out,
+            use_energy_uncertainty=True,
+            use_force_uncertainty=True,
+        )
+        svkdl.valid_on_cv(
+            testloader_uniform,
+            device=device,
+            dtype=torch.float32,
+            save_path=f"{log_path}/heatmap_{i}",
+            use_force_uncertainty=True,
         )
