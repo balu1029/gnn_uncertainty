@@ -8,6 +8,8 @@ import os
 
 from matplotlib.animation import FuncAnimation, PillowWriter
 
+plt.rcParams.update({"font.size": 22})
+
 
 def calculate_dihedrals_batch(molecules, indices) -> np.array:
     """
@@ -341,5 +343,53 @@ def get_al_animation(base_path):
     animate_active_learning(paths[0], paths[1:], fps=1)
 
 
+def _plot_scatter(molecules, save_path):
+    phi = calculate_dihedrals_batch(molecules, [6, 8, 14, 16])
+    psi = calculate_dihedrals_batch(molecules, [4, 6, 8, 14])
+
+    plt.figure(figsize=(8, 8))
+    plt.scatter(psi, phi, s=2)
+    plt.ylim(-180, 180)
+    plt.xlim(-180, 180)
+    plt.xlabel("φ")
+    plt.ylabel("Ψ")
+    plt.savefig(save_path)
+    plt.close()
+
+
+def get_space_coverage(base_path):
+    added_files = [f for f in os.listdir(base_path) if f.startswith("train")]
+    num_files = len(added_files) - 1
+    # paths.extend([base_path + f"train{i}.xyz" for i in range(num_files)])
+    all_paths = os.listdir(base_path)
+    paths = sorted(
+        all_paths,
+        key=lambda x: (
+            int(x.split("train")[-1].split(".xyz")[0])
+            if "train" in x and x.split("train")[-1].split(".xyz")[0].isdigit()
+            else -1
+        ),
+    )
+
+    save_path = f"{"/".join(base_path.split("/")[:-3])}/plots/"
+    paths = [os.path.join(base_path, p) for p in paths]
+    molecules, _ = read_xyz(paths[0])
+    print(np.array(molecules).shape)
+    _plot_scatter(molecules, f"{save_path}/coverage_init.svg")
+    for i, path in enumerate(paths[1:]):
+        new_molecules, _ = read_xyz(path)
+        molecules = np.concatenate([molecules, new_molecules], 0)
+        _plot_scatter(molecules, f"{save_path}/coverage{i}.svg")
+
+
 if __name__ == "__main__":
-    get_al_animation("al/run69/data/train/")
+    # get_al_animation("al/run69/data/train/")
+    get_space_coverage("al/run80/data/train/")
+    get_space_coverage("al/run81/data/train/")
+    get_space_coverage("al/run82/data/train/")
+    get_space_coverage("al/run83/data/train/")
+    get_space_coverage("al/run84/data/train/")
+    get_space_coverage("al/run85/data/train/")
+    get_space_coverage("al/run86/data/train/")
+    get_space_coverage("al/run87/data/train/")
+    get_space_coverage("al/run88/data/train/")

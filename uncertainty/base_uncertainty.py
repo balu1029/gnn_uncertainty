@@ -611,7 +611,23 @@ class BaseUncertainty(nn.Module):
                     text="R2 Score: {:.3f}".format(energy_r2),
                     save_path=plot_path + "_energy.svg",
                     show_plot=False,
+                    maximum=80,
+                    minimum=-80,
                 )
+                # self._scatter_plot(
+                #     ground_truths_forces.flatten(),
+                #     predictions_forces.flatten(),
+                #     plot_title,
+                #     "Ground Truth Forces [kJ/(mol*A)]",
+                #     "Predicted Forces [kJ/(mol*A)]",
+                #     text="R2 Score: {:.3f}".format(forces_r2),
+                #     save_path=plot_path + "_forces.svg",
+                #     show_plot=False,
+                #     set_limits=True,
+                #     maximum=250,
+                #     minimum=-250,
+                # )
+
             uncertainty_type = "_force" if use_force_uncertainty else "_energy"
             if plot:
                 self._scatter_plot(
@@ -663,17 +679,21 @@ class BaseUncertainty(nn.Module):
         save_path=None,
         show_plot=False,
         set_limits=True,
+        maximum=80,
+        minimum=-80,
     ):
         # plt.scatter(x, y)
         plt.figure(figsize=(10, 8))
         sns.kdeplot(x=x, y=y, cmap="Blues", fill=True)  # Density plot
         plt.xlabel(xlabel)
         plt.ylabel(ylabel)
-
+        print(save_path)
         if set_limits:
-            x_min = y_min = -80
-            x_max = y_max = 80
+            print("setting limit to", minimum)
+            x_min = y_min = minimum
+            x_max = y_max = maximum
         else:
+            print("automatically setting limits")
             x_min = min(min(x), min(y))
             x_max = max(max(x), max(y))
             y_min = x_min

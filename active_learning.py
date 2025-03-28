@@ -7,6 +7,9 @@ import wandb
 import csv
 from PIL import Image, ImageDraw, ImageFont
 import cairosvg
+import pandas as pd
+import matplotlib.pyplot as plt
+import time
 
 from ase.calculators.calculator import Calculator, all_properties
 from ase.units import eV, fs, Angstrom, nm, kJ, mol
@@ -446,42 +449,42 @@ class ActiveLearning:
             dtype=self.dtype,
             path=f"al/run{run_idx}/plots/calibration_init.svg",
         )
-        self.model.evaluate_all(
-            validloader,
-            device=self.device,
-            dtype=torch.float32,
-            plot_name=f"al/run{run_idx}/plots/plot_init",
-            csv_path=f"al/run{run_idx}/eval/eval.csv",
-            test_loader_out=testloader,
-            best_model_available=False,
-            use_energy_uncertainty=True,
-            use_force_uncertainty=force_uncertainty,
-        )
-        self.model.valid_epoch(
-            testloader,
-            criterion,
-            self.device,
-            self.dtype,
-            force_weight=force_weight,
-            energy_weight=energy_weight,
-            test=True,
-        )
-        self.model.valid_on_cv(
-            validationloader=testloader,
-            save_path=f"al/run{run_idx}/plots/heatmap_init",
-            device=device,
-            dtype=self.dtype,
-            use_force_uncertainty=force_uncertainty,
-        )
-        self.model.epoch_summary(
-            epoch=f"Initital validation",
-            use_wandb=use_wandb,
-            additional_logs={
-                "dataset_size": len(trainset.coordinates),
-                "max_uncertainty": self.calc.max_uncertainty,
-            },
-        )
-        self.model.drop_metrics()
+        # self.model.evaluate_all(
+        #     validloader,
+        #     device=self.device,
+        #     dtype=torch.float32,
+        #     plot_name=f"al/run{run_idx}/plots/plot_init",
+        #     csv_path=f"al/run{run_idx}/eval/eval.csv",
+        #     test_loader_out=testloader,
+        #     best_model_available=False,
+        #     use_energy_uncertainty=True,
+        #     use_force_uncertainty=force_uncertainty,
+        # )
+        # self.model.valid_epoch(
+        #     testloader,
+        #     criterion,
+        #     self.device,
+        #     self.dtype,
+        #     force_weight=force_weight,
+        #     energy_weight=energy_weight,
+        #     test=True,
+        # )
+        # self.model.valid_on_cv(
+        #     validationloader=testloader,
+        #     save_path=f"al/run{run_idx}/plots/heatmap_init",
+        #     device=device,
+        #     dtype=self.dtype,
+        #     use_force_uncertainty=force_uncertainty,
+        # )
+        # self.model.epoch_summary(
+        #     epoch=f"Initital validation",
+        #     use_wandb=use_wandb,
+        #     additional_logs={
+        #         "dataset_size": len(trainset.coordinates),
+        #         "max_uncertainty": self.calc.max_uncertainty,
+        #     },
+        # )
+        # self.model.drop_metrics()
 
         if use_wandb:
             wandb.finish()
@@ -491,6 +494,7 @@ class ActiveLearning:
             steps = {}
             for k in range(steps_per_iter):
                 self.sample_rand_pos(train_out_path)
+                start = time.time()
                 for j in range(max_iterations):
                     if (
                         len(self.calc.get_uncertainty_samples())
@@ -515,6 +519,9 @@ class ActiveLearning:
                         print(
                             f"Found uncertainty sample {k} after {j} steps.", flush=True
                         )
+                        print(
+                            f"Time for sample {k}: {time.time() - start} with a trajectory length of {j}"
+                        )
                         steps[k] = j
                         break
                     if not self.check_atomic_distances():
@@ -528,6 +535,9 @@ class ActiveLearning:
                         print(
                             f"Did not find any uncertainty samples for sample {k}.",
                             flush=True,
+                        )
+                        print(
+                            f"Time for sample {k}: {time.time() - start} with a trajectory length of {j}"
                         )
                         steps[k] = max_iterations
 
@@ -881,25 +891,427 @@ class ActiveLearning:
         for png_file in png_files:
             os.remove(png_file)
 
+    def _plot_rel_improvements(self, improvements, save_path=None):
+        iterations = range(len(improvements["new_samples"]))
+
+        fig, ax1 = plt.subplots(figsize=(10, 8))
+
+        color = "tab:blue"
+        ax1.set_xlabel("Iteration")
+        ax1.set_ylabel("Relative Error Improvement", color=color)
+        (line1,) = ax1.plot(
+            iterations,
+            improvements["rel_energy_error_improvement"],
+            color=color,
+            label="Rel Energy Error Improvement",
+        )
+        (line2,) = ax1.plot(
+            iterations,
+            improvements["rel_force_error_improvement"],
+            color="tab:green",
+            label="Rel Force Error Improvement",
+        )
+        ax1.tick_params(axis="y", labelcolor=color)
+
+        ax3 = ax1.twinx()
+        color = "tab:red"
+        ax3.spines["right"].set_position(("outward", 60))
+        ax3.set_ylabel("New Samples", color=color)
+        (line3,) = ax3.plot(
+            iterations,
+            improvements["new_samples"],
+            color=color,
+            label="New Samples",
+        )
+        ax3.tick_params(axis="y", labelcolor=color)
+
+        lines = [line1, line2, line3]
+        labels = [line.get_label() for line in lines]
+        ax1.legend(lines, labels)
+
+        fig.tight_layout()
+        plt.savefig(f"{save_path}result_relative.pdf")
+
+    def _plot_sample_count(self, improvements, save_path=None):
+        iterations = range(len(improvements["new_samples"]))
+
+        fig, ax1 = plt.subplots(figsize=(10, 8))
+
+        color = "tab:red"
+        ax1.set_xlabel("Iteration")
+        ax1.set_ylabel("New Samples")
+        ax1.plot(
+            iterations, improvements["new_samples"], color=color, label="New Samples"
+        )
+
+        fig.tight_layout()
+        plt.ylim(0, 105)
+        plt.savefig(f"{save_path}result_samples.svg")
+
+    def _plot_total_rel_improvement(self, improvements, save_path=None):
+        iterations = range(len(improvements["new_samples"]))
+
+        fig, ax1 = plt.subplots(figsize=(10, 8))
+        energy_errors = improvements["energy_error"]
+        force_errors = improvements["force_error"]
+        total_energy_improvement = [
+            (energy_errors[0] - energy_errors[i + 1]) / energy_errors[0]
+            for i in iterations
+        ]
+        total_force_improvement = [
+            (force_errors[0] - force_errors[i + 1]) / force_errors[0]
+            for i in iterations
+        ]
+
+        color = "tab:blue"
+        ax1.set_xlabel("Iteration")
+        ax1.set_ylabel("Total Relative Improvement")
+        ax1.plot(
+            iterations,
+            total_energy_improvement,
+            color=color,
+            label="Energy Error",
+        )
+        ax1.plot(
+            iterations,
+            total_force_improvement,
+            color="tab:green",
+            label="Force Error",
+        )
+        ax1.axhline(y=0, color="gray", linestyle="--")
+
+        fig.tight_layout()
+        plt.ylim(-0.15, 0.3)
+        plt.legend()
+        plt.savefig(f"{save_path}result_total_relative.svg")
+
+    def _plot_total_improvements(self, improvements, save_path=None):
+        iterations = range(len(improvements["new_samples"]))
+
+        fig, ax1 = plt.subplots(figsize=(10, 8))
+        total_energy_improvement = [
+            sum(improvements["abs_energy_error_improvement"][: i + 1])
+            for i in iterations
+        ]
+        total_force_improvement = [
+            sum(improvements["abs_force_error_improvement"][: i + 1])
+            for i in iterations
+        ]
+
+        color = "tab:blue"
+        ax1.set_xlabel("Iteration")
+        ax1.set_ylabel("Total absolute improvement")
+        ax1.plot(
+            iterations,
+            total_energy_improvement,
+            color=color,
+            label="Energy Error",
+        )
+        ax1.plot(
+            iterations,
+            total_force_improvement,
+            color="tab:green",
+            label="Force Error",
+        )
+
+        fig.tight_layout()
+        plt.legend()
+        plt.savefig(f"{save_path}result_total.svg")
+
+    def _plot_correlation_to_improvements(
+        self, improvements, save_path=None, energy=False
+    ):
+        rel_energy_improvement_per_sample = [
+            impr / samples if samples > 0 else 0
+            for impr, samples in zip(
+                improvements["rel_energy_error_improvement"],
+                improvements["new_samples"],
+            )
+        ]
+        rel_force_improvement_per_sample = [
+            impr / samples if samples > 0 else 0
+            for impr, samples in zip(
+                improvements["rel_force_error_improvement"], improvements["new_samples"]
+            )
+        ]
+        correlation_out = improvements["correlation_out"][:-1]
+
+        fig, ax = plt.subplots(figsize=(10, 8))
+        if energy:
+            ax.scatter(
+                rel_energy_improvement_per_sample,
+                correlation_out,
+                color="blue",
+                label="Energy",
+            )
+        else:
+            ax.scatter(
+                rel_force_improvement_per_sample,
+                correlation_out,
+                color="blue",
+                label="Force",
+            )
+
+        ax.set_xlabel("Relative Improvement per Sample")
+        ax.set_ylabel("Correlation Out")
+        ax.legend()
+
+        fig.tight_layout()
+        suf = "energy" if energy else "force"
+        plt.savefig(f"{save_path}correlation_improvement_{suf}.svg")
+
+    def _plot_improvement_per_sample(self, improvements, save_path=None):
+        iterations = range(len(improvements["new_samples"]))
+
+        fig, ax1 = plt.subplots(figsize=(10, 8))
+
+        rel_energy_improvement_per_sample = [
+            impr / samples if samples > 0 else 0
+            for impr, samples in zip(
+                improvements["rel_energy_error_improvement"],
+                improvements["new_samples"],
+            )
+        ]
+        rel_force_improvement_per_sample = [
+            impr / samples if samples > 0 else 0
+            for impr, samples in zip(
+                improvements["rel_force_error_improvement"], improvements["new_samples"]
+            )
+        ]
+
+        color = "tab:blue"
+        ax1.set_xlabel("Iteration")
+        ax1.set_ylabel("Rel. Improvement per Sample")
+        ax1.plot(
+            iterations,
+            rel_energy_improvement_per_sample,
+            color=color,
+            label="Energy",
+        )
+        ax1.plot(
+            iterations,
+            rel_force_improvement_per_sample,
+            color="tab:green",
+            label="Force",
+        )
+
+        fig.tight_layout()
+        plt.legend()
+        plt.savefig(f"{save_path}imp_per_sample.svg")
+
+    def evaluate_al(self, model, run_idx, force_uncertainty):
+        model_paths = sorted(os.listdir(f"al/run{run_idx}/models/"))
+        eval_data = pd.read_csv(f"al/run{run_idx}/eval/eval.csv")
+        run_infos = pd.read_csv(f"al/run{run_idx}/eval/md_steps.csv")
+        improvements = {
+            "rel_energy_error_improvement": [],
+            "abs_energy_error_improvement": [],
+            "rel_force_error_improvement": [],
+            "abs_force_error_improvement": [],
+            "correlation_in": [],
+            "correlation_out": [],
+            "new_samples": [],
+            "energy_error": [],
+            "force_error": [],
+            "md_steps": [],
+        }
+        improvements["energy_error"] = energy_errors = eval_data[
+            "Energy Errors Out Distribution"
+        ].tolist()
+        improvements["force_error"] = force_errors = eval_data[
+            "Force Errors Out Distribution"
+        ].tolist()
+        correlation = "Force" if force_uncertainty else "Energy"
+        improvements["correlation_out"] = eval_data[
+            f"{correlation} Correlation Out Distribution Forces"
+        ].tolist()
+        improvements["correlation_in"] = eval_data[
+            f"{correlation} Correlation Out Distribution Forces"
+        ].tolist()
+        for i, model_path in enumerate(model_paths):
+            md_steps = run_infos[run_infos["iteration"] == i]
+            num_not_found = len(md_steps[md_steps["MD steps"] == 4000])
+            num_data = len(md_steps) - num_not_found
+            improvements["new_samples"].append(num_data)
+            improvements["md_steps"].append(np.sum(md_steps["MD steps"].tolist()))
+            improvements["abs_energy_error_improvement"].append(
+                energy_errors[i] - energy_errors[i + 1]
+            )
+            improvements["rel_energy_error_improvement"].append(
+                (energy_errors[i] - energy_errors[i + 1]) / energy_errors[i]
+            )
+            improvements["abs_force_error_improvement"].append(
+                force_errors[i] - force_errors[i + 1]
+            )
+            improvements["rel_force_error_improvement"].append(
+                (force_errors[i] - force_errors[i + 1]) / force_errors[i]
+            )
+        rel_energy_improvement_per_sample = [
+            impr / samples if samples > 0 else 0
+            for impr, samples in zip(
+                improvements["rel_energy_error_improvement"],
+                improvements["new_samples"],
+            )
+        ]
+        rel_force_improvement_per_sample = [
+            impr / samples if samples > 0 else 0
+            for impr, samples in zip(
+                improvements["rel_force_error_improvement"], improvements["new_samples"]
+            )
+        ]
+        rel_improvement_force = (force_errors[0] - force_errors[-1]) / force_errors[0]
+        rel_improvement_energy = (energy_errors[0] - energy_errors[-1]) / energy_errors[
+            0
+        ]
+        force_per_sample = rel_improvement_force / np.sum(improvements["new_samples"])
+        energy_per_sample = rel_improvement_energy / np.sum(improvements["new_samples"])
+        print(f"run {run_idx}")
+        print("Ground_truth samples: ", np.sum(improvements["new_samples"]))
+        print("MD steps", np.sum(improvements["md_steps"]))
+        print("rel improvement force", rel_improvement_force)
+        print("rel improvement energy", rel_improvement_energy)
+        print(
+            "abs improvement force",
+            np.sum(improvements["abs_energy_error_improvement"]),
+        )
+        print(
+            "abs improvement energy",
+            np.sum(improvements["abs_force_error_improvement"]),
+        )
+
+        # self._plot_rel_improvements(improvements, f"al/run{run_idx}/eval/")
+        # self._plot_total_improvements(improvements, f"al/run{run_idx}/eval/")
+        # self._plot_total_rel_improvement(improvements, f"al/run{run_idx}/eval/")
+        # self._plot_sample_count(improvements, f"al/run{run_idx}/eval/")
+        # self._plot_correlation_to_improvements(
+        #     improvements, f"al/run{run_idx}/eval/", energy=False
+        # )
+        # self._plot_correlation_to_improvements(
+        #     improvements, f"al/run{run_idx}/eval/", energy=True
+        # )
+        # self._plot_improvement_per_sample(improvements, f"al/run{run_idx}/eval/")
+
+    def _get_improvements(self, run_indices, force_uncertainty_list):
+        improvements = {}
+        for i, run_idx in enumerate(run_indices):
+            model_paths = sorted(os.listdir(f"al/run{run_idx}/models/"))
+            eval_data = pd.read_csv(f"al/run{run_idx}/eval/eval.csv")
+            run_infos = pd.read_csv(f"al/run{run_idx}/eval/md_steps.csv")
+            improvements[run_idx] = {
+                "rel_energy_error_improvement": [],
+                "abs_energy_error_improvement": [],
+                "rel_force_error_improvement": [],
+                "abs_force_error_improvement": [],
+                "correlation_in": [],
+                "correlation_out_energy": [],
+                "correlation_out_force": [],
+                "new_samples": [],
+                "energy_error": [],
+                "force_error": [],
+                "md_steps": [],
+            }
+            correlations = "Force" if force_uncertainty_list[i] else "Energy"
+            improvements[run_idx]["energy_error"] = energy_errors = eval_data[
+                "Energy Errors Out Distribution"
+            ].tolist()
+            improvements[run_idx]["force_error"] = force_errors = eval_data[
+                "Force Errors Out Distribution"
+            ].tolist()
+            improvements[run_idx]["correlation_out_force"] = eval_data[
+                f"{correlations} Correlation Out Distribution Forces"
+            ].tolist()
+            improvements[run_idx]["correlation_out_energy"] = eval_data[
+                f"{correlations} Correlation Out Distribution Energy"
+            ].tolist()
+            improvements[run_idx]["correlation_in"] = eval_data[
+                f"{correlations} Correlation Out Distribution Forces"
+            ].tolist()
+            for i, model_path in enumerate(model_paths):
+                md_steps = run_infos[run_infos["iteration"] == i]
+                num_not_found = len(md_steps[md_steps["MD steps"] == 4000])
+                num_data = len(md_steps) - num_not_found
+                improvements[run_idx]["new_samples"].append(num_data)
+                improvements[run_idx]["md_steps"].append(
+                    np.sum(md_steps["MD steps"].tolist())
+                )
+                improvements[run_idx]["rel_energy_error_improvement"].append(
+                    (energy_errors[i] - energy_errors[i + 1])
+                    / energy_errors[i]
+                    / num_data
+                    if num_data > 0
+                    else 0
+                )
+                improvements[run_idx]["rel_force_error_improvement"].append(
+                    (force_errors[i] - force_errors[i + 1]) / force_errors[i] / num_data
+                    if num_data > 0
+                    else 0
+                )
+        return improvements
+
+    def compare_al(self, run_indices, force_uncertainty, labels=None):
+        plt.rc("text", usetex=True)
+        improvements = self._get_improvements(
+            run_indices, force_uncertainty_list=force_uncertainty
+        )
+        correlation_energy = [
+            improvements[i]["correlation_out_energy"] for i in run_indices
+        ]
+        correlation_force = [
+            improvements[i]["correlation_out_force"] for i in run_indices
+        ]
+        rel_energy_improvements = [
+            improvements[i]["rel_energy_error_improvement"] for i in run_indices
+        ]
+        rel_force_improvements = [
+            improvements[i]["rel_force_error_improvement"] for i in run_indices
+        ]
+
+        fig, ax = plt.subplots(figsize=(10, 8))
+        for i, corr in enumerate(correlation_energy):
+            print(len(rel_energy_improvements[i]), len(corr[:-1]))
+            label = f"Run {run_indices[i]}" if labels is None else labels[i]
+            ax.scatter(rel_energy_improvements[i], corr[:-1], label=label)
+        ax.set_xlabel("Relative Energy Error Improvement per Sample")
+        ax.set_ylabel("$r_{out}$($\Delta$E, $u$)")
+        ax.legend()
+        fig.tight_layout()
+        plt.xlim(-0.005, 0.004)
+        suf = "energy" if force_uncertainty else "force"
+        plt.savefig(f"al/compare_correlation_improvement_energy.svg")
+        plt.close()
+
+        fig, ax = plt.subplots(figsize=(10, 8))
+        for i, corr in enumerate(correlation_force):
+            label = f"Run {run_indices[i]}" if labels is None else labels[i]
+            ax.scatter(rel_force_improvements[i], corr[:-1], label=label)
+        ax.set_xlabel("Relative Force Error Improvement per Sample")
+        ax.set_ylabel("$r_{out}$($\Delta$F, $u$)")
+        ax.legend()
+        fig.tight_layout()
+        plt.xlim(-0.002, 0.004)
+        suf = "energy" if force_uncertainty else "force"
+        plt.savefig(f"al/compare_correlation_improvement_force.svg")
+        plt.close()
+
 
 if __name__ == "__main__":
     # model_path = "gnn/models/ensemble3_20241115_105146/model_0.pt"
-    model_path = "gnn/models/mve_20241205_093736/model_1.pt"
-    # model_path = "gnn/models/evi_20241129_140558/model_0.pt"
-    # model_path = "gnn/models/swag5_20241202_111154/model_0.pt"
+    # model_path = "gnn/models/mve_20241205_093736/model_1.pt"
+    model_path = "gnn/models/evi_20241208_093008/model_1.pt"
+    # model_path = "gnn/models/swag5_20241202_111154/model_1.pt"
 
     num_ensembles = 3
     in_nf = 12
     hidden_nf = 32
     n_layers = 4
-    model = MVE(
-        EGNN,
-        in_node_nf=in_nf,
-        in_edge_nf=0,
-        hidden_nf=hidden_nf,
-        n_layers=n_layers,
-        multi_dec=True,
-    )
+    # model = MVE(
+    #     EGNN,
+    #     in_node_nf=in_nf,
+    #     in_edge_nf=0,
+    #     hidden_nf=hidden_nf,
+    #     n_layers=n_layers,
+    #     multi_dec=True,
+    # )
     # model = ModelEnsemble(
     #     EGNN,
     #     num_models=num_ensembles,
@@ -924,18 +1336,18 @@ if __name__ == "__main__":
     #     n_layers=n_layers,
     #     multi_dec=True,
     # )
-    # model = EvidentialRegression(
-    #     EGNN,
-    #     in_node_nf=in_nf,
-    #     in_edge_nf=0,
-    #     hidden_nf=hidden_nf,
-    #     n_layers=n_layers,
-    # )
+    model = EvidentialRegression(
+        EGNN,
+        in_node_nf=in_nf,
+        in_edge_nf=0,
+        hidden_nf=hidden_nf,
+        n_layers=n_layers,
+    )
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model.to(device)
     model.load_state_dict(torch.load(model_path, map_location=device))
     al = ActiveLearning(
-        max_uncertainty=4,
+        max_uncertainty=20,
         num_ensembles=num_ensembles,
         in_nf=in_nf,
         hidden_nf=hidden_nf,
@@ -954,15 +1366,30 @@ if __name__ == "__main__":
     ).max()
     print(max_idx)
 
-    al.improve_model(
-        30,
-        100,
-        run_idx=max_idx + 1,
-        use_wandb=True,
-        model_path=model_path,
-        epochs_per_iter=20,
-        calibrate=True,
-        force_uncertainty=True,
+    # al.improve_model(
+    #     30,
+    #     100,
+    #     run_idx=max_idx + 100,
+    #     use_wandb=False,
+    #     model_path=model_path,
+    #     epochs_per_iter=20,
+    #     calibrate=True,
+    #     force_uncertainty=False,
+    # )
+    al.compare_al(
+        [80, 83, 85, 89],
+        force_uncertainty=[True, True, False, True],
+        labels=["Ensemble", "MVE", "DER", "SWAG"],
     )
+    # al.evaluate_al(model, 80, True)
+    # al.evaluate_al(model, 81, True)
+    # al.evaluate_al(model, 82, True)
+    # al.evaluate_al(model, 83, True)
+    # al.evaluate_al(model, 84, False)
+    # al.evaluate_al(model, 85, False)
+    # al.evaluate_al(model, 86, True)
+    # al.evaluate_al(model, 87, True)
+    # al.evaluate_al(model, 88, True)
+
     # al.eval_on_cv(59, model, al.device, al.dtype, use_force_uncertainty=False)
     # al.create_gif_from_svgs(54, duration=1000, loop=0, img_type="energy_error")
