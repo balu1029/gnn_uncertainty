@@ -167,4 +167,8 @@ cython_debug/
 *.pt
 *.npy
 
+wandb/*
+logs/*
+al/*
+
 int_script.job
