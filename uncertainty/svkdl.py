@@ -56,9 +56,10 @@ class SVKDL(BaseUncertainty):
 
         self.inducing_points = torch.tensor(
             np.random.randn(num_inducing_points, hidden_size), dtype=torch.float32
-        )
+        ).requires_grad_(True)
 
         self.model = SVGPModel(self.inducing_points, self.base_model)
+        self.likelihood = gpytorch.likelihoods.GaussianLikelihood()
 
         self.train_losses_energy = []
         self.train_losses_force = []
@@ -98,7 +99,6 @@ class SVKDL(BaseUncertainty):
         test_loader=None,
     ):
 
-        self.likelihood = gpytorch.likelihoods.GaussianLikelihood()
         optimizer = torch.optim.Adam(
             [
                 {"params": self.model.feature_extractor.parameters(), "lr": lr},
@@ -212,6 +212,9 @@ class SVKDL(BaseUncertainty):
     ):
         start = time.time()
         self.train()
+        self.model.feature_extractor.train()
+        self.model.gp_layer.train()
+        self.likelihood.train()
         force_criterion = nn.L1Loss()
         for i, data in enumerate(train_loader):
 
@@ -236,14 +239,14 @@ class SVKDL(BaseUncertainty):
                 n_nodes=n_nodes,
             )
 
-            loss_energy = criterion(output, label_energy.squeeze(-1))
+            loss_energy = -criterion(output, label_energy.unsqueeze(0))
             l1_energy = force_criterion(energy, label_energy)
             loss_force = force_criterion(force, label_forces)
             total_loss = force_weight * loss_force + energy_weight * loss_energy
 
             optimizer.zero_grad()
-            total_loss.backward()
-            torch.nn.utils.clip_grad_norm_(self.parameters(), max_norm=100.0)
+            total_loss.backward(retain_graph=True)
+            # torch.nn.utils.clip_grad_norm_(self.parameters(), max_norm=100.0)
             optimizer.step()
 
             self.train_losses_energy.append(
@@ -256,7 +259,7 @@ class SVKDL(BaseUncertainty):
 
             if (i + 1) % log_interval == 0:
                 print(
-                    f"Epoch {epoch}, Batch {i+1}/{len(train_loader)}, Loss: {total_loss.item()}, Variance: {torch.mean(variance)}",
+                    f"Epoch {epoch}, Batch {i+1}/{len(train_loader)}, Loss: {total_loss.mean().item()}, Variance: {torch.mean(variance)}",
                     flush=True,
                 )
 
@@ -274,6 +277,9 @@ class SVKDL(BaseUncertainty):
     ):
         start = time.time()
         self.eval()
+        self.model.feature_extractor.eval()
+        self.model.gp_layer.eval()
+        self.likelihood.eval()
         force_criterion = nn.L1Loss()
         for i, data in enumerate(valid_loader):
             (
@@ -297,13 +303,14 @@ class SVKDL(BaseUncertainty):
                 n_nodes=n_nodes,
             )
 
-            loss_energy = criterion(output, label_energy)
+            loss_energy = -criterion(output, label_energy)
+            l1_energy = force_criterion(energy, label_energy)
             loss_force = force_criterion(force, label_forces)
             total_loss = force_weight * loss_force + energy_weight * loss_energy
 
             if not test:
                 self.valid_losses_energy.append(
-                    loss_energy.item() * valid_loader.dataset.std_energy
+                    l1_energy.item() * valid_loader.dataset.std_energy
                 )
                 self.valid_losses_force.append(
                     loss_force.item() * valid_loader.dataset.std_energy
@@ -324,7 +331,7 @@ class SVKDL(BaseUncertainty):
 
     def predict(self, x, *args, use_force_uncertainty=False, **kwargs):
         self.eval()
-        energy, force, variance = self.forward(x=x, *args, **kwargs)
+        energy, force, variance, _ = self.forward(x=x, *args, **kwargs)
         uncertainty = variance.sqrt()
         return (
             energy,
@@ -334,7 +341,7 @@ class SVKDL(BaseUncertainty):
 
     def forward(self, x, *args, **kwargs):
         output = self.likelihood(self.model.forward(x=x, *args, **kwargs))
-        energy = output.mean
+        energy = output.rsample()
         variance = output.variance
 
         grad_output = torch.ones_like(energy)

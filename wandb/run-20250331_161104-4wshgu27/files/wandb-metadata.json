@@ -1,0 +1,58 @@
+{
+  "os":  "macOS-15.3.2-arm64-arm-64bit",
+  "python":  "CPython 3.12.2",
+  "startedAt":  "2025-03-31T14:11:04.793813Z",
+  "args":  [
+    "--uncertainty_method",
+    "SVKDL",
+    "--save_model",
+    "True",
+    "--use_wandb",
+    "True",
+    "--force_weight",
+    "1",
+    "--energy_weight",
+    "0",
+    "--epochs",
+    "4000"
+  ],
+  "program":  "/Users/lukas/Documents/KIT/Masterarbeit/git/gnn_uncertainty/evaluate_models.py",
+  "codePath":  "evaluate_models.py",
+  "git":  {
+    "remote":  "git@github.com:balu1029/gnn_uncertainty.git",
+    "commit":  "f7d9dd3c076d97543dc9b22079d112a46f3f5766"
+  },
+  "email":  "l.baer.99@web.de",
+  "root":  "/Users/lukas/Documents/KIT/Masterarbeit/git/gnn_uncertainty",
+  "host":  "wlan-cl-kit-cs-172-17-76-15.scc.kit.edu",
+  "executable":  "/Users/lukas/opt/miniconda3/envs/gnn_uncertainty/bin/python",
+  "codePathLocal":  "evaluate_models.py",
+  "cpu_count":  8,
+  "cpu_count_logical":  8,
+  "disk":  {
+    "/":  {
+      "total":  "494384795648",
+      "used":  "452696248320"
+    },
+    "/System/Volumes/Data":  {
+      "total":  "494384795648",
+      "used":  "452696248320"
+    }
+  },
+  "memory":  {
+    "total":  "17179869184"
+  },
+  "cpu":  {
+    "count":  8,
+    "countLogical":  8
+  },
+  "apple":  {
+    "name":  "Apple M1 Pro",
+    "ecpuCores":  2,
+    "pcpuCores":  6,
+    "gpuCores":  14,
+    "memoryGb":  16,
+    "swapTotalBytes":  "5368709120",
+    "ramTotalBytes":  "17179869184"
+  }
+}

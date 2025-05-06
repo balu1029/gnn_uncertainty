@@ -97,8 +97,8 @@ hidden_nf = 32
 n_layers = 4
 
 
-batch_size = 32
-lr = 1e-2
+batch_size = 2
+lr = 1e-3
 patience = 1000
 factor = 0.6
 device = "cuda" if torch.cuda.is_available() else "cpu"
@@ -394,7 +394,7 @@ if uncertainty_method == "SVKDL":
             model_path = f"{base_model_path}/model_{i}.pt"
         svkdl = SVKDL(
             EGNN,
-            hidden_size=4,
+            hidden_size=16,
             num_inducing_points=32,
             in_node_nf=in_node_nf,
             in_edge_nf=in_edge_nf,
