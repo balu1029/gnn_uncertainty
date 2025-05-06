@@ -14,9 +14,15 @@ from sklearn.metrics import r2_score
 
 
 class MVE(BaseUncertainty):
-    def __init__(self, base_model_class, multi_dec=True, *args, **kwargs):
+    def __init__(self, base_model_class, multi_dec=True, beta=0.5, *args, **kwargs):
         super(MVE, self).__init__()
-        self.model = base_model_class(*args, **kwargs, multi_dec=multi_dec)
+        self.model = base_model_class(
+            *args,
+            **kwargs,
+            multi_dec=multi_dec,
+        )
+
+        self.beta = beta
 
         self.train_losses_energy = []
         self.train_losses_force = []
@@ -267,27 +273,33 @@ class MVE(BaseUncertainty):
                 n_nodes=n_nodes,
             )
 
-            loss_energy = criterion(mean_energy, label_energy)
-            loss_force = criterion(mean_force, label_forces)
+            error_energy = criterion(mean_energy, label_energy)
+            error_force = criterion(mean_force, label_forces)
             if force_uncertainty:
                 total_loss = (
                     0.5
                     * torch.mean(
-                        torch.log(uncertainty)
-                        + mse_fn(mean_force, label_forces) / uncertainty
+                        torch.pow(uncertainty, self.beta).detach()
+                        * (
+                            torch.log(uncertainty)
+                            + mse_fn(mean_force, label_forces) / 2 * uncertainty
+                        )
                     )
                     * force_weight
-                    + loss_energy * energy_weight
+                    + error_energy * energy_weight
                 )
             else:
                 total_loss = (
                     0.5
                     * torch.mean(
-                        torch.log(uncertainty)
-                        + mse_fn(mean_energy, label_energy) / uncertainty
+                        torch.pow(uncertainty, self.beta).detach()
+                        * (
+                            torch.log(uncertainty)
+                            + mse_fn(mean_energy, label_energy) / 2 * uncertainty
+                        )
                     )
                     * energy_weight
-                    + loss_force * force_weight
+                    + error_force * force_weight
                 )
 
             optimizer.zero_grad()
@@ -296,16 +308,16 @@ class MVE(BaseUncertainty):
             optimizer.step()
 
             self.train_losses_energy.append(
-                loss_energy.item() * train_loader.dataset.std_energy
+                error_energy.item() * train_loader.dataset.std_energy
             )
             self.train_losses_force.append(
-                loss_force.item() * train_loader.dataset.std_energy
+                error_force.item() * train_loader.dataset.std_energy
             )
             self.train_losses_total.append(total_loss.item())
 
             if (i + 1) % log_interval == 0:
                 print(
-                    f"Epoch {epoch}, Batch {i+1}/{len(train_loader)}, Loss: {loss_energy.item()}, Uncertainty: {torch.mean(uncertainty).item()}",
+                    f"Epoch {epoch}, Batch {i+1}/{len(train_loader)}, Loss: {error_energy.item()}, Uncertainty: {torch.mean(uncertainty).item()}",
                     flush=True,
                 )
 
@@ -354,8 +366,11 @@ class MVE(BaseUncertainty):
                 total_loss = (
                     0.5
                     * torch.mean(
-                        torch.log(uncertainty)
-                        + mse_fn(mean_force, label_forces) / uncertainty
+                        torch.pow(uncertainty, self.beta).detach()
+                        * (
+                            torch.log(uncertainty)
+                            + mse_fn(mean_force, label_forces) / 2 * uncertainty
+                        )
                     )
                     * force_weight
                     + loss_energy * energy_weight
@@ -364,8 +379,11 @@ class MVE(BaseUncertainty):
                 total_loss = (
                     0.5
                     * torch.mean(
-                        torch.log(uncertainty)
-                        + mse_fn(mean_energy, label_energy) / uncertainty
+                        torch.pow(uncertainty, self.beta).detach()
+                        * (
+                            torch.log(uncertainty)
+                            + mse_fn(mean_energy, label_energy) / 2 * uncertainty
+                        )
                     )
                     * energy_weight
                     + loss_force * force_weight
