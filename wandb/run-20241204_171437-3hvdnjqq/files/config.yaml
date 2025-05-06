@@ -1,0 +1,88 @@
+wandb_version: 1
+
+name:
+  desc: null
+  value: alaninedipeptide
+learning_rate_start:
+  desc: null
+  value: 0.0001
+layers:
+  desc: null
+  value: 4
+hidden_nf:
+  desc: null
+  value: 32
+scheduler:
+  desc: null
+  value: StepLR
+optimizer:
+  desc: null
+  value: AdamW
+patience:
+  desc: null
+  value: 200
+factor:
+  desc: null
+  value: 0.1
+dataset:
+  desc: null
+  value: 1558
+epochs:
+  desc: null
+  value: 20
+batch_size:
+  desc: null
+  value: 32
+in_node_nf:
+  desc: null
+  value: 12
+in_edge_nf:
+  desc: null
+  value: 0
+loss_fn:
+  desc: null
+  value: L1Loss
+model_checkpoint:
+  desc: null
+  value: al/run73/models/model_45.pt
+force_weight:
+  desc: null
+  value: 5
+energy_weight:
+  desc: null
+  value: 1
+reg_factor:
+  desc: null
+  value: 1.0e-06
+_wandb:
+  desc: null
+  value:
+    python_version: 3.12.4
+    cli_version: 0.17.4
+    framework: torch
+    is_jupyter_run: false
+    is_kaggle_kernel: false
+    start_time: 1733328877
+    t:
+      1:
+      - 1
+      - 5
+      - 51
+      - 53
+      - 55
+      2:
+      - 1
+      - 5
+      - 51
+      - 53
+      - 55
+      3:
+      - 2
+      - 13
+      - 16
+      - 23
+      4: 3.12.4
+      5: 0.17.4
+      8:
+      - 5
+      13: linux-x86_64

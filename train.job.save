@@ -1,0 +1,16 @@
+#! /bin/bash
+
+#SBATCH --job-name=egnn
+#SBATCH --partition=gpu_4
+#SBATCH --ntasks=1
+#SBATCH --gres=gpu:1
+#SBATCH --time=20:00:00
+#SBATCH --mail-type=NONE
+#SBATCH --error=/home/kit/iti/fq0795/gnn_uncertainty/cluster_err
+#SBATCH --out=/home/kit/iti/fq0795/gnn_uncertainty/cluster_out
+
+eval "$(conda shell.bash hook)"
+conda activate torch
+
+export WANDB_API_KEY=b50639fb1b0277076877883625fad9a8ec622b77
+python3 active_learning.py

@@ -1,3 +1,8 @@
+Uncertainty Slope: 6.970903396606445, Uncertainty Bias: 2.709705352783203
+Uncertainty Slope: 17.070960998535156, Uncertainty Bias: 2.9689698219299316
+Uncertainty Slope: 0.0, Uncertainty Bias: 4.255654811859131
+Uncertainty Slope: 80.39153289794922, Uncertainty Bias: 1.2971892356872559
+Uncertainty Slope: 88.17778778076172, Uncertainty Bias: 1.2842845916748047
 
 Training and Validation Results of Epoch 0:
 ================================
@@ -2402,14 +2407,26 @@ Validation Loss Energy: 0.8464918988091605, Validation Loss Force: 4.07411755834
 ============================= JOB FEEDBACK =============================
 
 NodeName=uc2n520
+<<<<<<< HEAD
 Job ID: 24552145
+=======
+Job ID: 24667780
+>>>>>>> feature/active_learning
 Cluster: uc2
 User/Group: fq0795/iti
 State: CANCELLED (exit code 0)
 Nodes: 1
 Cores per node: 10
+<<<<<<< HEAD
 CPU Utilized: 00:00:00
 CPU Efficiency: 0.00% of 00:52:30 core-walltime
 Job Wall-clock time: 00:05:15
 Memory Utilized: 1.37 GB
 Memory Efficiency: 1.49% of 91.80 GB
+=======
+CPU Utilized: 00:04:34
+CPU Efficiency: 8.93% of 00:51:10 core-walltime
+Job Wall-clock time: 00:05:07
+Memory Utilized: 1.23 GB
+Memory Efficiency: 1.35% of 91.80 GB
+>>>>>>> feature/active_learning
