@@ -282,7 +282,7 @@ class MVE(BaseUncertainty):
                         torch.pow(uncertainty, self.beta).detach()
                         * (
                             torch.log(uncertainty)
-                            + mse_fn(mean_force, label_forces) / 2 * uncertainty
+                            + mse_fn(mean_force, label_forces) / (2 * uncertainty)
                         )
                     )
                     * force_weight
@@ -295,7 +295,7 @@ class MVE(BaseUncertainty):
                         torch.pow(uncertainty, self.beta).detach()
                         * (
                             torch.log(uncertainty)
-                            + mse_fn(mean_energy, label_energy) / 2 * uncertainty
+                            + mse_fn(mean_energy, label_energy) / (2 * uncertainty)
                         )
                     )
                     * energy_weight
@@ -369,7 +369,7 @@ class MVE(BaseUncertainty):
                         torch.pow(uncertainty, self.beta).detach()
                         * (
                             torch.log(uncertainty)
-                            + mse_fn(mean_force, label_forces) / 2 * uncertainty
+                            + mse_fn(mean_force, label_forces) / (2 * uncertainty)
                         )
                     )
                     * force_weight
@@ -382,7 +382,7 @@ class MVE(BaseUncertainty):
                         torch.pow(uncertainty, self.beta).detach()
                         * (
                             torch.log(uncertainty)
-                            + mse_fn(mean_energy, label_energy) / 2 * uncertainty
+                            + mse_fn(mean_energy, label_energy) / (2 * uncertainty)
                         )
                     )
                     * energy_weight

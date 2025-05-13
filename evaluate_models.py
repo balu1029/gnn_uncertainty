@@ -73,7 +73,12 @@ parser.add_argument(
     default=True,
     help="if mve is either trained on force uncertainty or energy uncertainty",
 )
-
+parser.add_argument(
+    "--mve_beta",
+    type=float,
+    default=0,
+    help="coefficient for regularizing the Evidential Regression Loss",
+)
 
 args = parser.parse_args()
 uncertainty_method = args.uncertainty_method
@@ -88,6 +93,7 @@ force_weight = args.force_weight
 energy_weight = args.energy_weight
 use_wandb = args.use_wandb
 coeff = args.evi_coeff
+mve_beta = args.mve_beta
 mve_force_uncertainty = False  # args.mve_force_uncertainty
 
 in_node_nf = 12
@@ -167,6 +173,7 @@ if uncertainty_method == "MVE":
             hidden_nf=hidden_nf,
             n_layers=n_layers,
             device=device,
+            beta=mve_beta,
         )
         mve.set_wandb_name(f"{timestamp}_{i}")
         mve.fit(
