@@ -14,7 +14,7 @@ from sklearn.metrics import r2_score
 
 
 class MVE(BaseUncertainty):
-    def __init__(self, base_model_class, multi_dec=True, beta=0.5, *args, **kwargs):
+    def __init__(self, base_model_class, multi_dec=True, beta=0, *args, **kwargs):
         super(MVE, self).__init__()
         self.model = base_model_class(
             *args,
