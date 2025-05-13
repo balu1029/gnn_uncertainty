@@ -546,6 +546,7 @@ class MVE(BaseUncertainty):
                 "model_checkpoint": model_path,
                 "force_weight": force_weight,
                 "energy_weight": energy_weight,
+                "beta": self.beta,
             },
         )
 
